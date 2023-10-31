@@ -1,10 +1,14 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import './main.css'
 import farm1 from '../../Assets/Image/farm1.jpg'
 import farm2 from '../../Assets/Image/farm2.jpg'
 import farm3 from '../../Assets/Image/farm3.jpg'
 import farm4 from '../../Assets/Image/farm4.jpg'
 import {BiCurrentLocation} from 'react-icons/bi'
+
+import Aos from 'aos'
+import 'aos/dist/aos.css'
+
 const Data = [
   { 
     id:1,
@@ -45,6 +49,12 @@ const Data = [
 ]
 
 const Main = () => {
+
+    // Create a react hook to add aa scroll animation
+    useEffect(()=>{
+      Aos.init({duration:2000})
+    },[])
+
   return (
     <section className='main container section'>
 
@@ -59,7 +69,7 @@ const Main = () => {
           Data.map(({id,imgSrc,destTitle,location,grade,
             quantity,description})=>{
               return(
-                <div key={id} className="singleDestination">
+                <div data-aos="fade-up" key={id} className="singleDestination">
                   {/*Here it will return single id from the map array*/}
 
                   <div className="imageDiv">

@@ -1,8 +1,16 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import video from '../../Assets/Video/video2.mp4'
 import {AiOutlineSend} from 'react-icons/ai'
 
+import Aos from 'aos'
+import 'aos/dist/aos.css'
+
 const Footer = () => {
+  // Create a react hook to add aa scroll animation
+  useEffect(()=>{
+    Aos.init({duration:2000})
+  },[])
+
   return (
     <section className='footer'>
       <div className="videoDiv">
@@ -12,13 +20,13 @@ const Footer = () => {
       
       <div className="secContent container">
         <div className="contactDiv flex">
-          <div className="text">
+          <div data-aos="fade-up" className="text">
             <small>KEEP IN TOUCH</small>
             <h2>With us</h2>
           </div>
           
           <div className="inputDiv flex">
-            <input type="text" placeholder='Enter Email Address' />
+            <input data-aos="fade-up" type="text" placeholder='Enter Email Address' />
             <button className='btn flex' type='submit'>
               SEND
               <AiOutlineSend className="icon"/>
