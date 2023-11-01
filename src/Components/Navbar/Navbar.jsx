@@ -19,50 +19,47 @@ const Navbar = () => {
 
   return (
     <section className='navBarSection'>
-        <header className='header flex'>
+        <header className="header flex">
 
-            <div className='logoDiv'>
-                <a href="#" className='logo flex'>
-                    <h1>
-                        <RxAccessibility className='icon'/>
-                        Agritech Farm
-                    </h1>
+            <div className="logoDiv">
+                <a href="#" className="logo flex">
+                    <h1><RxAccessibility className="icon"/>Agritech.</h1>
                 </a>
             </div>
 
             <div className={active}>
-                <ul className='navLists flex'>
+                <ul className="navLists flex">
 
-                    <li className='navItem'>
+                    <li className="navItem">
                         <a href="#" className="navLink">Home</a>
                     </li>
 
-                    <li className='navItem'>
+                    <li className="navItem">
                         <a href="#" className="navLink">Farm</a>
                     </li>
 
-                    <li className='navItem'>
+                    <li className="navItem">
                         <a href="#" className="navLink">News</a>
                     </li>
 
-                    <li className='navItem'>
+                    <li className="navItem">
                         <a href="#" className="navLink">About us</a>
                     </li>
 
                     <button className='btn'>
                         <a href="#">RETRIEVAL</a>
                     </button>
-            
                 </ul>
 
                 <div onClick={removeNavbar} className="closeNavbar">
-                    <AiFillCloseCircle className='icon'/>
+                    <AiFillCloseCircle className="icon"/>
                 </div>
             </div>
 
             <div onClick={showNav} className="toggleNavbar">
-                <TbGridDots className='icon'/>
+                <TbGridDots className="icon"/>
             </div>
+            
         </header>
     </section>
   )
