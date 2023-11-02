@@ -1,7 +1,7 @@
 :root{
-    --PrimaryColor: hsl(199,100%, 33%);
-    --SecondaryColor: hsl(187,85%,43%);
-    --gradientColor: linear-gradient(to right, hsl(187,85%,43%), hsl(199,100%,33%));
+    --PrimaryColor: hsl(151, 25%, 45%);
+    --SecondaryColor: hsl(143, 82%, 22%);
+    --gradientColor: linear-gradient(to right, hsl(148, 23%, 65%), hsl(137, 30%, 40%));
     --whiteColor: hsl(0,0%,100%);
     --blackColor: hsl(201,33%,16%);
     --textColor: hsl(240,4%,36%);
@@ -25,7 +25,7 @@
         position: absolute;
         height: 100%;
         width: 100%;
-        background: rgb(47, 106, 127);
+        background: rgb(55, 115, 75);
         top: 0;
         bottom: 0;
         z-index: 1;
@@ -126,7 +126,7 @@
 
 @media screen and (min-width: 1240px) {
     .home{
-        height: 85vh;
+        height: 150vh;
 
         .homeContent{
             padding-left: 0;

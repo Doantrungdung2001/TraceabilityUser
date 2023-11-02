@@ -14,8 +14,10 @@ const Home = () => {
   useEffect(()=>{
     Aos.init({duration:2000})
   },[])
+
+  
   return (
-    <section className='home'>
+    <section className="home">
       <div className="overlay"></div>
       <video src={video} muted autoPlay loop 
       type="video/mp4"></video>
