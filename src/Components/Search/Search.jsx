@@ -19,23 +19,22 @@ const Search = () => {
   return (
     <section className="home">
       <div className="overlay"></div>
-      <video src={video} muted autoPlay loop 
-      type="video/mp4"></video>
+      <video className="video" src={video} muted autoPlay loop type="video/mp4"></video>
 
       <div className="homeContent container">
+
         <div className="textDiv">
           <span data-aos="fade-up" className="smallText">
-            Our Packages
+            Here We Go
           </span>
           <h1 data-aos="fade-up" className="homeTitle">
             Search Code
           </h1>
-      
         </div>
 
         <div className="searchDiv">
           <div className="inputDiv flex">
-              <input data-aos="fade-up" type="text" placeholder='Enter Code.....' />
+              <input className='input'  type="text" placeholder='Enter Code.....' />
               <button className='btn flex' type='submit'>
                 Search
               </button>

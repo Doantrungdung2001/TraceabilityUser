@@ -47,19 +47,21 @@
             padding: 1rem;
             border-radius: 10px;
             align-items: center;
-            background: var(--cardBG);
-            box-shadow: 0 2px 4px rgba(140,140,141,0.549);
+            /* background: var(--cardBG); */
+            background: rgba(207, 207, 210, 0.549);
+            box-shadow: 0 2px 4px rgba(96, 96, 98, 0.549);
             overflow: hidden;
             &:hover{
                 background: var(--cardBG);
-                box-shadow: 1 4px 4px rgba(85,85,114,0.549);
+                box-shadow: 1 4px 4px rgba(95, 95, 105, 0.549);
                 transition: .3s ease;
             }
 
             .imageDiv{
-                height: 180px;
+                height: 90%;
                 width: 100%;
                 overflow: hidden;
+                border-radius: .8rem;
 
                 img{
                     height: 100%;

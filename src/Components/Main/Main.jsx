@@ -60,7 +60,7 @@ const Main = () => {
 
       <div className="secTitle">
         <h3 className="title">
-          List Farm
+          {/* List Farm */}
         </h3>
       </div>
 
