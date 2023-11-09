@@ -1,0 +1,11 @@
+.timeline {
+    background-color: rgb(255, 255, 255);
+    height: 95vh; /* Điều chỉnh chiều cao của timeline */
+    padding: 5rem 25rem;
+
+    .title{
+        text-align: center;
+        padding: 2rem;
+    }
+}
+  

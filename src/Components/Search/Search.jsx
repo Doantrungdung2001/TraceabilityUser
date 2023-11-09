@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import './home.css'
+import './search.css'
 import video from '../../Assets/Video/video1.mp4'
 
 import {FiFacebook} from  'react-icons/fi'
@@ -8,7 +8,7 @@ import {AiOutlineInstagram} from 'react-icons/ai'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
 
-const Home = () => {
+const Search = () => {
 
   // Create a react hook to add aa scroll animation
   useEffect(()=>{
@@ -30,9 +30,18 @@ const Home = () => {
           <h1 data-aos="fade-up" className="homeTitle">
             Search Code
           </h1>
+      
         </div>
 
-        <div data-aos="fade-up" className="homeFooterIcons flex">
+        <div className="searchDiv">
+          <div className="inputDiv flex">
+              <input data-aos="fade-up" type="text" placeholder='Enter Code.....' />
+              <button className='btn flex' type='submit'>
+                Search
+              </button>
+            </div>
+        </div>
+        {/* <div data-aos="fade-up" className="homeFooterIcons flex">
           <div className="rightIcons">
             <FiFacebook className='icon'/>
             <AiOutlineInstagram className='icon'/>
@@ -41,11 +50,11 @@ const Home = () => {
           <div className="leftIcons">
 
           </div>
-        </div>
+        </div> */}
       </div>
       
     </section>
   )
 }
 
-export default Home
+export default Search

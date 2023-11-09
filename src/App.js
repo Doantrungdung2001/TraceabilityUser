@@ -1,17 +1,16 @@
 import './App.css';
-import Footer from './Components/Footer/Footer';
-import Home from './Components/Home/Home';
-import Main from './Components/Main/Main';
-import Navbar from './Components/Navbar/Navbar';
+import {Routes, Route, BrowserRouter} from "react-router-dom";
+import { NormalRoutes } from './Routes/Routes';
 
 function App() {
   return (
-    <>
-      <Navbar/>
-      <Home/>
-      <Main/>
-      <Footer/>
-    </>
+    <BrowserRouter>
+      <Routes>
+        {NormalRoutes.map((route, index) => (
+          <Route key={index} path={route.path} element={route.element}/>
+        ))}           
+      </Routes>
+    </BrowserRouter>
   );
 }
 
