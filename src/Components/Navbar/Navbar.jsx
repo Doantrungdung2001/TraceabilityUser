@@ -22,7 +22,7 @@ const Navbar = () => {
         <header className="header flex">
 
             <div className="logoDiv">
-                <a href="#" className="logo flex">
+                <a href="/" className="logo flex">
                     <h1><RxAccessibility className="icon"/>Agritech.</h1>
                 </a>
             </div>
@@ -31,19 +31,19 @@ const Navbar = () => {
                 <ul className="navLists flex">
 
                     <li className="navItem">
-                        <a href="#" className="navLink">Home</a>
+                        <a href="/" className="navLink">Home</a>
                     </li>
 
                     <li className="navItem">
-                        <a href="#" className="navLink">Farm</a>
+                        <a href="/farm" className="navLink">Farm</a>
                     </li>
 
                     <li className="navItem">
-                        <a href="#" className="navLink">News</a>
+                        <a href="/news" className="navLink">News</a>
                     </li>
 
                     <li className="navItem">
-                        <a href="#" className="navLink">About us</a>
+                        <a href="/about-us" className="navLink">About us</a>
                     </li>
 
                     <button className='btn'>
