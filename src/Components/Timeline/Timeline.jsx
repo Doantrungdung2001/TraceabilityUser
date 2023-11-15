@@ -42,29 +42,38 @@ const items = [
 
 const Timeline = () => {
   return (
-    <div className="timeline">
+    <div className="my-timeline">
       <div className="title">
         <h1>Timeline</h1>
       </div>
       <Chrono 
         items={items} 
-        classNames={{
-          card: 'my-card',
-          cardMedia: 'my-card-media',
-          cardSubTitle: 'my-card-subtitle',
-          cardText: 'my-card-text',
-          cardTitle: 'my-card-title',
-          controls: 'my-controls',
-          title: 'my-title',
+        mediaSettings={{ align: 'right', fit: 'contain' }}
+        theme={{
+          primary: '#339966',
+          titleColor: '#006600',
+          titleColorActive: '#FFFFFF',
+          cardTitleColor: '#006600',
         }}
-        // theme={{
-        //   primary: 'red',
-        //   // secondary: 'blue',
-        //   cardBgColor: 'green',
-        //   titleColor: 'black',
-        //   titleColorActive: 'red',
+        // classNames={{
+        //   chrono: 'timeline',
+        //   event: 'chrono-event',
+        //   eventTitle: 'chrono-event-title',
+        //   eventSubtitle: 'chrono-event-subtitle',
+        //   eventImage: 'chrono-event-image',
+        //   card: 'my-card',
+        //   cardMedia: 'my-card-media',
+        //   cardSubTitle: 'my-card-subtitle',
+        //   cardText: 'my-card-text',
+        //   cardTitle: 'my-card-title',
+        //   controls: 'my-controls',
+        //   title: 'my-title',
         // }}
         mode="VERTICAL_ALTERNATING" 
+        fontSizes={{
+          cardTitle: '0.85rem',
+          title: '0.9rem',
+        }}
         enableOutline
       />
     </div>
