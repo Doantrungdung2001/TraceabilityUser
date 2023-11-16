@@ -1,0 +1,16 @@
+/* .layout-proflie-farm{
+    position: relative;
+    overflow-x: clip;
+}
+.layout-proflie-farm>:nth-child(1){
+    background: var(--blackColor);
+    position: relative;
+}
+
+.white-gradient{
+    position: absolute;
+    width: 20rem;
+    height: 20rem;
+    background: rgba(255, 255, 255, 0.522);
+    filter: blur(100px);
+} */
