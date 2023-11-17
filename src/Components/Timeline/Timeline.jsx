@@ -1,7 +1,6 @@
-
 import React from "react";
 import { Chrono } from "react-chrono";
-import './timeline.css'
+import "./timeline.css";
 const items = [
   {
     title: "May 1940",
@@ -46,14 +45,14 @@ const Timeline = () => {
       <div className="title">
         <h1>Timeline</h1>
       </div>
-      <Chrono 
-        items={items} 
-        mediaSettings={{ align: 'right', fit: 'contain' }}
+      <Chrono
+        items={items}
+        mediaSettings={{ align: "right", fit: "contain" }}
         theme={{
-          primary: '#339966',
-          titleColor: '#006600',
-          titleColorActive: '#FFFFFF',
-          cardTitleColor: '#006600',
+          primary: "#339966",
+          titleColor: "#006600",
+          titleColorActive: "#FFFFFF",
+          cardTitleColor: "#006600",
         }}
         // classNames={{
         //   chrono: 'timeline',
@@ -69,10 +68,10 @@ const Timeline = () => {
         //   controls: 'my-controls',
         //   title: 'my-title',
         // }}
-        mode="VERTICAL_ALTERNATING" 
+        mode="VERTICAL_ALTERNATING"
         fontSizes={{
-          cardTitle: '0.85rem',
-          title: '0.9rem',
+          cardTitle: "0.85rem",
+          title: "0.9rem",
         }}
         enableOutline
       />

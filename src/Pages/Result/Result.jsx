@@ -1,13 +1,13 @@
-import React from 'react'
-import Timeline from '../../Components/Timeline/Timeline'
-import Navbar from '../../Components/Navbar/Navbar'
+import React from "react";
+import Timeline from "../../Components/Timeline/Timeline";
+import Navbar from "../../Components/Navbar/Navbar";
 const Result = () => {
   return (
     <>
-        <Navbar/>
-        <Timeline/>
+      <Navbar />
+      <Timeline />
     </>
-  )
-}
+  );
+};
 
-export default Result
+export default Result;

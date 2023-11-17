@@ -1,25 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 /* Colors and styling */
-:root{
+:root {
   --PrimaryColor: hsl(151, 25%, 45%);
   --SecondaryColor: hsl(143, 82%, 22%);
-  --gradientColor: linear-gradient(to right, hsl(148, 23%, 65%), hsl(137, 30%, 40%));
-  --whiteColor: hsl(0,0%,100%);
-  --blackColor: hsl(201,33%,16%);
-  --textColor: hsl(240,4%,36%);
-  --whiteColorDeam: hsl(0,0%,93%);
-  --greyText: rgb(190,190,190);
-  --inputColor: rgb(239,239,239);
-  --bodyColor: rgb(240,240,246);
-  --cardBG: rgb(225,225,235);
+  --gradientColor: linear-gradient(
+    to right,
+    hsl(148, 23%, 65%),
+    hsl(137, 30%, 40%)
+  );
+  --whiteColor: hsl(0, 0%, 100%);
+  --blackColor: hsl(201, 33%, 16%);
+  --textColor: hsl(240, 4%, 36%);
+  --whiteColorDeam: hsl(0, 0%, 93%);
+  --greyText: rgb(190, 190, 190);
+  --inputColor: rgb(239, 239, 239);
+  --bodyColor: rgb(240, 240, 246);
+  --cardBG: rgb(225, 225, 235);
 
   --primary: #1f3e72;
   --secondary: rgba(255, 255, 255, 0.78);
@@ -27,19 +31,19 @@
   --orange-gradient: linear-gradient(270deg, #ffb978 0%, #ff922d 100%);
   --blue: #4066ff;
   --lightBlue: #eeeeff;
-  --shadow: 0px 23px 21px -8px rgba(136, 160 , 255, 0.25);
+  --shadow: 0px 23px 21px -8px rgba(136, 160, 255, 0.25);
 }
 
-html{
+html {
   scroll-behavior: smooth;
 }
 
-a{
+a {
   color: inherit;
   text-decoration: none;
 }
 
-.paddings{
+.paddings {
   padding: 1.5rem;
 }
 
@@ -94,7 +98,7 @@ a{
 }
 
 .secondaryText {
-  color: rbg(140,139,139);
+  color: rbg(140, 139, 139);
   font-size: 0.9rem;
 }
 
@@ -104,41 +108,41 @@ a{
   font-weight: 600;
 }
 
-li{
+li {
   list-style: none;
 }
 
-.section{
+.section {
   padding: 4rem 0 2rem;
 }
 
-.secTitle{
+.secTitle {
   color: var(--textColor);
   font-size: 20px;
 }
 
-.container{
+.container {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
 
-.icon{
+.icon {
   font-size: 2rem;
   cursor: pointer;
 }
 
-.flex{
+.flex {
   display: flex;
   align-items: center;
 }
 
-.grid{
+.grid {
   display: grid;
   align-items: center;
 }
 
-.btn{
-  padding: .6rem 1.5rem;
+.btn {
+  padding: 0.6rem 1.5rem;
   background: var(--gradientColor);
   border-radius: 3rem;
   border: none;
@@ -146,33 +150,33 @@ li{
   cursor: pointer;
 }
 
-.btn a{
+.btn a {
   color: var(--whiteColor);
   font-weight: 500;
 }
 
-.btn:hover{
-  background: var(--SecondaryColor)
+.btn:hover {
+  background: var(--SecondaryColor);
 }
 
-img, video{
+img,
+video {
   width: 100%;
   height: auto;
   object-fit: cover;
 }
 
-input{
+input {
   font-size: 100%;
 }
 
-body{
+body {
   background: var(--bodyColor);
 }
 
-
 /* MEDIA QUERIES */
 @media screen and (min-width: 2560px) {
-  body{
+  body {
     zoom: 1.7;
   }
 }
@@ -184,13 +188,13 @@ body{
   }
 }
 
-@media  screen and (min-width: 1240px) {
-  .container{
+@media screen and (min-width: 1240px) {
+  .container {
     width: 80% !important;
     margin: auto !important;
-  } 
-  
-  .section{
+  }
+
+  .section {
     padding: 6rem 0 4rem;
   }
 }
@@ -199,6 +203,4 @@ body{
   .paddings {
     padding: 4rem;
   }
-  
 }
-

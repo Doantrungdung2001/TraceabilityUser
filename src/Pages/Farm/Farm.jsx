@@ -1,14 +1,14 @@
-import React from 'react'
-import Main from '../../Components/Main/Main'
-import Navbar from '../../Components/Navbar/Navbar'
+import React from "react";
+import Main from "../../Components/Main/Main";
+import Navbar from "../../Components/Navbar/Navbar";
 
 const Farm = () => {
   return (
     <div>
-      <Navbar/>
-      <Main/>
+      <Navbar />
+      <Main />
     </div>
-  )
-}
+  );
+};
 
-export default Farm
+export default Farm;
