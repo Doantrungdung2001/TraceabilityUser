@@ -14,10 +14,12 @@ import Farm from "../Pages/Farm/Farm";
 import New from "../Pages/New/New";
 import About from "../Pages/AboutUs/About";
 import ProflieFarm from "../Pages/Farm/ProflieFarm";
+import Timeline from "../Components/Timeline/Timeline";
 
 export const NormalRoutes = [
   { path: "/", element: <Home /> },
   { path: "/results", element: <Result /> },
+  { path: "/results/timeline", element: <Timeline /> },
   { path: "/farm", element: <Farm /> },
   { path: "/farm/detail", element: <ProflieFarm /> },
   { path: "/news", element: <New /> },

@@ -1,11 +1,12 @@
 import React from "react";
-import Timeline from "../../Components/Timeline/Timeline";
 import Navbar from "../../Components/Navbar/Navbar";
+import Information from "../../Components/Information/Information";
 const Result = () => {
   return (
     <>
       <Navbar />
-      <Timeline />
+      {/* <Timeline /> */}
+      <Information/>
     </>
   );
 };
