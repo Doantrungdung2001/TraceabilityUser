@@ -5,7 +5,7 @@
     display: grid;
     justify-content: center;
     align-items: center;
-    padding-top: 0.5rem;
+    padding-top: 1.4rem;
     .button {
       color: #ffffff;
       justify-self: center;
@@ -13,7 +13,7 @@
       font-weight: 600;
       height: 50px;
       width: 180px;
-      background-color: rgb(57, 139, 112);
+      background-color: #10b981;
       margin-bottom: 10px;
       border-radius: 15px;
       text-align: center;
@@ -24,45 +24,44 @@
   }
 
   .r-content {
-    padding: 1rem;
+    padding: 3rem;
     display: grid;
     grid-template-columns: 3fr 1fr; /* Two columns with equal width */
-    gap: 16px;
     justify-content: space-between;
 
     .r-infor {
-      display: grid;
-      padding: 2.6rem;
-      justify-content: space-between;
+      height: 100%;
+      width: 70%;
+      margin-left: 60px;
       box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.3);
-      border-radius: 20px;
+      border-radius: 32px;
       margin-bottom: 100px;
 
-      .r-colum {
-        justify-content: space-between;
-        .r-properties {
-          justify-content: space-between;
-          font-weight: 600;
-        }
+      .r-header{
+        background-color: #10b981;
+        border-radius: 32px;
+        height: 60px;
+
       }
     }
 
     .r-time {
-
       display: grid;
+      height: 90%;
       justify-content: center;
       box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.3);
       border-radius: 20px;
+
       /* Styling */
       .r-event {
         position: relative;
         .timeline {
-          margin: 2em auto;
+          margin: 1.6em auto;
           position: relative;
-          max-width: 46em;
+          max-width: 42em;
 
           &:before {
-            background-color: rgb(18, 125, 40);
+            background-color: #10b981;
             content: "";
             margin-left: -1px;
             position: absolute;
@@ -79,7 +78,7 @@
           &:hover {
             .timeline-event-icon {
               @include rotate(-45deg);
-              background-color: rgb(9, 102, 57);
+              background-color: #10b981;
             }
 
             .timeline-event-thumbnail {
@@ -111,7 +110,7 @@
           @include transition(transform 0.2s ease-in);
           @include rotate(45deg);
 
-          background-color: rgb(40, 100, 47);
+          background-color: #10b981;
           outline: 10px solid white;
           display: block;
           margin: 0.5em 0.5em 0.5em -0.5em;
@@ -127,7 +126,7 @@
           color: white;
           font-size: 0.8em;
 
-          background-color: rgb(7, 111, 63);
+          background-color: #10b981;
           @include box-shadow(inset 0 0 0 0em #ef795a);
           display: inline-block;
           margin-bottom: 1em;
@@ -140,7 +139,7 @@
           bottom: 10px; /* Adjust the distance from the bottom as needed */
           left: 50%;
           transform: translateX(-50%);
-          background-color: #8aa1ca; /* Your button background color */
+          background-color: #10b981; /* Your button background color */
           color: white; /* Your button text color */
           padding: 10px 20px; /* Adjust padding as needed */
           border: none;
