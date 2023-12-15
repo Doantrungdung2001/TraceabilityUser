@@ -1,0 +1,65 @@
+:root {
+  --PrimaryColor: hsl(151, 25%, 45%);
+}
+
+.information {
+  padding-top: 10vh;
+  display: flex;
+  flex-direction: column;
+
+  .r-title {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1.4rem;
+    .button {
+      color: #ffffff;
+      justify-self: center;
+      font-size: medium;
+      font-weight: 600;
+      height: 53px;
+      width: 390px;
+      background-color: var(--PrimaryColor);
+      margin-bottom: 10px;
+      border-radius: 15px;
+      text-align: center;
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+  }
+}
+.content {
+    display: flex;
+    flex-direction: row;
+    margin: 1rem;
+  .infor {
+    display: grid;
+    margin: 1rem;
+    box-shadow: 2px 2px 5px 2px rgba(137, 123, 123, 0.3);
+    border-radius: 20px;
+  }
+
+  .timeline{
+    margin: auto;
+    display: grid;
+    box-shadow: 2px 2px 5px 2px rgba(137, 123, 123, 0.3);
+    border-radius: 20px;
+
+    .r-time {
+        padding: 3rem;
+    }
+  }
+}
+
+.tab-header {
+  background-color: var(--PrimaryColor);
+  height: 50px;
+}
+
+.more-infor{
+    margin: 5rem;
+    padding: 1rem;
+    box-shadow: 2px 2px 5px 2px rgba(137, 123, 123, 0.3);
+    border-radius: 20px;
+}
