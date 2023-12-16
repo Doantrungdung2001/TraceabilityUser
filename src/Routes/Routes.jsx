@@ -15,11 +15,11 @@ import New from "../Pages/New/New";
 import About from "../Pages/AboutUs/About";
 import ProflieFarm from "../Pages/Farm/ProflieFarm";
 import Timeline from "../Components/Timeline/Timeline";
-
+import History  from "../Pages/Result/History";
 export const NormalRoutes = [
   { path: "/", element: <Home /> },
   { path: "/results", element: <Result /> },
-  { path: "/results/timeline", element: <Timeline /> },
+  { path: "/results/timeline", element: <History /> },
   { path: "/farm", element: <Farm /> },
   { path: "/farm/detail", element: <ProflieFarm /> },
   { path: "/news", element: <New /> },

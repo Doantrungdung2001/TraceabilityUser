@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import Project from "../../Components/Project/Project";
 import Avatar from "../../Components/Avatar/Avatar";
-import "./farm.css";
 import Footer from "../../Components/Footer/Footer";
 
 const ProflieFarm = () => {
