@@ -47,7 +47,7 @@ const Introduce = () => {
 
         {/* right side */}
         <div className="flexColStart v-right">
-          <span className="orangeText">About Us</span>
+          <span className="orangeText">Về chúng tôi</span>
           <span className="primaryText">Value We Give to You</span>
           <span className="secondaryText">
             We always ready to help by providding the best services for you.

@@ -32,7 +32,7 @@ const Search = () => {
             Here We Go
           </span>
           <h1 data-aos="fade-up" className="homeTitle">
-            Search Code
+            Truy xuất nguồn gốc
           </h1>
         </div>
 
@@ -41,7 +41,7 @@ const Search = () => {
             <input
               className="input"
               type="text"
-              placeholder="Enter Code....."
+              placeholder="Nhập mã code....."
             />
             <button className="btn flex" type="submit">
               Search

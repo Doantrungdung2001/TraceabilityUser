@@ -14,7 +14,6 @@ import Farm from "../Pages/Farm/Farm";
 import New from "../Pages/New/New";
 import About from "../Pages/AboutUs/About";
 import ProflieFarm from "../Pages/Farm/ProflieFarm";
-import Timeline from "../Components/Timeline/Timeline";
 import History  from "../Pages/Result/History";
 export const NormalRoutes = [
   { path: "/", element: <Home /> },

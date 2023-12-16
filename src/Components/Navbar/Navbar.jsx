@@ -33,30 +33,30 @@ const Navbar = () => {
           <ul className="navLists flex">
             <li className="navItem">
               <a href="/" className="navLink">
-                Home
+                Trang chủ
               </a>
             </li>
 
             <li className="navItem">
               <a href="/farm" className="navLink">
-                Farm
+                Nông trại
               </a>
             </li>
 
             <li className="navItem">
               <a href="/news" className="navLink">
-                News
+                Tin tức
               </a>
             </li>
 
             <li className="navItem">
               <a href="/about-us" className="navLink">
-                About us
+                Thông tin
               </a>
             </li>
 
             <button className="btn">
-              <a href="#">RETRIEVAL</a>
+              <a href="#">Truy xuất</a>
             </button>
           </ul>
 

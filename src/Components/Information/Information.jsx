@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./information.css";
+import { Card, Typography } from "@material-tailwind/react";
 import {
   Tabs,
   TabsHeader,
@@ -13,6 +14,36 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
+
+const TABLE_HEAD = ["Name", "Job", "Employed", ""];
+
+const TABLE_ROWS = [
+  {
+    name: "John Michael",
+    job: "Manager",
+    date: "23/04/18",
+  },
+  {
+    name: "Alexa Liras",
+    job: "Developer",
+    date: "23/04/18",
+  },
+  {
+    name: "Laurent Perrier",
+    job: "Executive",
+    date: "19/09/17",
+  },
+  {
+    name: "Michael Levi",
+    job: "Developer",
+    date: "24/12/08",
+  },
+  {
+    name: "Richard Gran",
+    job: "Manager",
+    date: "04/10/21",
+  },
+];
 
 const mockdata = {
   ProductCode: 123456,
@@ -60,139 +91,6 @@ const Information = () => {
           Mã truy xuất : {mockdata.ProductCode}
         </button>
       </div>
-
-      {/* <div className="r-content">
-        <div className="r-infor">
-          <Tabs id="custom-animation" value="html">
-            <TabsHeader className="r-header">
-              {data.map(({ label, value }) => (
-                <Tab className="r-tab" key={value} value={value}>
-                  {label}
-                </Tab>
-              ))}
-            </TabsHeader>
-            <TabsBody
-              animate={{
-                initial: { y: 250 },
-                mount: { y: 0 },
-                unmount: { y: 250 },
-              }}
-            >
-              {data.map(({ value }) => (
-                <TabPanel key={value} value={value}>
-                  <Card className="h-full w-full">
-                    <table className="w-full min-w-max table-auto text-left">
-                      <thead>
-                        <tr>
-                          {TABLE_HEAD.map((head) => (
-                            <th
-                              key={head}
-                              className="border-b border-blue-gray-400 bg-blue-gray-200 p-4"
-                            >
-                              <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-normal leading-none opacity-70"
-                              >
-                                {head}
-                              </Typography>
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {TABLE_ROWS.map(({ name, job, date }, index) => {
-                          const isLast = index === TABLE_ROWS.length - 1;
-                          const classes = isLast
-                            ? "p-4"
-                            : "p-4 border-b border-blue-gray-50";
-
-                          return (
-                            <tr key={name}>
-                              <td className={classes}>
-                                <Typography
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="font-normal"
-                                >
-                                  {name}
-                                </Typography>
-                              </td>
-                              <td className={`${classes} bg-blue-gray-50/50`}>
-                                <Typography
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="font-normal"
-                                >
-                                  {job}
-                                </Typography>
-                              </td>
-                              <td className={classes}>
-                                <Typography
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="font-normal"
-                                >
-                                  {date}
-                                </Typography>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </Card>
-                </TabPanel>
-              ))}
-            </TabsBody>
-          </Tabs>
-          <Button>Button</Button>
-        </div>
-
-        <div className="r-time">
-          <div className="r-event">
-            <ul class="timeline">
-              <li class="timeline-event">
-                <label class="timeline-event-icon"></label>
-                <div class="timeline-event-copy">
-                  <p class="timeline-event-thumbnail">April 2011 - heute</p>
-                  <h3>Geil,Danke! GmbH</h3>
-                  <p>Smartphones und Tablets (iOS, Android, Windows).</p>
-                </div>
-              </li>
-              <li class="timeline-event">
-                <label class="timeline-event-icon"></label>
-                <div class="timeline-event-copy">
-                  <p class="timeline-event-thumbnail">
-                    November 2009 - März 2011
-                  </p>
-                  <h3>Freelancer</h3>
-                  <p>
-                    Konzeption, Design und Produktion von Digitalen Magazinen
-                    mit
-                  </p>
-                </div>
-              </li>
-              <li class="timeline-event">
-                <label class="timeline-event-icon"></label>
-                <div class="timeline-event-copy">
-                  <p class="timeline-event-thumbnail">April 2011 - heute</p>
-                  <h3>konplan gmbh</h3>
-                  <p>
-                    Modellierung von Systemen und APIs für Digital Publishing
-                    und
-                  </p>
-                </div>
-              </li>
-            </ul>
-            <button className="btn">All event</button>
-          </div>
-        </div>
-
-        <div className="map">
-          <span>Hello</span>
-        </div>
-      </div> */}
 
       <section className="content">
         <section className="infor">
@@ -252,19 +150,43 @@ const Information = () => {
                       <div>
                         <div className="px-4 sm:px-0">
                           <h3 className="text-base font-semibold leading-7 text-gray-900">
-                            Applicant Information
+                            Thông tin chi tiết của sản phẩm
                           </h3>
                           <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
                             Personal details and application.
                           </p>
                         </div>
-                        <div className="mt-6 border-t border-gray-100">
-                          <dl className="divide-y divide-gray-100">
+                        <div className="mt-6 border-t border-gray-900">
+                          <dl className="divide-y divide-gray-800">
                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                               <dt className="text-sm font-medium leading-6 text-gray-900">
-                                Full name
+                                Tên sản phẩm
                               </dt>
-                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
+                                Margot Foster
+                              </dd>
+                            </div>
+                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                              <dt className="text-sm font-medium leading-6 text-gray-900">
+                                Tên sản phẩm
+                              </dt>
+                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
+                                Margot Foster
+                              </dd>
+                            </div>
+                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                              <dt className="text-sm font-medium leading-6 text-gray-900">
+                                Tên sản phẩm
+                              </dt>
+                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
+                                Margot Foster
+                              </dd>
+                            </div>
+                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                              <dt className="text-sm font-medium leading-6 text-gray-900">
+                                Tên sản phẩm
+                              </dt>
+                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
                                 Margot Foster
                               </dd>
                             </div>
@@ -272,7 +194,7 @@ const Information = () => {
                               <dt className="text-sm font-medium leading-6 text-gray-900">
                                 Application for
                               </dt>
-                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
                                 Backend Developer
                               </dd>
                             </div>
@@ -280,7 +202,7 @@ const Information = () => {
                               <dt className="text-sm font-medium leading-6 text-gray-900">
                                 Email address
                               </dt>
-                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
                                 margotfoster@example.com
                               </dd>
                             </div>
@@ -288,7 +210,15 @@ const Information = () => {
                               <dt className="text-sm font-medium leading-6 text-gray-900">
                                 Salary expectation
                               </dt>
-                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
+                                $120,000
+                              </dd>
+                            </div>
+                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                              <dt className="text-sm font-medium leading-6 text-gray-900">
+                                Salary expectation
+                              </dt>
+                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
                                 $120,000
                               </dd>
                             </div>
@@ -296,7 +226,7 @@ const Information = () => {
                               <dt className="text-sm font-medium leading-6 text-gray-900">
                                 About
                               </dt>
-                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
                                 Fugiat ipsum ipsum deserunt culpa aute sint do
                                 nostrud anim incididunt cillum culpa consequat.
                                 Excepteur qui ipsum aliquip consequat sint. Sit
@@ -305,66 +235,6 @@ const Information = () => {
                                 adipisicing reprehenderit deserunt qui eu.
                               </dd>
                             </div>
-                            {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-gray-900">
-                              Attachments
-                            </dt>
-                            <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                              <ul
-                                role="list"
-                                className="divide-y divide-gray-100 rounded-md border border-gray-200"
-                              >
-                                <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                  <div className="flex w-0 flex-1 items-center">
-                                    <PaperClipIcon
-                                      className="h-5 w-5 flex-shrink-0 text-gray-400"
-                                      aria-hidden="true"
-                                    />
-                                    <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                      <span className="truncate font-medium">
-                                        resume_back_end_developer.pdf
-                                      </span>
-                                      <span className="flex-shrink-0 text-gray-400">
-                                        2.4mb
-                                      </span>
-                                    </div>
-                                  </div>
-                                  <div className="ml-4 flex-shrink-0">
-                                    <a
-                                      href="#"
-                                      className="font-medium text-indigo-600 hover:text-indigo-500"
-                                    >
-                                      Download
-                                    </a>
-                                  </div>
-                                </li>
-                                <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                  <div className="flex w-0 flex-1 items-center">
-                                    <PaperClipIcon
-                                      className="h-5 w-5 flex-shrink-0 text-gray-400"
-                                      aria-hidden="true"
-                                    />
-                                    <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                      <span className="truncate font-medium">
-                                        coverletter_back_end_developer.pdf
-                                      </span>
-                                      <span className="flex-shrink-0 text-gray-400">
-                                        4.5mb
-                                      </span>
-                                    </div>
-                                  </div>
-                                  <div className="ml-4 flex-shrink-0">
-                                    <a
-                                      href="#"
-                                      className="font-medium text-indigo-600 hover:text-indigo-500"
-                                    >
-                                      Download
-                                    </a>
-                                  </div>
-                                </li>
-                              </ul>
-                            </dd>
-                          </div> */}
                           </dl>
                         </div>
                       </div>
@@ -378,7 +248,7 @@ const Information = () => {
 
         <section className="timeline">
           <div className="r-time">
-            <ol class="relative border-s border-gray-200 dark:border-gray-700">
+            <ol class="relative border-s border-gray-900 dark:border-gray-700">
               <li class="mb-10 ms-6">
                 <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
                   <svg
@@ -393,9 +263,9 @@ const Information = () => {
                 </span>
                 <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
                   Flowbite Application UI v2.0.0{" "}
-                  <span class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">
+                  {/* <span class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">
                     Latest
-                  </span>
+                  </span> */}
                 </h3>
                 <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
                   Released on January 13th, 2022
@@ -484,53 +354,139 @@ const Information = () => {
         <>
           <Accordion
             open={open === 1}
-            className="mb-2 rounded-lg border border-blue-gray-100 px-4"
+            className="mb-2 rounded-lg border border-blue-gray-300 px-4"
           >
             <AccordionHeader
               onClick={() => handleOpen(1)}
               className={`border-b-0 transition-colors ${
-                open === 1 ? "text-blue-500 hover:!text-blue-700" : ""
+                open === 1 ? "text-green-400 hover:!text-green-700" : ""
               }`}
             >
-              What is Material Tailwind?
+              Thông tin chi tiết sản phẩm
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
-              We&apos;re not always in the position that we want to be at.
-              We&apos;re constantly growing. We&apos;re constantly making
-              mistakes. We&apos;re constantly trying to express ourselves and
-              actualize our dreams.
+              <section>
+                <div>
+                  <Card className="h-full w-full">
+                    <table className="w-full min-w-max table-auto text-left">
+                      <thead>
+                        <tr>
+                          {TABLE_HEAD.map((head) => (
+                            <th
+                              key={head}
+                              className="border-b border-blue-gray-600 bg-blue-gray-200 p-4"
+                            >
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal leading-none opacity-70"
+                              >
+                                {head}
+                              </Typography>
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {TABLE_ROWS.map(({ name, job, date }, index) => {
+                          const isLast = index === TABLE_ROWS.length - 1;
+                          const classes = isLast
+                            ? "p-4"
+                            : "p-4 border-b border-blue-gray-50";
+
+                          return (
+                            <tr key={name}>
+                              <td className={classes}>
+                                <Typography
+                                  variant="small"
+                                  color="blue-gray"
+                                  className="font-normal"
+                                >
+                                  {name}
+                                </Typography>
+                              </td>
+                              <td className={`${classes} bg-blue-gray-50/50`}>
+                                <Typography
+                                  variant="small"
+                                  color="blue-gray"
+                                  className="font-normal"
+                                >
+                                  {job}
+                                </Typography>
+                              </td>
+                              <td className={classes}>
+                                <Typography
+                                  variant="small"
+                                  color="blue-gray"
+                                  className="font-normal"
+                                >
+                                  {date}
+                                </Typography>
+                              </td>
+                              <td className={`${classes} bg-blue-gray-50/50`}>
+                                <Typography
+                                  as="a"
+                                  href="#"
+                                  variant="small"
+                                  color="blue-gray"
+                                  className="font-medium"
+                                >
+                                  Edit
+                                </Typography>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </Card>
+                </div>
+              </section>
             </AccordionBody>
           </Accordion>
           <Accordion
             open={open === 2}
-            className="mb-2 rounded-lg border border-blue-gray-100 px-4"
+            className="mb-2 rounded-lg border border-blue-gray-300 px-4"
           >
             <AccordionHeader
               onClick={() => handleOpen(2)}
               className={`border-b-0 transition-colors ${
-                open === 2 ? "text-blue-500 hover:!text-blue-700" : ""
+                open === 2 ? "text-green-400 hover:!text-green-700" : ""
               }`}
             >
-              How to use Material Tailwind?
+              Thông tin nông trại && Cơ sở pháp lý
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
-              We&apos;re not always in the position that we want to be at.
-              We&apos;re constantly growing. We&apos;re constantly making
-              mistakes. We&apos;re constantly trying to express ourselves and
-              actualize our dreams.
+              <div className="r-image">
+                <img
+                  className="h-96 py-4 w-full rounded-lg object-cover object-center shadow-xl shadow-blue-gray-800/50"
+                  src="https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
+                  alt="nature image"
+                />
+                <img
+                  className="h-96 py-4 w-full rounded-lg object-cover object-center shadow-xl shadow-blue-gray-800/50"
+                  src="https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
+                  alt="nature image"
+                />
+                <img
+                  className="h-96 py-4 w-full rounded-lg object-cover object-center shadow-xl shadow-blue-gray-800/50"
+                  src="https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
+                  alt="nature image"
+                />
+              </div>
             </AccordionBody>
           </Accordion>
           <Accordion
             open={open === 3}
-            className="rounded-lg border border-blue-gray-100 px-4"
+            className="rounded-lg border border-blue-gray-300 px-4"
           >
             <AccordionHeader
               onClick={() => handleOpen(3)}
               className={`border-b-0 transition-colors ${
-                open === 3 ? "text-blue-500 hover:!text-blue-700" : ""
+                open === 3 ? "text-green-400 hover:!text-green-700" : ""
               }`}
             >
-              What can I do with Material Tailwind?
+              Các bên liên quan
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
               We&apos;re not always in the position that we want to be at.
