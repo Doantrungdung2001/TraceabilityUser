@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import "./search.css";
 import video from "../../Assets/Video/video1.mp4";
 
-import { FiFacebook } from "react-icons/fi";
-import { AiOutlineInstagram } from "react-icons/ai";
 
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -13,6 +11,10 @@ const Search = () => {
   useEffect(() => {
     Aos.init({ duration: 2000 });
   }, []);
+
+  const handleClick = () => {
+    // window.location.href = '/';
+  }
 
   return (
     <section className="home">
@@ -43,7 +45,7 @@ const Search = () => {
               type="text"
               placeholder="Nhập mã code....."
             />
-            <button className="btn flex" type="submit">
+            <button className="btn flex" onClick={handleClick()}>
               Search
             </button>
           </div>
