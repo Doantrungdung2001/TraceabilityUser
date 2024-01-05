@@ -27,7 +27,7 @@ const Timeline = () => {
                 class="absolute -top-0.5 z-10 -ml-3.5 h-7 w-7 rounded-full text-green-500"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
                   clip-rule="evenodd"
                 />
@@ -53,7 +53,7 @@ const Timeline = () => {
                 class="absolute -top-0.5 z-10 -ml-3.5 h-7 w-7 rounded-full text-green-500"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
                   clip-rule="evenodd"
                 />
@@ -80,7 +80,7 @@ const Timeline = () => {
                 class="absolute -top-0.5 z-10 -ml-3.5 h-7 w-7 rounded-full text-green-500"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
                   clip-rule="evenodd"
                 />
@@ -107,7 +107,7 @@ const Timeline = () => {
                 class="absolute -top-0.5 z-10 -ml-3.5 h-7 w-7 rounded-full text-green-500"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
                   clip-rule="evenodd"
                 />
@@ -134,7 +134,7 @@ const Timeline = () => {
                 class="absolute -top-0.5 z-10 -ml-3.5 h-7 w-7 rounded-full text-green-500"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
                   clip-rule="evenodd"
                 />
@@ -161,7 +161,7 @@ const Timeline = () => {
                 class="absolute -top-0.5 z-10 -ml-3.5 h-7 w-7 rounded-full text-green-500"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
                   clip-rule="evenodd"
                 />
@@ -213,12 +213,6 @@ const Timeline = () => {
                   by our endeavors, while others may be offended—it&apos;s all
                   part of the process. I'm here to pursue my dreams and
                   encourage others to do the same.
-                  <br /> <br />
-                  Now is the time to embrace greatness without fear of judgment.
-                  Some may resent those who shine brightly or stand out, but
-                  it&apos;s time to be the best version of ourselves. Do you
-                  have faith in your beliefs, even if you&apos;re the only one
-                  who does?
                 </Typography>
               </DialogBody>
               <DialogFooter className="space-x-2">
