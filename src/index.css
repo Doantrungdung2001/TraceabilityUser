@@ -1,9 +1,11 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
-
+@import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 
 /* Colors and styling */
 :root {
