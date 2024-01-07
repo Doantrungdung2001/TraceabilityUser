@@ -78,7 +78,46 @@ const Information = () => {
     },
   ];
 
+  const data1 = [
+    {
+      imgelink:
+        "https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+    },
+    {
+      imgelink:
+        "https://images.unsplash.com/photo-1432462770865-65b70566d673?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+    },
+    {
+      imgelink:
+        "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80",
+    },
+    {
+      imgelink:
+        "https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80",
+    },
+    {
+      imgelink:
+        "https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80",
+    },
+    {
+      imgelink:
+        "https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80",
+    },
+    {
+      imgelink:
+        "https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80",
+    },
+    {
+      imgelink:
+        "https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80",
+    },
+  ];
+
   const [activeImg, setActiveImage] = useState(images.img1);
+
+  const [active, setActive] = useState(
+    "https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+  );
 
   const [open, setOpen] = React.useState(1);
 
@@ -329,7 +368,7 @@ const Information = () => {
                   </svg>
                 </span>
                 <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                  Gieo hạt 
+                  Gieo hạt
                 </h3>
                 <time className="block mb-2 text-sm font-normal leading-none text-gray-600 dark:text-gray-600">
                   05/03/2023
@@ -353,7 +392,7 @@ const Information = () => {
                   </svg>
                 </span>
                 <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                  Phun thuốc sâu 
+                  Phun thuốc sâu
                 </h3>
                 <time className="block mb-2 text-sm font-normal leading-none text-gray-600 dark:text-gray-600">
                   05/05/2023
@@ -574,26 +613,13 @@ const Information = () => {
                 open === 2 ? "text-green-400 hover:!text-green-700" : ""
               }`}
             >
-              Thông tin nông trại && Cơ sở pháp lý
+              Thông tin về dự án
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
-              <div className="r-image">
-                <img
-                  className="h-96 py-4 w-full rounded-lg object-cover object-center shadow-xl shadow-blue-gray-800/50"
-                  src="https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
-                  alt="nature image"
-                />
-                <img
-                  className="h-96 py-4 w-full rounded-lg object-cover object-center shadow-xl shadow-blue-gray-800/50"
-                  src="https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
-                  alt="nature image"
-                />
-                <img
-                  className="h-96 py-4 w-full rounded-lg object-cover object-center shadow-xl shadow-blue-gray-800/50"
-                  src="https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
-                  alt="nature image"
-                />
-              </div>
+              We&apos;re not always in the position that we want to be at.
+              We&apos;re constantly growing. We&apos;re constantly making
+              mistakes. We&apos;re constantly trying to express ourselves and
+              actualize our dreams.
             </AccordionBody>
           </Accordion>
           <Accordion
@@ -606,13 +632,30 @@ const Information = () => {
                 open === 3 ? "text-green-400 hover:!text-green-700" : ""
               }`}
             >
-              Các bên liên quan
+              Thông tin nông trại && Cơ sở pháp lý
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
-              We&apos;re not always in the position that we want to be at.
-              We&apos;re constantly growing. We&apos;re constantly making
-              mistakes. We&apos;re constantly trying to express ourselves and
-              actualize our dreams.
+              <div className="grid gap-4">
+                <div>
+                  <img
+                    className="h-auto w-full max-w-full rounded-lg object-cover object-center md:h-[480px]"
+                    src={active}
+                    alt=""
+                  />
+                </div>
+                <div className="grid grid-cols-5 gap-4">
+                  {data1.map(({ imgelink }, index) => (
+                    <div key={index}>
+                      <img
+                        onClick={() => setActive(imgelink)}
+                        src={imgelink}
+                        className="h-20 max-w-full cursor-pointer rounded-lg object-cover object-center"
+                        alt="gallery-image"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
             </AccordionBody>
           </Accordion>
         </>
