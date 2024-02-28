@@ -179,27 +179,6 @@ const Information = () => {
         <section className="infor">
           <div className=" p-10 flex flex-col justify-between lg:flex-row gap-10 lg:items-center">
             <div className="picture">
-              {/* <div className="grid gap-4">
-                <div>
-                  <img
-                    className="h-8 w-full max-w-full rounded-lg object-cover object-center md:h-[300px]"
-                    src={active}
-                    alt=""
-                  />
-                </div>
-                <div className="grid grid-cols-5 gap-4">
-                  {data1.map(({ imgelink }, index) => (
-                    <div key={index}>
-                      <img
-                        onClick={() => setActive(imgelink)}
-                        src={imgelink}
-                        className="h-20 max-w-full cursor-pointer rounded-lg object-cover object-center"
-                        alt="gallery-image"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div> */}
               <Carousel
                 className="rounded-xl"
                 navigation={({ setActiveIndex, activeIndex, length }) => (
@@ -341,14 +320,12 @@ const Information = () => {
 
         <section className="timeline">
           <div className="r-time">
-            <div className="w-full sm:w-[20rem]">
+            <div className="w-full sm:w-[50rem]">
               <Timeline className="flex flex-col">
-                <TimelineItem className="flex-grow h-[5rem]">
-                  {/* Đặt chiều cao cố định cho mỗi TimelineItem */}
+                <TimelineItem className="flex-grow h-[7rem]">
                   <TimelineConnector className="!w-[60px]" />
-                  <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
-                    <TimelineIcon className="p-3" variant="ghost">
-                      {/* Thêm biểu tượng vào đây */}
+                  <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
+                    <TimelineIcon className="p-2" variant="ghost">
                     </TimelineIcon>
                     <div className="flex flex-col gap-1">
                       <Typography
@@ -356,7 +333,14 @@ const Information = () => {
                         color="blue-gray"
                         className="text-sm sm:text-base"
                       >
-                        $2400, Design changes
+                        $2400, Design changes fasfad sfads fads 
+                      </Typography>
+                      <Typography
+                        variant="small"
+                        color="blue"
+                        className="font-medium text-xs sm:text-xs"
+                      >
+                        #AFW112434
                       </Typography>
                       <Typography
                         variant="small"
@@ -368,12 +352,10 @@ const Information = () => {
                     </div>
                   </TimelineHeader>
                 </TimelineItem>
-                <TimelineItem className="flex-grow h-[5rem]">
-                  {/* Đặt chiều cao cố định cho mỗi TimelineItem */}
-                  <TimelineConnector className="!w-[78px]" />
-                  <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
-                    <TimelineIcon className="p-3" variant="ghost" color="red">
-                      {/* Thêm biểu tượng vào đây */}
+                <TimelineItem className="flex-grow h-[7rem]">
+                  <TimelineConnector className="!w-[60px]" />
+                  <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
+                    <TimelineIcon className="p-2" variant="ghost">
                     </TimelineIcon>
                     <div className="flex flex-col gap-1">
                       <Typography
@@ -381,23 +363,89 @@ const Information = () => {
                         color="blue-gray"
                         className="text-sm sm:text-base"
                       >
-                        New order #1832412
+                        $2400, Design changes fasfad sfads fads 
+                      </Typography>
+                      <Typography
+                        variant="small"
+                        color="blue"
+                        className="font-medium text-xs sm:text-xs"
+                      >
+                        #AFW112434
                       </Typography>
                       <Typography
                         variant="small"
                         color="gray"
                         className="font-normal text-xs sm:text-xs"
                       >
-                        21 DEC 11 PM
+                        22 DEC 7:20 PM
                       </Typography>
                     </div>
                   </TimelineHeader>
                 </TimelineItem>
-                <TimelineItem className="flex-grow h-[5rem]">
-                  {/* Đặt chiều cao cố định cho mỗi TimelineItem */}
+                <TimelineItem className="flex-grow h-[7rem]">
+                  <TimelineConnector className="!w-[60px]" />
+                  <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
+                    <TimelineIcon className="p-2" variant="ghost">
+                    </TimelineIcon>
+                    <div className="flex flex-col gap-1">
+                      <Typography
+                        variant="h6"
+                        color="blue-gray"
+                        className="text-sm sm:text-base"
+                      >
+                        $2400, Design changes fasfad sfads fads 
+                      </Typography>
+                      <Typography
+                        variant="small"
+                        color="blue"
+                        className="font-medium text-xs sm:text-xs"
+                      >
+                        #AFW112434
+                      </Typography>
+                      <Typography
+                        variant="small"
+                        color="gray"
+                        className="font-normal text-xs sm:text-xs"
+                      >
+                        22 DEC 7:20 PM
+                      </Typography>
+                    </div>
+                  </TimelineHeader>
+                </TimelineItem>
+                <TimelineItem className="flex-grow h-[7rem]">
+                  <TimelineConnector className="!w-[60px]" />
+                  <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
+                    <TimelineIcon className="p-2" variant="ghost">
+                    </TimelineIcon>
+                    <div className="flex flex-col gap-1">
+                      <Typography
+                        variant="h6"
+                        color="blue-gray"
+                        className="text-sm sm:text-base"
+                      >
+                        $2400, Design changes fasfad sfads fads 
+                      </Typography>
+                      <Typography
+                        variant="small"
+                        color="blue"
+                        className="font-medium text-xs sm:text-xs"
+                      >
+                        #AFW112434
+                      </Typography>
+                      <Typography
+                        variant="small"
+                        color="gray"
+                        className="font-normal text-xs sm:text-xs"
+                      >
+                        22 DEC 7:20 PM
+                      </Typography>
+                    </div>
+                  </TimelineHeader>
+                </TimelineItem>
+                {/* <TimelineItem className="flex-grow h-[5rem]">
                   <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
                     <TimelineIcon className="p-3" variant="ghost" color="green">
-                      {/* Thêm biểu tượng vào đây */}
+                      
                     </TimelineIcon>
                     <div className="flex flex-col gap-1">
                       <Typography
@@ -416,7 +464,7 @@ const Information = () => {
                       </Typography>
                     </div>
                   </TimelineHeader>
-                </TimelineItem>
+                </TimelineItem> */}
               </Timeline>
             </div>
 
