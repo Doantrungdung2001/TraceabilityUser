@@ -15,6 +15,7 @@ import New from "../Pages/New/New";
 import About from "../Pages/AboutUs/About";
 import ProflieFarm from "../Pages/Farm/ProflieFarm";
 import History  from "../Pages/Result/History";
+
 export const NormalRoutes = [
   { path: "/", element: <Home /> },
   { path: "/results", element: <Result /> },

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import "./information.css";
-import { Card, Typography } from "@material-tailwind/react";
+// import "./information.css";
+import "./infor.css";
+import { Card, Typography, Carousel  } from "@material-tailwind/react";
 import {
   Tabs,
   TabsHeader,
@@ -15,11 +16,11 @@ import {
   AccordionBody,
 } from "@material-tailwind/react";
 
-const TABLE_HEAD = ["Name", "Job", "Employed", ""];
+const TABLE_HEAD = ["Name", "Job", "Employed", "Hello", "Hi", "Hi"];
 
 const TABLE_ROWS = [
   {
-    name: "John Michael",
+    name: "John Michael ",
     job: "Manager",
     date: "23/04/18",
   },
@@ -43,6 +44,36 @@ const TABLE_ROWS = [
     job: "Manager",
     date: "04/10/21",
   },
+  {
+    name: "Richard Gran",
+    job: "Manager",
+    date: "04/10/21",
+  },
+  {
+    name: "Richard Gran",
+    job: "Manager",
+    date: "04/10/21",
+  },
+  {
+    name: "Richard Gran",
+    job: "Manager",
+    date: "04/10/21",
+  },
+  {
+    name: "Richard Gran",
+    job: "Manager",
+    date: "04/10/21",
+  },
+  {
+    name: "Richard Gran",
+    job: "Manager",
+    date: "04/10/21",
+  },{
+    name: "Richard Gran",
+    job: "Manager",
+    date: "04/10/21",
+  },
+
 ];
 
 const mockdata = {
@@ -134,138 +165,128 @@ const Information = () => {
       <section className="content">
         <section className="infor">
           <div className=" p-10 flex flex-col justify-between lg:flex-row gap-10 lg:items-center">
-            <div className="flex flex-col gap-6 lg:w-2/4">
-              <img
-                src={activeImg}
-                alt=""
-                className="w-full h-full aspect-square object-cover rounded-md"
-              />
-              <div className="flex flex-row justify-between h-24">
-                <img
-                  src={images.img1}
-                  alt=""
-                  className="w-24 h-24 rounded-md cursor-pointer mr-4"
-                  onClick={() => setActiveImage(images.img1)}
-                />
-                <img
-                  src={images.img2}
-                  alt=""
-                  className="w-24 h-24 rounded-md cursor-pointer mr-4"
-                  onClick={() => setActiveImage(images.img2)}
-                />
-                <img
-                  src={images.img3}
-                  alt=""
-                  className="w-24 h-24 rounded-md cursor-pointer mr-4"
-                  onClick={() => setActiveImage(images.img3)}
-                />
-                <img
-                  src={images.img4}
-                  alt=""
-                  className="w-24 h-24 rounded-md cursor-pointer"
-                  onClick={() => setActiveImage(images.img4)}
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-6 lg:w-2/4">
-              <Tabs className="tab" id="custom-animation" value="infor">
-                <TabsHeader className="tab-header">
-                  {data.map(({ label, value }) => (
-                    <Tab key={value} value={value}>
-                      {label}
-                    </Tab>
+            <div className="picture">
+              {/* <div className="grid gap-4">
+                <div>
+                  <img
+                    className="h-8 w-full max-w-full rounded-lg object-cover object-center md:h-[300px]"
+                    src={active}
+                    alt=""
+                  />
+                </div>
+                <div className="grid grid-cols-5 gap-4">
+                  {data1.map(({ imgelink }, index) => (
+                    <div key={index}>
+                      <img
+                        onClick={() => setActive(imgelink)}
+                        src={imgelink}
+                        className="h-20 max-w-full cursor-pointer rounded-lg object-cover object-center"
+                        alt="gallery-image"
+                      />
+                    </div>
                   ))}
-                </TabsHeader>
-                <TabsBody
-                  animate={{
-                    initial: { y: 250 },
-                    mount: { y: 0 },
-                    unmount: { y: 250 },
-                  }}
-                >
-                  {data.map(({ value }) => (
-                    <TabPanel key={value} value={value}>
-                      <div>
-                        <div className="px-4 sm:px-0">
-                          <h3 className="text-base font-semibold leading-7 text-gray-900">
-                            Thông tin chi tiết của sản phẩm
-                          </h3>
-                          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-                            Personal details and application.
-                          </p>
-                        </div>
-                        <div className="mt-6 border-t border-gray-900">
-                          <dl className="divide-y divide-gray-800">
-                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-medium leading-6 text-gray-900">
-                                Tên sản phẩm
-                              </dt>
-                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
-                                Bắp cải
-                              </dd>
-                            </div>
-                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-medium leading-6 text-gray-900">
-                                Nông trại sản xuất
-                              </dt>
-                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
-                                ABC
-                              </dd>
-                            </div>
-                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-medium leading-6 text-gray-900">
-                                Người thu hoạch
-                              </dt>
-                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
-                                Nguyễn Văn A
-                              </dd>
-                            </div>
-                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-medium leading-6 text-gray-900">
-                                Mã sản phẩm
-                              </dt>
-                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
-                                XB1111
-                              </dd>
-                            </div>
-                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-medium leading-6 text-gray-900">
-                                Cân nặng
-                              </dt>
-                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
-                                0.5kg
-                              </dd>
-                            </div>
-                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-medium leading-6 text-gray-900">
-                                Số lượng
-                              </dt>
-                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
-                                01 (Cái)
-                              </dd>
-                            </div>
-                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-medium leading-6 text-gray-900">
-                                Giá cả
-                              </dt>
-                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
-                                40,000 (VND)
-                              </dd>
-                            </div>
-                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-medium leading-6 text-gray-900">
-                                Thuế (VAT)
-                              </dt>
-                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
-                                2,000 (VND)
-                              </dd>
-                            </div>
-                            {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-medium leading-6 text-gray-900">
+                </div>
+              </div> */}
+            </div>
+            <div className="product">
+              <div className="flex flex-col gap-6 lg:w-2/4">
+                <Tabs className="tab" id="custom-animation" value="infor">
+                  <TabsHeader className="tab-header">
+                    {data.map(({ label, value }) => (
+                      <Tab key={value} value={value}>
+                        {label}
+                      </Tab>
+                    ))}
+                  </TabsHeader>
+                  <TabsBody
+                    animate={{
+                      initial: { y: 250 },
+                      mount: { y: 0 },
+                      unmount: { y: 250 },
+                    }}
+                  >
+                    {data.map(({ value }) => (
+                      <TabPanel key={value} value={value}>
+                        <div>
+                          <div className="px-4 sm:px-0">
+                            <h3 className="text-base font-semibold leading-7 text-gray-900">
+                              Thông tin chi tiết của sản phẩm
+                            </h3>
+                            <p className="mt-1 max-w-2xl text-sm leaading-3 text-gray-500">
+                              Personal details and application.
+                            </p>
+                          </div>
+                          <div className="mt-6 border-t border-gray-900">
+                            <dl className="divide-y divide-gray-800">
+                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt className="text-sm font-medium leaading-3 text-gray-900">
+                                  Tên sản phẩm
+                                </dt>
+                                <dd className="mt-0 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                                  Bắp cải
+                                </dd>
+                              </div>
+                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt className="text-sm font-medium leaading-3 text-gray-900">
+                                  Nông trại sản xuất
+                                </dt>
+                                <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                                  ABC
+                                </dd>
+                              </div>
+                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt className="text-sm font-medium leaading-3 text-gray-900">
+                                  Người thu hoạch
+                                </dt>
+                                <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                                  Nguyễn Văn A
+                                </dd>
+                              </div>
+                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt className="text-sm font-medium leaading-3 text-gray-900">
+                                  Mã sản phẩm
+                                </dt>
+                                <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                                  XB1111
+                                </dd>
+                              </div>
+                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt className="text-sm font-medium leaading-3 text-gray-900">
+                                  Cân nặng
+                                </dt>
+                                <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                                  0.5kg
+                                </dd>
+                              </div>
+                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt className="text-sm font-medium leaading-3 text-gray-900">
+                                  Số lượng
+                                </dt>
+                                <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                                  01 (Cái)
+                                </dd>
+                              </div>
+                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt className="text-sm font-medium leaading-3 text-gray-900">
+                                  Giá cả
+                                </dt>
+                                <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                                  40,000 (VND)
+                                </dd>
+                              </div>
+                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt className="text-sm font-medium leaading-3 text-gray-900">
+                                  Thuế (VAT)
+                                </dt>
+                                <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                                  2,000 (VND)
+                                </dd>
+                              </div>
+                              {/* <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                              <dt className="text-sm font-medium leaading-3 text-gray-900">
                                 About
                               </dt>
-                              <dd className="mt-1 text-sm font-semibold leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
+                              <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
                                 Fugiat ipsum ipsum deserunt culpa aute sint do
                                 nostrud anim incididunt cillum culpa consequat.
                                 Excepteur qui ipsum aliquip consequat sint. Sit
@@ -274,13 +295,14 @@ const Information = () => {
                                 adipisicing reprehenderit deserunt qui eu.
                               </dd>
                             </div> */}
-                          </dl>
+                            </dl>
+                          </div>
                         </div>
-                      </div>
-                    </TabPanel>
-                  ))}
-                </TabsBody>
-              </Tabs>
+                      </TabPanel>
+                    ))}
+                  </TabsBody>
+                </Tabs>
+              </div>
             </div>
           </div>
         </section>
@@ -288,7 +310,7 @@ const Information = () => {
         <section className="timeline">
           <div className="r-time">
             <ol className="relative border-s border-gray-900 dark:border-gray-700">
-              <li className="mb-10 ms-6">
+              <li className="mb-5 ms-5">
                 <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
                   <svg
                     className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
@@ -316,7 +338,7 @@ const Information = () => {
                 </p> */}
                 {/* <a
                   href="#"
-                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+                  className="inline-flex items-center px-2 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
                 >
                   <svg
                     className="w-3.5 h-3.5 me-2.5"
@@ -331,7 +353,7 @@ const Information = () => {
                   Download ZIP
                 </a> */}
               </li>
-              <li className="mb-10 ms-6">
+              <li className="mb-5 ms-5">
                 <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
                   <svg
                     className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
@@ -349,13 +371,8 @@ const Information = () => {
                 <time className="block mb-2 text-sm font-normal leading-none text-gray-600 dark:text-gray-600">
                   05/02/2023
                 </time>
-                {/* <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  All of the pages and components are first designed in Figma
-                  and we keep a parity between the two versions even as we
-                  update the project.
-                </p> */}
               </li>
-              <li className="mb-10 ms-6">
+              <li className="mb-5 ms-5">
                 <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
                   <svg
                     className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
@@ -373,13 +390,8 @@ const Information = () => {
                 <time className="block mb-2 text-sm font-normal leading-none text-gray-600 dark:text-gray-600">
                   05/03/2023
                 </time>
-                {/* <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  All of the pages and components are first designed in Figma
-                  and we keep a parity between the two versions even as we
-                  update the project.
-                </p> */}
               </li>
-              <li className="mb-10 ms-6">
+              <li className="mb-5 ms-5">
                 <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
                   <svg
                     className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
@@ -403,7 +415,7 @@ const Information = () => {
                   update the project.
                 </p> */}
               </li>
-              <li className="mb-10 ms-6">
+              <li className="mb-5 ms-5">
                 <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
                   <svg
                     className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
@@ -427,7 +439,7 @@ const Information = () => {
                   update the project.
                 </p> */}
               </li>
-              <li className="mb-10 ms-6">
+              <li className="mb-5 ms-5">
                 <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
                   <svg
                     className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
@@ -451,7 +463,7 @@ const Information = () => {
                   update the project.
                 </p> */}
               </li>
-              <li className="mb-10 ms-6">
+              <li className="mb-5 ms-5">
                 <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
                   <svg
                     className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
@@ -475,7 +487,7 @@ const Information = () => {
                   update the project.
                 </p> */}
               </li>
-              <li className="ms-6">
+              <li className="ms-5">
                 <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
                   <svg
                     className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
@@ -493,19 +505,16 @@ const Information = () => {
                 <time className="block mb-2 text-sm font-normal leading-none text-gray-600 dark:text-gray-600">
                   16/08/2023
                 </time>
-                {/* <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  Get started with dozens of web components and interactive
-                  elements built on top of Tailwind CSS.
-                </p> */}
               </li>
             </ol>
             <button
               type="button"
-              className="m-10 text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+              className="m-10 text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-1.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
             >
               Chi tiết
             </button>
           </div>
+          <div className="history"></div>
         </section>
       </section>
 
@@ -513,7 +522,7 @@ const Information = () => {
         <>
           <Accordion
             open={open === 1}
-            className="mb-2 rounded-lg border border-blue-gray-300 px-4"
+            className="mb-2 rounded-lg border border-blue-gray-300 px-2"
           >
             <AccordionHeader
               onClick={() => handleOpen(1)}
@@ -526,78 +535,81 @@ const Information = () => {
             <AccordionBody className="pt-0 text-base font-normal">
               <section>
                 <div>
-                  <Card className="h-full w-full">
-                    <table className="w-full min-w-max table-auto text-left">
-                      <thead>
-                        <tr>
-                          {TABLE_HEAD.map((head) => (
-                            <th
-                              key={head}
-                              className="border-b border-blue-gray-600 bg-blue-gray-200 p-4"
-                            >
-                              <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-normal leading-none opacity-70"
+                  <div>Thông tin dự án</div>
+                  <Card className="overflow-scroll max-h-80 overflow-y-scroll mx-auto">
+                    <div className="block overflow-x-auto">
+                      <table className="w-full min-w-max text-center border border-collapse">
+                        <thead>
+                          <tr>
+                            {TABLE_HEAD.map((head) => (
+                              <th
+                                key={head}
+                                className="border-b border-blue-gray-600 bg-blue-gray-200 p-2 sm:p-2"
                               >
-                                {head}
-                              </Typography>
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {TABLE_ROWS.map(({ name, job, date }, index) => {
-                          const isLast = index === TABLE_ROWS.length - 1;
-                          const classes = isLast
-                            ? "p-4"
-                            : "p-4 border-b border-blue-gray-50";
+                                <Typography
+                                  variant="small"
+                                  color="blue-gray"
+                                  className="font-normal leading-none opacity-70"
+                                >
+                                  {head}
+                                </Typography>
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {TABLE_ROWS.map(({ name, job, date }, index) => {
+                            const isLast = index === TABLE_ROWS.length - 1;
+                            const classes = isLast
+                              ? "p-2 sm:p-4"
+                              : "p-2 sm:p-4 border-b border-blue-gray-50";
 
-                          return (
-                            <tr key={name}>
-                              <td className={classes}>
-                                <Typography
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="font-normal"
-                                >
-                                  {name}
-                                </Typography>
-                              </td>
-                              <td className={`${classes} bg-blue-gray-50/50`}>
-                                <Typography
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="font-normal"
-                                >
-                                  {job}
-                                </Typography>
-                              </td>
-                              <td className={classes}>
-                                <Typography
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="font-normal"
-                                >
-                                  {date}
-                                </Typography>
-                              </td>
-                              <td className={`${classes} bg-blue-gray-50/50`}>
-                                <Typography
-                                  as="a"
-                                  href="#"
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="font-medium"
-                                >
-                                  Edit
-                                </Typography>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                            return (
+                              <tr key={name}>
+                                <td className={`${classes} border`}>
+                                  <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal text-xs sm:text-sm"
+                                  >
+                                    {name}
+                                  </Typography>
+                                </td>
+                                <td className={`${classes} bg-blue-gray-50/50`}>
+                                  <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal text-xs sm:text-sm"
+                                  >
+                                    {job}
+                                  </Typography>
+                                </td>
+                                <td className={classes}>
+                                  <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal text-xs sm:text-sm"
+                                  >
+                                    {date}
+                                  </Typography>
+                                </td>
+                                <td className={`${classes} bg-blue-gray-50/50`}>
+                                  <Typography
+                                    as="a"
+                                    href="#"
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-medium"
+                                  >
+                                    Edit
+                                  </Typography>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
                   </Card>
                 </div>
               </section>
@@ -616,10 +628,86 @@ const Information = () => {
               Thông tin về dự án
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
-              We&apos;re not always in the position that we want to be at.
-              We&apos;re constantly growing. We&apos;re constantly making
-              mistakes. We&apos;re constantly trying to express ourselves and
-              actualize our dreams.
+              <section>
+                <div>
+                  <div>Thông tin dự án</div>
+                  <Card className="overflow-scroll">
+                    <div className="block overflow-x-auto">
+                      <table className="w-full min-w-max table-auto text-left">
+                        <thead>
+                          <tr>
+                            {TABLE_HEAD.map((head) => (
+                              <th
+                                key={head}
+                                className="border-b border-blue-gray-600 bg-blue-gray-200 p-2 sm:p-4"
+                              >
+                                <Typography
+                                  variant="small"
+                                  color="blue-gray"
+                                  className="font-normal leading-none opacity-70"
+                                >
+                                  {head}
+                                </Typography>
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {TABLE_ROWS.map(({ name, job, date }, index) => {
+                            const isLast = index === TABLE_ROWS.length - 1;
+                            const classes = isLast
+                              ? "p-2 sm:p-4"
+                              : "p-2 sm:p-4 border-b border-blue-gray-50";
+
+                            return (
+                              <tr key={name}>
+                                <td className={classes}>
+                                  <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal text-xs sm:text-sm"
+                                  >
+                                    {name}
+                                  </Typography>
+                                </td>
+                                <td className={`${classes} bg-blue-gray-50/50`}>
+                                  <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal text-xs sm:text-sm"
+                                  >
+                                    {job}
+                                  </Typography>
+                                </td>
+                                <td className={classes}>
+                                  <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal text-xs sm:text-sm"
+                                  >
+                                    {date}
+                                  </Typography>
+                                </td>
+                                <td className={`${classes} bg-blue-gray-50/50`}>
+                                  <Typography
+                                    as="a"
+                                    href="#"
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-medium"
+                                  >
+                                    Edit
+                                  </Typography>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </Card>
+                </div>
+              </section>
             </AccordionBody>
           </Accordion>
           <Accordion

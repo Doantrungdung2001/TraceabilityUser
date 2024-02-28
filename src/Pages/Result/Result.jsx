@@ -8,7 +8,7 @@ const Result = () => {
       <Navbar />
       {/* <Timeline /> */}
       <Information/>
-      <Footer/>
+      <Footer />
     </>
   );
 };
