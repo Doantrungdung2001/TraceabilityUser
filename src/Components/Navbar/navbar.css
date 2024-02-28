@@ -105,7 +105,7 @@
 
   .toggleNavbar {
     .icon {
-      font-size: 25px;
+      font-size: 35px;
       color: var(--PrimaryColor);
     }
     &:hover.icon {

@@ -123,15 +123,15 @@ li {
   padding-right: 1.5rem;
 }
 
-.icon {
+.icon { 
   font-size: 2rem;
   cursor: pointer;
 }
 
-.flex {
+/* .flex {
   display: flex;
   align-items: center;
-}
+} */
 
 .grid {
   display: grid;

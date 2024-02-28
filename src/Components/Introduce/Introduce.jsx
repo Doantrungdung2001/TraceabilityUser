@@ -79,9 +79,9 @@ const Introduce = () => {
                         }
                       </AccordionItemState>
 
-                      <div className="flexCenter icon">{item.icon}</div>
+                      <div className="flexCenter icon1">{item.icon}</div>
                       <span className="primaryText">{item.heading}</span>
-                      <div className="flexCenter icon">
+                      <div className="flexCenter icon1">
                         <MdOutlineArrowDropDown size={20} />
                       </div>
                     </AccordionItemButton>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import "./information.css";
 import "./infor.css";
-import { Card, Typography, Carousel  } from "@material-tailwind/react";
+import { Card, Typography, Carousel } from "@material-tailwind/react";
 import {
   Tabs,
   TabsHeader,
@@ -15,6 +15,19 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
+
+import {
+  Timeline,
+  TimelineItem,
+  TimelineConnector,
+  TimelineIcon,
+  TimelineHeader,
+} from "@material-tailwind/react";
+import {
+  BellIcon,
+  ArchiveBoxIcon,
+  CurrencyDollarIcon,
+} from "@heroicons/react/24/solid";
 
 const TABLE_HEAD = ["Name", "Job", "Employed", "Hello", "Hi", "Hi"];
 
@@ -68,12 +81,12 @@ const TABLE_ROWS = [
     name: "Richard Gran",
     job: "Manager",
     date: "04/10/21",
-  },{
+  },
+  {
     name: "Richard Gran",
     job: "Manager",
     date: "04/10/21",
   },
-
 ];
 
 const mockdata = {
@@ -187,6 +200,38 @@ const Information = () => {
                   ))}
                 </div>
               </div> */}
+              <Carousel
+                className="rounded-xl"
+                navigation={({ setActiveIndex, activeIndex, length }) => (
+                  <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
+                    {new Array(length).fill("").map((_, i) => (
+                      <span
+                        key={i}
+                        className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
+                          activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/50"
+                        }`}
+                        onClick={() => setActiveIndex(i)}
+                      />
+                    ))}
+                  </div>
+                )}
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
+                  alt="image 1"
+                  className="h-full w-full object-cover"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"
+                  alt="image 2"
+                  className="h-full w-full object-cover"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
+                  alt="image 3"
+                  className="h-full w-full object-cover"
+                />
+              </Carousel>
             </div>
             <div className="product">
               <div className="flex flex-col gap-6 lg:w-2/4">
@@ -282,19 +327,6 @@ const Information = () => {
                                   2,000 (VND)
                                 </dd>
                               </div>
-                              {/* <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-medium leaading-3 text-gray-900">
-                                About
-                              </dt>
-                              <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                                Fugiat ipsum ipsum deserunt culpa aute sint do
-                                nostrud anim incididunt cillum culpa consequat.
-                                Excepteur qui ipsum aliquip consequat sint. Sit
-                                id mollit nulla mollit nostrud in ea officia
-                                proident. Irure nostrud pariatur mollit ad
-                                adipisicing reprehenderit deserunt qui eu.
-                              </dd>
-                            </div> */}
                             </dl>
                           </div>
                         </div>
@@ -309,212 +341,92 @@ const Information = () => {
 
         <section className="timeline">
           <div className="r-time">
-            <ol className="relative border-s border-gray-900 dark:border-gray-700">
-              <li className="mb-5 ms-5">
-                <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                  <svg
-                    className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                  </svg>
-                </span>
-                <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                  Xướt đất , làm tơi xốp đất
-                  {/* <span className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">
-                    Latest
-                  </span> */}
-                </h3>
-                <time className="block mb-2 text-sm font-normal leading-none text-gray-600 dark:text-gray-600">
-                  01/02/2023
-                </time>
-                {/* <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                  Get access to over 20+ pages including a dashboard layout,
-                  charts, kanban board, calendar, and pre-order E-commerce &
-                  Marketing pages.
-                </p> */}
-                {/* <a
-                  href="#"
-                  className="inline-flex items-center px-2 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-                >
-                  <svg
-                    className="w-3.5 h-3.5 me-2.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z" />
-                    <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" />
-                  </svg>{" "}
-                  Download ZIP
-                </a> */}
-              </li>
-              <li className="mb-5 ms-5">
-                <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                  <svg
-                    className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                  </svg>
-                </span>
-                <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                  Mua hạt giống
-                </h3>
-                <time className="block mb-2 text-sm font-normal leading-none text-gray-600 dark:text-gray-600">
-                  05/02/2023
-                </time>
-              </li>
-              <li className="mb-5 ms-5">
-                <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                  <svg
-                    className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                  </svg>
-                </span>
-                <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                  Gieo hạt
-                </h3>
-                <time className="block mb-2 text-sm font-normal leading-none text-gray-600 dark:text-gray-600">
-                  05/03/2023
-                </time>
-              </li>
-              <li className="mb-5 ms-5">
-                <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                  <svg
-                    className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                  </svg>
-                </span>
-                <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                  Phun thuốc sâu
-                </h3>
-                <time className="block mb-2 text-sm font-normal leading-none text-gray-600 dark:text-gray-600">
-                  05/05/2023
-                </time>
-                {/* <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  All of the pages and components are first designed in Figma
-                  and we keep a parity between the two versions even as we
-                  update the project.
-                </p> */}
-              </li>
-              <li className="mb-5 ms-5">
-                <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                  <svg
-                    className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                  </svg>
-                </span>
-                <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                  Nở hoa
-                </h3>
-                <time className="block mb-2 text-sm font-normal leading-none text-gray-600 dark:text-gray-600">
-                  05/07/2023
-                </time>
-                {/* <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  All of the pages and components are first designed in Figma
-                  and we keep a parity between the two versions even as we
-                  update the project.
-                </p> */}
-              </li>
-              <li className="mb-5 ms-5">
-                <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                  <svg
-                    className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                  </svg>
-                </span>
-                <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                  Thu hoạch
-                </h3>
-                <time className="block mb-2 text-sm font-normal leading-none text-gray-600 dark:text-gray-600">
-                  09/08/2023
-                </time>
-                {/* <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  All of the pages and components are first designed in Figma
-                  and we keep a parity between the two versions even as we
-                  update the project.
-                </p> */}
-              </li>
-              <li className="mb-5 ms-5">
-                <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                  <svg
-                    className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                  </svg>
-                </span>
-                <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                  Đóng gói sản phẩm
-                </h3>
-                <time className="block mb-2 text-sm font-normal leading-none text-gray-600 dark:text-gray-600">
-                  15/08/2023
-                </time>
-                {/* <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  All of the pages and components are first designed in Figma
-                  and we keep a parity between the two versions even as we
-                  update the project.
-                </p> */}
-              </li>
-              <li className="ms-5">
-                <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                  <svg
-                    className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                  </svg>
-                </span>
-                <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                  Vận chuyển
-                </h3>
-                <time className="block mb-2 text-sm font-normal leading-none text-gray-600 dark:text-gray-600">
-                  16/08/2023
-                </time>
-              </li>
-            </ol>
+            <div className="w-full sm:w-[20rem]">
+              <Timeline className="flex flex-col">
+                <TimelineItem className="flex-grow h-[5rem]">
+                  {/* Đặt chiều cao cố định cho mỗi TimelineItem */}
+                  <TimelineConnector className="!w-[60px]" />
+                  <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
+                    <TimelineIcon className="p-3" variant="ghost">
+                      {/* Thêm biểu tượng vào đây */}
+                    </TimelineIcon>
+                    <div className="flex flex-col gap-1">
+                      <Typography
+                        variant="h6"
+                        color="blue-gray"
+                        className="text-sm sm:text-base"
+                      >
+                        $2400, Design changes
+                      </Typography>
+                      <Typography
+                        variant="small"
+                        color="gray"
+                        className="font-normal text-xs sm:text-xs"
+                      >
+                        22 DEC 7:20 PM
+                      </Typography>
+                    </div>
+                  </TimelineHeader>
+                </TimelineItem>
+                <TimelineItem className="flex-grow h-[5rem]">
+                  {/* Đặt chiều cao cố định cho mỗi TimelineItem */}
+                  <TimelineConnector className="!w-[78px]" />
+                  <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
+                    <TimelineIcon className="p-3" variant="ghost" color="red">
+                      {/* Thêm biểu tượng vào đây */}
+                    </TimelineIcon>
+                    <div className="flex flex-col gap-1">
+                      <Typography
+                        variant="h6"
+                        color="blue-gray"
+                        className="text-sm sm:text-base"
+                      >
+                        New order #1832412
+                      </Typography>
+                      <Typography
+                        variant="small"
+                        color="gray"
+                        className="font-normal text-xs sm:text-xs"
+                      >
+                        21 DEC 11 PM
+                      </Typography>
+                    </div>
+                  </TimelineHeader>
+                </TimelineItem>
+                <TimelineItem className="flex-grow h-[5rem]">
+                  {/* Đặt chiều cao cố định cho mỗi TimelineItem */}
+                  <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
+                    <TimelineIcon className="p-3" variant="ghost" color="green">
+                      {/* Thêm biểu tượng vào đây */}
+                    </TimelineIcon>
+                    <div className="flex flex-col gap-1">
+                      <Typography
+                        variant="h6"
+                        color="blue-gray"
+                        className="text-sm sm:text-base"
+                      >
+                        Payment completed for order #4395133
+                      </Typography>
+                      <Typography
+                        variant="small"
+                        color="gray"
+                        className="font-normal text-xs sm:text-xs"
+                      >
+                        20 DEC 2:20 AM
+                      </Typography>
+                    </div>
+                  </TimelineHeader>
+                </TimelineItem>
+              </Timeline>
+            </div>
+
             <button
               type="button"
-              className="m-10 text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-1.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+              className="m-8 text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-1.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
             >
               Chi tiết
             </button>
           </div>
-          <div className="history"></div>
         </section>
       </section>
 
