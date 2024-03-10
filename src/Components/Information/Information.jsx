@@ -20,14 +20,18 @@ import {
   Timeline,
   TimelineItem,
   TimelineConnector,
-  TimelineIcon,
   TimelineHeader,
+  TimelineIcon,
+  TimelineBody,
 } from "@material-tailwind/react";
+
 import {
-  BellIcon,
-  ArchiveBoxIcon,
-  CurrencyDollarIcon,
-} from "@heroicons/react/24/solid";
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+} from "@material-tailwind/react";
 
 const TABLE_HEAD = ["Name", "Job", "Employed", "Hello", "Hi", "Hi"];
 
@@ -97,7 +101,9 @@ const mockdata = {
   Output: 900,
   Fertilizer: "NPK",
 };
+const timelinedata = {
 
+}
 const Information = () => {
   const [images, setImages] = useState({
     img1: "https://khuyennong.backan.gov.vn/wp-content/uploads/2022/11/271996094_4769026249850385_7182923108748771800_n.jpg",
@@ -110,15 +116,47 @@ const Information = () => {
     {
       label: "Thông tin",
       value: "infor",
-    },
-    {
-      label: "Đầu vào",
-      value: "Input",
-    },
+      desc: (
+        <DialogBody className="h-[39rem] overflow-scroll">
+          <section className="content"></section>
 
+          <section className="infor">
+            <div className="specific-information-container">
+              <div className="w-[32rem]">
+                <Timeline>
+                  <TimelineItem>
+                    <TimelineConnector />
+                    <TimelineHeader className="h-6">
+                      <TimelineIcon />
+                      <Typography
+                        variant="h6"
+                        color="blue-gray"
+                        className="leading-none"
+                      >
+                        Timeline Title Here.
+                      </Typography>
+                    </TimelineHeader>
+                    <TimelineBody className="pb-8">
+                      <Typography
+                        variant="small"
+                        color="gary"
+                        className="font-normal text-gray-600"
+                      >
+                        The key to more success is to have a lot of pillows.
+                      </Typography>
+                    </TimelineBody>
+                  </TimelineItem>
+                </Timeline>
+              </div>
+            </div>
+          </section>
+        </DialogBody>
+      ),
+    },
     {
-      label: "Đầu ra",
-      value: "Output",
+      label: "Video",
+      value: "Input",
+      desc: `afadsfad`,
     },
   ];
 
@@ -157,8 +195,6 @@ const Information = () => {
     },
   ];
 
-  const [activeImg, setActiveImage] = useState(images.img1);
-
   const [active, setActive] = useState(
     "https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
   );
@@ -166,6 +202,9 @@ const Information = () => {
   const [open, setOpen] = React.useState(1);
 
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
+
+  const [openTimeline, setOpenTimeline] = useState(false);
+  const handleOpenTimeline = () => setOpenTimeline(!openTimeline);
 
   return (
     <section className="information">
@@ -214,105 +253,7 @@ const Information = () => {
             </div>
             <div className="product">
               <div className="flex flex-col gap-6 lg:w-2/4">
-                <Tabs className="tab" id="custom-animation" value="infor">
-                  <TabsHeader className="tab-header">
-                    {data.map(({ label, value }) => (
-                      <Tab key={value} value={value}>
-                        {label}
-                      </Tab>
-                    ))}
-                  </TabsHeader>
-                  <TabsBody
-                    animate={{
-                      initial: { y: 250 },
-                      mount: { y: 0 },
-                      unmount: { y: 250 },
-                    }}
-                  >
-                    {data.map(({ value }) => (
-                      <TabPanel key={value} value={value}>
-                        <div>
-                          <div className="px-4 sm:px-0">
-                            <h3 className="text-base font-semibold leading-7 text-gray-900">
-                              Thông tin chi tiết của sản phẩm
-                            </h3>
-                            <p className="mt-1 max-w-2xl text-sm leaading-3 text-gray-500">
-                              Personal details and application.
-                            </p>
-                          </div>
-                          <div className="mt-6 border-t border-gray-900">
-                            <dl className="divide-y divide-gray-800">
-                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt className="text-sm font-medium leaading-3 text-gray-900">
-                                  Tên sản phẩm
-                                </dt>
-                                <dd className="mt-0 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                                  Bắp cải
-                                </dd>
-                              </div>
-                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt className="text-sm font-medium leaading-3 text-gray-900">
-                                  Nông trại sản xuất
-                                </dt>
-                                <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                                  ABC
-                                </dd>
-                              </div>
-                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt className="text-sm font-medium leaading-3 text-gray-900">
-                                  Người thu hoạch
-                                </dt>
-                                <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                                  Nguyễn Văn A
-                                </dd>
-                              </div>
-                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt className="text-sm font-medium leaading-3 text-gray-900">
-                                  Mã sản phẩm
-                                </dt>
-                                <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                                  XB1111
-                                </dd>
-                              </div>
-                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt className="text-sm font-medium leaading-3 text-gray-900">
-                                  Cân nặng
-                                </dt>
-                                <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                                  0.5kg
-                                </dd>
-                              </div>
-                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt className="text-sm font-medium leaading-3 text-gray-900">
-                                  Số lượng
-                                </dt>
-                                <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                                  01 (Cái)
-                                </dd>
-                              </div>
-                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt className="text-sm font-medium leaading-3 text-gray-900">
-                                  Giá cả
-                                </dt>
-                                <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                                  40,000 (VND)
-                                </dd>
-                              </div>
-                              <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt className="text-sm font-medium leaading-3 text-gray-900">
-                                  Thuế (VAT)
-                                </dt>
-                                <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                                  2,000 (VND)
-                                </dd>
-                              </div>
-                            </dl>
-                          </div>
-                        </div>
-                      </TabPanel>
-                    ))}
-                  </TabsBody>
-                </Tabs>
+                
               </div>
             </div>
           </div>
@@ -324,24 +265,29 @@ const Information = () => {
               <Timeline className="flex flex-col">
                 <TimelineItem className="flex-grow h-[7rem]">
                   <TimelineConnector className="!w-[60px]" />
-                  <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
-                    <TimelineIcon className="p-2" variant="ghost">
-                    </TimelineIcon>
+                  <TimelineHeader
+                    className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5"
+                    onClick={handleOpenTimeline}
+                  >
+                    <TimelineIcon
+                      className="p-2"
+                      variant="ghost"
+                    ></TimelineIcon>
                     <div className="flex flex-col gap-1">
                       <Typography
                         variant="h6"
                         color="blue-gray"
                         className="text-sm sm:text-base"
                       >
-                        $2400, Design changes fasfad sfads fads 
+                        $2400, Design changes fasfad sfads fads
                       </Typography>
-                      <Typography
+                      {/* <Typography
                         variant="small"
                         color="blue"
                         className="font-medium text-xs sm:text-xs"
                       >
                         #AFW112434
-                      </Typography>
+                      </Typography> */}
                       <Typography
                         variant="small"
                         color="gray"
@@ -354,24 +300,29 @@ const Information = () => {
                 </TimelineItem>
                 <TimelineItem className="flex-grow h-[7rem]">
                   <TimelineConnector className="!w-[60px]" />
-                  <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
-                    <TimelineIcon className="p-2" variant="ghost">
-                    </TimelineIcon>
+                  <TimelineHeader
+                    className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5"
+                    onClick={handleOpenTimeline}
+                  >
+                    <TimelineIcon
+                      className="p-2"
+                      variant="ghost"
+                    ></TimelineIcon>
                     <div className="flex flex-col gap-1">
                       <Typography
                         variant="h6"
                         color="blue-gray"
                         className="text-sm sm:text-base"
                       >
-                        $2400, Design changes fasfad sfads fads 
+                        $2400, Design changes fasfad sfads fads
                       </Typography>
-                      <Typography
+                      {/* <Typography
                         variant="small"
                         color="blue"
                         className="font-medium text-xs sm:text-xs"
                       >
                         #AFW112434
-                      </Typography>
+                      </Typography> */}
                       <Typography
                         variant="small"
                         color="gray"
@@ -384,24 +335,29 @@ const Information = () => {
                 </TimelineItem>
                 <TimelineItem className="flex-grow h-[7rem]">
                   <TimelineConnector className="!w-[60px]" />
-                  <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
-                    <TimelineIcon className="p-2" variant="ghost">
-                    </TimelineIcon>
+                  <TimelineHeader
+                    className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5"
+                    onClick={handleOpenTimeline}
+                  >
+                    <TimelineIcon
+                      className="p-2"
+                      variant="ghost"
+                    ></TimelineIcon>
                     <div className="flex flex-col gap-1">
                       <Typography
                         variant="h6"
                         color="blue-gray"
                         className="text-sm sm:text-base"
                       >
-                        $2400, Design changes fasfad sfads fads 
+                        $2400, Design changes fasfad sfads fads
                       </Typography>
-                      <Typography
+                      {/* <Typography
                         variant="small"
                         color="blue"
                         className="font-medium text-xs sm:text-xs"
                       >
                         #AFW112434
-                      </Typography>
+                      </Typography> */}
                       <Typography
                         variant="small"
                         color="gray"
@@ -414,24 +370,29 @@ const Information = () => {
                 </TimelineItem>
                 <TimelineItem className="flex-grow h-[7rem]">
                   <TimelineConnector className="!w-[60px]" />
-                  <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
-                    <TimelineIcon className="p-2" variant="ghost">
-                    </TimelineIcon>
+                  <TimelineHeader
+                    className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5"
+                    onClick={handleOpenTimeline}
+                  >
+                    <TimelineIcon
+                      className="p-2"
+                      variant="ghost"
+                    ></TimelineIcon>
                     <div className="flex flex-col gap-1">
                       <Typography
                         variant="h6"
                         color="blue-gray"
                         className="text-sm sm:text-base"
                       >
-                        $2400, Design changes fasfad sfads fads 
+                        $2400, Design changes fasfad sfads fads
                       </Typography>
-                      <Typography
+                      {/* <Typography
                         variant="small"
                         color="blue"
                         className="font-medium text-xs sm:text-xs"
                       >
                         #AFW112434
-                      </Typography>
+                      </Typography> */}
                       <Typography
                         variant="small"
                         color="gray"
@@ -468,12 +429,145 @@ const Information = () => {
               </Timeline>
             </div>
 
-            <button
+            {/* <button
               type="button"
               className="m-8 text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-1.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
             >
               Chi tiết
-            </button>
+            </button> */}
+            <Dialog open={openTimeline} handler={handleOpenTimeline}>
+              <DialogHeader>Thông tin việc làm</DialogHeader>
+
+              <DialogBody className="h-[39rem] overflow-scroll">
+                <section className="content"></section>
+                <Tabs className="tab" id="custom-animation" value="infor">
+                  <TabsHeader className="tab-header">
+                    {data.map(({ label, value }) => (
+                      <Tab key={value} value={value}>
+                        {label}
+                      </Tab>
+                    ))}
+                  </TabsHeader>
+                  <TabsBody
+                    animate={{
+                      initial: { y: 250 },
+                      mount: { y: 0 },
+                      unmount: { y: 250 },
+                    }}
+                  >
+                    {data.map(({ value, desc }) => (
+                      <TabPanel key={value} value={value}>
+                        {desc}
+                      </TabPanel>
+                    ))}
+                  </TabsBody>
+                </Tabs>
+                {/* <section className="infor">
+                  <div className="specific-information-container">
+                    <div className="w-[32rem]">
+                      <Timeline>
+                        <TimelineItem>
+                          <TimelineConnector />
+                          <TimelineHeader className="h-6">
+                            <TimelineIcon />
+                            <Typography
+                              variant="h6"
+                              color="blue-gray"
+                              className="leading-none"
+                            >
+                              Timeline Title Here.
+                            </Typography>
+                          </TimelineHeader>
+                          <TimelineBody className="pb-8">
+                            <Typography
+                              variant="small"
+                              color="gary"
+                              className="font-normal text-gray-600"
+                            >
+                              The key to more success is to have a lot of
+                              pillows. Put it this way, it took me twenty five
+                              years to get these plants, twenty five years of
+                              blood sweat and tears, and I&apos;m never giving
+                              up, I&apos;m just getting started. I&apos;m up to
+                              something. Fan luv.
+                            </Typography>
+                          </TimelineBody>
+                        </TimelineItem>
+                        <TimelineItem>
+                          <TimelineConnector />
+                          <TimelineHeader className="h-3">
+                            <TimelineIcon />
+                            <Typography
+                              variant="h6"
+                              color="blue-gray"
+                              className="leading-none"
+                            >
+                              Timeline Title Here.
+                            </Typography>
+                          </TimelineHeader>
+                          <TimelineBody className="pb-8">
+                            <Typography
+                              variant="small"
+                              color="gary"
+                              className="font-normal text-gray-600"
+                            >
+                              The key to more success is to have a lot of
+                              pillows. Put it this way, it took me twenty five
+                              years to get these plants, twenty five years of
+                              blood sweat and tears, and I&apos;m never giving
+                              up, I&apos;m just getting started. I&apos;m up to
+                              something. Fan luv.
+                            </Typography>
+                          </TimelineBody>
+                        </TimelineItem>
+                        <TimelineItem>
+                          <TimelineHeader className="h-3">
+                            <TimelineIcon />
+                            <Typography
+                              variant="h6"
+                              color="blue-gray"
+                              className="leading-none"
+                            >
+                              Timeline Title Here.
+                            </Typography>
+                          </TimelineHeader>
+                          <TimelineBody>
+                            <Typography
+                              variant="small"
+                              color="gary"
+                              className="font-normal text-gray-600"
+                            >
+                              The key to more success is to have a lot of
+                              pillows. Put it this way, it took me twenty five
+                              years to get these plants, twenty five years of
+                              blood sweat and tears, and I&apos;m never giving
+                              up, I&apos;m just getting started. I&apos;m up to
+                              something. Fan luv.
+                            </Typography>
+                          </TimelineBody>
+                        </TimelineItem>
+                      </Timeline>
+                    </div>
+                  </div>
+                </section> */}
+              </DialogBody>
+              <DialogFooter className="space-x-2">
+                <Button
+                  variant="text"
+                  color="blue-gray"
+                  onClick={handleOpenTimeline}
+                >
+                  cancel
+                </Button>
+                <Button
+                  variant="gradient"
+                  color="green"
+                  onClick={handleOpenTimeline}
+                >
+                  confirm
+                </Button>
+              </DialogFooter>
+            </Dialog>
           </div>
         </section>
       </section>
