@@ -101,9 +101,7 @@ const mockdata = {
   Output: 900,
   Fertilizer: "NPK",
 };
-const timelinedata = {
-
-}
+const timelinedata = {};
 const Information = () => {
   const [images, setImages] = useState({
     img1: "https://khuyennong.backan.gov.vn/wp-content/uploads/2022/11/271996094_4769026249850385_7182923108748771800_n.jpg",
@@ -253,7 +251,84 @@ const Information = () => {
             </div>
             <div className="product">
               <div className="flex flex-col gap-6 lg:w-2/4">
-                
+                <div>
+                  <div className="px-4 sm:px-0">
+                    <h3 className="text-base font-semibold leading-7 text-gray-900">
+                      Thông tin chi tiết của sản phẩm
+                    </h3>
+                    <p className="mt-1 max-w-2xl text-sm leaading-3 text-gray-500">
+                      Personal details and application.
+                    </p>
+                  </div>
+                  <div className="mt-6 border-t border-gray-900">
+                    <dl className="divide-y divide-gray-800">
+                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leaading-3 text-gray-900">
+                          Tên sản phẩm
+                        </dt>
+                        <dd className="mt-0 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                          Bắp cải
+                        </dd>
+                      </div>
+                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leaading-3 text-gray-900">
+                          Nông trại sản xuất
+                        </dt>
+                        <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                          ABC
+                        </dd>
+                      </div>
+                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leaading-3 text-gray-900">
+                          Người thu hoạch
+                        </dt>
+                        <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                          Nguyễn Văn A
+                        </dd>
+                      </div>
+                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leaading-3 text-gray-900">
+                          Mã sản phẩm
+                        </dt>
+                        <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                          XB1111
+                        </dd>
+                      </div>
+                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leaading-3 text-gray-900">
+                          Cân nặng
+                        </dt>
+                        <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                          0.5kg
+                        </dd>
+                      </div>
+                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leaading-3 text-gray-900">
+                          Số lượng
+                        </dt>
+                        <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                          01 (Cái)
+                        </dd>
+                      </div>
+                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leaading-3 text-gray-900">
+                          Giá cả
+                        </dt>
+                        <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                          40,000 (VND)
+                        </dd>
+                      </div>
+                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leaading-3 text-gray-900">
+                          Thuế (VAT)
+                        </dt>
+                        <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                          2,000 (VND)
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
