@@ -8,6 +8,7 @@ import {
   TabsBody,
   Tab,
   TabPanel,
+  Tooltip,
 } from "@material-tailwind/react";
 
 import {
@@ -33,7 +34,7 @@ import {
   DialogFooter,
 } from "@material-tailwind/react";
 
-const TABLE_HEAD = ["Name", "Job", "Employed", "Hello", "Hi", "Hi"];
+const TABLE_HEAD = ["Name", "Job", "Employed"];
 
 const TABLE_ROWS = [
   {
@@ -56,41 +57,6 @@ const TABLE_ROWS = [
     job: "Developer",
     date: "24/12/08",
   },
-  {
-    name: "Richard Gran",
-    job: "Manager",
-    date: "04/10/21",
-  },
-  {
-    name: "Richard Gran",
-    job: "Manager",
-    date: "04/10/21",
-  },
-  {
-    name: "Richard Gran",
-    job: "Manager",
-    date: "04/10/21",
-  },
-  {
-    name: "Richard Gran",
-    job: "Manager",
-    date: "04/10/21",
-  },
-  {
-    name: "Richard Gran",
-    job: "Manager",
-    date: "04/10/21",
-  },
-  {
-    name: "Richard Gran",
-    job: "Manager",
-    date: "04/10/21",
-  },
-  {
-    name: "Richard Gran",
-    job: "Manager",
-    date: "04/10/21",
-  },
 ];
 
 const mockdata = {
@@ -101,7 +67,6 @@ const mockdata = {
   Output: 900,
   Fertilizer: "NPK",
 };
-const timelinedata = {};
 const Information = () => {
   const [images, setImages] = useState({
     img1: "https://khuyennong.backan.gov.vn/wp-content/uploads/2022/11/271996094_4769026249850385_7182923108748771800_n.jpg",
@@ -154,7 +119,29 @@ const Information = () => {
     {
       label: "Video",
       value: "Input",
-      desc: `afadsfad`,
+      desc: (
+        <div>
+          <video
+            className="h-full w-full my-2 rounded-lg "
+            controls
+            autoPlay
+            muted
+          >
+            <source
+              src="https://docs.material-tailwind.com/demo.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video ta
+          </video>
+          <video className="h-full w-full rounded-lg" controls autoPlay muted>
+            <source
+              src="https://docs.material-tailwind.com/demo.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video ta
+          </video>
+        </div>
+      ),
     },
   ];
 
@@ -204,6 +191,8 @@ const Information = () => {
   const [openTimeline, setOpenTimeline] = useState(false);
   const handleOpenTimeline = () => setOpenTimeline(!openTimeline);
 
+  const [openTable, setOpenTable] = useState(false);
+  const handleOpenTable = () => setOpenTable(!openTable);
   return (
     <section className="information">
       <div className="r-title">
@@ -240,6 +229,26 @@ const Information = () => {
                 <img
                   src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"
                   alt="image 2"
+                  className="h-full w-full object-cover"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
+                  alt="image 3"
+                  className="h-full w-full object-cover"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
+                  alt="image 3"
+                  className="h-full w-full object-cover"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
+                  alt="image 3"
+                  className="h-full w-full object-cover"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
+                  alt="image 3"
                   className="h-full w-full object-cover"
                 />
                 <img
@@ -338,111 +347,44 @@ const Information = () => {
           <div className="r-time">
             <div className="w-full sm:w-[50rem]">
               <Timeline className="flex flex-col">
-                <TimelineItem className="flex-grow h-[7rem]">
-                  <TimelineConnector className="!w-[60px]" />
-                  <TimelineHeader
-                    className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5"
-                    onClick={handleOpenTimeline}
-                  >
-                    <TimelineIcon
-                      className="p-2"
-                      variant="ghost"
-                    ></TimelineIcon>
-                    <div className="flex flex-col gap-1">
-                      <Typography
-                        variant="h6"
-                        color="blue-gray"
-                        className="text-sm sm:text-base"
-                      >
-                        $2400, Design changes fasfad sfads fads
-                      </Typography>
-                      {/* <Typography
+                <Tooltip title="Click vào để xem cụ thể">
+                  <TimelineItem className="flex-grow h-[7rem]">
+                    <TimelineConnector className="!w-[60px]" />
+                    <TimelineHeader
+                      className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5"
+                      onClick={handleOpenTimeline}
+                    >
+                      <TimelineIcon
+                        className="p-2"
+                        variant="ghost"
+                      ></TimelineIcon>
+                      <div className="flex flex-col gap-1">
+                        <Typography
+                          variant="h6"
+                          color="blue-gray"
+                          className="text-sm sm:text-base"
+                        >
+                          $2400, Design changes fasfad sfads fads
+                        </Typography>
+                        {/* <Typography
                         variant="small"
                         color="blue"
                         className="font-medium text-xs sm:text-xs"
                       >
                         #AFW112434
                       </Typography> */}
-                      <Typography
-                        variant="small"
-                        color="gray"
-                        className="font-normal text-xs sm:text-xs"
-                      >
-                        22 DEC 7:20 PM
-                      </Typography>
-                    </div>
-                  </TimelineHeader>
-                </TimelineItem>
-                <TimelineItem className="flex-grow h-[7rem]">
-                  <TimelineConnector className="!w-[60px]" />
-                  <TimelineHeader
-                    className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5"
-                    onClick={handleOpenTimeline}
-                  >
-                    <TimelineIcon
-                      className="p-2"
-                      variant="ghost"
-                    ></TimelineIcon>
-                    <div className="flex flex-col gap-1">
-                      <Typography
-                        variant="h6"
-                        color="blue-gray"
-                        className="text-sm sm:text-base"
-                      >
-                        $2400, Design changes fasfad sfads fads
-                      </Typography>
-                      {/* <Typography
-                        variant="small"
-                        color="blue"
-                        className="font-medium text-xs sm:text-xs"
-                      >
-                        #AFW112434
-                      </Typography> */}
-                      <Typography
-                        variant="small"
-                        color="gray"
-                        className="font-normal text-xs sm:text-xs"
-                      >
-                        22 DEC 7:20 PM
-                      </Typography>
-                    </div>
-                  </TimelineHeader>
-                </TimelineItem>
-                <TimelineItem className="flex-grow h-[7rem]">
-                  <TimelineConnector className="!w-[60px]" />
-                  <TimelineHeader
-                    className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5"
-                    onClick={handleOpenTimeline}
-                  >
-                    <TimelineIcon
-                      className="p-2"
-                      variant="ghost"
-                    ></TimelineIcon>
-                    <div className="flex flex-col gap-1">
-                      <Typography
-                        variant="h6"
-                        color="blue-gray"
-                        className="text-sm sm:text-base"
-                      >
-                        $2400, Design changes fasfad sfads fads
-                      </Typography>
-                      {/* <Typography
-                        variant="small"
-                        color="blue"
-                        className="font-medium text-xs sm:text-xs"
-                      >
-                        #AFW112434
-                      </Typography> */}
-                      <Typography
-                        variant="small"
-                        color="gray"
-                        className="font-normal text-xs sm:text-xs"
-                      >
-                        22 DEC 7:20 PM
-                      </Typography>
-                    </div>
-                  </TimelineHeader>
-                </TimelineItem>
+                        <Typography
+                          variant="small"
+                          color="gray"
+                          className="font-normal text-xs sm:text-xs"
+                        >
+                          22 DEC 7:20 PM
+                        </Typography>
+                      </div>
+                    </TimelineHeader>
+                  </TimelineItem>
+                </Tooltip>
+
                 <TimelineItem className="flex-grow h-[7rem]">
                   <TimelineConnector className="!w-[60px]" />
                   <TimelineHeader
@@ -537,94 +479,6 @@ const Information = () => {
                     ))}
                   </TabsBody>
                 </Tabs>
-                {/* <section className="infor">
-                  <div className="specific-information-container">
-                    <div className="w-[32rem]">
-                      <Timeline>
-                        <TimelineItem>
-                          <TimelineConnector />
-                          <TimelineHeader className="h-6">
-                            <TimelineIcon />
-                            <Typography
-                              variant="h6"
-                              color="blue-gray"
-                              className="leading-none"
-                            >
-                              Timeline Title Here.
-                            </Typography>
-                          </TimelineHeader>
-                          <TimelineBody className="pb-8">
-                            <Typography
-                              variant="small"
-                              color="gary"
-                              className="font-normal text-gray-600"
-                            >
-                              The key to more success is to have a lot of
-                              pillows. Put it this way, it took me twenty five
-                              years to get these plants, twenty five years of
-                              blood sweat and tears, and I&apos;m never giving
-                              up, I&apos;m just getting started. I&apos;m up to
-                              something. Fan luv.
-                            </Typography>
-                          </TimelineBody>
-                        </TimelineItem>
-                        <TimelineItem>
-                          <TimelineConnector />
-                          <TimelineHeader className="h-3">
-                            <TimelineIcon />
-                            <Typography
-                              variant="h6"
-                              color="blue-gray"
-                              className="leading-none"
-                            >
-                              Timeline Title Here.
-                            </Typography>
-                          </TimelineHeader>
-                          <TimelineBody className="pb-8">
-                            <Typography
-                              variant="small"
-                              color="gary"
-                              className="font-normal text-gray-600"
-                            >
-                              The key to more success is to have a lot of
-                              pillows. Put it this way, it took me twenty five
-                              years to get these plants, twenty five years of
-                              blood sweat and tears, and I&apos;m never giving
-                              up, I&apos;m just getting started. I&apos;m up to
-                              something. Fan luv.
-                            </Typography>
-                          </TimelineBody>
-                        </TimelineItem>
-                        <TimelineItem>
-                          <TimelineHeader className="h-3">
-                            <TimelineIcon />
-                            <Typography
-                              variant="h6"
-                              color="blue-gray"
-                              className="leading-none"
-                            >
-                              Timeline Title Here.
-                            </Typography>
-                          </TimelineHeader>
-                          <TimelineBody>
-                            <Typography
-                              variant="small"
-                              color="gary"
-                              className="font-normal text-gray-600"
-                            >
-                              The key to more success is to have a lot of
-                              pillows. Put it this way, it took me twenty five
-                              years to get these plants, twenty five years of
-                              blood sweat and tears, and I&apos;m never giving
-                              up, I&apos;m just getting started. I&apos;m up to
-                              something. Fan luv.
-                            </Typography>
-                          </TimelineBody>
-                        </TimelineItem>
-                      </Timeline>
-                    </div>
-                  </div>
-                </section> */}
               </DialogBody>
               <DialogFooter className="space-x-2">
                 <Button
@@ -760,15 +614,15 @@ const Information = () => {
               <section>
                 <div>
                   <div>Thông tin dự án</div>
-                  <Card className="overflow-scroll">
+                  <Card className="overflow-scroll max-h-80 overflow-y-scroll mx-auto">
                     <div className="block overflow-x-auto">
-                      <table className="w-full min-w-max table-auto text-left">
+                      <table className="w-full min-w-max text-center border border-collapse">
                         <thead>
                           <tr>
                             {TABLE_HEAD.map((head) => (
                               <th
                                 key={head}
-                                className="border-b border-blue-gray-600 bg-blue-gray-200 p-2 sm:p-4"
+                                className="border-b border-blue-gray-600 bg-blue-gray-200 p-2 sm:p-2"
                               >
                                 <Typography
                                   variant="small"
@@ -790,7 +644,7 @@ const Information = () => {
 
                             return (
                               <tr key={name}>
-                                <td className={classes}>
+                                <td className={`${classes} border`}>
                                   <Typography
                                     variant="small"
                                     color="blue-gray"
@@ -817,16 +671,29 @@ const Information = () => {
                                     {date}
                                   </Typography>
                                 </td>
-                                <td className={`${classes} bg-blue-gray-50/50`}>
-                                  <Typography
-                                    as="a"
-                                    href="#"
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-medium"
-                                  >
-                                    Edit
-                                  </Typography>
+                                <td>
+                                  <div>
+                                    <svg
+                                      onClick={handleOpenTable}
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      strokeWidth={1.5}
+                                      stroke="currentColor"
+                                      className="w-6 h-6"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                                      />
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                                      />
+                                    </svg>
+                                  </div>
                                 </td>
                               </tr>
                             );
@@ -834,6 +701,26 @@ const Information = () => {
                         </tbody>
                       </table>
                     </div>
+                    <Dialog open={openTable} handler={handleOpenTable}>
+                      <DialogHeader>Its a simple dialog.</DialogHeader>
+                      <DialogBody>
+                        The key to more success is to have a lot of pillows. Put
+                        it this way, it took me twenty five years to get these
+                        plants, twenty five years of blood sweat and tears, and
+                        I&apos;m never giving up, I&apos;m just getting started.
+                        I&apos;m up to something. Fan luv.
+                      </DialogBody>
+                      <DialogFooter>
+                        <Button
+                          variant="text"
+                          color="red"
+                          onClick={handleOpenTable}
+                          className="mr-1"
+                        >
+                          <span>Thoát</span>
+                        </Button>
+                      </DialogFooter>
+                    </Dialog>
                   </Card>
                 </div>
               </section>
@@ -866,7 +753,7 @@ const Information = () => {
                       <img
                         onClick={() => setActive(imgelink)}
                         src={imgelink}
-                        className="h-20 max-w-full cursor-pointer rounded-lg object-cover object-center"
+                        className="h-15 max-w-full cursor-pointer rounded-lg object-cover object-center"
                         alt="gallery-image"
                       />
                     </div>
