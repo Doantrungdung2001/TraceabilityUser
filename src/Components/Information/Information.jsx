@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./infor.css";
 import { Card, Typography, Carousel, Spinner } from "@material-tailwind/react";
 import {
@@ -30,30 +30,7 @@ import {
   formatTransactionHashTable,
 } from "../../Utils/helpers";
 
-const TABLE_HEAD = ["Name", "Job", "Employed"];
-
-const TABLE_ROWS = [
-  {
-    name: "John Michael ",
-    job: "Manager",
-    date: "23/04/18",
-  },
-  {
-    name: "Alexa Liras",
-    job: "Developer",
-    date: "23/04/18",
-  },
-  {
-    name: "Laurent Perrier",
-    job: "Executive",
-    date: "19/09/17",
-  },
-  {
-    name: "Michael Levi",
-    job: "Developer",
-    date: "24/12/08",
-  },
-];
+const TABLE_HEAD = ["Thời gian", "Dự kiến (kg)"];
 
 const Information = () => {
   const projectId = useParams().projectId;
@@ -67,49 +44,23 @@ const Information = () => {
     dataProcess,
     isSuccessProcess,
     isLoadingProcess,
+    dataExpect,
+    isSuccessExpect,
+    isLoadingExpect,
+    dataCertificateImages,
+    isSuccessCertificateImages,
+    isLoadingCertificateImages,
   } = useInformation({ projectId });
 
-  const data1 = [
-    {
-      imgelink:
-        "https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-    },
-    {
-      imgelink:
-        "https://images.unsplash.com/photo-1432462770865-65b70566d673?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-    },
-    {
-      imgelink:
-        "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80",
-    },
-    {
-      imgelink:
-        "https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80",
-    },
-    {
-      imgelink:
-        "https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80",
-    },
-    {
-      imgelink:
-        "https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80",
-    },
-    {
-      imgelink:
-        "https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80",
-    },
-    {
-      imgelink:
-        "https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80",
-    },
-  ];
-
-  const [active, setActive] = useState(
-    "https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-  );
+  const [active, setActive] = useState();
+  useEffect(()=> {
+    if(dataCertificateImages && dataCertificateImages.length > 0)
+      setActive(dataCertificateImages[0].imgelink)
+  }, [isSuccessCertificateImages])
 
   const [open, setOpen] = React.useState(1);
   const [selectedProcess, setSelectedProcess] = useState(null);
+  const [selectedExpect, setSelectedExpect] = useState(null);
 
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
@@ -495,12 +446,11 @@ const Information = () => {
                 open === 1 ? "text-green-400 hover:!text-green-700" : ""
               }`}
             >
-              Thông tin dự kiến 
+              Thông tin dự kiến sản lượng
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
               <section>
                 <div>
-                  <div>Thông tin dự án</div>
                   <Card className="overflow-scroll max-h-80 overflow-y-scroll mx-auto">
                     <div className="block overflow-x-auto">
                       <table className="w-full min-w-max text-center border border-collapse">
@@ -523,58 +473,89 @@ const Information = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {TABLE_ROWS.map(({ name, job, date }, index) => {
-                            const isLast = index === TABLE_ROWS.length - 1;
-                            const classes = isLast
-                              ? "p-2 sm:p-4"
-                              : "p-2 sm:p-4 border-b border-blue-gray-50";
+                          {isSuccessExpect &&
+                            dataExpect.map((expect, index) => {
+                              const isLast = index === dataExpect.length - 1;
+                              const classes = isLast
+                                ? "p-2 sm:p-4"
+                                : "p-2 sm:p-4 border-b border-blue-gray-50";
 
-                            return (
-                              <tr key={name}>
-                                <td className={`${classes} border`}>
-                                  <Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-normal text-xs sm:text-sm"
+                              return (
+                                <tr key={index}>
+                                  <td className={`${classes} border`}>
+                                    <Typography
+                                      variant="small"
+                                      color="blue-gray"
+                                      className="font-normal text-xs sm:text-sm"
+                                    >
+                                      {formatDateTime(expect.time)}
+                                    </Typography>
+                                  </td>
+                                  <td
+                                    className={`${classes} bg-blue-gray-50/50`}
                                   >
-                                    {name}
-                                  </Typography>
-                                </td>
-                                <td className={`${classes} bg-blue-gray-50/50`}>
-                                  <Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-normal text-xs sm:text-sm"
-                                  >
-                                    {job}
-                                  </Typography>
-                                </td>
-                                <td className={classes}>
-                                  <Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-normal text-xs sm:text-sm"
-                                  >
-                                    {date}
-                                  </Typography>
-                                </td>
-                                <td className={`${classes} bg-blue-gray-50/50`}>
-                                  <Typography
-                                    as="a"
-                                    href="#"
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-medium"
-                                  >
-                                    Edit
-                                  </Typography>
-                                </td>
-                              </tr>
-                            );
-                          })}
+                                    <Typography
+                                      variant="small"
+                                      color="blue-gray"
+                                      className="font-normal text-xs sm:text-sm"
+                                    >
+                                      {expect.amount}
+                                    </Typography>
+                                  </td>
+                                  <td>
+                                    <div>
+                                      <svg
+                                        onClick={() => {
+                                          setSelectedExpect(expect);
+                                          handleOpenTable();
+                                        }}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth={1.5}
+                                        stroke="currentColor"
+                                        className="w-6 h-6"
+                                      >
+                                        <path
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                                        />
+                                        <path
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                                        />
+                                      </svg>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          {isLoadingExpect && <Spinner />}
                         </tbody>
                       </table>
                     </div>
+                    <Dialog open={openTable} handler={handleOpenTable}>
+                      <DialogHeader>Its a simple dialog.</DialogHeader>
+                      <DialogBody>
+                        The key to more success is to have a lot of pillows. Put
+                        it this way, it took me twenty five years to get these
+                        plants, twenty five years of blood sweat and tears, and
+                        I&apos;m never giving up, I&apos;m just getting started.
+                        I&apos;m up to something. Fan luv.
+                      </DialogBody>
+                      <DialogFooter>
+                        <Button
+                          variant="text"
+                          color="red"
+                          onClick={handleOpenTable}
+                          className="mr-1"
+                        >
+                          <span>Thoát</span>
+                        </Button>
+                      </DialogFooter>
+                    </Dialog>
                   </Card>
                 </div>
               </section>
@@ -590,13 +571,13 @@ const Information = () => {
                 open === 2 ? "text-green-400 hover:!text-green-700" : ""
               }`}
             >
-              Thông tin về dự án
+              Quy trình mẫu
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
               <section>
                 <div>
                   <div>Thông tin dự án</div>
-                  <Card className="overflow-scroll max-h-80 overflow-y-scroll mx-auto">
+                  {/* <Card className="overflow-scroll max-h-80 overflow-y-scroll mx-auto">
                     <div className="block overflow-x-auto">
                       <table className="w-full min-w-max text-center border border-collapse">
                         <thead>
@@ -703,7 +684,7 @@ const Information = () => {
                         </Button>
                       </DialogFooter>
                     </Dialog>
-                  </Card>
+                  </Card> */}
                 </div>
               </section>
             </AccordionBody>
@@ -718,7 +699,7 @@ const Information = () => {
                 open === 3 ? "text-green-400 hover:!text-green-700" : ""
               }`}
             >
-              Thông tin nông trại && Cơ sở pháp lý
+              Các chứng nhận
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
               <div className="grid gap-4">
@@ -730,16 +711,18 @@ const Information = () => {
                   />
                 </div>
                 <div className="grid grid-cols-5 gap-4">
-                  {data1.map(({ imgelink }, index) => (
-                    <div key={index}>
-                      <img
-                        onClick={() => setActive(imgelink)}
-                        src={imgelink}
-                        className="h-15 max-w-full cursor-pointer rounded-lg object-cover object-center"
-                        alt="gallery-image"
-                      />
-                    </div>
-                  ))}
+                  {isSuccessCertificateImages &&
+                    dataCertificateImages.map(({ imgelink }, index) => (
+                      <div key={index}>
+                        <img
+                          onClick={() => setActive(imgelink)}
+                          src={imgelink}
+                          className="h-15 max-w-full cursor-pointer rounded-lg object-cover object-center"
+                          alt="gallery-image"
+                        />
+                      </div>
+                    ))}
+                  {isLoadingCertificateImages && <Spinner />}
                 </div>
               </div>
             </AccordionBody>

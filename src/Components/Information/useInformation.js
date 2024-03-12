@@ -25,7 +25,6 @@ export default function useInformation({ projectId }) {
   });
 
   const parseDataProjectInfo = useCallback((data) => {
-    console.log("data: ", data);
     const projectInfo = {
       id: data?._id,
       plant: data?.plant,
@@ -71,7 +70,6 @@ export default function useInformation({ projectId }) {
     let dataProcess = [];
     if (process.cultivation && process.cultivation.length > 0)
       process.cultivation.map((item) => {
-        console.log("process item", item);
         dataProcess.push({
           _id: item?._id,
           time: item?.time,
@@ -83,7 +81,6 @@ export default function useInformation({ projectId }) {
             description: item?.cultivationActivity.description,
           },
         });
-        console.log("process item,process", dataProcess);
       });
 
     process.planting.map((item) => {
@@ -165,6 +162,52 @@ export default function useInformation({ projectId }) {
     enabled: !!projectId,
   });
 
+  const parseDataExpect = useCallback((data) => {
+    const expect = data.map((item) => ({
+      id: item?._id,
+      tx: item?.tx,
+      time: item?.time,
+      amount: item?.amount,
+      note: item?.note,
+      isEdited: item?.isEdited,
+      historyExpect: item?.historyExpect,
+      createdAtTime: item?.createdAtTime,
+    }));
+    return { expect };
+  }, []);
+
+  const {
+    data: dataExpect,
+    isSuccess: isSuccessExpect,
+    isLoading: isLoadingExpect,
+  } = useQuery({
+    queryKey: ["projectExpect", projectId],
+    queryFn: () => PROJECT.getExpect(projectId),
+    staleTime: 20 * 1000,
+    select: (data) => parseDataExpect(data?.data?.metadata),
+    enabled: !!projectId,
+  });
+
+  const parseDataCertificateImages = useCallback((data) => {
+    const certificateImages = data.map((item) => {
+      return {
+        imgelink: item,
+      };
+    });
+    return { certificateImages };
+  }, []);
+  const {
+    data: dataCertificateImages,
+    isSuccess: isSuccessCertificateImages,
+    isLoading: isLoadingCertificateImages,
+  } = useQuery({
+    queryKey: ["getCertificateImages", projectId],
+    queryFn: () => PROJECT.getCertificateImages({ projectId }),
+    staleTime: 20 * 1000,
+    select: (data) => parseDataCertificateImages(data?.data?.metadata),
+    enabled: !!projectId,
+  });
+
   return {
     ImageProduct: dataOutput?.outputImages,
     isSuccessOutput,
@@ -175,5 +218,11 @@ export default function useInformation({ projectId }) {
     dataProcess: dataProcess?.dataProcess,
     isSuccessProcess,
     isLoadingProcess,
+    dataExpect: dataExpect?.expect,
+    isSuccessExpect,
+    isLoadingExpect,
+    dataCertificateImages: dataCertificateImages?.certificateImages,
+    isSuccessCertificateImages,
+    isLoadingCertificateImages,
   };
 }
