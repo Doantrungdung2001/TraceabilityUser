@@ -1,37 +1,34 @@
 import React, { useState } from "react";
 import "./infor.css";
-import { Card, Typography, Carousel } from "@material-tailwind/react";
+import { Card, Typography, Carousel, Spinner } from "@material-tailwind/react";
 import {
   Tabs,
   TabsHeader,
   TabsBody,
-  Tab,
   TabPanel,
-  Tooltip,
-} from "@material-tailwind/react";
-
-import {
+  Tab,
   Accordion,
   AccordionHeader,
   AccordionBody,
-} from "@material-tailwind/react";
-
-import {
   Timeline,
   TimelineItem,
   TimelineConnector,
   TimelineHeader,
   TimelineIcon,
   TimelineBody,
-} from "@material-tailwind/react";
-
-import {
   Button,
   Dialog,
   DialogHeader,
   DialogBody,
   DialogFooter,
 } from "@material-tailwind/react";
+
+import { useParams } from "react-router-dom";
+import useInformation from "./useInformation";
+import {
+  formatDateTime,
+  formatTransactionHashTable,
+} from "../../Utils/helpers";
 
 const TABLE_HEAD = ["Name", "Job", "Employed"];
 
@@ -58,91 +55,19 @@ const TABLE_ROWS = [
   },
 ];
 
-const mockdata = {
-  ProductCode: 123456,
-  Farm: "ABC",
-  Procedure: "VietGap",
-  Input: 1000,
-  Output: 900,
-  Fertilizer: "NPK",
-};
-
 const Information = () => {
-  const [images, setImages] = useState({
-    img1: "https://khuyennong.backan.gov.vn/wp-content/uploads/2022/11/271996094_4769026249850385_7182923108748771800_n.jpg",
-    img2: "https://khomay3a.com/userfiles/image/tin-tuc/ky-thuat-trong-bap-cai-04.jpg",
-    img3: "https://www.fao.org.vn/wp-content/uploads/2020/11/cach-trong-bap-cai.jpg",
-    img4: "https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2021/11/14/973740/Bap-Cai.jpeg",
-  });
-
-  const data = [
-    {
-      label: "Thông tin",
-      value: "infor",
-      desc: (
-        <DialogBody className="h-[39rem] overflow-scroll">
-          <section className="content"></section>
-          <section className="infor">
-            <div className="specific-information-container">
-              <div className="w-[32rem]">
-                <Timeline>
-                  <TimelineItem>
-                    <TimelineConnector />
-                    <TimelineHeader className="h-6">
-                      <TimelineIcon />
-                      <Typography
-                        variant="h6"
-                        color="blue-gray"
-                        className="leading-none"
-                      >
-                        Timeline Title Here.
-                      </Typography>
-                    </TimelineHeader>
-                    <TimelineBody className="pb-8">
-                      <Typography
-                        variant="small"
-                        color="gary"
-                        className="font-normal text-gray-600"
-                      >
-                        The key to more success is to have a lot of pillows.
-                      </Typography>
-                    </TimelineBody>
-                  </TimelineItem>
-                </Timeline>
-              </div>
-            </div>
-          </section>
-        </DialogBody>
-      ),
-    },
-    {
-      label: "Video",
-      value: "Input",
-      desc: (
-        <div>
-          <video
-            className="h-full w-full my-2 rounded-lg "
-            controls
-            autoPlay
-            muted
-          >
-            <source
-              src="https://docs.material-tailwind.com/demo.mp4"
-              type="video/mp4"
-            />
-            Your browser does not support the video ta
-          </video>
-          <video className="h-full w-full rounded-lg" controls autoPlay muted>
-            <source
-              src="https://docs.material-tailwind.com/demo.mp4"
-              type="video/mp4"
-            />
-            Your browser does not support the video ta
-          </video>
-        </div>
-      ),
-    },
-  ];
+  const projectId = useParams().projectId;
+  const {
+    ImageProduct,
+    isSuccessOutput,
+    isLoadingOutput,
+    projectInfo,
+    isSuccessProjectInfo,
+    isLoadingProjectInfo,
+    dataProcess,
+    isSuccessProcess,
+    isLoadingProcess,
+  } = useInformation({ projectId });
 
   const data1 = [
     {
@@ -184,6 +109,7 @@ const Information = () => {
   );
 
   const [open, setOpen] = React.useState(1);
+  const [selectedProcess, setSelectedProcess] = useState(null);
 
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
@@ -192,12 +118,165 @@ const Information = () => {
 
   const [openTable, setOpenTable] = useState(false);
   const handleOpenTable = () => setOpenTable(!openTable);
+
+  const data = [
+    {
+      label: "Thông tin",
+      value: "infor",
+      desc: (
+        <DialogBody className="h-[39rem] overflow-scroll">
+          <section className="content"></section>
+          <section className="infor">
+            <div className="specific-information-container">
+              <div className="w-full md:w-[32rem]">
+                {selectedProcess && selectedProcess.type === "pesticide" && (
+                  <div>
+                    <Typography variant="h3" color="green">
+                      {selectedProcess.detail.name}
+                    </Typography>
+                    <Typography variant="h4" color="blue">
+                      {formatTransactionHashTable({
+                        str: selectedProcess.detail.tx,
+                        a: 8,
+                        b: 5,
+                      })}
+                    </Typography>
+                    <Typography variant="paragraph">
+                      {selectedProcess.detail.symptoms}
+                    </Typography>
+                    {/* <Typography variant="paragraph">
+                        {selectedProcess.detail.solution}
+                      </Typography> */}
+                    <Typography variant="paragraph">
+                      {selectedProcess.detail.type}
+                    </Typography>
+                  </div>
+                )}
+
+                {selectedProcess && selectedProcess.type === "fertilize" && (
+                  <div>
+                    <Typography variant="h3" color="green">
+                      {formatDateTime(selectedProcess.time)}
+                    </Typography>
+                    <Typography variant="h4" color="blue">
+                      {formatTransactionHashTable({
+                        str: selectedProcess.detail.tx,
+                        a: 8,
+                        b: 5,
+                      })}
+                    </Typography>
+                    <Typography variant="paragraph">
+                      {selectedProcess.detail.description}
+                    </Typography>
+                    <Typography variant="paragraph">
+                      {selectedProcess.detail.type}
+                    </Typography>
+                  </div>
+                )}
+
+                {selectedProcess && selectedProcess.type === "planting" && (
+                  <div>
+                    <Typography variant="h3" color="green">
+                      {selectedProcess.detail.density}
+                    </Typography>
+                    <Typography variant="h4" color="blue">
+                      {formatTransactionHashTable({
+                        str: selectedProcess.detail.tx,
+                        a: 8,
+                        b: 5,
+                      })}
+                    </Typography>
+                    <Typography variant="paragraph">
+                      {selectedProcess.detail.description}
+                    </Typography>
+                  </div>
+                )}
+
+                {selectedProcess && selectedProcess.type === "other" && (
+                  <div>
+                    <Typography variant="h4" color="blue">
+                      {formatTransactionHashTable({
+                        str: selectedProcess.detail.tx,
+                        a: 8,
+                        b: 5,
+                      })}
+                    </Typography>
+                    <Typography variant="paragraph">
+                      {selectedProcess.detail.description}
+                    </Typography>
+                  </div>
+                )}
+
+                {selectedProcess && selectedProcess.type === "cultivation" && (
+                  <div>
+                    <Typography variant="h3" color="green">
+                      {selectedProcess.detail.name}
+                    </Typography>
+                    <Typography variant="h4" color="blue">
+                      {formatTransactionHashTable({
+                        str: selectedProcess.detail.tx,
+                        a: 8,
+                        b: 5,
+                      })}
+                    </Typography>
+                    <Typography variant="paragraph">
+                      {selectedProcess.detail.description}
+                    </Typography>
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+        </DialogBody>
+      ),
+    },
+    {
+      label: "Video",
+      value: "Input",
+      desc: (
+        <div>
+          <video
+            className="h-full w-full my-2 rounded-lg "
+            controls
+            autoPlay
+            muted
+          >
+            <source
+              src="https://docs.material-tailwind.com/demo.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video ta
+          </video>
+          <video className="h-full w-full rounded-lg" controls autoPlay muted>
+            <source
+              src="https://docs.material-tailwind.com/demo.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video ta
+          </video>
+        </div>
+      ),
+    },
+  ];
+  const renderType = (type) => {
+    switch (type) {
+      case "pesticide":
+        return "Phòng trừ sâu bệnh";
+      case "fertilize":
+        return "Bón phân";
+      case "planting":
+        return "Gieo trồng";
+      case "other":
+        return "Hoạt động khác";
+      case "cultivation":
+        return "Làm đất";
+    }
+  };
+
   return (
     <section className="information">
       <div className="r-title">
-        <button className="button">
-          Mã truy xuất : {mockdata.ProductCode}
-        </button>
+        <button className="button">Mã truy xuất : {projectId}</button>
       </div>
 
       <section className="content">
@@ -220,123 +299,91 @@ const Information = () => {
                   </div>
                 )}
               >
-                <img
-                  src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
-                  alt="image 1"
-                  className="h-full w-full object-cover"
-                />
-                <img
-                  src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"
-                  alt="image 2"
-                  className="h-full w-full object-cover"
-                />
-                <img
-                  src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
-                  alt="image 3"
-                  className="h-full w-full object-cover"
-                />
-                <img
-                  src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
-                  alt="image 3"
-                  className="h-full w-full object-cover"
-                />
-                <img
-                  src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
-                  alt="image 3"
-                  className="h-full w-full object-cover"
-                />
-                <img
-                  src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
-                  alt="image 3"
-                  className="h-full w-full object-cover"
-                />
-                <img
-                  src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
-                  alt="image 3"
-                  className="h-full w-full object-cover"
-                />
+                {isSuccessOutput &&
+                  ImageProduct.map((url, index) => (
+                    <img
+                      key={index}
+                      src={url.img}
+                      className="h-full w-full object-cover"
+                    />
+                  ))}
+                {isLoadingOutput && <Spinner />}
               </Carousel>
             </div>
             <div className="product">
               <div className="flex flex-col gap-6 lg:w-2/4">
-                <div>
-                  <div className="px-4 sm:px-0">
-                    <h3 className="text-base font-semibold leading-7 text-gray-900">
-                      Thông tin chi tiết của sản phẩm
-                    </h3>
-                    <p className="mt-1 max-w-2xl text-sm leaading-3 text-gray-500">
+                {isSuccessProjectInfo && (
+                  <div>
+                    <div className="px-4 sm:px-0">
+                      <h3 className="text-base font-semibold leading-7 text-gray-900">
+                        Thông tin chi tiết của sản phẩm
+                      </h3>
+                      {/* <p className="mt-1 max-w-2xl text-sm leaading-3 text-gray-500">
                       Personal details and application.
-                    </p>
+                    </p> */}
+                    </div>
+                    <div className="mt-6 border-t border-gray-900">
+                      <dl className="divide-y divide-gray-800">
+                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                          <dt className="text-sm font-medium leaading-3 text-gray-900">
+                            Transaction Hash
+                          </dt>
+                          <dd className="mt-1 text-sm font-semibold leaading-3 text-blue-900 sm:col-span-2 sm:mt-0">
+                            {formatTransactionHashTable({
+                              str: projectInfo?.txHash,
+                              a: 8,
+                              b: 5,
+                            })}
+                          </dd>
+                        </div>
+                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                          <dt className="text-sm font-medium leaading-3 text-gray-900">
+                            Nông trại sản xuất
+                          </dt>
+                          <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                            {projectInfo?.farm?.name}
+                          </dd>
+                        </div>
+
+                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                          <dt className="text-sm font-medium leaading-3 text-gray-900">
+                            Tên cây
+                          </dt>
+                          <dd className="mt-0 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                            {projectInfo?.plant?.plant_name}
+                          </dd>
+                        </div>
+
+                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                          <dt className="text-sm font-medium leaading-3 text-gray-900">
+                            Tên hạt giống
+                          </dt>
+                          <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                            {projectInfo?.seed?.seed_name}
+                          </dd>
+                        </div>
+                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                          <dt className="text-sm font-medium leaading-3 text-gray-900">
+                            Ngày trồng
+                          </dt>
+                          <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                            {formatDateTime(projectInfo?.startDate)}
+                          </dd>
+                        </div>
+                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                          <dt className="text-sm font-medium leaading-3 text-gray-900">
+                            Diện tích trồng (m2 )
+                          </dt>
+                          <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                            {projectInfo?.square}
+                          </dd>
+                        </div>
+                      </dl>
+                    </div>
                   </div>
-                  <div className="mt-6 border-t border-gray-900">
-                    <dl className="divide-y divide-gray-800">
-                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leaading-3 text-gray-900">
-                          Tên sản phẩm
-                        </dt>
-                        <dd className="mt-0 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                          Bắp cải
-                        </dd>
-                      </div>
-                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leaading-3 text-gray-900">
-                          Nông trại sản xuất
-                        </dt>
-                        <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                          ABC
-                        </dd>
-                      </div>
-                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leaading-3 text-gray-900">
-                          Người thu hoạch
-                        </dt>
-                        <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                          Nguyễn Văn A
-                        </dd>
-                      </div>
-                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leaading-3 text-gray-900">
-                          Mã sản phẩm
-                        </dt>
-                        <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                          XB1111
-                        </dd>
-                      </div>
-                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leaading-3 text-gray-900">
-                          Cân nặng
-                        </dt>
-                        <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                          0.5kg
-                        </dd>
-                      </div>
-                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leaading-3 text-gray-900">
-                          Số lượng
-                        </dt>
-                        <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                          01 (Cái)
-                        </dd>
-                      </div>
-                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leaading-3 text-gray-900">
-                          Giá cả
-                        </dt>
-                        <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                          40,000 (VND)
-                        </dd>
-                      </div>
-                      <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leaading-3 text-gray-900">
-                          Thuế (VAT)
-                        </dt>
-                        <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                          2,000 (VND)
-                        </dd>
-                      </div>
-                    </dl>
-                  </div>
-                </div>
+                )}
+
+                {isLoadingProjectInfo && <Spinner />}
               </div>
             </div>
           </div>
@@ -346,113 +393,55 @@ const Information = () => {
           <div className="r-time">
             <div className="w-full sm:w-[50rem]">
               <Timeline className="flex flex-col">
-                <Tooltip title="Click vào để xem cụ thể">
-                  <TimelineItem className="flex-grow h-[7rem]">
-                    <TimelineConnector className="!w-[60px]" />
-                    <TimelineHeader
-                      className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5"
-                      onClick={handleOpenTimeline}
-                    >
-                      <TimelineIcon
-                        className="p-2"
-                        variant="ghost"
-                      ></TimelineIcon>
-                      <div className="flex flex-col gap-1">
-                        <Typography
-                          variant="h6"
-                          color="blue-gray"
-                          className="text-sm sm:text-base"
+                {isSuccessProcess &&
+                  dataProcess.map((process, index) => (
+                    <div>
+                      <TimelineItem className="flex-grow h-[7rem]" key={index}>
+                        <TimelineConnector className="!w-[60px]" />
+                        <TimelineHeader
+                          className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5"
+                          onClick={() => {
+                            setSelectedProcess(process);
+                            handleOpenTimeline();
+                          }}
                         >
-                          $2400, Design changes fasfad sfads fads
-                        </Typography>
-                        {/* <Typography
-                        variant="small"
-                        color="blue"
-                        className="font-medium text-xs sm:text-xs"
-                      >
-                        #AFW112434
-                      </Typography> */}
-                        <Typography
-                          variant="small"
-                          color="gray"
-                          className="font-normal text-xs sm:text-xs"
-                        >
-                          22 DEC 7:20 PM
-                        </Typography>
-                      </div>
-                    </TimelineHeader>
-                  </TimelineItem>
-                </Tooltip>
+                          <TimelineIcon
+                            className="p-2"
+                            variant="ghost"
+                          ></TimelineIcon>
+                          <div className="flex flex-col gap-1">
+                            <Typography
+                              variant="h6"
+                              color="blue-gray"
+                              className="text-sm sm:text-base"
+                            >
+                              {process.name}
+                            </Typography>
+                            <Typography
+                              variant="small"
+                              color="blue"
+                              className="font-medium text-xs sm:text-xs"
+                            >
+                              {renderType(process.type)}
+                            </Typography>
+                            <Typography
+                              variant="small"
+                              color="gray"
+                              className="font-normal text-xs sm:text-xs"
+                            >
+                              {formatDateTime(process.time)}
+                            </Typography>
+                          </div>
+                        </TimelineHeader>
+                      </TimelineItem>
+                    </div>
+                  ))}
 
-                <TimelineItem className="flex-grow h-[7rem]">
-                  <TimelineConnector className="!w-[60px]" />
-                  <TimelineHeader
-                    className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5"
-                    onClick={handleOpenTimeline}
-                  >
-                    <TimelineIcon
-                      className="p-2"
-                      variant="ghost"
-                    ></TimelineIcon>
-                    <div className="flex flex-col gap-1">
-                      <Typography
-                        variant="h6"
-                        color="blue-gray"
-                        className="text-sm sm:text-base"
-                      >
-                        $2400, Design changes fasfad sfads fads
-                      </Typography>
-                      {/* <Typography
-                        variant="small"
-                        color="blue"
-                        className="font-medium text-xs sm:text-xs"
-                      >
-                        #AFW112434
-                      </Typography> */}
-                      <Typography
-                        variant="small"
-                        color="gray"
-                        className="font-normal text-xs sm:text-xs"
-                      >
-                        22 DEC 7:20 PM
-                      </Typography>
-                    </div>
-                  </TimelineHeader>
-                </TimelineItem>
-                {/* <TimelineItem className="flex-grow h-[5rem]">
-                  <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5">
-                    <TimelineIcon className="p-3" variant="ghost" color="green">
-                      
-                    </TimelineIcon>
-                    <div className="flex flex-col gap-1">
-                      <Typography
-                        variant="h6"
-                        color="blue-gray"
-                        className="text-sm sm:text-base"
-                      >
-                        Payment completed for order #4395133
-                      </Typography>
-                      <Typography
-                        variant="small"
-                        color="gray"
-                        className="font-normal text-xs sm:text-xs"
-                      >
-                        20 DEC 2:20 AM
-                      </Typography>
-                    </div>
-                  </TimelineHeader>
-                </TimelineItem> */}
+                {isLoadingProcess && <Spinner />}
               </Timeline>
             </div>
-
-            {/* <button
-              type="button"
-              className="m-8 text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-1.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-            >
-              Chi tiết
-            </button> */}
             <Dialog open={openTimeline} handler={handleOpenTimeline}>
-              <DialogHeader>Thông tin việc làm</DialogHeader>
+              <DialogHeader>Chi tiết công việc</DialogHeader>
 
               <DialogBody className="h-[39rem] overflow-scroll">
                 <section className="content"></section>
@@ -479,20 +468,14 @@ const Information = () => {
                   </TabsBody>
                 </Tabs>
               </DialogBody>
-              <DialogFooter className="space-x-2">
+              <DialogFooter>
                 <Button
                   variant="text"
-                  color="blue-gray"
+                  color="red"
                   onClick={handleOpenTimeline}
+                  className="mr-1"
                 >
-                  cancel
-                </Button>
-                <Button
-                  variant="gradient"
-                  color="green"
-                  onClick={handleOpenTimeline}
-                >
-                  confirm
+                  <span>Thoát</span>
                 </Button>
               </DialogFooter>
             </Dialog>
@@ -512,7 +495,7 @@ const Information = () => {
                 open === 1 ? "text-green-400 hover:!text-green-700" : ""
               }`}
             >
-              Thông tin chi tiết sản phẩm
+              Thông tin dự kiến 
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
               <section>

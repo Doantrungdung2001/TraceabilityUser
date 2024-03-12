@@ -14,3 +14,6 @@ npm i mdb-react-ui-kit
 ```
 npm i @fortawesome/fontawesome-free
 ```
+```
+npm i @tanstack/react-query
+```

@@ -18,7 +18,7 @@ import History  from "../Pages/Result/History";
 
 export const NormalRoutes = [
   { path: "/", element: <Home /> },
-  { path: "/results", element: <Result /> },
+  { path: "/results/:projectId", element: <Result /> },
   { path: "/results/timeline", element: <History /> },
   { path: "/farm", element: <Farm /> },
   { path: "/farm/detail", element: <ProflieFarm /> },
