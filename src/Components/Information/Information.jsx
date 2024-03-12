@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import "./information.css";
 import "./infor.css";
 import { Card, Typography, Carousel } from "@material-tailwind/react";
 import {
@@ -67,6 +66,7 @@ const mockdata = {
   Output: 900,
   Fertilizer: "NPK",
 };
+
 const Information = () => {
   const [images, setImages] = useState({
     img1: "https://khuyennong.backan.gov.vn/wp-content/uploads/2022/11/271996094_4769026249850385_7182923108748771800_n.jpg",
@@ -82,7 +82,6 @@ const Information = () => {
       desc: (
         <DialogBody className="h-[39rem] overflow-scroll">
           <section className="content"></section>
-
           <section className="infor">
             <div className="specific-information-container">
               <div className="w-[32rem]">
