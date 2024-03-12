@@ -208,6 +208,41 @@ export default function useInformation({ projectId }) {
     enabled: !!projectId,
   });
 
+  const parseDataPlantFarming = useCallback((data) => {
+    if (!data)
+      return {
+        plantFarming: null,
+      };
+    const plantFarming = {
+      id: data?._id,
+      plant: data?.plant,
+      seed: data?.seed,
+      timeCultivates: data?.timeCultivates,
+      cultivationActivities: data?.cultivationActivities,
+      plantingActivity: data?.plantingActivity,
+      fertilizationActivities: data?.fertilizationActivities,
+      pestAndDiseaseControlActivities: data?.pestAndDiseaseControlActivities,
+      bestTimeCultivate: data?.bestTimeCultivate,
+      farmingTime: data?.farmingTime,
+      harvestTime: data?.harvestTime,
+      isEdited: data?.isEdited,
+      historyPlantFarmingEdit: data?.historyPlantFarmingEdit,
+      createdAtTime: data?.createdAtTime,
+    };
+    return { plantFarming };
+  }, []);
+  const {
+    data: dataPlantFarming,
+    isSuccess: isSuccessPlantFarming,
+    isLoading: isLoadingPlantFarming,
+  } = useQuery({
+    queryKey: ["getPlantFarmingFromProject", projectId],
+    queryFn: () => PROJECT.getPlantFarmingFromProject(projectId),
+    staleTime: 20 * 1000,
+    select: (data) => parseDataPlantFarming(data?.data?.metadata),
+    enabled: !!projectId,
+  });
+
   return {
     ImageProduct: dataOutput?.outputImages,
     isSuccessOutput,
@@ -224,5 +259,8 @@ export default function useInformation({ projectId }) {
     dataCertificateImages: dataCertificateImages?.certificateImages,
     isSuccessCertificateImages,
     isLoadingCertificateImages,
+    dataPlantFarming: dataPlantFarming?.plantFarming,
+    isSuccessPlantFarming,
+    isLoadingPlantFarming,
   };
 }

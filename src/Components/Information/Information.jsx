@@ -31,6 +31,31 @@ import {
 } from "../../Utils/helpers";
 
 const TABLE_HEAD = ["Thời gian", "Dự kiến (kg)"];
+const cultivation = [];
+const planting = [];
+const fertilize = [];
+const pesticide = [];
+
+function Icon({ id, open }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={2}
+      stroke="currentColor"
+      className={`${
+        id === open ? "rotate-180" : ""
+      } h-5 w-5 transition-transform`}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+      />
+    </svg>
+  );
+}
 
 const Information = () => {
   const projectId = useParams().projectId;
@@ -50,20 +75,25 @@ const Information = () => {
     dataCertificateImages,
     isSuccessCertificateImages,
     isLoadingCertificateImages,
+    dataPlantFarming,
+    isSuccessPlantFarming,
+    isLoadingPlantFarming,
   } = useInformation({ projectId });
 
   const [active, setActive] = useState();
-  useEffect(()=> {
-    if(dataCertificateImages && dataCertificateImages.length > 0)
-      setActive(dataCertificateImages[0].imgelink)
-  }, [isSuccessCertificateImages])
+  useEffect(() => {
+    if (dataCertificateImages && dataCertificateImages.length > 0)
+      setActive(dataCertificateImages[0].imgelink);
+  }, [isSuccessCertificateImages]);
 
-  const [open, setOpen] = React.useState(1);
+  const [open, setOpen] = useState(1);
+  const [openExpect, setOpenExpect] = useState(0);
   const [selectedProcess, setSelectedProcess] = useState(null);
   const [selectedExpect, setSelectedExpect] = useState(null);
 
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
-
+  const handleOpenExpect = (value) =>
+    setOpenExpect(openExpect === value ? 0 : value);
   const [openTimeline, setOpenTimeline] = useState(false);
   const handleOpenTimeline = () => setOpenTimeline(!openTimeline);
 
@@ -269,9 +299,6 @@ const Information = () => {
                       <h3 className="text-base font-semibold leading-7 text-gray-900">
                         Thông tin chi tiết của sản phẩm
                       </h3>
-                      {/* <p className="mt-1 max-w-2xl text-sm leaading-3 text-gray-500">
-                      Personal details and application.
-                    </p> */}
                     </div>
                     <div className="mt-6 border-t border-gray-900">
                       <dl className="divide-y divide-gray-800">
@@ -574,129 +601,102 @@ const Information = () => {
               Quy trình mẫu
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
-              <section>
-                <div>
-                  <div>Thông tin dự án</div>
-                  {/* <Card className="overflow-scroll max-h-80 overflow-y-scroll mx-auto">
-                    <div className="block overflow-x-auto">
-                      <table className="w-full min-w-max text-center border border-collapse">
-                        <thead>
-                          <tr>
-                            {TABLE_HEAD.map((head) => (
-                              <th
-                                key={head}
-                                className="border-b border-blue-gray-600 bg-blue-gray-200 p-2 sm:p-2"
-                              >
-                                <Typography
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="font-normal leading-none opacity-70"
-                                >
-                                  {head}
-                                </Typography>
-                              </th>
-                            ))}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {TABLE_ROWS.map(({ name, job, date }, index) => {
-                            const isLast = index === TABLE_ROWS.length - 1;
-                            const classes = isLast
-                              ? "p-2 sm:p-4"
-                              : "p-2 sm:p-4 border-b border-blue-gray-50";
-
-                            return (
-                              <tr key={name}>
-                                <td className={`${classes} border`}>
-                                  <Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-normal text-xs sm:text-sm"
-                                  >
-                                    {name}
-                                  </Typography>
-                                </td>
-                                <td className={`${classes} bg-blue-gray-50/50`}>
-                                  <Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-normal text-xs sm:text-sm"
-                                  >
-                                    {job}
-                                  </Typography>
-                                </td>
-                                <td className={classes}>
-                                  <Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-normal text-xs sm:text-sm"
-                                  >
-                                    {date}
-                                  </Typography>
-                                </td>
-                                <td>
-                                  <div>
-                                    <svg
-                                      onClick={handleOpenTable}
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                      strokeWidth={1.5}
-                                      stroke="currentColor"
-                                      className="w-6 h-6"
-                                    >
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                                      />
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                                      />
-                                    </svg>
-                                  </div>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
-                    <Dialog open={openTable} handler={handleOpenTable}>
-                      <DialogHeader>Its a simple dialog.</DialogHeader>
-                      <DialogBody>
-                        The key to more success is to have a lot of pillows. Put
-                        it this way, it took me twenty five years to get these
-                        plants, twenty five years of blood sweat and tears, and
-                        I&apos;m never giving up, I&apos;m just getting started.
-                        I&apos;m up to something. Fan luv.
-                      </DialogBody>
-                      <DialogFooter>
-                        <Button
-                          variant="text"
-                          color="red"
-                          onClick={handleOpenTable}
-                          className="mr-1"
-                        >
-                          <span>Thoát</span>
-                        </Button>
-                      </DialogFooter>
-                    </Dialog>
-                  </Card> */}
-                </div>
+              <section className="px-4">
+                <>
+                  <Accordion
+                    open={openExpect === 1}
+                    icon={<Icon id={1} open={openExpect} />}
+                  >
+                    <AccordionHeader
+                      className="text-base"
+                      onClick={() => handleOpenExpect(1)}
+                    >
+                      Hoạt động làm đất
+                    </AccordionHeader>
+                    <AccordionBody>
+                      We&apos;re not always in the position that we want to be
+                      at. We&apos;re constantly growing. We&apos;re constantly
+                      making mistakes. We&apos;re constantly trying to express
+                      ourselves and actualize our dreams.
+                    </AccordionBody>
+                  </Accordion>
+                  <Accordion
+                    open={openExpect === 2}
+                    icon={<Icon id={2} open={openExpect} />}
+                  >
+                    <AccordionHeader
+                      className="text-base"
+                      onClick={() => handleOpenExpect(2)}
+                    >
+                      Hoạt động gieo trồng 
+                    </AccordionHeader>
+                    <AccordionBody>
+                      We&apos;re not always in the position that we want to be
+                      at. We&apos;re constantly growing. We&apos;re constantly
+                      making mistakes. We&apos;re constantly trying to express
+                      ourselves and actualize our dreams.
+                    </AccordionBody>
+                  </Accordion>
+                  <Accordion
+                    open={openExpect === 3}
+                    icon={<Icon id={3} open={openExpect} />}
+                  >
+                    <AccordionHeader
+                      className="text-base"
+                      onClick={() => handleOpenExpect(3)}
+                    >
+                      Hoạt động bón phân
+                    </AccordionHeader>
+                    <AccordionBody>
+                      We&apos;re not always in the position that we want to be
+                      at. We&apos;re constantly growing. We&apos;re constantly
+                      making mistakes. We&apos;re constantly trying to express
+                      ourselves and actualize our dreams.
+                    </AccordionBody>
+                  </Accordion>
+                  <Accordion
+                    open={openExpect === 4}
+                    icon={<Icon id={4} open={openExpect} />}
+                  >
+                    <AccordionHeader
+                      className="text-base"
+                      onClick={() => handleOpenExpect(4)}
+                    >
+                      Phòng trừ sâu bệnh
+                    </AccordionHeader>
+                    <AccordionBody>
+                      We&apos;re not always in the position that we want to be
+                      at. We&apos;re constantly growing. We&apos;re constantly
+                      making mistakes. We&apos;re constantly trying to express
+                      ourselves and actualize our dreams.
+                    </AccordionBody>
+                  </Accordion>
+                </>
               </section>
             </AccordionBody>
           </Accordion>
           <Accordion
             open={open === 3}
-            className="rounded-lg border border-blue-gray-300 px-4"
+            className="mb-2 rounded-lg border border-blue-gray-300 px-4"
           >
             <AccordionHeader
               onClick={() => handleOpen(3)}
               className={`border-b-0 transition-colors ${
                 open === 3 ? "text-green-400 hover:!text-green-700" : ""
+              }`}
+            >
+              Đầu ra
+            </AccordionHeader>
+            <AccordionBody className="pt-0 text-base font-normal"></AccordionBody>
+          </Accordion>
+          <Accordion
+            open={open === 4}
+            className="rounded-lg border border-blue-gray-300 px-4"
+          >
+            <AccordionHeader
+              onClick={() => handleOpen(4)}
+              className={`border-b-0 transition-colors ${
+                open === 4 ? "text-green-400 hover:!text-green-700" : ""
               }`}
             >
               Các chứng nhận
