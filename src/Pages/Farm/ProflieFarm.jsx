@@ -8,10 +8,10 @@ const ProflieFarm = () => {
   return (
     <div className="layout-proflie-farm">
       <div className="white-gradient">
-        {/* <Navbar /> */}
+        <Navbar />
         {/* <Avatar /> */}
-        {/* <Project /> */}
         <ProfileFarm />
+        <Project />
         <Footer/>
       </div>
     </div>
