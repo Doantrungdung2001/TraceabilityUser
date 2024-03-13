@@ -1,79 +1,29 @@
 import React from "react";
-import "./avatar.css";
-import farm1 from "../../Assets/Image/farm1.jpg";
-const Avatar = () => {
+
+const ProfileFarm = () => {
   return (
-    // <section classNameName="hero-wrapper">
-    //   <div className="paddings innerWidth flexCenter hero-container ">
-    //     {/* left side */}
-
-    //     <div className="flexColStart hero-left">
-    //       <div className="orange-circle" />
-    //       <div className="hero-title">
-    //         <h1>Farm 1</h1>
-    //       </div>
-
-    //       <div className="flexColStart hero-des">
-    //         <span> Information of Farm </span>
-    //         <ul>
-    //           <li>Intruduction</li>
-    //           <li>Project</li>
-    //         </ul>
-    //       </div>
-
-    //       <div className="flexCenter stats">
-    //         <div className="flexColCenter stat">
-    //           <span>
-    //             {/* <CountUp start={8000} end={9000} duration={4} /> */}
-    //             <span>+</span>
-    //           </span>
-    //           <span className="secondaryText">Projects</span>
-    //         </div>
-
-    //         <div className="flexColCenter stat">
-    //           <span>
-    //             {/* <CountUp start={20} end={40} duration={4} /> */}
-    //             <span>+</span>
-    //           </span>
-    //           <span className="secondaryText">Custumers</span>
-    //         </div>
-    //       </div>
-    //     </div>
-
-    //     {/* right side */}
-    //     <div className="flexCenter hero-right">
-    //       <div className="image-container">
-    //         <img src={farm1} alt="" />
-    //       </div>
-    //     </div>
-    //   </div>
-    // </section>
-    <section className="mt-24">
-      <section className="relative block h-500-px">
-        <div
-          className="absolute top-0 w-full h-full bg-center bg-cover"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2710&amp;q=80')",
-          }}
-        >
-          <span
+    <div className="profile-page">
+      <section className="relative block h-96">
+        <div className="absolute top-0 w-full h-full bg-center bg-cover">
+          <div
+            className="absolute top-0 w-full h-full bg-black opacity-50"
             id="blackOverlay"
-            className="w-full h-full absolute opacity-50 bg-black"
-          ></span>
+          ></div>
+          <img
+            alt="background"
+            src="https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80"
+            className="absolute top-0 left-0 w-full h-full bg-cover"
+          />
         </div>
-        <div
-          className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
-          style={{ transform: "translateZ(0px)" }}
-        >
+        <div className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-72">
           <svg
-            className="absolute bottom-0 overflow-hidden"
             xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="none"
             version="1.1"
             viewBox="0 0 2560 100"
             x="0"
             y="0"
+            className="absolute bottom-0 w-full h-full overflow-hidden"
           >
             <polygon
               className="text-blueGray-200 fill-current"
@@ -82,7 +32,8 @@ const Avatar = () => {
           </svg>
         </div>
       </section>
-      {/* <section className="relative py-16 bg-blueGray-200">
+
+      <section className="relative py-16 bg-blueGray-200">
         <div className="container mx-auto px-4">
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
             <div className="px-6">
@@ -92,10 +43,11 @@ const Avatar = () => {
                     <img
                       alt="..."
                       src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg"
-                      className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
+                      className="shadow-xl rounded-full h-auto align-middle border-none absolute -top-16 -left-20 lg:-left-16 max-w-150"
                     />
                   </div>
                 </div>
+
                 <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
                   <div className="py-6 px-3 mt-32 sm:mt-0">
                     <button
@@ -177,7 +129,7 @@ const Avatar = () => {
                     href="https://www.creative-tim.com/product/notus-js"
                     className="text-blueGray-500 hover:text-gray-800"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                   >
                     Notus JS
                   </a>{" "}
@@ -186,7 +138,7 @@ const Avatar = () => {
                     href="https://www.creative-tim.com"
                     className="text-blueGray-500 hover:text-blueGray-800"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                   >
                     {" "}
                     Creative Tim
@@ -197,9 +149,9 @@ const Avatar = () => {
             </div>
           </div>
         </footer>
-      </section> */}
-    </section>
+      </section>
+    </div>
   );
 };
 
-export default Avatar;
+export default ProfileFarm;

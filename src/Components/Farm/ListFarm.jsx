@@ -68,34 +68,39 @@ const Data = [
 
 const ListFarm = () => {
   return (
-    <section className="mx-auto px-12 sm:px-6 lg:px-8 py-24">
+    <section className="mx-auto sm:px-6 lg:px-8 py-24 justify-center">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
         {Data.map((farm) => (
-          <Card
-            key={farm.id}
-            className="w-80 sm:w-full md:w-full lg:w-full xl:w-full"
-          >
-            <CardHeader color="blue-gray" className="relative h-40">
+          <div class="mx-auto relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+            <div class="relative mx-4 mt-4 h-72 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
               <img
-                src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
-                alt="card-image"
-                className="object-cover w-full h-full"
+                src="https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=927&amp;q=80"
+                class="h-full w-full object-cover"
               />
-            </CardHeader>
-            <CardBody>
-              <Typography variant="h5" color="blue-gray" className="mb-2">
-                UI/UX Review Check
-              </Typography>
-              <Typography>
-                The place is close to Barceloneta Beach and bus stop just 2 min
-                by walk and near to &quot;Naviglio&quot; where you can enjoy the
-                main night life in Barcelona.
-              </Typography>
-            </CardBody>
-            <CardFooter className="pt-0">
-              <Button>Read More</Button>
-            </CardFooter>
-          </Card>
+            </div>
+            <div class="p-6">
+              <div class="mb-2 flex items-center justify-between">
+                <p class="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
+                  Apple AirPods
+                </p>
+                <p class="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
+                  $95.00
+                </p>
+              </div>
+              <p class="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75">
+                With plenty of talk and listen time, voice-activated Siri
+                access, and an available wireless charging case.
+              </p>
+            </div>
+            <div class="p-6 pt-0">
+              <button
+                class="block w-full select-none rounded-lg bg-blue-gray-900/10 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-blue-gray-900 transition-all hover:scale-105 focus:scale-105 focus:opacity-[0.85] active:scale-100 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
         ))}
       </div>
     </section>
