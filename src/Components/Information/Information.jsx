@@ -15,7 +15,6 @@ import {
   TimelineConnector,
   TimelineHeader,
   TimelineIcon,
-  TimelineBody,
   Button,
   Dialog,
   DialogHeader,
@@ -54,6 +53,26 @@ function Icon({ id, open }) {
         d="M19.5 8.25l-7.5 7.5-7.5-7.5"
       />
     </svg>
+  );
+}
+
+function ActivityLogItem({ text, linkText, time, note }) {
+  return (
+    <div className="flex items-center w-full my-5 -ml-1.5">
+      <div className="w-1/12 z-10">
+        <div className="w-3.5 h-3.5 bg-blue-600 rounded-full"></div>
+      </div>
+      <div className="w-11/12">
+        <p className="text-sm text-gray-800 font-bold">
+          Số lượng :<span className="text-gray-600"> {text} </span>
+          <span className="text-xs text-blue-600 font-bold"># {linkText}</span>
+        </p>
+        <p className="text-xs text-gray-600">{time}</p>
+        <p className="text-sm  text-gray-800 font-bold">
+          Ghi chú : <span className="text-xs text-gray-600 ">{note}</span>
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -104,6 +123,14 @@ const Information = () => {
   const handleReportsOpen = (value) =>
     setReportsOpen(reportsOpen === value ? 0 : value);
 
+  const [openCultivation, setOpenCultivation] = useState(false); // Làm đất
+  const handleOpenCultivation = () => setOpenCultivation(!openCultivation);
+  const [openpPlanting, setOpenuPlanting] = useState(false); // Trồng cây
+  const handleOpenpPlanting = () => setOpenuPlanting(!openpPlanting);
+  const [openFertilize, setOpenFertilize] = useState(false); // Bón phân
+  const handleOpenFertilize = () => setOpenFertilize(!openFertilize);
+  const [openPesticide, setOpenPesticide] = useState(false); // Thuốc trừ sâu
+  const handleOpenPesticide = () => setOpenPesticide(!openPesticide);
   const data = [
     {
       label: "Thông tin",
@@ -127,14 +154,12 @@ const Information = () => {
                     {selectedProcess &&
                       selectedProcess.type === "pesticide" && (
                         <div>
-                          <div className="max-w-screen-md text-xs">
+                          <div className="max-w-screen-md text-sm mb-3">
                             <h3 class="text-blue-600">
                               {formatDateTime(selectedProcess.time)}
                             </h3>
 
-                            <h4 className="text-lg font-semibold mb-2">
-                              Mã Hash
-                            </h4>
+                            <h4 className="text-lg font-semibold">Mã Hash</h4>
                             <p class="text-blue-600">
                               {formatTransactionHashTable({
                                 str: selectedProcess.detail.tx,
@@ -142,9 +167,7 @@ const Information = () => {
                                 b: 5,
                               })}
                             </p>
-                            <h3 className="text-lg font-semibold mb-2">
-                              Đối tượng
-                            </h3>
+                            <h3 className="text-lg font-semibold">Đối tượng</h3>
                             <p>{selectedProcess.detail.name}</p>
                             {/* <ul className="list-disc ml-6 mb-4">
                               <li>
@@ -159,13 +182,9 @@ const Information = () => {
                                 interactions with our content.
                               </li>
                             </ul> */}
-                            <h3 className="text-lg font-semibold mb-2">
-                              Chi tiết
-                            </h3>
+                            <h3 className="text-lg font-semibold">Chi tiết</h3>
                             <p>{selectedProcess.detail.symptoms}</p>
-                            <h3 className="text-lg font-semibold mb-2">
-                              Hoạt động
-                            </h3>
+                            <h3 className="text-lg font-semibold">Hoạt động</h3>
                             <p>{selectedProcess.detail.solution}</p>
                           </div>
                         </div>
@@ -174,7 +193,7 @@ const Information = () => {
                     {selectedProcess &&
                       selectedProcess.type === "fertilize" && (
                         <div>
-                          <div className="max-w-screen-md text-xs">
+                          <div className="max-w-screen-md mb-3 text-sm">
                             <h3 class="text-blue-600">
                               {formatDateTime(selectedProcess.time)}
                             </h3>
@@ -218,14 +237,12 @@ const Information = () => {
 
                     {selectedProcess && selectedProcess.type === "planting" && (
                       <div>
-                        <div className="max-w-screen-md text-xs">
+                        <div className="max-w-screen-md mb-3 text-sm">
                           <h3 class="text-blue-600">
                             {formatDateTime(selectedProcess.time)}
                           </h3>
 
-                          <h4 className="text-lg font-semibold mb-2">
-                            Mã Hash
-                          </h4>
+                          <h4 className="text-lg font-semibold">Mã Hash</h4>
                           <p class="text-blue-600">
                             {formatTransactionHashTable({
                               str: selectedProcess.detail.tx,
@@ -233,9 +250,7 @@ const Information = () => {
                               b: 5,
                             })}
                           </p>
-                          <h3 className="text-lg font-semibold mb-2">
-                            Đối tượng
-                          </h3>
+                          <h3 className="text-lg font-semibold">Đối tượng</h3>
                           <p>{selectedProcess.detail.name}</p>
                           {/* <ul className="list-disc ml-6 mb-4">
                               <li>
@@ -250,9 +265,9 @@ const Information = () => {
                                 interactions with our content.
                               </li>
                             </ul> */}
-                          <h3 className="text-lg font-semibold mb-2">Kiểu</h3>
+                          <h3 className="text-lg font-semibold">Kiểu</h3>
                           <p>{selectedProcess.detail.density}</p>
-                          <h3 className="text-lg font-semibold mb-2">Mô tả</h3>
+                          <h3 className="text-lg font-semibold">Mô tả</h3>
                           <p>{selectedProcess.detail.description}</p>
                         </div>
                       </div>
@@ -261,14 +276,12 @@ const Information = () => {
                     {selectedProcess && selectedProcess.type === "other" && (
                       <div>
                         <div>
-                          <div className="max-w-screen-md text-xs">
+                          <div className="max-w-screen-md mb-3 text-sm">
                             <h3 class="text-blue-600">
                               {formatDateTime(selectedProcess.time)}
                             </h3>
 
-                            <h4 className="text-lg font-semibold mb-2">
-                              Mã Hash
-                            </h4>
+                            <h4 className="text-lg font-semibold">Mã Hash</h4>
                             <p class="text-blue-600">
                               {formatTransactionHashTable({
                                 str: selectedProcess.detail.tx,
@@ -276,9 +289,7 @@ const Information = () => {
                                 b: 5,
                               })}
                             </p>
-                            <h3 className="text-lg font-semibold mb-2">
-                              Đối tượng
-                            </h3>
+                            <h3 className="text-lg font-semibold">Đối tượng</h3>
                             <p>{selectedProcess.detail.name}</p>
                             {/* <ul className="list-disc ml-6 mb-4">
                               <li>
@@ -293,11 +304,9 @@ const Information = () => {
                                 interactions with our content.
                               </li>
                             </ul> */}
-                            <h3 className="text-lg font-semibold mb-2">Kiểu</h3>
+                            <h3 className="text-lg font-semibold">Kiểu</h3>
                             <p>{selectedProcess.detail.density}</p>
-                            <h3 className="text-lg font-semibold mb-2">
-                              Mô tả
-                            </h3>
+                            <h3 className="text-lg font-semibold">Mô tả</h3>
                             <p>{selectedProcess.detail.description}</p>
                           </div>
                         </div>
@@ -308,14 +317,12 @@ const Information = () => {
                       selectedProcess.type === "cultivation" && (
                         <div>
                           <div>
-                            <div className="max-w-screen-md text-xs">
+                            <div className="max-w-screen-md mb-3 text-sm">
                               <h3 class="text-blue-600">
                                 {formatDateTime(selectedProcess.time)}
                               </h3>
 
-                              <h4 className="text-lg font-semibold mb-2">
-                                Mã Hash
-                              </h4>
+                              <h4 className="text-lg font-semibold">Mã Hash</h4>
                               <p class="text-blue-600">
                                 {formatTransactionHashTable({
                                   str: selectedProcess.detail.tx,
@@ -323,7 +330,7 @@ const Information = () => {
                                   b: 5,
                                 })}
                               </p>
-                              <h3 className="text-lg font-semibold mb-2">
+                              <h3 className="text-lg font-semibold">
                                 Đối tượng
                               </h3>
                               <p>{selectedProcess.detail.name}</p>
@@ -340,13 +347,9 @@ const Information = () => {
                                 interactions with our content.
                               </li>
                             </ul> */}
-                              <h3 className="text-lg font-semibold mb-2">
-                                Kiểu
-                              </h3>
+                              <h3 className="text-lg font-semibold">Kiểu</h3>
                               <p>{selectedProcess.detail.density}</p>
-                              <h3 className="text-lg font-semibold mb-2">
-                                Mô tả
-                              </h3>
+                              <h3 className="text-lg font-semibold">Mô tả</h3>
                               <p>{selectedProcess.detail.description}</p>
                             </div>
                           </div>
@@ -734,13 +737,54 @@ const Information = () => {
                       </table>
                     </div>
                     <Dialog open={openTable} handler={handleOpenTable}>
-                      <DialogHeader>Its a simple dialog.</DialogHeader>
+                      <DialogHeader>Nội dung </DialogHeader>
                       <DialogBody>
-                        The key to more success is to have a lot of pillows. Put
-                        it this way, it took me twenty five years to get these
-                        plants, twenty five years of blood sweat and tears, and
-                        I&apos;m never giving up, I&apos;m just getting started.
-                        I&apos;m up to something. Fan luv.
+                        {isSuccessExpect && selectedExpect && (
+                          <div>
+                            <div className="max-w-screen-md text-xs">
+                              <h4 className="text-lg font-semibold  text-gray-800">
+                                Mã Hash
+                              </h4>
+                              <p className="text-blue-600 mb-4">
+                                {formatTransactionHashTable({
+                                  str: selectedExpect.tx,
+                                  a: 8,
+                                  b: 5,
+                                })}
+                              </p>
+                              <h3 className="text-lg  text-gray-800 font-semibold">
+                                Ghi chú
+                              </h3>
+                              <p className="font-semibold text-gray-600">
+                                {selectedExpect.note}
+                              </p>
+                            </div>
+
+                            {selectedExpect?.isEdited && (
+                              <>
+                                <h4 className="text-lg  text-gray-800 font-semibold mt-4">
+                                  Lịch sử chỉnh sửa
+                                </h4>
+                                {selectedExpect.historyExpect.map(
+                                  (data, index) => (
+                                    <ActivityLogItem
+                                      key={index} // Assuming each item has a unique key
+                                      text={data.amount}
+                                      linkText={formatTransactionHashTable({
+                                        str: selectedExpect.tx,
+                                        a: 8,
+                                        b: 5,
+                                      })}
+                                      time={data.time}
+                                      note={data.note}
+                                    />
+                                  )
+                                )}
+                              </>
+                            )}
+                          </div>
+                        )}
+                        {isLoadingExpect && <Spinner />}
                       </DialogBody>
                       <DialogFooter>
                         <Button
@@ -784,72 +828,11 @@ const Information = () => {
                       Hoạt động làm đất
                     </AccordionHeader>
                     <AccordionBody>
-                      {/* <section className="py-1 bg-blueGray-50 min-h-screen">
-                        <div className="w-full px-4 mx-auto">
-                          <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-                            <div className="rounded-t mb-0 px-4 py-3 border-0">
-                              <div className="flex flex-wrap items-center">
-                                <div className="relative w-full px-4 max-w-full flex-grow flex-1">
-                                  <h3 className="font-semibold text-sm sm:text-base text-blueGray-700">
-                                    Page Visits
-                                  </h3>
-                                </div>
-                                <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                                  <button
-                                    className="bg-indigo-500 text-white active:bg-indigo-600 text-xs sm:text-sm font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                    type="button"
-                                  >
-                                    See all
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="block w-full overflow-x-auto">
-                              <div className="table w-full">
-                                <table className="items-center bg-transparent w-full border-collapse">
-                                  <thead>
-                                    <tr>
-                                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs sm:text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left sm:table-cell">
-                                        Page name
-                                      </th>
-                                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs sm:text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left sm:table-cell">
-                                        Visitors
-                                      </th>
-                                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs sm:text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left sm:table-cell">
-                                        Unique users
-                                      </th>
-                                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs sm:text-sm uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left sm:table-cell">
-                                        Bounce rate
-                                      </th>
-                                    </tr>
-                                  </thead>
-
-                                  <tbody>
-                                    <tr>
-                                      <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs sm:text-sm whitespace-nowrap p-4 text-left text-blueGray-700 sm:table-cell">
-                                        /argon/
-                                      </th>
-                                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs sm:text-sm whitespace-nowrap p-4">
-                                        4,569
-                                      </td>
-                                      <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs sm:text-sm whitespace-nowrap p-4">
-                                        340
-                                      </td>
-                                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs sm:text-sm whitespace-nowrap p-4">
-                                        <i className="fas fa-arrow-up text-emerald-500 mr-2 sm:mr-4"></i>
-                                        46,53%
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </section> */}
                       <section className="flex items-center justify-center">
-                        <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
+                        <div
+                          className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100"
+                          onClick={handleOpenCultivation}
+                        >
                           <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
                           <div className="mt-1">
                             <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
@@ -890,157 +873,45 @@ const Information = () => {
                                   </span>
                                 </div>
                               </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
                             </div>
                           </div>
                         </div>
+                        <Dialog
+                          open={openCultivation}
+                          handler={handleOpenCultivation}
+                        >
+                          <DialogHeader> Bón phân </DialogHeader>
+                          <DialogBody>
+                            <div>
+                              <div className="max-w-screen-md text-xs">
+                                <h4 className="text-lg font-semibold  text-gray-800">
+                                  Mã Hash
+                                </h4>
+                                <p className="text-blue-600 mb-4">afdsfa</p>
+                                <h3 className="text-lg  text-gray-800 font-semibold">
+                                  afsafd
+                                </h3>
+                                <p className="font-semibold text-gray-600">
+                                  afafa
+                                </p>
+                              </div>
+                            </div>
+                            {/* {isSuccessExpect && selectedExpect && (
+                              
+                            )} */}
+                            {/* {isLoadingExpect && <Spinner />} */}
+                          </DialogBody>
+                          <DialogFooter>
+                            <Button
+                              variant="text"
+                              color="red"
+                              onClick={handleOpenCultivation}
+                              className="mr-1"
+                            >
+                              <span>Thoát</span>
+                            </Button>
+                          </DialogFooter>
+                        </Dialog>
                       </section>
                     </AccordionBody>
                   </Accordion>
@@ -1060,155 +931,10 @@ const Information = () => {
                           <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
                           <div className="mt-1">
                             <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
+                              <button
+                                className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
+                                onClick={handleOpenpPlanting}
+                              >
                                 <div
                                   className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
                                   style={{
@@ -1248,6 +974,42 @@ const Information = () => {
                             </div>
                           </div>
                         </div>
+                        <Dialog
+                          open={openpPlanting}
+                          handler={handleOpenpPlanting}
+                        >
+                          <DialogHeader> Bón phân </DialogHeader>
+                          <DialogBody>
+                            <div>
+                              <div className="max-w-screen-md text-xs">
+                                <h4 className="text-lg font-semibold  text-gray-800">
+                                  Mã Hash
+                                </h4>
+                                <p className="text-blue-600 mb-4">afdsfa</p>
+                                <h3 className="text-lg  text-gray-800 font-semibold">
+                                  afsafd
+                                </h3>
+                                <p className="font-semibold text-gray-600">
+                                  afafa
+                                </p>
+                              </div>
+                            </div>
+                            {/* {isSuccessExpect && selectedExpect && (
+                              
+                            )} */}
+                            {/* {isLoadingExpect && <Spinner />} */}
+                          </DialogBody>
+                          <DialogFooter>
+                            <Button
+                              variant="text"
+                              color="red"
+                              onClick={handleOpenpPlanting}
+                              className="mr-1"
+                            >
+                              <span>Thoát</span>
+                            </Button>
+                          </DialogFooter>
+                        </Dialog>
                       </section>
                     </AccordionBody>
                   </Accordion>
@@ -1267,155 +1029,10 @@ const Information = () => {
                           <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
                           <div className="mt-1">
                             <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
+                              <button
+                                className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
+                                onClick={handleOpenFertilize}
+                              >
                                 <div
                                   className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
                                   style={{
@@ -1455,6 +1072,42 @@ const Information = () => {
                             </div>
                           </div>
                         </div>
+                        <Dialog
+                          open={openFertilize}
+                          handler={handleOpenFertilize}
+                        >
+                          <DialogHeader> Bón phân </DialogHeader>
+                          <DialogBody>
+                            <div>
+                              <div className="max-w-screen-md text-xs">
+                                <h4 className="text-lg font-semibold  text-gray-800">
+                                  Mã Hash
+                                </h4>
+                                <p className="text-blue-600 mb-4">afdsfa</p>
+                                <h3 className="text-lg  text-gray-800 font-semibold">
+                                  afsafd
+                                </h3>
+                                <p className="font-semibold text-gray-600">
+                                  afafa
+                                </p>
+                              </div>
+                            </div>
+                            {/* {isSuccessExpect && selectedExpect && (
+                              
+                            )} */}
+                            {/* {isLoadingExpect && <Spinner />} */}
+                          </DialogBody>
+                          <DialogFooter>
+                            <Button
+                              variant="text"
+                              color="red"
+                              onClick={handleOpenFertilize}
+                              className="mr-1"
+                            >
+                              <span>Thoát</span>
+                            </Button>
+                          </DialogFooter>
+                        </Dialog>
                       </section>
                     </AccordionBody>
                   </Accordion>
@@ -1474,155 +1127,10 @@ const Information = () => {
                           <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
                           <div className="mt-1">
                             <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
+                              <button
+                                className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
+                                onClick={handleOpenPesticide}
+                              >
                                 <div
                                   className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
                                   style={{
@@ -1662,6 +1170,42 @@ const Information = () => {
                             </div>
                           </div>
                         </div>
+                        <Dialog
+                          open={openPesticide}
+                          handler={handleOpenPesticide}
+                        >
+                          <DialogHeader> Bón phân </DialogHeader>
+                          <DialogBody>
+                            <div>
+                              <div className="max-w-screen-md text-xs">
+                                <h4 className="text-lg font-semibold  text-gray-800">
+                                  Mã Hash
+                                </h4>
+                                <p className="text-blue-600 mb-4">afdsfa</p>
+                                <h3 className="text-lg  text-gray-800 font-semibold">
+                                  afsafd
+                                </h3>
+                                <p className="font-semibold text-gray-600">
+                                  afafa
+                                </p>
+                              </div>
+                            </div>
+                            {/* {isSuccessExpect && selectedExpect && (
+                              
+                            )} */}
+                            {/* {isLoadingExpect && <Spinner />} */}
+                          </DialogBody>
+                          <DialogFooter>
+                            <Button
+                              variant="text"
+                              color="red"
+                              onClick={handleOpenPesticide}
+                              className="mr-1"
+                            >
+                              <span>Thoát</span>
+                            </Button>
+                          </DialogFooter>
+                        </Dialog>
                       </section>
                     </AccordionBody>
                   </Accordion>
