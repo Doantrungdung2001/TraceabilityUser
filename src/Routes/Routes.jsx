@@ -14,7 +14,8 @@ import Farm from "../Pages/Farm/Farm";
 import New from "../Pages/New/New";
 import About from "../Pages/AboutUs/About";
 import ProflieFarm from "../Pages/Farm/ProflieFarm";
-import History  from "../Pages/Result/History";
+import History from "../Pages/Result/History";
+import NotFound from "../Pages/404/NotFound";
 
 export const NormalRoutes = [
   { path: "/", element: <Home /> },
@@ -24,4 +25,5 @@ export const NormalRoutes = [
   { path: "/farm/detail", element: <ProflieFarm /> },
   { path: "/news", element: <New /> },
   { path: "/about-us", element: <About /> },
+  { path: "/404-notfound", element: <NotFound /> },
 ];
