@@ -50,16 +50,6 @@ const Search = () => {
             </button>
           </div>
         </div>
-        {/* <div data-aos="fade-up" className="homeFooterIcons flex">
-          <div className="rightIcons">
-            <FiFacebook className='icon'/>
-            <AiOutlineInstagram className='icon'/>
-          </div>
-
-          <div className="leftIcons">
-
-          </div>
-        </div> */}
       </div>
     </section>
   );
