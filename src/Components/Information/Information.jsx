@@ -100,113 +100,279 @@ const Information = () => {
   const [openTable, setOpenTable] = useState(false);
   const handleOpenTable = () => setOpenTable(!openTable);
 
+  const [reportsOpen, setReportsOpen] = useState(0);
+  const handleReportsOpen = (value) =>
+    setReportsOpen(reportsOpen === value ? 0 : value);
+
   const data = [
     {
       label: "Thông tin",
       value: "infor",
       desc: (
-        <DialogBody className="h-[39rem] overflow-scroll">
-          <section className="content"></section>
+        <DialogBody className="h-[39rem]">
           <section className="infor">
-            <div className="specific-information-container">
-              <div className="w-full md:w-[32rem]">
-                {selectedProcess && selectedProcess.type === "pesticide" && (
-                  <div>
-                    <Typography variant="h3" color="green">
-                      {selectedProcess.detail.name}
-                    </Typography>
-                    <Typography variant="h4" color="blue">
-                      {formatTransactionHashTable({
-                        str: selectedProcess.detail.tx,
-                        a: 8,
-                        b: 5,
-                      })}
-                    </Typography>
-                    <Typography variant="paragraph">
-                      {selectedProcess.detail.symptoms}
-                    </Typography>
-                    {/* <Typography variant="paragraph">
-                        {selectedProcess.detail.solution}
-                      </Typography> */}
-                    <Typography variant="paragraph">
-                      {selectedProcess.detail.type}
-                    </Typography>
-                  </div>
-                )}
+            <>
+              <Accordion
+                open={reportsOpen === 1}
+                icon={<Icon id={1} open={reportsOpen} />}
+              >
+                <AccordionHeader
+                  onClick={() => handleReportsOpen(1)}
+                  style={{ color: "green" }}
+                >
+                  Công việc
+                </AccordionHeader>
+                <AccordionBody>
+                  <div className="w-full md:w-[40rem]">
+                    {selectedProcess &&
+                      selectedProcess.type === "pesticide" && (
+                        <div>
+                          <div className="max-w-screen-md text-xs">
+                            <h3 class="text-blue-600">
+                              {formatDateTime(selectedProcess.time)}
+                            </h3>
 
-                {selectedProcess && selectedProcess.type === "fertilize" && (
-                  <div>
-                    <Typography variant="h3" color="green">
-                      {formatDateTime(selectedProcess.time)}
-                    </Typography>
-                    <Typography variant="h4" color="blue">
-                      {formatTransactionHashTable({
-                        str: selectedProcess.detail.tx,
-                        a: 8,
-                        b: 5,
-                      })}
-                    </Typography>
-                    <Typography variant="paragraph">
-                      {selectedProcess.detail.description}
-                    </Typography>
-                    <Typography variant="paragraph">
-                      {selectedProcess.detail.type}
-                    </Typography>
-                  </div>
-                )}
+                            <h4 className="text-lg font-semibold mb-2">
+                              Mã Hash
+                            </h4>
+                            <p class="text-blue-600">
+                              {formatTransactionHashTable({
+                                str: selectedProcess.detail.tx,
+                                a: 8,
+                                b: 5,
+                              })}
+                            </p>
+                            <h3 className="text-lg font-semibold mb-2">
+                              Đối tượng
+                            </h3>
+                            <p>{selectedProcess.detail.name}</p>
+                            {/* <ul className="list-disc ml-6 mb-4">
+                              <li>
+                                Personal Information: We may collect your name,
+                                email address, and other personal information
+                                when you provide it to us.
+                              </li>
+                              <li>
+                                Usage Information: We may collect information
+                                about your usage of our website and services,
+                                such as the pages you visit and your
+                                interactions with our content.
+                              </li>
+                            </ul> */}
+                            <h3 className="text-lg font-semibold mb-2">
+                              Chi tiết
+                            </h3>
+                            <p>{selectedProcess.detail.symptoms}</p>
+                            <h3 className="text-lg font-semibold mb-2">
+                              Hoạt động
+                            </h3>
+                            <p>{selectedProcess.detail.solution}</p>
+                          </div>
+                        </div>
+                      )}
 
-                {selectedProcess && selectedProcess.type === "planting" && (
-                  <div>
-                    <Typography variant="h3" color="green">
-                      {selectedProcess.detail.density}
-                    </Typography>
-                    <Typography variant="h4" color="blue">
-                      {formatTransactionHashTable({
-                        str: selectedProcess.detail.tx,
-                        a: 8,
-                        b: 5,
-                      })}
-                    </Typography>
-                    <Typography variant="paragraph">
-                      {selectedProcess.detail.description}
-                    </Typography>
-                  </div>
-                )}
+                    {selectedProcess &&
+                      selectedProcess.type === "fertilize" && (
+                        <div>
+                          <div className="max-w-screen-md text-xs">
+                            <h3 class="text-blue-600">
+                              {formatDateTime(selectedProcess.time)}
+                            </h3>
 
-                {selectedProcess && selectedProcess.type === "other" && (
-                  <div>
-                    <Typography variant="h4" color="blue">
-                      {formatTransactionHashTable({
-                        str: selectedProcess.detail.tx,
-                        a: 8,
-                        b: 5,
-                      })}
-                    </Typography>
-                    <Typography variant="paragraph">
-                      {selectedProcess.detail.description}
-                    </Typography>
-                  </div>
-                )}
+                            <h4 className="text-lg font-semibold mb-2">
+                              Mã Hash
+                            </h4>
+                            <p class="text-blue-600">
+                              {formatTransactionHashTable({
+                                str: selectedProcess.detail.tx,
+                                a: 8,
+                                b: 5,
+                              })}
+                            </p>
+                            <h3 className="text-lg font-semibold mb-2">
+                              Đối tượng
+                            </h3>
+                            <p>{selectedProcess.detail.name}</p>
+                            {/* <ul className="list-disc ml-6 mb-4">
+                              <li>
+                                Personal Information: We may collect your name,
+                                email address, and other personal information
+                                when you provide it to us.
+                              </li>
+                              <li>
+                                Usage Information: We may collect information
+                                about your usage of our website and services,
+                                such as the pages you visit and your
+                                interactions with our content.
+                              </li>
+                            </ul> */}
+                            <h3 className="text-lg font-semibold mb-2">Kiểu</h3>
+                            <p>{selectedProcess.detail.type}</p>
+                            <h3 className="text-lg font-semibold mb-2">
+                              Mô tả
+                            </h3>
+                            <p>{selectedProcess.detail.description}</p>
+                          </div>
+                        </div>
+                      )}
 
-                {selectedProcess && selectedProcess.type === "cultivation" && (
-                  <div>
-                    <Typography variant="h3" color="green">
-                      {selectedProcess.detail.name}
-                    </Typography>
-                    <Typography variant="h4" color="blue">
-                      {formatTransactionHashTable({
-                        str: selectedProcess.detail.tx,
-                        a: 8,
-                        b: 5,
-                      })}
-                    </Typography>
-                    <Typography variant="paragraph">
-                      {selectedProcess.detail.description}
-                    </Typography>
+                    {selectedProcess && selectedProcess.type === "planting" && (
+                      <div>
+                        <div className="max-w-screen-md text-xs">
+                          <h3 class="text-blue-600">
+                            {formatDateTime(selectedProcess.time)}
+                          </h3>
+
+                          <h4 className="text-lg font-semibold mb-2">
+                            Mã Hash
+                          </h4>
+                          <p class="text-blue-600">
+                            {formatTransactionHashTable({
+                              str: selectedProcess.detail.tx,
+                              a: 8,
+                              b: 5,
+                            })}
+                          </p>
+                          <h3 className="text-lg font-semibold mb-2">
+                            Đối tượng
+                          </h3>
+                          <p>{selectedProcess.detail.name}</p>
+                          {/* <ul className="list-disc ml-6 mb-4">
+                              <li>
+                                Personal Information: We may collect your name,
+                                email address, and other personal information
+                                when you provide it to us.
+                              </li>
+                              <li>
+                                Usage Information: We may collect information
+                                about your usage of our website and services,
+                                such as the pages you visit and your
+                                interactions with our content.
+                              </li>
+                            </ul> */}
+                          <h3 className="text-lg font-semibold mb-2">Kiểu</h3>
+                          <p>{selectedProcess.detail.density}</p>
+                          <h3 className="text-lg font-semibold mb-2">Mô tả</h3>
+                          <p>{selectedProcess.detail.description}</p>
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedProcess && selectedProcess.type === "other" && (
+                      <div>
+                        <div>
+                          <div className="max-w-screen-md text-xs">
+                            <h3 class="text-blue-600">
+                              {formatDateTime(selectedProcess.time)}
+                            </h3>
+
+                            <h4 className="text-lg font-semibold mb-2">
+                              Mã Hash
+                            </h4>
+                            <p class="text-blue-600">
+                              {formatTransactionHashTable({
+                                str: selectedProcess.detail.tx,
+                                a: 8,
+                                b: 5,
+                              })}
+                            </p>
+                            <h3 className="text-lg font-semibold mb-2">
+                              Đối tượng
+                            </h3>
+                            <p>{selectedProcess.detail.name}</p>
+                            {/* <ul className="list-disc ml-6 mb-4">
+                              <li>
+                                Personal Information: We may collect your name,
+                                email address, and other personal information
+                                when you provide it to us.
+                              </li>
+                              <li>
+                                Usage Information: We may collect information
+                                about your usage of our website and services,
+                                such as the pages you visit and your
+                                interactions with our content.
+                              </li>
+                            </ul> */}
+                            <h3 className="text-lg font-semibold mb-2">Kiểu</h3>
+                            <p>{selectedProcess.detail.density}</p>
+                            <h3 className="text-lg font-semibold mb-2">
+                              Mô tả
+                            </h3>
+                            <p>{selectedProcess.detail.description}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedProcess &&
+                      selectedProcess.type === "cultivation" && (
+                        <div>
+                          <div>
+                            <div className="max-w-screen-md text-xs">
+                              <h3 class="text-blue-600">
+                                {formatDateTime(selectedProcess.time)}
+                              </h3>
+
+                              <h4 className="text-lg font-semibold mb-2">
+                                Mã Hash
+                              </h4>
+                              <p class="text-blue-600">
+                                {formatTransactionHashTable({
+                                  str: selectedProcess.detail.tx,
+                                  a: 8,
+                                  b: 5,
+                                })}
+                              </p>
+                              <h3 className="text-lg font-semibold mb-2">
+                                Đối tượng
+                              </h3>
+                              <p>{selectedProcess.detail.name}</p>
+                              {/* <ul className="list-disc ml-6 mb-4">
+                              <li>
+                                Personal Information: We may collect your name,
+                                email address, and other personal information
+                                when you provide it to us.
+                              </li>
+                              <li>
+                                Usage Information: We may collect information
+                                about your usage of our website and services,
+                                such as the pages you visit and your
+                                interactions with our content.
+                              </li>
+                            </ul> */}
+                              <h3 className="text-lg font-semibold mb-2">
+                                Kiểu
+                              </h3>
+                              <p>{selectedProcess.detail.density}</p>
+                              <h3 className="text-lg font-semibold mb-2">
+                                Mô tả
+                              </h3>
+                              <p>{selectedProcess.detail.description}</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                   </div>
-                )}
-              </div>
-            </div>
+                </AccordionBody>
+              </Accordion>
+              <Accordion
+                open={reportsOpen === 2}
+                icon={<Icon id={2} open={reportsOpen} />}
+              >
+                <AccordionHeader
+                  onClick={() => handleReportsOpen(2)}
+                  style={{ color: "green" }}
+                >
+                  Lịch sử chỉnh sửa
+                </AccordionHeader>
+                <AccordionBody>
+                  We&apos;re not always in the position that we want to be at.
+                  We&apos;re constantly growing. We&apos;re constantly making
+                  mistakes. We&apos;re constantly trying to express ourselves
+                  and actualize our dreams.
+                </AccordionBody>
+              </Accordion>
+            </>
           </section>
         </DialogBody>
       ),
@@ -285,7 +451,8 @@ const Information = () => {
                     <img
                       key={index}
                       src={url.img}
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-cover rounded-xl"
+                      style={{ maxWidth: "100%", height: "auto" }}
                     />
                   ))}
                 {isLoadingOutput && <Spinner />}
@@ -374,8 +541,9 @@ const Information = () => {
                 {isSuccessProcess &&
                   dataProcess.map((process, index) => (
                     <div>
-                      <TimelineItem className="flex-grow h-[7rem]" key={index}>
-                        <TimelineConnector className="!w-[60px]" />
+                      {/* <TimelineItem className="flex-grow h-[7rem]" key={index}> */}
+                      <TimelineItem style={{ height: "7rem" }} key={index}>
+                        <TimelineConnector className="!w-[50px]" />
                         <TimelineHeader
                           className="relative rounded-xl border border-blue-gray-50 bg-white py-1 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5"
                           onClick={() => {
@@ -393,7 +561,9 @@ const Information = () => {
                               color="blue-gray"
                               className="text-sm sm:text-base"
                             >
-                              {process.name}
+                              {process.name.length > 20
+                                ? process.name.slice(0, 20) + "..."
+                                : process.name}
                             </Typography>
                             <Typography
                               variant="small"
@@ -421,7 +591,7 @@ const Information = () => {
             <Dialog open={openTimeline} handler={handleOpenTimeline}>
               <DialogHeader>Chi tiết công việc</DialogHeader>
 
-              <DialogBody className="h-[39rem] overflow-scroll">
+              <DialogBody className="h-[25rem] overflow-scroll">
                 <section className="content"></section>
                 <Tabs className="tab" id="custom-animation" value="infor">
                   <TabsHeader className="tab-header">
@@ -1092,10 +1262,200 @@ const Information = () => {
                       Hoạt động bón phân
                     </AccordionHeader>
                     <AccordionBody>
-                      We&apos;re not always in the position that we want to be
-                      at. We&apos;re constantly growing. We&apos;re constantly
-                      making mistakes. We&apos;re constantly trying to express
-                      ourselves and actualize our dreams.
+                      <section className="flex items-center justify-center">
+                        <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
+                          <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
+                          <div className="mt-1">
+                            <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
+                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
+                                <div
+                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    flexShrink: 0,
+                                  }}
+                                >
+                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                                    <svg
+                                      className="mx-auto h-6 w-6"
+                                      aria-hidden="true"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+
+                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
+                                  <p className="text-blue-500 text-[15px]">
+                                    Click vào xem chi tiết
+                                  </p>
+                                  <span className="text-xs font-light text-gray-400">
+                                    Add a box with additional info
+                                  </span>
+                                </div>
+                              </button>
+                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
+                                <div
+                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    flexShrink: 0,
+                                  }}
+                                >
+                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                                    <svg
+                                      className="mx-auto h-6 w-6"
+                                      aria-hidden="true"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+
+                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
+                                  <p className="text-blue-500 text-[15px]">
+                                    Click vào xem chi tiết
+                                  </p>
+                                  <span className="text-xs font-light text-gray-400">
+                                    Add a box with additional info
+                                  </span>
+                                </div>
+                              </button>
+                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
+                                <div
+                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    flexShrink: 0,
+                                  }}
+                                >
+                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                                    <svg
+                                      className="mx-auto h-6 w-6"
+                                      aria-hidden="true"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+
+                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
+                                  <p className="text-blue-500 text-[15px]">
+                                    Click vào xem chi tiết
+                                  </p>
+                                  <span className="text-xs font-light text-gray-400">
+                                    Add a box with additional info
+                                  </span>
+                                </div>
+                              </button>
+                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
+                                <div
+                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    flexShrink: 0,
+                                  }}
+                                >
+                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                                    <svg
+                                      className="mx-auto h-6 w-6"
+                                      aria-hidden="true"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+
+                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
+                                  <p className="text-blue-500 text-[15px]">
+                                    Click vào xem chi tiết
+                                  </p>
+                                  <span className="text-xs font-light text-gray-400">
+                                    Add a box with additional info
+                                  </span>
+                                </div>
+                              </button>
+                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
+                                <div
+                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    flexShrink: 0,
+                                  }}
+                                >
+                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                                    <svg
+                                      className="mx-auto h-6 w-6"
+                                      aria-hidden="true"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+
+                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
+                                  <p className="text-blue-500 text-[15px]">
+                                    Click vào xem chi tiết
+                                  </p>
+                                  <span className="text-xs font-light text-gray-400">
+                                    Add a box with additional info
+                                  </span>
+                                </div>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
                     </AccordionBody>
                   </Accordion>
                   <Accordion
@@ -1109,10 +1469,200 @@ const Information = () => {
                       Phòng trừ sâu bệnh
                     </AccordionHeader>
                     <AccordionBody>
-                      We&apos;re not always in the position that we want to be
-                      at. We&apos;re constantly growing. We&apos;re constantly
-                      making mistakes. We&apos;re constantly trying to express
-                      ourselves and actualize our dreams.
+                      <section className="flex items-center justify-center">
+                        <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
+                          <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
+                          <div className="mt-1">
+                            <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
+                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
+                                <div
+                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    flexShrink: 0,
+                                  }}
+                                >
+                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                                    <svg
+                                      className="mx-auto h-6 w-6"
+                                      aria-hidden="true"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+
+                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
+                                  <p className="text-blue-500 text-[15px]">
+                                    Click vào xem chi tiết
+                                  </p>
+                                  <span className="text-xs font-light text-gray-400">
+                                    Add a box with additional info
+                                  </span>
+                                </div>
+                              </button>
+                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
+                                <div
+                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    flexShrink: 0,
+                                  }}
+                                >
+                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                                    <svg
+                                      className="mx-auto h-6 w-6"
+                                      aria-hidden="true"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+
+                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
+                                  <p className="text-blue-500 text-[15px]">
+                                    Click vào xem chi tiết
+                                  </p>
+                                  <span className="text-xs font-light text-gray-400">
+                                    Add a box with additional info
+                                  </span>
+                                </div>
+                              </button>
+                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
+                                <div
+                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    flexShrink: 0,
+                                  }}
+                                >
+                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                                    <svg
+                                      className="mx-auto h-6 w-6"
+                                      aria-hidden="true"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+
+                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
+                                  <p className="text-blue-500 text-[15px]">
+                                    Click vào xem chi tiết
+                                  </p>
+                                  <span className="text-xs font-light text-gray-400">
+                                    Add a box with additional info
+                                  </span>
+                                </div>
+                              </button>
+                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
+                                <div
+                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    flexShrink: 0,
+                                  }}
+                                >
+                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                                    <svg
+                                      className="mx-auto h-6 w-6"
+                                      aria-hidden="true"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+
+                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
+                                  <p className="text-blue-500 text-[15px]">
+                                    Click vào xem chi tiết
+                                  </p>
+                                  <span className="text-xs font-light text-gray-400">
+                                    Add a box with additional info
+                                  </span>
+                                </div>
+                              </button>
+                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
+                                <div
+                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    flexShrink: 0,
+                                  }}
+                                >
+                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                                    <svg
+                                      className="mx-auto h-6 w-6"
+                                      aria-hidden="true"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+
+                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
+                                  <p className="text-blue-500 text-[15px]">
+                                    Click vào xem chi tiết
+                                  </p>
+                                  <span className="text-xs font-light text-gray-400">
+                                    Add a box with additional info
+                                  </span>
+                                </div>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
                     </AccordionBody>
                   </Accordion>
                 </>

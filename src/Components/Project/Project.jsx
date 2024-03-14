@@ -43,10 +43,6 @@ const data = [
 const SliderButton = () => {
   const swiper = useSwiper();
   return (
-    // <div className="flexCenter r-buttons">
-    //   <button onClick={() => swiper.slidePrev()}>&lt;</button>
-    //   <button onClick={() => swiper.slideNext()}>&gt;</button>
-    // </div>
     <div className="flex items-center justify-center lg:justify-between px-4 py-2">
       <button
         className="bg-green-300 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-l-lg mr-2"
