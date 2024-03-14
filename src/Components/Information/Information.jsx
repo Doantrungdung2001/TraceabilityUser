@@ -58,7 +58,7 @@ function Icon({ id, open }) {
 
 function ActivityLogItem({ text, linkText, time, note }) {
   return (
-    <div className="flex items-center w-full my-5 -ml-1.5">
+    <div className="flex items-center w-full my-5 -ml-1.5 px-2">
       <div className="w-1/12 z-10">
         <div className="w-3.5 h-3.5 bg-blue-600 rounded-full"></div>
       </div>
@@ -369,10 +369,20 @@ const Information = () => {
                   Lịch sử chỉnh sửa
                 </AccordionHeader>
                 <AccordionBody>
-                  We&apos;re not always in the position that we want to be at.
-                  We&apos;re constantly growing. We&apos;re constantly making
-                  mistakes. We&apos;re constantly trying to express ourselves
-                  and actualize our dreams.
+                  <>
+                    <ActivityLogItem
+                      text="Profile informations changed."
+                      time="3 min ago"
+                    />
+                    <ActivityLogItem
+                      text="Profile informations changed."
+                      time="3 min ago"
+                    />
+                    <ActivityLogItem
+                      text="Profile informations changed."
+                      time="3 min ago"
+                    />
+                  </>
                 </AccordionBody>
               </Accordion>
             </>
