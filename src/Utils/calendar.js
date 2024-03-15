@@ -46,16 +46,16 @@ export const generateDate = (
 };
 
 export const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  "Tháng 01",
+  "Tháng 02",
+  "Tháng 03",
+  "Tháng 04",
+  "Tháng 05",
+  "Tháng 06",
+  "Tháng 07",
+  "Tháng 08",
+  "Tháng 09",
+  "Tháng 10",
+  "Tháng 11",
+  "Tháng 12",
 ];
