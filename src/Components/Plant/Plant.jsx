@@ -1,7 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/css";
-import "./project.css";
 import { sliderSettings } from "../../Utils/common";
 const data = [
   {
@@ -60,13 +59,13 @@ const SliderButton = () => {
   );
 };
 
-const Project = () => {
+const Plant = () => {
   return (
     <section className="r-wrapper">
       <div className="paddings innerWidth r-container">
         <div className="r-head flexColStart">
-          <span className="orangeText">Danh sách dự án</span>
-          <span className="primaryText">Dự án nổi bật</span>
+          <span className="orangeText">Danh sách cây trồng</span>
+          <span className="primaryText">Cây trồng phổ biến</span>
         </div>
 
         <Swiper {...sliderSettings}>
@@ -98,4 +97,4 @@ const Project = () => {
   );
 };
 
-export default Project;
+export default Plant;
