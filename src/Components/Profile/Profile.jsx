@@ -2,6 +2,7 @@ import React from "react";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/css";
 import { sliderSettings } from "../../Utils/common";
+import { useParams } from "react-router-dom";
 
 const data = [
   {
@@ -61,6 +62,7 @@ const SliderButton = () => {
 };
 
 const ProfileFarm = () => {
+  const {farmId} = useParams()
   function PlantCard({ category, name, price, image, color }) {
     return (
       <div

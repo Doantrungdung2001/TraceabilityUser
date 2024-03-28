@@ -30,31 +30,7 @@ import {
 } from "../../Utils/helpers";
 import Calendar from "../Calendar/Calendar";
 
-const output = [
-  {
-    name: "Hoat dong1",
-    content: "sdfasdf",
-  },
-  {
-    name: "Hoat dong2",
-    content: "sdfasdf",
-  },
-  {
-    name: "Hoat dong3",
-    content: "sdfasdf",
-  },
-  {
-    name: "Hoat dong4",
-    content: "sdfasdf",
-  },
-];
-
 const TABLE_HEAD = ["Thời gian", "Dự kiến (kg)"];
-const cultivation = [];
-const planting = [];
-const fertilize = [];
-const pesticide = [];
-
 function Icon({ id, open }) {
   return (
     <svg
@@ -83,10 +59,11 @@ function ActivityLogItem({ text, linkText, time, note }) {
         <div className="w-3.5 h-3.5 bg-blue-600 rounded-full"></div>
       </div>
       <div className="w-11/12">
-        <p className="text-sm text-gray-800 font-bold">
-          Số lượng :<span className="text-gray-600"> {text} </span>
-          <span className="text-xs text-blue-600 font-bold"># {linkText}</span>
+        <p className="text-sm text-gray-800 font-bold py-1">
+          Sản lượng :<span className="text-gray-600"> {text} (kg)</span>
+          <span className="text-xs text-blue-600 font-bold"> ({linkText})</span>
         </p>
+
         <p className="text-xs text-gray-600">{time}</p>
         <p className="text-sm  text-gray-800 font-bold">
           Ghi chú : <span className="text-xs text-gray-600 ">{note}</span>
@@ -100,6 +77,8 @@ const Information = () => {
   const projectId = useParams().projectId;
   const {
     ImageProduct,
+    allDistributerWithAmount,
+    Output,
     isSuccessOutput,
     isLoadingOutput,
     projectInfo,
@@ -129,6 +108,10 @@ const Information = () => {
   const [openExpect, setOpenExpect] = useState(0);
   const [selectedProcess, setSelectedProcess] = useState(null);
   const [selectedExpect, setSelectedExpect] = useState(null);
+  const [selectedCultivation, setSelectedCultivation] = useState(null);
+  const [selectedPlanting, setSelectedPlanting] = useState(null);
+  const [selectedFertilize, setSelectedFertilize] = useState(null);
+  const [selectedPesticide, setSelectedPesticide] = useState(null);
 
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
   const handleOpenExpect = (value) =>
@@ -152,9 +135,13 @@ const Information = () => {
   const [openPesticide, setOpenPesticide] = useState(false); // Thuốc trừ sâu
   const handleOpenPesticide = () => setOpenPesticide(!openPesticide);
 
+  const [openHarvest, setOpenHarvest] = useState(false); // Phần output chỗ thu hoạch
+  const handleOpenHarvest = () => setOpenHarvest(!openHarvest);
+
   const [openOutput, setOpenOutput] = useState(0);
   const handleOpenOutput = (value) =>
     setOpenOutput(openOutput === value ? 0 : value);
+
   const data = [
     {
       label: "Thông tin",
@@ -193,7 +180,7 @@ const Information = () => {
                             </p>
                             <h3 className="text-lg font-semibold">Đối tượng</h3>
                             <p>{selectedProcess.detail.name}</p>
-                            {/* <ul className="list-disc ml-6 mb-4">
+                            <ul className="list-disc ml-6 mb-4">
                               <li>
                                 Personal Information: We may collect your name,
                                 email address, and other personal information
@@ -205,7 +192,7 @@ const Information = () => {
                                 such as the pages you visit and your
                                 interactions with our content.
                               </li>
-                            </ul> */}
+                            </ul>
                             <h3 className="text-lg font-semibold">Chi tiết</h3>
                             <p>{selectedProcess.detail.symptoms}</p>
                             <h3 className="text-lg font-semibold">Hoạt động</h3>
@@ -508,7 +495,7 @@ const Information = () => {
                       <dl className="divide-y divide-gray-800">
                         <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                           <dt className="text-sm font-medium leaading-3 text-gray-900">
-                            Transaction Hash
+                            Transaction Hash (Khởi tạo dự án)
                           </dt>
                           <dd className="mt-1 text-sm font-semibold leaading-3 text-blue-900 sm:col-span-2 sm:mt-0">
                             {formatTransactionHashTable({
@@ -560,11 +547,32 @@ const Information = () => {
                             {projectInfo?.square}
                           </dd>
                         </div>
+                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                          <dt className="text-sm font-medium leaading-3 text-gray-900">
+                            Mô tả
+                          </dt>
+                          <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                            {projectInfo?.description}
+                          </dd>
+                        </div>
+                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                          <dt className="text-sm font-medium leaading-3 text-gray-900">
+                            Nhà phân phối
+                          </dt>
+                          <dd className="mt-1 text-sm font-semibold leading-3 text-gray-900 sm:col-span-2 sm:mt-0">
+                            <ul className="py-1">
+                              {allDistributerWithAmount.map((item, index) => (
+                                <li className="py-1" key={index}>
+                                  {item.distributer?.name}
+                                </li>
+                              ))}
+                            </ul>
+                          </dd>
+                        </div>
                       </dl>
                     </div>
                   </div>
                 )}
-
                 {isLoadingProjectInfo && <Spinner />}
               </div>
             </div>
@@ -578,7 +586,6 @@ const Information = () => {
                 {isSuccessProcess &&
                   dataProcess.map((process, index) => (
                     <div>
-                      {/* <TimelineItem className="flex-grow h-[7rem]" key={index}> */}
                       <TimelineItem style={{ height: "7rem" }} key={index}>
                         <TimelineConnector className="!w-[50px]" />
                         <TimelineHeader
@@ -809,7 +816,7 @@ const Information = () => {
                                         a: 8,
                                         b: 5,
                                       })}
-                                      time={data.time}
+                                      time={formatDateTime(data.time)}
                                       note={data.note}
                                     />
                                   )
@@ -849,430 +856,131 @@ const Information = () => {
               Quy trình mẫu
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
-              <section className="px-4">
-                <>
-                  <Accordion
-                    open={openExpect === 1}
-                    icon={<Icon id={1} open={openExpect} />}
-                  >
-                    <AccordionHeader
-                      className="text-base"
-                      onClick={() => handleOpenExpect(1)}
-                    >
-                      Hoạt động làm đất
-                    </AccordionHeader>
-                    <AccordionBody>
-                      <section className="flex items-center justify-center">
-                        <div
-                          className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100"
-                          onClick={handleOpenCultivation}
-                        >
-                          <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
-                          <div className="mt-1">
-                            <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
-                              <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                        <Dialog
-                          open={openCultivation}
-                          handler={handleOpenCultivation}
-                        >
-                          <DialogHeader> Bón phân </DialogHeader>
-                          <DialogBody>
-                            <div>
-                              <div className="max-w-screen-md text-xs">
-                                <h4 className="text-lg font-semibold  text-gray-800">
-                                  Mã Hash
-                                </h4>
-                                <p className="text-blue-600 mb-4">afdsfa</p>
-                                <h3 className="text-lg  text-gray-800 font-semibold">
-                                  afsafd
-                                </h3>
-                                <p className="font-semibold text-gray-600">
-                                  afafa
-                                </p>
-                              </div>
-                            </div>
-                            {/* {isSuccessExpect && selectedExpect && (
-                              
-                            )} */}
-                            {/* {isLoadingExpect && <Spinner />} */}
-                          </DialogBody>
-                          <DialogFooter>
-                            <Button
-                              variant="text"
-                              color="red"
-                              onClick={handleOpenCultivation}
-                              className="mr-1"
-                            >
-                              <span>Thoát</span>
-                            </Button>
-                          </DialogFooter>
-                        </Dialog>
-                      </section>
-                    </AccordionBody>
-                  </Accordion>
-                  <Accordion
-                    open={openExpect === 2}
-                    icon={<Icon id={2} open={openExpect} />}
-                  >
-                    <AccordionHeader
-                      className="text-base"
-                      onClick={() => handleOpenExpect(2)}
-                    >
-                      Hoạt động gieo trồng
-                    </AccordionHeader>
-                    <AccordionBody>
-                      <section className="flex items-center justify-center">
-                        <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
-                          <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
-                          <div className="mt-1">
-                            <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
-                              <button
-                                className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
-                                onClick={handleOpenpPlanting}
-                              >
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                        <Dialog
-                          open={openpPlanting}
-                          handler={handleOpenpPlanting}
-                        >
-                          <DialogHeader> Bón phân </DialogHeader>
-                          <DialogBody>
-                            <div>
-                              <div className="max-w-screen-md text-xs">
-                                <h4 className="text-lg font-semibold  text-gray-800">
-                                  Mã Hash
-                                </h4>
-                                <p className="text-blue-600 mb-4">afdsfa</p>
-                                <h3 className="text-lg  text-gray-800 font-semibold">
-                                  afsafd
-                                </h3>
-                                <p className="font-semibold text-gray-600">
-                                  afafa
-                                </p>
-                              </div>
-                            </div>
-                            {/* {isSuccessExpect && selectedExpect && (
-                              
-                            )} */}
-                            {/* {isLoadingExpect && <Spinner />} */}
-                          </DialogBody>
-                          <DialogFooter>
-                            <Button
-                              variant="text"
-                              color="red"
-                              onClick={handleOpenpPlanting}
-                              className="mr-1"
-                            >
-                              <span>Thoát</span>
-                            </Button>
-                          </DialogFooter>
-                        </Dialog>
-                      </section>
-                    </AccordionBody>
-                  </Accordion>
-                  <Accordion
-                    open={openExpect === 3}
-                    icon={<Icon id={3} open={openExpect} />}
-                  >
-                    <AccordionHeader
-                      className="text-base"
-                      onClick={() => handleOpenExpect(3)}
-                    >
-                      Hoạt động bón phân
-                    </AccordionHeader>
-                    <AccordionBody>
-                      <section className="flex items-center justify-center">
-                        <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
-                          <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
-                          <div className="mt-1">
-                            <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
-                              <button
-                                className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
-                                onClick={handleOpenFertilize}
-                              >
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                        <Dialog
-                          open={openFertilize}
-                          handler={handleOpenFertilize}
-                        >
-                          <DialogHeader> Bón phân </DialogHeader>
-                          <DialogBody>
-                            <div>
-                              <div className="max-w-screen-md text-xs">
-                                <h4 className="text-lg font-semibold  text-gray-800">
-                                  Mã Hash
-                                </h4>
-                                <p className="text-blue-600 mb-4">afdsfa</p>
-                                <h3 className="text-lg  text-gray-800 font-semibold">
-                                  afsafd
-                                </h3>
-                                <p className="font-semibold text-gray-600">
-                                  afafa
-                                </p>
-                              </div>
-                            </div>
-                            {/* {isSuccessExpect && selectedExpect && (
-                              
-                            )} */}
-                            {/* {isLoadingExpect && <Spinner />} */}
-                          </DialogBody>
-                          <DialogFooter>
-                            <Button
-                              variant="text"
-                              color="red"
-                              onClick={handleOpenFertilize}
-                              className="mr-1"
-                            >
-                              <span>Thoát</span>
-                            </Button>
-                          </DialogFooter>
-                        </Dialog>
-                      </section>
-                    </AccordionBody>
-                  </Accordion>
-                  <Accordion
-                    open={openExpect === 4}
-                    icon={<Icon id={4} open={openExpect} />}
-                  >
-                    <AccordionHeader
-                      className="text-base"
-                      onClick={() => handleOpenExpect(4)}
-                    >
-                      Phòng trừ sâu bệnh
-                    </AccordionHeader>
-                    <AccordionBody>
-                      <section className="flex items-center justify-center">
-                        <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
-                          <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
-                          <div className="mt-1">
-                            <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
-                              <button
-                                className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
-                                onClick={handleOpenPesticide}
-                              >
-                                <div
-                                  className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                  style={{
-                                    width: "30px",
-                                    height: "30px",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                    <svg
-                                      className="mx-auto h-6 w-6"
-                                      aria-hidden="true"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      viewBox="0 0 24 24"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      ></path>
-                                    </svg>
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                  <p className="text-blue-500 text-[15px]">
-                                    Click vào xem chi tiết
-                                  </p>
-                                  <span className="text-xs font-light text-gray-400">
-                                    Add a box with additional info
-                                  </span>
-                                </div>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                        <Dialog
-                          open={openPesticide}
-                          handler={handleOpenPesticide}
-                        >
-                          <DialogHeader> Bón phân </DialogHeader>
-                          <DialogBody>
-                            <div>
-                              <div className="max-w-screen-md text-xs">
-                                <h4 className="text-lg font-semibold  text-gray-800">
-                                  Mã Hash
-                                </h4>
-                                <p className="text-blue-600 mb-4">afdsfa</p>
-                                <h3 className="text-lg  text-gray-800 font-semibold">
-                                  afsafd
-                                </h3>
-                                <p className="font-semibold text-gray-600">
-                                  afafa
-                                </p>
-                              </div>
-                            </div>
-                            {/* {isSuccessExpect && selectedExpect && (
-                              
-                            )} */}
-                            {/* {isLoadingExpect && <Spinner />} */}
-                          </DialogBody>
-                          <DialogFooter>
-                            <Button
-                              variant="text"
-                              color="red"
-                              onClick={handleOpenPesticide}
-                              className="mr-1"
-                            >
-                              <span>Thoát</span>
-                            </Button>
-                          </DialogFooter>
-                        </Dialog>
-                      </section>
-                    </AccordionBody>
-                  </Accordion>
-                </>
-              </section>
-            </AccordionBody>
-          </Accordion>
-          <Accordion
-            open={open === 3}
-            className="mb-2 rounded-lg border border-blue-gray-300 px-4"
-          >
-            <AccordionHeader
-              onClick={() => handleOpen(3)}
-              className={`border-b-0 transition-colors ${
-                open === 3 ? "text-green-400 hover:!text-green-700" : ""
-              }`}
-            >
-              Đầu ra
-            </AccordionHeader>
-            <AccordionBody className="pt-0 text-base font-normal">
-              <section>
-                <>
-                  {output.map((item, index) => (
+              {isSuccessPlantFarming && (
+                <section className="px-4">
+                  <>
                     <Accordion
-                      key={index} // Make sure to provide a unique key for each item
-                      open={openOutput === 1}
-                      icon={<Icon id={1} open={openOutput} />}
+                      open={openExpect === 1}
+                      icon={<Icon id={1} open={openExpect} />}
                     >
                       <AccordionHeader
                         className="text-base"
-                        onClick={() => handleOpenOutput(1)}
+                        onClick={() => handleOpenExpect(1)}
                       >
-                        {item.name}
+                        Hoạt động làm đất
+                      </AccordionHeader>
+                      <AccordionBody>
+                        <section className="flex items-center justify-center">
+                          <div
+                            className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100"
+                            onClick={handleOpenCultivation}
+                          >
+                            <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
+                            <div className="mt-1">
+                              <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
+                                {dataPlantFarming?.cultivationActivities?.map(
+                                  (item, index) => (
+                                    <button
+                                      key={index}
+                                      className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
+                                      onClick={() => {
+                                        setSelectedCultivation(item);
+                                        handleOpenCultivation();
+                                      }}
+                                    >
+                                      <div
+                                        className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                                        style={{
+                                          width: "30px",
+                                          height: "30px",
+                                          flexShrink: 0,
+                                        }}
+                                      >
+                                        <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                                          <svg
+                                            className="mx-auto h-6 w-6"
+                                            aria-hidden="true"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                              strokeLinecap="round"
+                                              strokeLinejoin="round"
+                                            ></path>
+                                          </svg>
+                                        </span>
+                                      </div>
+                                      <div className="flex flex-col items-start text-gray-600">
+                                        <p
+                                          className="font-semibold text-blue-500"
+                                          style={{
+                                            float: "left",
+                                            width: "100%",
+                                            textAlign: "justify",
+                                          }}
+                                        >
+                                          {item?.name}
+                                        </p>
+                                      </div>
+                                    </button>
+                                  )
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                          <Dialog
+                            open={openCultivation}
+                            handler={handleOpenCultivation}
+                          >
+                            <DialogHeader>Họat động làm đất </DialogHeader>
+                            {selectedCultivation && (
+                              <DialogBody>
+                                <div>
+                                  <div className="max-w-screen-md text-xs">
+                                    <h4 className="text-lg font-semibold  text-gray-800">
+                                      Tên hoạt động
+                                    </h4>
+                                    <p className="font-semibold text-gray-600 mb-4">
+                                      {selectedCultivation?.name}
+                                    </p>
+                                    <h3 className="text-lg  text-gray-800 font-semibold">
+                                      Mô tả
+                                    </h3>
+                                    <p className="font-semibold text-gray-600">
+                                      {selectedCultivation?.description}
+                                    </p>
+                                  </div>
+                                </div>
+                              </DialogBody>
+                            )}
+
+                            <DialogFooter>
+                              <Button
+                                variant="text"
+                                color="red"
+                                onClick={handleOpenCultivation}
+                                className="mr-1"
+                              >
+                                <span>Thoát</span>
+                              </Button>
+                            </DialogFooter>
+                          </Dialog>
+                        </section>
+                      </AccordionBody>
+                    </Accordion>
+                    <Accordion
+                      open={openExpect === 2}
+                      icon={<Icon id={2} open={openExpect} />}
+                    >
+                      <AccordionHeader
+                        className="text-base"
+                        onClick={() => handleOpenExpect(2)}
+                      >
+                        Hoạt động gieo trồng
                       </AccordionHeader>
                       <AccordionBody>
                         <section className="flex items-center justify-center">
@@ -1280,7 +988,15 @@ const Information = () => {
                             <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
                             <div className="mt-1">
                               <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
-                                <button className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100">
+                                <button
+                                  className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
+                                  onClick={() => {
+                                    setSelectedPlanting(
+                                      dataPlantFarming?.plantingActivity
+                                    );
+                                    handleOpenpPlanting();
+                                  }}
+                                >
                                   <div
                                     className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
                                     style={{
@@ -1309,54 +1025,453 @@ const Information = () => {
                                   </div>
 
                                   <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                    <p className="text-blue-500 text-[15px]">
-                                      Click vào xem chi tiết
+                                    <p
+                                      className="font-semibold text-blue-500"
+                                      style={{
+                                        float: "left",
+                                        width: "100%",
+                                        textAlign: "justify",
+                                      }}
+                                    >
+                                      {
+                                        dataPlantFarming?.plantingActivity
+                                          .density
+                                      }
                                     </p>
-                                    <span className="text-xs font-light text-gray-400">
-                                      {item.name}
-                                    </span>
                                   </div>
                                 </button>
                               </div>
                             </div>
                           </div>
-                          {/* <Dialog
-                            open={openCultivation}
-                            handler={handleOpenCultivation}
+                          <Dialog
+                            open={openpPlanting}
+                            handler={handleOpenpPlanting}
                           >
-                            <DialogHeader> Bón phân </DialogHeader>
-                            <DialogBody>
-                              <div>
-                                <div className="max-w-screen-md text-xs">
-                                  <h4 className="text-lg font-semibold  text-gray-800">
-                                    Mã Hash
-                                  </h4>
-                                  <p className="text-blue-600 mb-4">afdsfa</p>
-                                  <h3 className="text-lg  text-gray-800 font-semibold">
-                                    afsafd
-                                  </h3>
-                                  <p className="font-semibold text-gray-600">
-                                    afafa
-                                  </p>
+                            <DialogHeader> Hoạt động gieo trồng </DialogHeader>
+                            {selectedPlanting && (
+                              <DialogBody>
+                                <div>
+                                  <div className="max-w-screen-md text-xs">
+                                    <h4 className="text-lg font-semibold  text-gray-800">
+                                      Nội dung
+                                    </h4>
+                                    <p className="font-semibold text-gray-600 mb-4">
+                                      {selectedPlanting.density}
+                                    </p>
+                                    <h3 className="text-lg  text-gray-800 font-semibold">
+                                      Mô tả
+                                    </h3>
+                                    <p className="font-semibold text-gray-600">
+                                      {selectedPlanting.description}
+                                    </p>
+                                  </div>
                                 </div>
-                              </div>
-                              {isLoadingExpect && <Spinner />}
-                            </DialogBody>
+                              </DialogBody>
+                            )}
+
                             <DialogFooter>
                               <Button
                                 variant="text"
                                 color="red"
-                                onClick={handleOpenCultivation}
+                                onClick={handleOpenpPlanting}
                                 className="mr-1"
                               >
                                 <span>Thoát</span>
                               </Button>
                             </DialogFooter>
-                          </Dialog> */}
+                          </Dialog>
                         </section>
                       </AccordionBody>
                     </Accordion>
-                  ))}
+                    <Accordion
+                      open={openExpect === 3}
+                      icon={<Icon id={3} open={openExpect} />}
+                    >
+                      <AccordionHeader
+                        className="text-base"
+                        onClick={() => handleOpenExpect(3)}
+                      >
+                        Hoạt động bón phân
+                      </AccordionHeader>
+                      <AccordionBody>
+                        <section className="flex items-center justify-center">
+                          <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
+                            <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
+                            <div className="mt-1">
+                              <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
+                                {dataPlantFarming?.fertilizationActivities?.map(
+                                  (item, index) => (
+                                    <button
+                                      key={index}
+                                      className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
+                                      onClick={() => {
+                                        setSelectedFertilize(item);
+                                        handleOpenFertilize();
+                                      }}
+                                    >
+                                      <div
+                                        className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                                        style={{
+                                          width: "30px",
+                                          height: "30px",
+                                          flexShrink: 0,
+                                        }}
+                                      >
+                                        <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                                          <svg
+                                            className="mx-auto h-6 w-6"
+                                            aria-hidden="true"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                              strokeLinecap="round"
+                                              strokeLinejoin="round"
+                                            ></path>
+                                          </svg>
+                                        </span>
+                                      </div>
+                                      <div className="flex flex-col items-start justify-between font-light text-gray-600">
+                                        <p
+                                          className="font-semibold text-blue-500"
+                                          style={{
+                                            float: "left",
+                                            width: "100%",
+                                            textAlign: "justify",
+                                          }}
+                                        >
+                                          {item?.fertilizationTime}
+                                        </p>
+                                      </div>
+                                    </button>
+                                  )
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                          <Dialog
+                            open={openFertilize}
+                            handler={handleOpenFertilize}
+                          >
+                            <DialogHeader>Hoạt động bón phân </DialogHeader>
+                            {selectedFertilize && (
+                              <DialogBody>
+                                <div>
+                                  <div className="max-w-screen-md text-xs">
+                                    <h4 className="text-lg font-semibold  text-gray-800">
+                                      Quy trình
+                                    </h4>
+                                    <p className="font-semibold text-gray-600 mb-4">
+                                      {selectedFertilize.fertilizationTime}
+                                    </p>
+                                    <h3 className="text-lg  text-gray-800 font-semibold">
+                                      Kiểu
+                                    </h3>
+                                    <p className="font-semibold text-gray-600 mb-4">
+                                      {selectedFertilize.type}
+                                    </p>
+                                    <h3 className="text-lg  text-gray-800 font-semibold">
+                                      Mô tả
+                                    </h3>
+                                    <p className="font-semibold text-gray-600">
+                                      {selectedFertilize.description}
+                                    </p>
+                                  </div>
+                                </div>
+                              </DialogBody>
+                            )}
+
+                            <DialogFooter>
+                              <Button
+                                variant="text"
+                                color="red"
+                                onClick={handleOpenFertilize}
+                                className="mr-1"
+                              >
+                                <span>Thoát</span>
+                              </Button>
+                            </DialogFooter>
+                          </Dialog>
+                        </section>
+                      </AccordionBody>
+                    </Accordion>
+                    <Accordion
+                      open={openExpect === 4}
+                      icon={<Icon id={4} open={openExpect} />}
+                    >
+                      <AccordionHeader
+                        className="text-base"
+                        onClick={() => handleOpenExpect(4)}
+                      >
+                        Phòng trừ sâu bệnh
+                      </AccordionHeader>
+                      <AccordionBody>
+                        <section className="flex items-center justify-center">
+                          <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
+                            <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
+                            <div className="mt-1">
+                              <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
+                                {dataPlantFarming?.pestAndDiseaseControlActivities?.map(
+                                  (item, index) => (
+                                    <button
+                                      key={index}
+                                      className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
+                                      onClick={() => {
+                                        setSelectedPesticide(item);
+                                        handleOpenPesticide();
+                                      }}
+                                    >
+                                      <div
+                                        className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                                        style={{
+                                          width: "30px",
+                                          height: "30px",
+                                          flexShrink: 0,
+                                        }}
+                                      >
+                                        <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                                          <svg
+                                            className="mx-auto h-6 w-6"
+                                            aria-hidden="true"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                              strokeLinecap="round"
+                                              strokeLinejoin="round"
+                                            ></path>
+                                          </svg>
+                                        </span>
+                                      </div>
+
+                                      <div className="flex flex-col items-start justify-between font-light text-gray-600">
+                                        <p
+                                          className="font-semibold text-blue-500"
+                                          style={{
+                                            float: "left",
+                                            width: "100%",
+                                            textAlign: "justify",
+                                          }}
+                                        >
+                                          {item?.name}
+                                        </p>
+                                      </div>
+                                    </button>
+                                  )
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                          <Dialog
+                            open={openPesticide}
+                            handler={handleOpenPesticide}
+                          >
+                            <DialogHeader> Phòng trừ sâu bệnh </DialogHeader>
+                            {selectedPesticide && (
+                              <DialogBody>
+                                <div>
+                                  <div className="max-w-screen-md text-xs">
+                                    <h4 className="text-lg font-semibold  text-gray-800">
+                                      Tên
+                                    </h4>
+                                    <p className="font-semibold text-gray-600 mb-4">
+                                      {selectedPesticide.name}
+                                    </p>
+                                    <h3 className="text-lg  text-gray-800 font-semibold">
+                                      Kiểu
+                                    </h3>
+                                    <p className="font-semibold text-gray-600 mb-4">
+                                      {selectedPesticide.type}
+                                    </p>
+                                    <h3 className="text-lg  text-gray-800 font-semibold">
+                                      Triệu chứng
+                                    </h3>
+                                    <p className="font-semibold text-gray-600 mb-4">
+                                      {selectedPesticide.symptoms}
+                                    </p>
+                                    <h3 className="text-lg  text-gray-800 font-semibold">
+                                      Mô tả
+                                    </h3>
+                                    <p className="font-semibold text-gray-600 mb-4">
+                                      {selectedPesticide.description}
+                                    </p>
+                                    <h3 className="text-lg  text-gray-800 font-semibold">
+                                      Giải pháp
+                                    </h3>
+                                    <ul>
+                                      {selectedPesticide?.solution.map(
+                                        (data) => (
+                                          <li className="font-semibold text-gray-600">
+                                            {data}
+                                          </li>
+                                        )
+                                      )}
+                                    </ul>
+                                  </div>
+                                </div>
+                              </DialogBody>
+                            )}
+                            <DialogFooter>
+                              <Button
+                                variant="text"
+                                color="red"
+                                onClick={handleOpenPesticide}
+                                className="mr-1"
+                              >
+                                <span>Thoát</span>
+                              </Button>
+                            </DialogFooter>
+                          </Dialog>
+                        </section>
+                      </AccordionBody>
+                    </Accordion>
+                  </>
+                </section>
+              )}
+              {isLoadingPlantFarming && <Spinner />}
+            </AccordionBody>
+          </Accordion>
+          <Accordion
+            open={open === 3}
+            className="mb-2 rounded-lg border border-blue-gray-300 px-4"
+          >
+            <AccordionHeader
+              onClick={() => handleOpen(3)}
+              className={`border-b-0 transition-colors ${
+                open === 3 ? "text-green-400 hover:!text-green-700" : ""
+              }`}
+            >
+              Đầu ra
+            </AccordionHeader>
+            <AccordionBody className="pt-0 text-base font-normal">
+              <section>
+                <>
+                  {isSuccessOutput &&
+                    Output.map((item, index) => (
+                      <Accordion
+                        key={index} // Make sure to provide a unique key for each item
+                        open={openOutput === 1}
+                        icon={<Icon id={1} open={openOutput} />}
+                      >
+                        <AccordionHeader
+                          className="text-base"
+                          onClick={() => handleOpenOutput(1)}
+                        >
+                          Lần thu hoạch thứ {index + 1}
+                        </AccordionHeader>
+                        <AccordionBody>
+                          <section className="flex items-center justify-center">
+                            <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-3 shadow-md shadow-gray-100">
+                              <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
+                                <div className="flex items-center">
+                                  <p className="text-gray-900 font-semibold mr-2">
+                                    Transaction :
+                                  </p>
+                                  <p className="font-semibold text-blue-700">
+                                    {formatTransactionHashTable({
+                                      str: item?.tx,
+                                      a: 8,
+                                      b: 5,
+                                    })}
+                                  </p>
+                                </div>
+                                <div className="flex items-center">
+                                  <p className="text-gray-900 font-semibold mr-2">
+                                    Thời gian :
+                                  </p>
+                                  <p className="font-semibold text-gray-500">
+                                    {formatDateTime(item?.time)}
+                                  </p>
+                                </div>
+                                <div className="flex items-center">
+                                  <p className="text-gray-900 font-semibold mr-2">
+                                    Số lượng :
+                                  </p>
+                                  <p className="font-semibold text-gray-500">
+                                    {item?.amount}
+                                  </p>
+                                </div>
+                                <div className="flex items-center">
+                                  <p className="text-gray-900 font-semibold mr-2">
+                                    Sản lượng / 1 sản phẩm :
+                                  </p>
+                                  <p className="font-semibold text-gray-500">
+                                    {item?.amountPerOne}
+                                  </p>
+                                </div>
+                                <div>
+                                  <p className="text-gray-900 font-semibold mr-2">
+                                    Nhà phân phối :
+                                  </p>
+                                  <ul>
+                                    {item.distributerWithAmount?.map(
+                                      (data, index) => (
+                                        <li
+                                          key={index}
+                                          className="font-semibold text-gray-500"
+                                        >
+                                          {data.distributer.name} (Số lượng :{" "}
+                                          {data.amount})
+                                        </li>
+                                      )
+                                    )}
+                                  </ul>
+                                </div>
+                                <p className="text-blue-800 font-semibold mr-2">
+                                  <span
+                                    className="italic underline cursor-pointer"
+                                    onClick={handleOpenHarvest}
+                                  >
+                                    Lịch sử chỉnh sửa(Click vào)
+                                  </span>
+                                </p>
+                              </div>
+                            </div>
+                            <Dialog
+                              open={openHarvest}
+                              handler={handleOpenHarvest}
+                            >
+                              <DialogHeader> Lịch sử chỉnh sửa </DialogHeader>
+                              <DialogBody>
+                                <div>
+                                  <div className="max-w-screen-md text-xs">
+                                    <h4 className="text-lg font-semibold  text-gray-900">
+                                      Mã Hash
+                                    </h4>
+                                    <p className="text-blue-500 mb-4">afdsfa</p>
+                                    <h3 className="text-lg  text-gray-900 font-semibold">
+                                      afsafd
+                                    </h3>
+                                    <p className="font-semibold text-gray-500">
+                                      afafa
+                                    </p>
+                                  </div>
+                                </div>
+                              </DialogBody>
+                              <DialogFooter>
+                                <Button
+                                  variant="text"
+                                  color="red"
+                                  onClick={handleOpenHarvest}
+                                  className="mr-1"
+                                >
+                                  <span>Thoát</span>
+                                </Button>
+                              </DialogFooter>
+                            </Dialog>
+                          </section>
+                        </AccordionBody>
+                      </Accordion>
+                    ))}
+                  {isLoadingOutput && <Spinner />}
                 </>
               </section>
             </AccordionBody>

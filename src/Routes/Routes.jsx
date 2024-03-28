@@ -22,7 +22,7 @@ export const NormalRoutes = [
   { path: "/results/:projectId", element: <Result /> },
   { path: "/results/timeline", element: <History /> },
   { path: "/farm", element: <Farm /> },
-  { path: "/farm/detail", element: <ProflieFarm /> },
+  { path: "/farm/detail/:farmId", element: <ProflieFarm /> },
   { path: "/news", element: <New /> },
   { path: "/about-us", element: <About /> },
   { path: "/404-notfound", element: <NotFound /> },

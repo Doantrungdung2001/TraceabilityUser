@@ -9,7 +9,6 @@ const ProflieFarm = () => {
     <div className="layout-proflie-farm">
       <div className="white-gradient">
         <Navbar />
-        {/* <Avatar /> */}
         <ProfileFarm />
         <Project />
         <Footer/>

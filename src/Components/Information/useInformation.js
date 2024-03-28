@@ -10,7 +10,30 @@ export default function useInformation({ projectId }) {
         outputImages.push({ img });
       });
     });
-    return { outputImages };
+    
+    let allDistributerWithAmount = []
+    data.forEach((item) => {
+      item.distributerWithAmount.forEach((distributerWithAmount) => {
+        allDistributerWithAmount.push(distributerWithAmount)
+      })
+    })
+
+    const output = data.map((item) => ({
+      id: item?._id,
+      tx: item?.tx,
+      time: item?.time,
+      amount: item?.amount,
+      images:item?.images,
+      note: item?.note,
+      isEdited: item?.isEdited,
+      historyOutput: item?.historyOutput,
+      createdAtTime: item?.createdAtTime,
+      distributerWithAmount: item?.distributerWithAmount,
+      amountPerOne: item?.amountPerOne,
+    }));
+
+    
+    return { outputImages, allDistributerWithAmount,output };
   }, []);
   const {
     data: dataOutput,
@@ -229,6 +252,8 @@ export default function useInformation({ projectId }) {
       historyPlantFarmingEdit: data?.historyPlantFarmingEdit,
       createdAtTime: data?.createdAtTime,
     };
+
+    console.log("x: ", plantFarming)
     return { plantFarming };
   }, []);
   const {
@@ -245,6 +270,8 @@ export default function useInformation({ projectId }) {
 
   return {
     ImageProduct: dataOutput?.outputImages,
+    allDistributerWithAmount: dataOutput?.allDistributerWithAmount,
+    Output: dataOutput?.output, 
     isSuccessOutput,
     isLoadingOutput,
     projectInfo: dataProjectInfo?.projectInfo,
