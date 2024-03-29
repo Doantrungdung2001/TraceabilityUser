@@ -17,3 +17,6 @@ npm i @fortawesome/fontawesome-free
 ```
 npm i @tanstack/react-query
 ```
+```
+npm install @fortawesome/fontawesome-svg-core @fortawesome/free-regular-svg-icons @fortawesome/react-fontawesome
+```

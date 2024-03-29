@@ -83,13 +83,16 @@ export default function useProfile({ farmId }) {
           }`,
       };
     });
-
     return {
       projects,
     };
   }, []);
 
-  const { data: allProject, isSuccess : isSuccessProject, isLoading: isLoadingProject} = useQuery({
+  const {
+    data: allProject,
+    isSuccess: isSuccessProject,
+    isLoading: isLoadingProject,
+  } = useQuery({
     queryKey: ["projects", farmId],
     queryFn: () => PROJECT.getProjects(farmId),
     staleTime: 20 * 1000,

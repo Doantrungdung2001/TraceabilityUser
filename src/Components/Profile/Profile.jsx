@@ -5,7 +5,17 @@ import useProfile from "./useProfile";
 
 const ProfileFarm = () => {
   const { farmId } = useParams();
-  const { farmInfo, isSuccessFarmInfo, isLoadingFarmInfo } = useProfile({
+  const {
+    farmInfo,
+    isSuccessFarmInfo,
+    isLoadingFarmInfo,
+    plant,
+    isSuccessPlant,
+    isLoadingPlant,
+    projects,
+    isSuccessProject,
+    isLoadingProject,
+  } = useProfile({
     farmId,
   });
 
@@ -75,9 +85,7 @@ const ProfileFarm = () => {
             <div className="w-full ml-1 mr-1 flex flex-col justify-center items-center sm:w-96 border-gray-700 text-center">
               <div className="w-full rounded-2xl p-8 text-white bg-gradient-to-br from-[#5f99f9] to-[#8868dc] pb-44 relative">
                 <h1 className="text-xl mb-4">Lời giới thiệu</h1>
-                <p>
-                  {farmInfo.description}
-                </p>
+                <p>{farmInfo.description}</p>
               </div>
               <div className="text-center bg-white shadow-lg w-[80%] rounded-xl -mt-32 z-10 p-9 flex items-center flex-col">
                 {/* <h2 className="font-semibold text-xl">Start chatting</h2> */}

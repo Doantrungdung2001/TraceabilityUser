@@ -67,6 +67,9 @@ const Project = () => {
         <div className="r-head flexColStart">
           <span className="orangeText">Danh sách dự án</span>
           <span className="primaryText">Dự án nổi bật</span>
+          <button className="bg-green-300 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg mt-5">
+            Xem tất cả
+          </button>
         </div>
 
         <Swiper {...sliderSettings}>
