@@ -1,89 +1,13 @@
 import React from "react";
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-import "swiper/css";
-import { sliderSettings } from "../../Utils/common";
 import { useParams } from "react-router-dom";
 import { Carousel, Spinner } from "@material-tailwind/react";
 import useProfile from "./useProfile";
-
-const SliderButton = () => {
-  const swiper = useSwiper();
-  return (
-    <div className="flex items-center justify-center lg:justify-between px-4 py-2">
-      <button
-        className="bg-green-300 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-l-lg mr-2"
-        onClick={() => swiper.slidePrev()}
-      >
-        &lt;
-      </button>
-      <button
-        className="bg-green-300 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-r-lg ml-2"
-        onClick={() => swiper.slideNext()}
-      >
-        &gt;
-      </button>
-    </div>
-  );
-};
 
 const ProfileFarm = () => {
   const { farmId } = useParams();
   const { farmInfo, isSuccessFarmInfo, isLoadingFarmInfo } = useProfile({
     farmId,
   });
-
-  function PlantCard({ category, name, price, image, color }) {
-    return (
-      <div
-        className={`flex-shrink-0 m-6 relative overflow-hidden bg-${color}-500 rounded-lg max-w-xs shadow-lg`}
-      >
-        <svg
-          className="absolute bottom-0 left-0 mb-8"
-          viewBox="0 0 375 283"
-          fill="none"
-          style={{ transform: "scale(1.5)", opacity: "0.1" }}
-        >
-          <rect
-            x="159.52"
-            y="175"
-            width="152"
-            height="152"
-            rx="8"
-            transform="rotate(-45 159.52 175)"
-            fill="white"
-          />
-          <rect
-            y="107.48"
-            width="152"
-            height="152"
-            rx="8"
-            transform="rotate(-45 0 107.48)"
-            fill="white"
-          />
-        </svg>
-        <div className="relative pt-10 px-10 flex items-center justify-center">
-          <div
-            className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
-            style={{
-              background: "radial-gradient(black, transparent 60%)",
-              transform: "rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1)",
-              opacity: "0.2",
-            }}
-          ></div>
-          <img className="relative w-40" src={image} alt={name} />
-        </div>
-        <div className="relative text-white px-6 pb-6 mt-6">
-          <span className="block opacity-75 -mb-1">{category}</span>
-          <div className="flex justify-between">
-            <span className="block font-semibold text-xl">{name}</span>
-            <span className="block bg-white rounded-full text-purple-500 text-xs font-bold px-3 py-2 leading-none flex items-center">
-              ${price}
-            </span>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="mx-auto pt-20">
@@ -107,12 +31,7 @@ const ProfileFarm = () => {
           >
             {isSuccessFarmInfo &&
               farmInfo?.images?.map((url, index) => (
-                <img
-                  key={index}
-                  src={url}
-                  className="h-full w-full object-cover rounded-xl"
-                  style={{ maxWidth: "100%", height: "auto" }}
-                />
+                <img key={index} src={url} className="object-cover" />
               ))}
             {isLoadingFarmInfo && <Spinner />}
           </Carousel>
@@ -120,25 +39,66 @@ const ProfileFarm = () => {
       </section>
 
       <section className="relative py-8 bg-blueGray-200">
-        <div className="container mx-auto px-4">
-          <div className="text-center mt-3">
-            <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
-              Jenna Stones
-            </h3>
-            <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-              <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-              Los Angeles, California
-            </div>
-            <div className="mb-2 text-blueGray-600 mt-10">
-              <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
-              Solution Manager - Creative Tim Officer
-            </div>
-            <div className="mb-2 text-blueGray-600">
-              <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>
-              University of Computer Science
+        {isSuccessFarmInfo && (
+          <div className="container mx-auto px-4">
+            <div className="text-center mt-3">
+              <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+                {farmInfo.name}
+              </h3>
+              <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+                {farmInfo.address}
+              </div>
+              <div className="mb-2 text-blueGray-600 mt-10">
+                <i class="fas fa-mail-bulk mr-2 text-lg text-blueGray-400"></i>
+                <ul></ul>
+                {farmInfo?.email?.map((email) => (
+                  <li>{email}</li>
+                ))}
+              </div>
+              <div className="mb-2 text-blueGray-600">
+                <i className="fas fa-phone mr-2 text-lg text-blueGray-400"></i>
+                {farmInfo?.phone?.map((phone) => (
+                  <span> - {phone} </span>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
+        {isLoadingFarmInfo && <Spinner />}
+      </section>
+
+      {/* introduction */}
+      <section>
+        {isSuccessFarmInfo && (
+          <div className="bg-[#f3f6ff] flex justify-center items-center min-h-screen">
+            <div className="w-full ml-1 mr-1 flex flex-col justify-center items-center sm:w-96 border-gray-700 text-center">
+              <div className="w-full rounded-2xl p-8 text-white bg-gradient-to-br from-[#5f99f9] to-[#8868dc] pb-44 relative">
+                <h1 className="text-xl mb-4">Lời giới thiệu</h1>
+                <p>
+                  {farmInfo.description}
+                </p>
+              </div>
+              <div className="text-center bg-white shadow-lg w-[80%] rounded-xl -mt-32 z-10 p-9 flex items-center flex-col">
+                {/* <h2 className="font-semibold text-xl">Start chatting</h2> */}
+                <img
+                  src={farmInfo.images[0]}
+                  alt="Profile"
+                  className="w-[40%] rounded-full mt-7"
+                />
+                <p className="mt-3 font-semibold text-lg">{farmInfo.name}</p>
+                <span className="text-slate-500 rounded-xl border-slate-100 text-sm mt-2 pl-3 pr-3 border-[1px]">
+                  <span className="bg-green-500 w-2 h-2 rounded-full mt-0.5 inline-block"></span>{" "}
+                  Active
+                </span>
+                {/* <button className="w-full gradient rounded-md text-white p-4 mt-4 hover:shadow-xl transition-all duration-200 ease-in">
+                Send a message
+              </button> */}
+              </div>
+            </div>
+          </div>
+        )}
+        {isLoadingFarmInfo && <Spinner />}
       </section>
     </div>
   );
