@@ -6,7 +6,6 @@ const Result = () => {
   return (
     <>
       <Navbar />
-      {/* <Timeline /> */}
       <Information/>
       <Footer />
     </>

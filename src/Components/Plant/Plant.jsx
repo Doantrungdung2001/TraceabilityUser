@@ -46,7 +46,7 @@ const data = [
 const SliderButton = () => {
   const swiper = useSwiper();
   return (
-    <div className="flex items-center justify-between px-4 py-2">
+    <div className="flex items-center justify-between px-4 py-6">
       <button
         className="bg-green-300 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-l-lg"
         onClick={() => swiper.slidePrev()}
@@ -63,21 +63,21 @@ const SliderButton = () => {
   );
 };
 
-const Plant = () => {
+const Plant = ({dataPlant}) => {
   return (
     <section className="r-wrapper">
       <div className="paddings innerWidth r-container">
         <div className="r-head flexColStart">
           <span className="orangeText">Danh sách cây trồng</span>
           <span className="primaryText">Cây trồng phổ biến</span>
-          <button className="bg-green-300 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg mt-5">
+          <button className="bg-green-300 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg mt-5 mb-3">
             Xem tất cả
           </button>
         </div>
 
         <Swiper {...sliderSettings}>
           <SliderButton />
-          {data.map((card, i) => (
+          {dataPlant.map((card, i) => (
             <SwiperSlide key={i}>
               <div className="flex items-center justify-center bg-gray-100">
                 <div className="mx-auto px-5">
@@ -88,10 +88,10 @@ const Plant = () => {
                       alt="product"
                     />
                     <p className="my-2 sm:my-4 pl-4 font-bold text-gray-500 text-sm sm:text-base md:text-lg lg:text-xl">
-                      {card.name}
+                      Phân loại : {card.type}
                     </p>
-                    <p className="mb-2 sm:mb-4 ml-4 text-lg font-semibold text-gray-800">
-                      {card.price}
+                    <p className="mb-1 sm:mb-4 ml-4 text-lg font-semibold text-gray-800">
+                    {card.name}
                     </p>
                   </div>
                 </div>
