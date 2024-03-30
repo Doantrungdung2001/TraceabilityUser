@@ -47,6 +47,10 @@ export default function useProfile({ farmId }) {
       description: plant.plant_description,
       type: plant.plant_type,
       isActive: plant.isActive,
+      timeCultivates: plant.timeCultivates,
+      createdAt: plant.createdAt,
+      updatedAt: plant.updatedAt,
+      plant_slug: plant.plant_slug,
     }));
     return { plant };
   }, []);

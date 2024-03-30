@@ -16,6 +16,7 @@ import {
 
 import useProfile from "../Profile/useProfile";
 import Avarta from "../Avarta/Avarta";
+import { formatDateTime } from "../../Utils/helpers";
 
 const MAX_DESCRIPTION_LENGTH = 100; // Số ký tự tối đa bạn muốn hiển thị
 
@@ -69,63 +70,93 @@ const ListPlant = () => {
           {isLoadingFarmInfo && <Spinner />}
         </section>
         <section className="pt-[4vh] px-8 mb-5">
-          <span className="orangeText">Danh sách dự án</span>
-          {isSuccessPlant &&
-            allPlant?.map((card) => (
-              <Card className="max-w-xs overflow-hidden mt-5">
-                <CardHeader
-                  floated={false}
-                  shadow={false}
-                  color="transparent"
-                  className="m-0 rounded-none"
-                >
-                  <img
-                    src={card.image}
-                    alt="ui/ux review check"
-                    className="h-32"
-                  />
-                </CardHeader>
-                <CardBody>
-                  <Typography variant="h6" color="blue-gray">
-                    {card.name}
-                  </Typography>
-                  <Typography
-                    variant="h8"
-                    color="gray"
-                    className="mt-2 font-normal"
+          <span className="orangeText">Danh sách cây trồng</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+            {isSuccessPlant &&
+              allPlant?.map((card) => (
+                <Card className="max-w-xs overflow-hidden mt-5">
+                  <CardHeader
+                    floated={false}
+                    shadow={false}
+                    color="transparent"
+                    className="m-0 rounded-none"
                   >
-                    {card.description.length > MAX_DESCRIPTION_LENGTH
-                      ? `${card.description.substring(
-                          0,
-                          MAX_DESCRIPTION_LENGTH
-                        )}...`
-                      : card.description}
-                  </Typography>
-                </CardBody>
-                <CardFooter className="flex items-center justify-between">
-                  <Button onClick={handleOpenPlantDetail}>Chi tiết</Button>
-                  <Typography className="font-normal">January 10</Typography>
-                </CardFooter>
-              </Card>
-            ))}
-          {isLoadingPlant && <Spinner />}
+                    <img
+                      src={card.image}
+                      alt="ui/ux review check"
+                      className="h-32"
+                    />
+                  </CardHeader>
+                  <CardBody>
+                    <Typography variant="h6" color="blue-gray">
+                      {card.name}
+                    </Typography>
+                    <Typography
+                      variant="h8"
+                      color="gray"
+                      className="mt-2 font-normal"
+                    >
+                      {card.description.length > MAX_DESCRIPTION_LENGTH
+                        ? `${card.description.substring(
+                            0,
+                            MAX_DESCRIPTION_LENGTH
+                          )}...`
+                        : card.description}
+                    </Typography>
+                  </CardBody>
+                  <CardFooter className="flex items-center justify-between">
+                    <Button
+                      onClick={() => {
+                        setSelectedPlantDetail(card);
+                        handleOpenPlantDetail();
+                      }}
+                    >
+                      Chi tiết
+                    </Button>
+                    <Typography className="font-normal">
+                      {formatDateTime(card.createdAt)}
+                    </Typography>
+                  </CardFooter>
+                </Card>
+              ))}
+            {isLoadingPlant && <Spinner />}
+          </div>
+
           <Dialog open={openPlantDetail} handler={handleOpenPlantDetail}>
-            <DialogHeader>Họat động làm đất </DialogHeader>
             {selectedPlantDetail && (
-              <DialogBody>
-                <div>
-                  <div className="max-w-screen-md text-xs">
-                    <h4 className="text-lg font-semibold  text-gray-800">
-                      Tên hoạt động
+              <>
+                <DialogHeader> {selectedPlantDetail.name} </DialogHeader>
+                <DialogBody>
+                  <div className="max-w-screen-md text-sm sm:text-base">
+                    <h4 className="text-lg font-semibold text-gray-800">
+                      Ngày trồng
                     </h4>
-                    <p className="font-semibold text-gray-600 mb-4">ầdfadf</p>
-                    <h3 className="text-lg  text-gray-800 font-semibold">
+                    <p className="font-normal text-gray-800 mb-4">
+                      {formatDateTime(selectedPlantDetail.createdAt)}
+                    </p>
+                    <h4 className="text-lg font-semibold text-gray-800">
+                      Phân loại
+                    </h4>
+                    <p className="font-normal text-gray-800 mb-4">
+                      {selectedPlantDetail.type}
+                    </p>
+                    <h4 className="text-lg font-semibold text-gray-800">
+                      Trạng thái
+                    </h4>
+                    <p className="font-normal text-gray-800 mb-4">
+                      {selectedPlantDetail.isActive
+                        ? "Đang thực hiện"
+                        : "Không thực hiện"}
+                    </p>
+                    <h4 className="text-lg font-semibold text-gray-800">
                       Mô tả
-                    </h3>
-                    <p className="font-semibold text-gray-600">fadadfasd</p>
+                    </h4>
+                    <p className="font-normal text-gray-800">
+                      {selectedPlantDetail.description}
+                    </p>
                   </div>
-                </div>
-              </DialogBody>
+                </DialogBody>
+              </>
             )}
 
             <DialogFooter>
