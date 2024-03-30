@@ -1,4 +1,3 @@
-// import * as Pages from '../Pages'
 
 // export const NormalRoutes = [
 //     {path: '/', element: <Pages.About/>},
@@ -16,7 +15,7 @@ import About from "../Pages/AboutUs/About";
 import ProflieFarm from "../Pages/Farm/ProflieFarm";
 import History from "../Pages/Result/History";
 import NotFound from "../Pages/404/NotFound";
-import ProductFarm from "../Pages/Farm/ProductFarm";
+import PlantFarm from "../Pages/Farm/PlantFarm";
 
 export const NormalRoutes = [
   { path: "/", element: <Home /> },
@@ -24,8 +23,8 @@ export const NormalRoutes = [
   { path: "/results/timeline", element: <History /> },
   { path: "/farm", element: <Farm /> },
   { path: "/farm/detail/:farmId", element: <ProflieFarm /> },
-  { path: "/farm/detail/products", element: <ProductFarm /> },
-  { path: "/farm/detail/project", element: <ProductFarm /> },
+  { path: "/farm/detail/:farmId/plant", element: <PlantFarm /> },
+  // { path: "/farm/detail/project", element: <ProductFarm /> },
   { path: "/news", element: <New /> },
   { path: "/about-us", element: <About /> },
   { path: "/404-notfound", element: <NotFound /> },

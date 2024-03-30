@@ -1,9 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Carousel, Spinner } from "@material-tailwind/react";
+import { Spinner } from "@material-tailwind/react";
 import useProfile from "./useProfile";
 import Plant from "../Plant/Plant";
 import Project from "../Project/Project";
+import Avarta from "../Avarta/Avarta";
 
 const ProfileFarm = () => {
   const { farmId } = useParams();
@@ -20,56 +21,30 @@ const ProfileFarm = () => {
   } = useProfile({
     farmId,
   });
-  console.log("product", allProject);
   return (
     <>
       <div className="mx-auto pt-20">
-        <section>
-          <div className="picture">
-            <Carousel
-              className="rounded-xl"
-              navigation={({ setActiveIndex, activeIndex, length }) => (
-                <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
-                  {new Array(length).fill("").map((_, i) => (
-                    <span
-                      key={i}
-                      className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
-                        activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/50"
-                      }`}
-                      onClick={() => setActiveIndex(i)}
-                    />
-                  ))}
-                </div>
-              )}
-            >
-              {isSuccessFarmInfo &&
-                farmInfo?.images?.map((url, index) => (
-                  <img key={index} src={url} className="object-cover" />
-                ))}
-              {isLoadingFarmInfo && <Spinner />}
-            </Carousel>
-          </div>
-        </section>
+        {isSuccessFarmInfo && <Avarta data={farmInfo.images} />}
+        {isLoadingFarmInfo && <Spinner />}
 
         <section className="relative py-8 bg-blueGray-200">
           {isSuccessFarmInfo && (
             <div className="container mx-auto px-4">
-              <div className="text-center mt-3">
-                <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+              <div className="text-center mt-1">
+                <h3 className="text-4xl font-semibold leading-normal text-blueGray-700 mb-1">
                   {farmInfo.name}
                 </h3>
-                <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                <div className="text-sm leading-normal mt-0 mb-1 text-blueGray-400 font-bold uppercase">
                   <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
                   {farmInfo.address}
                 </div>
-                <div className="mb-2 text-blueGray-600 mt-10">
-                  <i class="fas fa-mail-bulk mr-2 text-lg text-blueGray-400"></i>
-                  <ul></ul>
-                  {farmInfo?.email?.map((email) => (
-                    <li>{email}</li>
-                  ))}
-                </div>
-                <div className="mb-2 text-blueGray-600">
+                {farmInfo?.email?.map((email) => (
+                  <div className="mb-2 text-blue-500 mt-3">
+                    <i class="fas fa-mail-bulk mr-2 text-lg"></i>
+                    <span>{email}</span>
+                  </div>
+                ))}
+                <div className="mb-2 text-blue-500">
                   <i className="fas fa-phone mr-2 text-lg text-blueGray-400"></i>
                   {farmInfo?.phone?.map((phone) => (
                     <span> - {phone} </span>

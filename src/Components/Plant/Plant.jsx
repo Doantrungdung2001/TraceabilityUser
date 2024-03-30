@@ -6,43 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleRight } from "@fortawesome/free-regular-svg-icons";
 import { faArrowAltCircleLeft } from "@fortawesome/free-regular-svg-icons";
 
-const data = [
-  {
-    name: "Aliva Priva Jardin",
-    price: "47,043",
-    detail:
-      "Jakarta Garden City Street, Cakung. Pulo Gadung, Jakarta Timur , DKI Jakarta",
-    image: "https://wallpaperaccess.com/full/803471.jpg",
-  },
-  {
-    name: "Asatti Garden City",
-    price: "63,043",
-    detail: "Pahlawan Street XVII No.215",
-    image: "http://getwallpapers.com/wallpaper/full/d/d/d/426328.jpg",
-  },
-  {
-    name: "Citralan Pulri Serang",
-    price: "35.853",
-    detail:
-      "Jakarta Garden City Street, Cakung. Pulo Gadung, Jakarta Timur , DKI Jakarta",
-    image: "https://wallpapercave.com/wp/wp3644160.jpg",
-  },
-  {
-    name: "Aliva Priva Jardin",
-    price: "47,043",
-    detail:
-      "Jakarta Garden City Street, Cakung. Pulo Gadung, Jakarta Timur , DKI Jakarta",
-    image: "http://getwallpapers.com/wallpaper/full/e/6/e/425797.jpg",
-  },
-  {
-    name: "Aliva Priva Jardin",
-    price: "47,043",
-    detail:
-      "Jakarta Garden City Street, Cakung. Pulo Gadung, Jakarta Timur , DKI Jakarta",
-    image: "https://wallpaperaccess.com/full/803473.jpg",
-  },
-];
-
 const SliderButton = () => {
   const swiper = useSwiper();
   return (
