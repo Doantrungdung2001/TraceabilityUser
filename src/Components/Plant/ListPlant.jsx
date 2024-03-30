@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Card,
@@ -8,6 +8,10 @@ import {
   Typography,
   Button,
   Spinner,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
 } from "@material-tailwind/react";
 
 import useProfile from "../Profile/useProfile";
@@ -28,7 +32,9 @@ const ListPlant = () => {
     farmId,
   });
 
-  console.log(allPlant);
+  const [openPlantDetail, setOpenPlantDetail] = useState(false);
+  const handleOpenPlantDetail = () => setOpenPlantDetail(!openPlantDetail);
+  const [selectedPlantDetail, setSelectedPlantDetail] = useState(null);
   return (
     <>
       <div className="mx-auto pt-20">
@@ -97,12 +103,42 @@ const ListPlant = () => {
                   </Typography>
                 </CardBody>
                 <CardFooter className="flex items-center justify-between">
-                  <Button>Chi tiết</Button>
+                  <Button onClick={handleOpenPlantDetail}>Chi tiết</Button>
                   <Typography className="font-normal">January 10</Typography>
                 </CardFooter>
               </Card>
             ))}
           {isLoadingPlant && <Spinner />}
+          <Dialog open={openPlantDetail} handler={handleOpenPlantDetail}>
+            <DialogHeader>Họat động làm đất </DialogHeader>
+            {selectedPlantDetail && (
+              <DialogBody>
+                <div>
+                  <div className="max-w-screen-md text-xs">
+                    <h4 className="text-lg font-semibold  text-gray-800">
+                      Tên hoạt động
+                    </h4>
+                    <p className="font-semibold text-gray-600 mb-4">ầdfadf</p>
+                    <h3 className="text-lg  text-gray-800 font-semibold">
+                      Mô tả
+                    </h3>
+                    <p className="font-semibold text-gray-600">fadadfasd</p>
+                  </div>
+                </div>
+              </DialogBody>
+            )}
+
+            <DialogFooter>
+              <Button
+                variant="text"
+                color="red"
+                onClick={handleOpenPlantDetail}
+                className="mr-1"
+              >
+                <span>Thoát</span>
+              </Button>
+            </DialogFooter>
+          </Dialog>
         </section>
       </div>
     </>
