@@ -68,41 +68,43 @@ const ListProject = () => {
           <span className="orangeText">Danh sách dự án</span>
           {isSuccessProject &&
             allProject?.map((card) => (
-              <Card className="max-w-xs overflow-hidden mt-5">
-                <CardHeader
-                  floated={false}
-                  shadow={false}
-                  color="transparent"
-                  className="m-0 rounded-none"
-                >
-                  <img
-                    src={card.image}
-                    alt="ui/ux review check"
-                    className="h-32"
-                  />
-                </CardHeader>
-                <CardBody>
-                  <Typography variant="h6" color="blue-gray">
-                    {card.name}
-                  </Typography>
-                  <Typography
-                    variant="h8"
-                    color="gray"
-                    className="mt-2 font-normal"
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+                <Card className="max-w-xs overflow-hidden mt-5">
+                  <CardHeader
+                    floated={false}
+                    shadow={false}
+                    color="transparent"
+                    className="m-0 rounded-none"
                   >
-                    {card.description.length > MAX_DESCRIPTION_LENGTH
-                      ? `${card.description.substring(
-                          0,
-                          MAX_DESCRIPTION_LENGTH
-                        )}...`
-                      : card.description}
-                  </Typography>
-                </CardBody>
-                <CardFooter className="flex items-center justify-between">
-                  <Button>Chi tiết</Button>
-                  <Typography className="font-normal">January 10</Typography>
-                </CardFooter>
-              </Card>
+                    <img
+                      src={card.image}
+                      alt="ui/ux review check"
+                      className="h-32"
+                    />
+                  </CardHeader>
+                  <CardBody>
+                    <Typography variant="h6" color="blue-gray">
+                      {card.name}
+                    </Typography>
+                    <Typography
+                      variant="h8"
+                      color="gray"
+                      className="mt-2 font-normal"
+                    >
+                      {card.description.length > MAX_DESCRIPTION_LENGTH
+                        ? `${card.description.substring(
+                            0,
+                            MAX_DESCRIPTION_LENGTH
+                          )}...`
+                        : card.description}
+                    </Typography>
+                  </CardBody>
+                  <CardFooter className="flex items-center justify-between">
+                    <Button>Chi tiết</Button>
+                    <Typography className="font-normal">January 10</Typography>
+                  </CardFooter>
+                </Card>
+              </div>
             ))}
           {isLoadingProject && <Spinner />}
           {/* <Dialog open={openPlantDetail} handler={handleOpenPlantDetail}>
