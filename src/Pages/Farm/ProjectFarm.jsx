@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
+import Navbar from "../../Components/Navbar/Navbar";
+import ListProject from "../../Components/Project/ListProject";
+import Footer from "../../Components/Footer/Footer";
 
 const ProjectFarm = () => {
   return (
-    <div>ProjectFarm</div>
-  )
-}
+    <>
+      <Navbar />
+      <ListProject />
+      <Footer />
+    </>
+  );
+};
 
-export default ProjectFarm
+export default ProjectFarm;
