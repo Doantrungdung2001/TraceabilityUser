@@ -2,10 +2,12 @@ import React from "react";
 import "./listfarm.css";
 import useListFarm from "./useListFarm";
 import { Spinner } from "@material-tailwind/react";
+import {useNavigate} from "react-router";
 
 const ListFarm = () => {
   const { allFarm, isSuccessAllFarm, isLoadingAllFarm } = useListFarm();
-  console.log(allFarm)
+  const MAX_DESCRIPTION_LENGTH = 100; // Số ký tự tối đa bạn muốn hiển thị
+  const navigate = useNavigate();
   return (
     <section className="mx-auto sm:px-6 lg:px-8 py-24 justify-center">
       <div className="mx-auto py-5 px-3">
@@ -84,7 +86,7 @@ const ListFarm = () => {
             <div class="mx-auto relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
               <div class="relative mx-4 mt-4 h-72 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
                 <img
-                  src="https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=927&amp;q=80"
+                  src="https://i.pinimg.com/originals/5e/3f/dd/5e3fdd7119bffad728705e852680ba9a.jpg"
                   class="h-full w-full object-cover"
                 />
               </div>
@@ -94,20 +96,25 @@ const ListFarm = () => {
                     {farm.name}
                   </p>
                   <p class="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
-                    $95.00
+                    {farm.status ? "active" : <span>Online</span>}
                   </p>
                 </div>
                 <p class="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75">
-                  With plenty of talk and listen time, voice-activated Siri
-                  access, and an available wireless charging case.
+                  {farm.description.length > MAX_DESCRIPTION_LENGTH
+                    ? `${farm.description.substring(
+                        0,
+                        MAX_DESCRIPTION_LENGTH
+                      )}...`
+                    : farm.description}
                 </p>
               </div>
               <div class="p-6 pt-0">
                 <button
                   class="block w-full select-none rounded-lg bg-blue-gray-900/10 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-blue-gray-900 transition-all hover:scale-105 focus:scale-105 focus:opacity-[0.85] active:scale-100 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="button"
+                  onClick={() => navigate(`/farm/detail/${farm.id}`)} // Corrected onClick handler
                 >
-                  Add to Cart
+                  Chi tiết
                 </button>
               </div>
             </div>

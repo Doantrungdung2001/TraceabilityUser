@@ -145,6 +145,8 @@ li {
   border: none;
   outline: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .btn a {

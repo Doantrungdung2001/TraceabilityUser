@@ -6,19 +6,16 @@ export default function useListFarm() {
   const parseDataAllFarm = useCallback((data) => {
 
     const allfarm = data.map((farm) => ({
-      _id: farm._id,
-      name: farm.name,
-      status: farm.status,
-      district: farm.district,
-      address: farm.address,
-      email: farm.email,
-      isActive: farm.isActive,
-      walletAddress: farm.walletAddress,
-      description: farm.farm_description,
-      createdAt: farm.createdAt,
-    }));
-    console.log("allfarm", allfarm)
-    return { allfarm };
+      id: farm._id,
+      name: farm.name || "Chưa cập nhật",
+      status: farm.status || "Chưa cập nhật",
+      district: farm.district || "Chưa cập nhật",
+      address: farm.address || "Chưa cập nhật",
+      email: farm.email || "Chưa cập nhật",
+      walletAddress: farm.walletAddress || "Chưa cập nhật",
+      description: farm.description || "Chưa cập nhật",
+      createdAt: farm.createdAt || "Chưa cập nhật",
+    }));  return { allfarm };
   }, []);
 
   

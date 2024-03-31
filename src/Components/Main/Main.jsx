@@ -1,54 +1,14 @@
 import React, { useEffect } from "react";
 import "./main.css";
 import farm1 from "../../Assets/Image/farm1.jpg";
-import farm2 from "../../Assets/Image/farm2.jpg";
-import farm3 from "../../Assets/Image/farm3.jpg";
-import farm4 from "../../Assets/Image/farm4.jpg";
 import { BiCurrentLocation } from "react-icons/bi";
-
 import Aos from "aos";
 import "aos/dist/aos.css";
+import { useNavigate } from "react-router-dom";
 
-const Data = [
-  {
-    id: 1,
-    imgSrc: farm1,
-    destTitle: "Farm 1",
-    location: "Viet Nam - Bac Ninh",
-    grade: "CUL TURAL RELAX",
-    quantity: "50",
-    description: "good farm",
-  },
-  {
-    id: 2,
-    imgSrc: farm2,
-    destTitle: "Farm 2",
-    location: "Viet Nam - Ninh Binh",
-    grade: "CUL TURAL RELAX",
-    quantity: "51",
-    description: "good farm",
-  },
-  {
-    id: 3,
-    imgSrc: farm3,
-    destTitle: "Farm 3",
-    location: "Viet Nam - Ha Tinh",
-    grade: "CUL TURAL RELAX",
-    quantity: "52",
-    description: "good farm",
-  },
-  {
-    id: 4,
-    imgSrc: farm4,
-    destTitle: "Farm 4",
-    location: "Viet Nam - Thanh Hoa",
-    grade: "CUL TURAL RELAX",
-    quantity: "53",
-    description: "good farm",
-  },
-];
-
-const Main = () => {
+const Main = ({ farm }) => {
+  const MAX_DESCRIPTION_LENGTH = 100; // Số ký tự tối đa bạn muốn hiển thị
+  const navigate = useNavigate();
   // Create a react hook to add aa scroll animation
   useEffect(() => {
     Aos.init({ duration: 2000 });
@@ -61,54 +21,49 @@ const Main = () => {
       </div>
 
       <div className="secContent grid">
-        {Data.map(
-          ({
-            id,
-            imgSrc,
-            destTitle,
-            location,
-            grade,
-            quantity,
-            description,
-          }) => {
-            return (
-              <div data-aos="fade-up" key={id} className="singleDestination">
-                {/*Here it will return single id from the map array*/}
+        {farm.slice(0, 6).map((data, index) => {
+          return (
+            <div data-aos="fade-up" key={index} className="singleDestination">
+              {/*Here it will return single id from the map array*/}
 
-                <div className="imageDiv">
-                  <img src={imgSrc} alt={destTitle} />
-                </div>
-
-                <div className="cardInfo">
-                  <h4 className="destTitle">{destTitle}</h4>
-                  <span className="continent flex">
-                    <BiCurrentLocation className="icon" />
-                    <span className="name">{location}</span>
-                  </span>
-
-                  <div className="fees flex">
-                    <div className="grade">
-                      <span>
-                        {grade}
-                        <small>+1</small>
-                      </span>
-                    </div>
-
-                    <div className="quantity">
-                      <h5>{quantity}</h5>
-                    </div>
-                  </div>
-
-                  <div className="desc">
-                    <p>{description}</p>
-                  </div>
-
-                  <button className="btn flex">DETAILS</button>
-                </div>
+              <div className="imageDiv">
+                <img src={farm1} alt={data.roles} />
               </div>
-            );
-          }
-        )}
+
+              <div className="cardInfo">
+                <h4 className="destTitle">{data.name}</h4>
+                <span className="continent flex">
+                  <BiCurrentLocation className="icon" />
+                  <span className="name">{data.address}</span>
+                </span>
+
+                <div className="fees flex">
+                    <div className="grade">
+                      {/* <span>
+                        {grade}
+                        <small></small>
+                      </span> */}
+                    </div>
+
+                    {/* <div className="quantity">
+                      <h5>{quantity}</h5>
+                    </div> */}
+                  </div>
+
+                <div className="desc">
+                  <p>{data.description.length > MAX_DESCRIPTION_LENGTH
+                    ? `${data.description.substring(
+                        0,
+                        MAX_DESCRIPTION_LENGTH
+                      )}...`
+                    : data.description}</p>
+                </div>
+
+                <button  onClick={() => navigate(`/farm/detail/${data.id}`)} className="btn flex">Chi tiết</button>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
