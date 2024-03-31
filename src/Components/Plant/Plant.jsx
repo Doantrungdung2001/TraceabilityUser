@@ -1,12 +1,17 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/css";
 import { sliderSettings } from "../../Utils/common";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleRight } from "@fortawesome/free-regular-svg-icons";
 import { faArrowAltCircleLeft } from "@fortawesome/free-regular-svg-icons";
-
+import Aos from "aos";
+import "aos/dist/aos.css";
+import { useNavigate } from "react-router-dom";
 const SliderButton = () => {
+  useEffect(() => {
+    Aos.init({ duration: 2000 });
+  }, []);
   const swiper = useSwiper();
   return (
     <div className="flex items-center justify-between px-4 py-6">
@@ -27,13 +32,15 @@ const SliderButton = () => {
 };
 
 const Plant = ({dataPlant}) => {
+  console.log("dtaa", dataPlant)
+  const navigate = useNavigate();
   return (
-    <section className="r-wrapper">
+    <section data-aos="fade-up" className="r-wrapper">
       <div className="paddings innerWidth r-container">
         <div className="r-head flexColStart">
           <span className="orangeText">Danh sách cây trồng</span>
           <span className="primaryText">Cây trồng phổ biến</span>
-          <button className="bg-green-300 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg mt-5 mb-3">
+          <button  className="bg-green-300 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg mt-5 mb-3">
             Xem tất cả
           </button>
         </div>

@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Spinner } from "@material-tailwind/react";
 import useProfile from "./useProfile";
 import Plant from "../Plant/Plant";
 import Project from "../Project/Project";
 import Avarta from "../Avarta/Avarta";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 const ProfileFarm = () => {
+  useEffect(() => {
+    Aos.init({ duration: 2000 });
+  }, []);
   const { farmId } = useParams();
   const {
     farmInfo,
@@ -23,11 +28,11 @@ const ProfileFarm = () => {
   });
   return (
     <>
-      <div className="mx-auto pt-20">
+      <div data-aos="fade-up" className="mx-auto pt-20">
         {isSuccessFarmInfo && <Avarta data={farmInfo.images} />}
         {isLoadingFarmInfo && <Spinner />}
 
-        <section className="relative py-8 bg-blueGray-200">
+        <section data-aos="fade-up" className="relative py-8 bg-blueGray-200">
           {isSuccessFarmInfo && (
             <div className="container mx-auto px-4">
               <div className="text-center mt-1">
@@ -59,7 +64,10 @@ const ProfileFarm = () => {
         {/* introduction */}
         <section>
           {isSuccessFarmInfo && (
-            <div className="bg-[#f3f6ff] flex justify-center items-center min-h-screen">
+            <div
+              data-aos="fade-up"
+              className="bg-[#f3f6ff] flex justify-center items-center min-h-screen"
+            >
               <div className="w-full ml-1 mr-1 flex flex-col justify-center items-center sm:w-96 border-gray-700 text-center">
                 <div className="w-full rounded-2xl p-8 text-white bg-gradient-to-br from-[#5f99f9] to-[#8868dc] pb-44 relative">
                   <h1 className="text-xl mb-4">Lời giới thiệu</h1>

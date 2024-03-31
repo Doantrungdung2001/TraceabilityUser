@@ -41,7 +41,7 @@ export default function useProfile({ farmId }) {
 
   const parseDataPlant = useCallback((data) => {
     const plant = data.map((plant) => ({
-      _id: plant._id,
+      id: plant._id,
       name: plant.plant_name,
       image: plant.plant_thumb,
       description: plant.plant_description,

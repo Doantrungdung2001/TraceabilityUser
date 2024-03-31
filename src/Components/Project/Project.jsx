@@ -2,6 +2,8 @@ import React from "react";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/css";
 import { sliderSettings } from "../../Utils/common";
+import Aos from "aos";
+import "aos/dist/aos.css";
 const SliderButton = () => {
   const swiper = useSwiper();
   return (
@@ -24,7 +26,7 @@ const SliderButton = () => {
 
 const Project = ({ dataProject }) => {
   return (
-    <section className="r-wrapper">
+    <section data-aos="fade-up" className="r-wrapper">
       <div className="paddings innerWidth r-container">
         <div className="r-head flexColStart">
           <span className="orangeText">Danh sách dự án</span>

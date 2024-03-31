@@ -1,13 +1,18 @@
-import React from "react";
+import React ,{useEffect} from "react";
 import "./listfarm.css";
 import useListFarm from "./useListFarm";
 import { Spinner } from "@material-tailwind/react";
 import {useNavigate} from "react-router";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 const ListFarm = () => {
   const { allFarm, isSuccessAllFarm, isLoadingAllFarm } = useListFarm();
   const MAX_DESCRIPTION_LENGTH = 100; // Số ký tự tối đa bạn muốn hiển thị
   const navigate = useNavigate();
+  useEffect(() => {
+    Aos.init({ duration: 2000 });
+  }, []);
   return (
     <section className="mx-auto sm:px-6 lg:px-8 py-24 justify-center">
       <div className="mx-auto py-5 px-3">
@@ -83,7 +88,7 @@ const ListFarm = () => {
       {isSuccessAllFarm && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
           {allFarm.map((farm) => (
-            <div class="mx-auto relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+            <div data-aos="fade-up" class="mx-auto relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
               <div class="relative mx-4 mt-4 h-72 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
                 <img
                   src="https://i.pinimg.com/originals/5e/3f/dd/5e3fdd7119bffad728705e852680ba9a.jpg"

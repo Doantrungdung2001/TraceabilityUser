@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./infor.css";
 import { Card, Typography, Carousel, Spinner } from "@material-tailwind/react";
+import Aos from "aos";
+import "aos/dist/aos.css";
 import {
   Tabs,
   TabsHeader,
@@ -75,6 +77,9 @@ function ActivityLogItem({ text, linkText, time, note }) {
 
 const Information = () => {
   const projectId = useParams().projectId;
+  useEffect(() => {
+    Aos.init({ duration: 2000 });
+  }, []);
   const {
     ImageProduct,
     allDistributerWithAmount,
@@ -446,14 +451,14 @@ const Information = () => {
 
   return (
     <section className="information">
-      <div className="r-title">
+      <div data-aos="fade-up" className="r-title">
         <button className="button">Mã truy xuất : {projectId}</button>
       </div>
 
       <section className="content">
         <section className="infor">
           <div className=" p-10 flex flex-col justify-between lg:flex-row gap-10 lg:items-center">
-            <div className="picture">
+            <div data-aos="fade-up" className="picture">
               <Carousel
                 className="rounded-xl"
                 navigation={({ setActiveIndex, activeIndex, length }) => (
@@ -482,7 +487,7 @@ const Information = () => {
                 {isLoadingOutput && <Spinner />}
               </Carousel>
             </div>
-            <div className="product">
+            <div data-aos="fade-up" className="product">
               <div className="flex flex-col gap-6 lg:w-2/4">
                 {isSuccessProjectInfo && (
                   <div>
@@ -561,7 +566,7 @@ const Information = () => {
                           </dt>
                           <dd className="mt-1 text-sm font-semibold leading-3 text-gray-900 sm:col-span-2 sm:mt-0">
                             <ul className="py-1">
-                              {allDistributerWithAmount.map((item, index) => (
+                              {allDistributerWithAmount?.map((item, index) => (
                                 <li className="py-1" key={index}>
                                   {item.distributer?.name}
                                 </li>
@@ -581,7 +586,7 @@ const Information = () => {
 
         <section className="timeline">
           <div className="r-time">
-            <div className="w-full sm:w-[50rem]">
+            <div data-aos="fade-up" className="w-full sm:w-[50rem]">
               <Timeline className="flex flex-col">
                 {isSuccessProcess &&
                   dataProcess.map((process, index) => (
@@ -675,7 +680,7 @@ const Information = () => {
         </section>
       </section>
 
-      <section className="more-infor">
+      <section data-aos="fade-up" className="more-infor">
         <>
           <Accordion
             open={open === 1}

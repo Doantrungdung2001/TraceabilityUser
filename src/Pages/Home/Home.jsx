@@ -6,6 +6,7 @@ import Search from "../../Components/Search/Search";
 import useListFarm from "../../Components/Farm/useListFarm";
 import useInformation from "../../Components/Information/useInformation";
 import { useParams } from "react-router-dom";
+import { Spinner } from "@material-tailwind/react";
 const Home = () => {
   const projectId = useParams().projectId;
   const { allFarm, isSuccessAllFarm, isLoadingAllFarm } = useListFarm();
@@ -35,8 +36,9 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <Search />
-      <Main farm={allFarm} />
+      <Search projectId={projectId} />
+      {isSuccessAllFarm && <Main farm={allFarm} />}{isLoadingAllFarm && <Spinner /> }
+      
       <Footer />
     </>
   );

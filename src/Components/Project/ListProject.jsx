@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Aos from "aos";
+import "aos/dist/aos.css";
 import {
   Card,
   CardHeader,
@@ -20,6 +22,9 @@ import Avarta from "../Avarta/Avarta";
 const MAX_DESCRIPTION_LENGTH = 100; // Số ký tự tối đa bạn muốn hiển thị
 
 const ListProject = () => {
+  useEffect(() => {
+    Aos.init({ duration: 2000 });
+  }, []);
   const { farmId } = useParams();
   const {
     farmInfo,
@@ -33,7 +38,7 @@ const ListProject = () => {
   });
   return (
     <>
-      <div className="mx-auto pt-20">
+      <div data-aos="fade-up" className="mx-auto pt-20">
         {isSuccessFarmInfo && <Avarta data={farmInfo.images} />}
         {isLoadingFarmInfo && <Spinner />}
         <section className="relative py-2 bg-blueGray-200">

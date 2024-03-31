@@ -6,7 +6,7 @@ import video from "../../Assets/Video/video1.mp4";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-const Search = () => {
+const Search = ({projectId}) => {
   // Create a react hook to add aa scroll animation
   useEffect(() => {
     Aos.init({ duration: 2000 });
@@ -30,9 +30,9 @@ const Search = () => {
 
       <div className="homeContent container">
         <div className="textDiv">
-          <span data-aos="fade-up" className="smallText">
+          {/* <span data-aos="fade-up" className="smallText">
             Here We Go
-          </span>
+          </span> */}
           <h1 data-aos="fade-up" className="homeTitle">
             Truy xuất nguồn gốc
           </h1>

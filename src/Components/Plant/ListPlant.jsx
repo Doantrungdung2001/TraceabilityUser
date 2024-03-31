@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
   Card,
@@ -17,10 +17,15 @@ import {
 import useProfile from "../Profile/useProfile";
 import Avarta from "../Avarta/Avarta";
 import { formatDateTime } from "../../Utils/helpers";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 const MAX_DESCRIPTION_LENGTH = 100; // Số ký tự tối đa bạn muốn hiển thị
 
 const ListPlant = () => {
+  useEffect(() => {
+    Aos.init({ duration: 2000 });
+  }, []);
   const { farmId } = useParams();
   const {
     farmInfo,
@@ -38,7 +43,7 @@ const ListPlant = () => {
   const [selectedPlantDetail, setSelectedPlantDetail] = useState(null);
   return (
     <>
-      <div className="mx-auto pt-20">
+      <div data-aos="fade-up" className="mx-auto pt-20">
         {isSuccessFarmInfo && <Avarta data={farmInfo.images} />}
         {isLoadingFarmInfo && <Spinner />}
         <section className="relative py-2 bg-blueGray-200">
