@@ -107,7 +107,7 @@ const ListProject = () => {
                     </Typography>
                   </CardBody>
                   <CardFooter className="flex items-center justify-between">
-                    <Button onClick={()=>{navigate(`/farm/detail/${card.farmid}/projects/${card.id}`)}}>Chi tiết</Button>
+                    <Button onClick={()=>{navigate(`/results/${card.id}`)}}>Chi tiết</Button>
                     <Typography className="font-normal">{formatDateTime(card.startDate)}</Typography>
                   </CardFooter>
                 </Card>

@@ -45,7 +45,7 @@ const Plant = ({dataPlant}) => {
         </div>
         <Swiper {...sliderSettings}>
           <SliderButton />
-          {dataPlant.map((card, i) => (
+          {dataPlant?.map((card, i) => (
             <SwiperSlide key={i}>
               <div className="flex items-center justify-center bg-gray-100">
                 <div className="mx-auto px-5">

@@ -26,6 +26,7 @@ const ProfileFarm = () => {
   } = useProfile({
     farmId,
   });
+  console.log(allPlant)
   return (
     <>
       <div data-aos="fade-up" className="mx-auto pt-20">
@@ -61,7 +62,6 @@ const ProfileFarm = () => {
           {isLoadingFarmInfo && <Spinner />}
         </section>
 
-        {/* introduction */}
         <section>
           {isSuccessFarmInfo && (
             <div
@@ -95,6 +95,7 @@ const ProfileFarm = () => {
           {isLoadingFarmInfo && <Spinner />}
         </section>
       </div>
+      
       {isSuccessPlant && <Plant dataPlant={allPlant} />}
       {isLoadingPlant && <Spinner />}
 

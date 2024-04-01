@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
   Card,
@@ -8,21 +8,17 @@ import {
   Typography,
   Button,
   Spinner,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
 } from "@material-tailwind/react";
 
 import useProfile from "../Profile/useProfile";
 import Avarta from "../Avarta/Avarta";
-import { formatDateTime } from "../../Utils/helpers";
 import Aos from "aos";
 import "aos/dist/aos.css";
-
+import { useNavigate } from "react-router-dom";
 const MAX_DESCRIPTION_LENGTH = 100; // Số ký tự tối đa bạn muốn hiển thị
 
 const ListPlant = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     Aos.init({ duration: 2000 });
   }, []);
@@ -38,42 +34,57 @@ const ListPlant = () => {
     farmId,
   });
 
-  const [openPlantDetail, setOpenPlantDetail] = useState(false);
-  const handleOpenPlantDetail = () => setOpenPlantDetail(!openPlantDetail);
-  const [selectedPlantDetail, setSelectedPlantDetail] = useState(null);
+  const renderPlantType = (type) => {
+    switch (type) {
+      case "herb":
+        return "Rau gia vị";
+      case "leafy":
+        return "Rau ăn lá";
+      case "root":
+        return "Củ";
+      case "fruit":
+        return "Quả";
+      default:
+        return type;
+    }
+  };
   return (
     <>
       <div data-aos="fade-up" className="mx-auto pt-20">
-        {isSuccessFarmInfo && <Avarta data={farmInfo.images} />}
-        {isLoadingFarmInfo && <Spinner />}
-        <section className="relative py-2 bg-blueGray-200">
-          {isSuccessFarmInfo && (
-            <div className="container mx-auto px-4">
-              <div className="text-center mt-1">
-                <h3 className="text-4xl font-semibold leading-normal text-blueGray-700 mb-1">
-                  {farmInfo.name}
-                </h3>
-                <div className="text-sm leading-normal mt-0 mb-1 text-blueGray-400 font-bold uppercase">
-                  <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-                  {farmInfo.address}
-                </div>
-                {farmInfo?.email?.map((email) => (
-                  <div className="mb-2 text-blue-500 mt-3">
-                    <i class="fas fa-mail-bulk mr-2 text-lg"></i>
-                    <span>{email}</span>
+        {isSuccessFarmInfo && (
+          <>
+            <Avarta data={farmInfo.images} />
+            <section
+              data-aos="fade-up"
+              className="relative py-8 bg-blueGray-200"
+            >
+              <div className="container mx-auto px-4">
+                <div className="text-center mt-1">
+                  <h3 className="text-4xl font-semibold leading-normal text-blueGray-700 mb-1">
+                    {farmInfo.name}
+                  </h3>
+                  <div className="text-sm leading-normal mt-0 mb-1 text-blueGray-400 font-bold uppercase">
+                    <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+                    {farmInfo.address}
                   </div>
-                ))}
-                <div className="mb-2 text-blue-500">
-                  <i className="fas fa-phone mr-2 text-lg text-blueGray-400"></i>
-                  {farmInfo?.phone?.map((phone) => (
-                    <span> - {phone} </span>
+                  {farmInfo?.email?.map((email) => (
+                    <div className="mb-2 text-blue-500 mt-3">
+                      <i class="fas fa-mail-bulk mr-2 text-lg"></i>
+                      <span>{email}</span>
+                    </div>
                   ))}
+                  <div className="mb-2 text-blue-500">
+                    <i className="fas fa-phone mr-2 text-lg text-blueGray-400"></i>
+                    {farmInfo?.phone?.map((phone) => (
+                      <span> - {phone} </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-          {isLoadingFarmInfo && <Spinner />}
-        </section>
+            </section>
+          </>
+        )}
+        {isLoadingFarmInfo && <Spinner />}
         <section className="mx-auto pt-[4vh] px-8 mb-5 justify-center">
           <span className="orangeText">Danh sách cây trồng</span>
           <div className=" mx-auto grid flex justify-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
@@ -112,69 +123,21 @@ const ListPlant = () => {
                   <CardFooter className="flex items-center justify-between">
                     <Button
                       onClick={() => {
-                        setSelectedPlantDetail(card);
-                        handleOpenPlantDetail();
+                        navigate(
+                          `/farm/detail/${card.farmid}/plants/${card.id}`
+                        );
                       }}
                     >
                       Chi tiết
                     </Button>
                     <Typography className="font-normal">
-                      {formatDateTime(card.createdAt)}
+                      {renderPlantType(card.type)}
                     </Typography>
                   </CardFooter>
                 </Card>
               ))}
             {isLoadingPlant && <Spinner />}
           </div>
-
-          <Dialog open={openPlantDetail} handler={handleOpenPlantDetail}>
-            {selectedPlantDetail && (
-              <>
-                <DialogHeader> {selectedPlantDetail.name} </DialogHeader>
-                <DialogBody>
-                  <div className="max-w-screen-md text-sm sm:text-base">
-                    <h4 className="text-lg font-semibold text-gray-800">
-                      Ngày trồng
-                    </h4>
-                    <p className="font-normal text-gray-800 mb-4">
-                      {formatDateTime(selectedPlantDetail.createdAt)}
-                    </p>
-                    <h4 className="text-lg font-semibold text-gray-800">
-                      Phân loại
-                    </h4>
-                    <p className="font-normal text-gray-800 mb-4">
-                      {selectedPlantDetail.type}
-                    </p>
-                    <h4 className="text-lg font-semibold text-gray-800">
-                      Trạng thái
-                    </h4>
-                    <p className="font-normal text-gray-800 mb-4">
-                      {selectedPlantDetail.isActive
-                        ? "Đang thực hiện"
-                        : "Không thực hiện"}
-                    </p>
-                    <h4 className="text-lg font-semibold text-gray-800">
-                      Mô tả
-                    </h4>
-                    <p className="font-normal text-gray-800">
-                      {selectedPlantDetail.description}
-                    </p>
-                  </div>
-                </DialogBody>
-              </>
-            )}
-
-            <DialogFooter>
-              <Button
-                variant="text"
-                color="red"
-                onClick={handleOpenPlantDetail}
-                className="mr-1"
-              >
-                <span>Thoát</span>
-              </Button>
-            </DialogFooter>
-          </Dialog>
         </section>
       </div>
     </>

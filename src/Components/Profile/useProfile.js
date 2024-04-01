@@ -40,7 +40,7 @@ export default function useProfile({ farmId }) {
   });
 
   const parseDataPlant = useCallback((data) => {
-    const plant = data.map((plant) => ({
+    const allplant = data.map((plant) => ({
       id: plant._id,
       farmid: plant?.farm,
       name: plant.plant_name,
@@ -53,7 +53,7 @@ export default function useProfile({ farmId }) {
       updatedAt: plant.updatedAt,
       plant_slug: plant.plant_slug,
     }));
-    return { plant };
+    return { allplant };
   }, []);
 
   const {
@@ -112,7 +112,7 @@ export default function useProfile({ farmId }) {
     farmInfo: dataFarmInfo?.farmInfo,
     isSuccessFarmInfo,
     isLoadingFarmInfo,
-    allPlant: dataAllPlant?.plant,
+    allPlant: dataAllPlant?.allplant,
     isSuccessPlant,
     isLoadingPlant,
     allProject: allProject?.projects,
