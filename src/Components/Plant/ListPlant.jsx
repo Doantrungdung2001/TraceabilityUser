@@ -74,9 +74,9 @@ const ListPlant = () => {
           )}
           {isLoadingFarmInfo && <Spinner />}
         </section>
-        <section className="pt-[4vh] px-8 mb-5">
+        <section className="mx-auto pt-[4vh] px-8 mb-5 justify-center">
           <span className="orangeText">Danh sách cây trồng</span>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+          <div className=" mx-auto grid flex justify-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
             {isSuccessPlant &&
               allPlant?.map((card) => (
                 <Card className="max-w-xs overflow-hidden mt-5">

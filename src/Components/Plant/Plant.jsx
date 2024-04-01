@@ -32,7 +32,6 @@ const SliderButton = () => {
 };
 
 const Plant = ({dataPlant}) => {
-  console.log("dtaa", dataPlant)
   const navigate = useNavigate();
   return (
     <section data-aos="fade-up" className="r-wrapper">
@@ -40,11 +39,10 @@ const Plant = ({dataPlant}) => {
         <div className="r-head flexColStart">
           <span className="orangeText">Danh sách cây trồng</span>
           <span className="primaryText">Cây trồng phổ biến</span>
-          <button  className="bg-green-300 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg mt-5 mb-3">
+          <button onClick={() => navigate(`/farm/detail/${dataPlant[0].farmid}/plants`)}  className="bg-green-300 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg mt-5 mb-3">
             Xem tất cả
           </button>
         </div>
-
         <Swiper {...sliderSettings}>
           <SliderButton />
           {dataPlant.map((card, i) => (

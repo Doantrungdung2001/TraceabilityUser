@@ -42,6 +42,7 @@ export default function useProfile({ farmId }) {
   const parseDataPlant = useCallback((data) => {
     const plant = data.map((plant) => ({
       id: plant._id,
+      farmid: plant?.farm,
       name: plant.plant_name,
       image: plant.plant_thumb,
       description: plant.plant_description,
@@ -71,6 +72,7 @@ export default function useProfile({ farmId }) {
     const projects = data.map((item) => {
       return {
         id: item?._id,
+        farmid:item?.farm?._id,
         title: item?.plant?.plant_name,
         plantId: item?.plant?._id,
         seed: item.seed ? item?.seed?.seed_name : "basic",
@@ -103,6 +105,9 @@ export default function useProfile({ farmId }) {
     select: (data) => parseDataProject(data.data.metadata),
     enabled: !!farmId,
   });
+
+  
+
   return {
     farmInfo: dataFarmInfo?.farmInfo,
     isSuccessFarmInfo,

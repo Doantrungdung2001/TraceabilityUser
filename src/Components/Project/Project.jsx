@@ -4,6 +4,7 @@ import "swiper/css";
 import { sliderSettings } from "../../Utils/common";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import { useNavigate } from "react-router-dom";
 const SliderButton = () => {
   const swiper = useSwiper();
   return (
@@ -25,13 +26,14 @@ const SliderButton = () => {
 };
 
 const Project = ({ dataProject }) => {
+  const navigate = useNavigate();
   return (
     <section data-aos="fade-up" className="r-wrapper">
       <div className="paddings innerWidth r-container">
         <div className="r-head flexColStart">
           <span className="orangeText">Danh sách dự án</span>
           <span className="primaryText">Dự án nổi bật</span>
-          <button className="bg-green-300 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg mt-5 mb-3">
+          <button onClick={() => navigate(`/farm/detail/${dataProject[0].farmid}/projects`)} className="bg-green-300 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg mt-5 mb-3">
             Xem tất cả
           </button>
         </div>
@@ -49,7 +51,7 @@ const Project = ({ dataProject }) => {
                       alt="product"
                     />
                     <p className="my-2 sm:my-4 pl-4 font-bold text-gray-500 text-sm sm:text-base md:text-lg lg:text-xl">
-                      Trạng thái : {card.status }
+                      Trạng thái : {card.status}
                     </p>
                     <p className="mb-2 sm:mb-4 ml-4 text-lg font-semibold text-gray-800">
                       {card.title}

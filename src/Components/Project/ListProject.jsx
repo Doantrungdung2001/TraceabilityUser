@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -18,10 +18,12 @@ import {
 
 import useProfile from "../Profile/useProfile";
 import Avarta from "../Avarta/Avarta";
-
+import { formatDateTime } from "../../Utils/helpers";
+import { useNavigate } from "react-router-dom";
 const MAX_DESCRIPTION_LENGTH = 100; // Số ký tự tối đa bạn muốn hiển thị
 
 const ListProject = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     Aos.init({ duration: 2000 });
   }, []);
@@ -69,11 +71,11 @@ const ListProject = () => {
           )}
           {isLoadingFarmInfo && <Spinner />}
         </section>
-        <section className="pt-[4vh] px-8 mb-5">
+        <section className="pt-[4vh] px-8 mb-5 ">
           <span className="orangeText">Danh sách dự án</span>
-          {isSuccessProject &&
-            allProject?.map((card) => (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+          <div className=" mx-auto grid flex justify-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+            {isSuccessProject &&
+              allProject?.map((card) => (
                 <Card className="max-w-xs overflow-hidden mt-5">
                   <CardHeader
                     floated={false}
@@ -84,12 +86,12 @@ const ListProject = () => {
                     <img
                       src={card.image}
                       alt="ui/ux review check"
-                      className="h-32"
+                      className="h-auto"
                     />
                   </CardHeader>
                   <CardBody>
                     <Typography variant="h6" color="blue-gray">
-                      {card.name}
+                      {card.title}
                     </Typography>
                     <Typography
                       variant="h8"
@@ -105,12 +107,12 @@ const ListProject = () => {
                     </Typography>
                   </CardBody>
                   <CardFooter className="flex items-center justify-between">
-                    <Button>Chi tiết</Button>
-                    <Typography className="font-normal">January 10</Typography>
+                    <Button onClick={()=>{navigate(`/farm/detail/${card.farmid}/projects/${card.id}`)}}>Chi tiết</Button>
+                    <Typography className="font-normal">{formatDateTime(card.startDate)}</Typography>
                   </CardFooter>
                 </Card>
-              </div>
-            ))}
+              ))}{" "}
+          </div>
           {isLoadingProject && <Spinner />}
           {/* <Dialog open={openPlantDetail} handler={handleOpenPlantDetail}>
             <DialogHeader>Họat động làm đất </DialogHeader>
