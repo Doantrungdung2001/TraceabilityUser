@@ -15,6 +15,7 @@ export default function usePlants({ plantId }) {
       fertilizationActivities: plant?.fertilizationActivities,
       pestAndDiseaseControlActivities: plant?.pestAndDiseaseControlActivities,
       historyPlantFarmingEdit: plant?.historyPlantFarmingEdit,
+      createdAtTime: plant?.createdAtTime,
     }));
     return { plantFarm };
   }, []);
