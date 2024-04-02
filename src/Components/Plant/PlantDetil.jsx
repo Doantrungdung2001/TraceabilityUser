@@ -19,6 +19,7 @@ import {
   DialogFooter,
   Button,
   Spinner,
+  Typography,
 } from "@material-tailwind/react";
 import useProfile from "../Profile/useProfile";
 
@@ -33,18 +34,35 @@ const PlantDetil = () => {
     });
   const [open, setOpen] = useState(0);
   const [openPlantFarming, setOpenPlantFarming] = useState(0);
-  const [openDialog, setOpenDialog] = useState(false);
+
+  const [openDialogCultivationActivities, setOpenDialogCultivationActivities] =
+    useState(false);
+  const [openDialogPlantingActivity, setOpenDialogPlantingActivity] =
+    useState(false);
+  const [
+    openDialogFertilizationActivities,
+    setOpenDialogFertilizationActivities,
+  ] = useState(false);
+  const [
+    openDialogPestAndDiseaseControlActivities,
+    setOpenDialogPestAndDiseaseControlActivities,
+  ] = useState(false);
 
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
   const handleOpenPlantFarming = (value) =>
     setOpenPlantFarming(openPlantFarming === value ? 0 : value);
 
-  const handleOpencultivationActivities = () => setOpenDialog(!openDialog);
-  const handleOpenplantingActivity = () => setOpenDialog(!openDialog);
-  const handleOpenfertilizationActivities = () => setOpenDialog(!openDialog);
-  const handleOpenpestAndDiseaseControlActivities = () =>
-    setOpenDialog(!openDialog);
+  const handleOpenCultivationActivities = () =>
+    setOpenDialogCultivationActivities(!openDialogCultivationActivities);
+  const handleOpenPlantingActivity = () =>
+    setOpenDialogPlantingActivity(!openDialogPlantingActivity);
+  const handleOpenFertilizationActivities = () =>
+    setOpenDialogFertilizationActivities(!openDialogFertilizationActivities);
+  const handleOpenPestAndDiseaseControlActivities = () =>
+    setOpenDialogPestAndDiseaseControlActivities(
+      !openDialogPestAndDiseaseControlActivities
+    );
   const renderPlantType = (type) => {
     switch (type) {
       case "herb":
@@ -88,14 +106,86 @@ const PlantDetil = () => {
     console.log("isOpen", isOpen);
     return (
       <>
-        <Dialog isOpen={isOpen} onClose={handleClose}>
-          <DialogHeader>Its a simple dialog.</DialogHeader>
+        <Dialog open={isOpen} handler={handleClose}>
+          <DialogHeader>Thông tin</DialogHeader>
           <DialogBody>
-            The key to more success is to have a lot of pillows. Put it this
-            way, it took me twenty five years to get these plants, twenty five
-            years of blood sweat and tears, and I&apos;m never giving up,
-            I&apos;m just getting started. I&apos;m up to something. Fan luv.
+            <section>
+              <div>
+                {data?.name && (
+                  <div className="max-w-screen-md text-xs">
+                    <h4 className="text-lg font-semibold  text-gray-900 mb-2">
+                      Tên hoạt động :
+                    </h4>
+                    <p className="font-semibold text-gray-700 mb-4">
+                      {data?.name}
+                    </p>
+                  </div>
+                )}
+                {data?.density && (
+                  <div className="max-w-screen-md text-xs">
+                    <h4 className="text-lg font-semibold  text-gray-900 mb-2">
+                      Tỷ trọng :
+                    </h4>
+                    <p className="font-semibold text-gray-700 mb-4">
+                      {data?.density}
+                    </p>
+                  </div>
+                )}
+                {data?.description && (
+                  <div className="max-w-screen-md text-xs">
+                    <h4 className="text-lg font-semibold  text-gray-900 mb-2">
+                      Mô tả :
+                    </h4>
+                    <p className="font-semibold text-gray-700 mb-4">
+                      {data?.description}
+                    </p>
+                  </div>
+                )}
+                {data?.fertilizationTime && (
+                  <div className="max-w-screen-md text-xs">
+                    <h4 className="text-lg font-semibold  text-gray-900 mb-2">
+                      Thời điểm :
+                    </h4>
+                    <p className="font-semibold text-gray-700 mb-4">
+                      {data?.fertilizationTime}
+                    </p>
+                  </div>
+                )}
+                {data?.type && (
+                  <div className="max-w-screen-md text-xs">
+                    <h4 className="text-lg font-semibold  text-gray-900 mb-2">
+                      Kiểu loại :
+                    </h4>
+                    <p className="font-semibold text-gray-700 mb-4">
+                      {data?.type}
+                    </p>
+                  </div>
+                )}
+                {data?.symptoms && (
+                  <div className="max-w-screen-md text-xs">
+                    <h4 className="text-lg font-semibold  text-gray-900 mb-2">
+                      Triệu chứng :
+                    </h4>
+                    <p className="font-semibold text-gray-700 mb-4">
+                      {data?.symptoms}
+                    </p>
+                  </div>
+                )}
+                {data?.solution && (
+                  <div className="max-w-screen-md text-xs">
+                    <h4 className="text-lg font-semibold  text-gray-900 mb-2">
+                      Giải pháp :
+                    </h4>
+
+                    {data?.solution.map((solution, index) => (
+                      <p className="font-semibold text-gray-700 mb-4">Giải pháp {index + 1} : {solution}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </section>
           </DialogBody>
+
           <DialogFooter>
             <Button
               variant="text"
@@ -103,10 +193,7 @@ const PlantDetil = () => {
               onClick={handleClose}
               className="mr-1"
             >
-              <span>Cancel</span>
-            </Button>
-            <Button variant="gradient" color="green" onClick={handleClose}>
-              <span>Confirm</span>
+              <span>Thoát</span>
             </Button>
           </DialogFooter>
         </Dialog>
@@ -360,17 +447,19 @@ const PlantDetil = () => {
                                         className="m-1"
                                         style={{ backgroundColor: "#A5DD9B" }}
                                         onClick={() => {
-                                          handleOpencultivationActivities();
+                                          handleOpenCultivationActivities();
                                         }}
                                       >
                                         {cultivationActivities.name}
                                       </Button>
-                                      {openDialog && (
+                                      {openDialogCultivationActivities && (
                                         <DialogDefault
                                           data={cultivationActivities}
-                                          isOpen={openDialog}
+                                          isOpen={
+                                            openDialogCultivationActivities
+                                          }
                                           handleClose={
-                                            handleOpencultivationActivities
+                                            handleOpenCultivationActivities
                                           }
                                         />
                                       )}
@@ -399,9 +488,19 @@ const PlantDetil = () => {
                                 <Button
                                   className="m-1"
                                   style={{ backgroundColor: "#A5DD9B" }}
+                                  onClick={() => {
+                                    handleOpenPlantingActivity();
+                                  }}
                                 >
                                   {plantFarming.plantingActivity.density}
                                 </Button>
+                                {openDialogPlantingActivity && (
+                                  <DialogDefault
+                                    data={plantFarming.plantingActivity}
+                                    isOpen={openDialogPlantingActivity}
+                                    handleClose={handleOpenPlantingActivity}
+                                  />
+                                )}
                               </section>
                             </AccordionBody>
                           </Accordion>
@@ -422,16 +521,31 @@ const PlantDetil = () => {
                             <AccordionBody className="pt-0 text-base font-normal">
                               <section>
                                 {plantFarming.fertilizationActivities.map(
-                                  (fertilizationActivities) => (
+                                  (fertilizationActivities, index) => (
                                     <>
                                       <Button
+                                        key={index}
                                         className="m-1"
                                         style={{ backgroundColor: "#A5DD9B" }}
+                                        onClick={() => {
+                                          handleOpenFertilizationActivities();
+                                        }}
                                       >
                                         {
                                           fertilizationActivities.fertilizationTime
                                         }
                                       </Button>
+                                      {openDialogFertilizationActivities && (
+                                        <DialogDefault
+                                          data={fertilizationActivities}
+                                          isOpen={
+                                            openDialogFertilizationActivities
+                                          }
+                                          handleClose={
+                                            handleOpenFertilizationActivities
+                                          }
+                                        />
+                                      )}
                                     </>
                                   )
                                 )}
@@ -460,9 +574,23 @@ const PlantDetil = () => {
                                       <Button
                                         className="m-1"
                                         style={{ backgroundColor: "#A5DD9B" }}
+                                        onClick={() => {
+                                          handleOpenPestAndDiseaseControlActivities();
+                                        }}
                                       >
                                         {pestAndDiseaseControlActivities.name}
                                       </Button>
+                                      {openDialogPestAndDiseaseControlActivities && (
+                                        <DialogDefault
+                                          data={pestAndDiseaseControlActivities}
+                                          isOpen={
+                                            openDialogPestAndDiseaseControlActivities
+                                          }
+                                          handleClose={
+                                            handleOpenPestAndDiseaseControlActivities
+                                          }
+                                        />
+                                      )}
                                     </>
                                   )
                                 )}
