@@ -36,10 +36,16 @@ const SearchTransactionHash = () => {
   const [expects, setExpects] = React.useState(null);
   const [outputs, setOutputs] = React.useState(null);
   const [project, setProject] = React.useState(null);
+  const [videos, setVideos] = React.useState(null);
+  const [connectionLoss, setConnectionLoss] = React.useState(null);
+  
+
   const [loadingProcesses, setLoadingProcesses] = React.useState(false);
   const [loadingExpects, setLoadingExpects] = React.useState(false);
   const [loadingOutputs, setLoadingOutputs] = React.useState(false);
   const [loadingProject, setLoadingProject] = React.useState(false);
+  const [loadingVideos, setLoadingVideos] = React.useState(false);
+  const [loadingConnectionLoss, setLoadingConnectionLoss] = React.useState(false);
 
 
   const jsonRpcURL = 'https://evmos-pokt.nodies.app' 
@@ -994,7 +1000,7 @@ const SearchTransactionHash = () => {
       "type": "function"
     }
   ]
-  
+
   const contractAddress = '0x97e3B6d3132A36563b7B38E3eB5bC6af4b114623'
   const videoContractAddress = '0x1Ad6EcAd571B3F2e1aA113eb99E7FBE192F9a197'
 
@@ -1008,6 +1014,8 @@ const SearchTransactionHash = () => {
     setLoadingExpects(false)
     setLoadingOutputs(false)
     setLoadingProject(false)
+    setLoadingConnectionLoss(false)
+    setLoadingVideos(false)
     const project = await contract.methods.getProject(projectIndex).call()
     setLoadingProject(true)
     setProject(project)
@@ -1024,6 +1032,48 @@ const SearchTransactionHash = () => {
     const outputs = await contract.methods.getProjectOutputs(projectIndex).call()
     setLoadingOutputs(true)
     setOutputs(outputs)
+
+
+    // 1. call api to get list of cameraIndex and startDate and endTime
+    // 2. query in blockchain video by cameraIndex
+    // assume cameraIndex = [0], startDate = 2022-01-01, endTime = 2025-01-02
+    const cameraIndex = [0]
+    // convert startDate and endTime to unix time stamp
+    let startDate = new Date("2022-01-01")
+    let endTime = new Date("2025-01-02")
+
+    startDate = startDate.getTime() / 1000
+    endTime = endTime.getTime() / 1000
+    console.log("startDate: ", startDate)
+    console.log("end time: ", endTime)
+    // loop in cameraIndex and query
+    const videos = []
+    const connectionLoss = []
+    for (let i = 0; i < cameraIndex.length; i++) {
+      const video = await videoContract.methods.getVideosByCamera(cameraIndex[i]).call()
+
+      // loop in video to get list of videoItem with date between startDate and endTime, remember to convert date from unix time stamp to date
+      const videoItem = video.filter(item => Number(item.date) >= startDate && Number(item.date) <= endTime)
+
+      videos.push(...videoItem)
+      const connection = await videoContract.methods.getConnectionLossByCamera(cameraIndex[i]).call()
+
+      
+      console.log("connection: ", connection)
+
+      connection.forEach(item => console.log("date: ", Number(item.date)))
+
+      const connectionItem = connection.filter(item => Number(item.date) >= startDate && Number(item.date) <= endTime)
+      connectionLoss.push(...connectionItem)
+    }
+
+    console.log("videos: ", videos)
+    console.log("connectionLoss: ", connectionLoss)
+
+    setVideos(videos)
+    setConnectionLoss(connectionLoss)
+    setLoadingVideos(true)
+    setLoadingConnectionLoss(true)
 
   }
   return (
@@ -1175,52 +1225,32 @@ const SearchTransactionHash = () => {
                 Hình ảnh và video
               </AccordionHeader>
               <AccordionBody>
-                <div class="bg-gray-100 overflow-hidden shadow rounded-lg border ">
-                  <div class="px-4 py-5 sm:px-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                      Thông tin
-                    </h3>
-                    <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                      This is some information about the user.
-                    </p>
-                  </div>
-                  <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                    <dl class="sm:divide-y sm:divide-gray-200">
-                      <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                          Full name
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                          John Doe
-                        </dd>
+                {
+                  loadingVideos && (videos || videos.length === 0)  ? 
+                  <>
+                  {
+                    videos.map((video, index) => (
+                      <div key={index} class="bg-gray-100 overflow-hidden shadow rounded-lg border ">
+                        <div class="px-4 py-5 sm:px-6">
+                          <h3 class="text-lg leading-6 font-medium text-gray-900">
+                          {new Date(Number(video.date) * 1000).toISOString()}
+                          </h3>
+                          <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                            <ul>
+                              <li>
+                                Video hash: {video.hash}
+                              </li>
+                              <li>
+                                Time description: {video.timeDesciption}
+                              </li>
+                            </ul>
+                          </p>
+                        </div>
                       </div>
-                      <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                          Email address
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                          johndoe@example.com
-                        </dd>
-                      </div>
-                      <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                          Phone number
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                          (123) 456-7890
-                        </dd>
-                      </div>
-                      <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                          Address
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                          123 Main St Anytown, USA 12345
-                        </dd>
-                      </div>
-                    </dl>
-                  </div>
-                </div>
+                    ))
+                  }
+                  </> : <Spinner />
+                }
               </AccordionBody>
             </Accordion>
             <Accordion open={open === 8} icon={<Icon id={8} open={open} />}>
@@ -1228,52 +1258,32 @@ const SearchTransactionHash = () => {
                 Kết nối
               </AccordionHeader>
               <AccordionBody>
-                <div class="bg-gray-100 overflow-hidden shadow rounded-lg border ">
-                  <div class="px-4 py-5 sm:px-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                      Thông tin
-                    </h3>
-                    <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                      This is some information about the user.
-                    </p>
-                  </div>
-                  <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                    <dl class="sm:divide-y sm:divide-gray-200">
-                      <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                          Full name
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                          John Doe
-                        </dd>
+                {
+                  loadingConnectionLoss && (connectionLoss || connectionLoss.length === 0)  ? 
+                  <>
+                  {
+                    connectionLoss.map((connection, index) => (
+                      <div key={index} class="bg-gray-100 overflow-hidden shadow rounded-lg border ">
+                        <div class="px-4 py-5 sm:px-6">
+                          <h3 class="text-lg leading-6 font-medium text-gray-900">
+                          {new Date(Number(connection.date) * 1000).toISOString()}
+                          </h3>
+                          <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                            <ul>
+                              <li>
+                                Total loss per day (second): {Number(connection.totalLossPerDay)}
+                              </li>
+                              <li>
+                                Connection loss: {connection.connectionLoss}
+                              </li>
+                            </ul>
+                          </p>
+                        </div>
                       </div>
-                      <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                          Email address
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                          johndoe@example.com
-                        </dd>
-                      </div>
-                      <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                          Phone number
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                          (123) 456-7890
-                        </dd>
-                      </div>
-                      <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                          Address
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                          123 Main St Anytown, USA 12345
-                        </dd>
-                      </div>
-                    </dl>
-                  </div>
-                </div>
+
+                    ))
+                } </> : <Spinner />
+              }
               </AccordionBody>
             </Accordion>
           </>
