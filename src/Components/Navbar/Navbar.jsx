@@ -4,11 +4,9 @@ import { RxAccessibility } from "react-icons/rx";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { TbGridDots } from "react-icons/tb";
 import {
-  Button,
   Dialog,
   DialogHeader,
   DialogBody,
-  DialogFooter,
   IconButton,
   Typography,
   MenuItem,
@@ -93,7 +91,7 @@ const Navbar = () => {
               </Typography>
               <Typography color="gray" variant="paragraph">
                 Bạn hãy chọn một trong hai các để truy xuất , sau đó nhập
-                transactionHash hoặc Id tương ứng.
+                transaction hash hoặc project index tương ứng.
               </Typography>
             </div>
             <IconButton
@@ -155,20 +153,12 @@ const Navbar = () => {
                     variant="h6"
                     onClick={() => navigate(`/search/index`)}
                   >
-                    Mã truy suất
+                    Project index
                   </Typography>
                 </MenuItem>
               </ul>
             </div>
           </DialogBody>
-          <DialogFooter className="justify-between gap-2">
-            <Typography variant="small" color="gray" className="font-normal">
-              New to Ethereum wallets?
-            </Typography>
-            <Button variant="outlined" size="sm">
-              Learn More
-            </Button>
-          </DialogFooter>
         </Dialog>
       </section>
     </section>

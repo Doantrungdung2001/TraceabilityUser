@@ -391,7 +391,7 @@ const SearchTransactionHash = () => {
               </p>
               <input
                 type="text"
-                placeholder="index"
+                placeholder="Transaction hash"
                 className="border-2 rounded-lg w-full h-12 px-4"
                 onChange={(e) => setTransactionHash(e.target.value.trim())}
               />
