@@ -103,7 +103,21 @@ const PROJECT = {
       .catch((err) => {
         return err;
       });
-  }
+  },
+
+  // Lấy quá trình cùng video
+  getProcessWithObjectDetections: async (projectIndex) => {
+    return await publicHttp({
+      method: "GET",
+      url: `/project/${projectIndex}/processesWithObjectDetections`,
+    })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
+  },
 };
 
 export default PROJECT;

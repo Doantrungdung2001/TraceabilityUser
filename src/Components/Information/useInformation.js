@@ -10,20 +10,20 @@ export default function useInformation({ projectId }) {
         outputImages.push({ img });
       });
     });
-    
-    let allDistributerWithAmount = []
+
+    let allDistributerWithAmount = [];
     data.forEach((item) => {
       item.distributerWithAmount.forEach((distributerWithAmount) => {
-        allDistributerWithAmount.push(distributerWithAmount)
-      })
-    })
+        allDistributerWithAmount.push(distributerWithAmount);
+      });
+    });
 
     const output = data.map((item) => ({
       id: item?._id,
       tx: item?.tx,
       time: item?.time,
       amount: item?.amount,
-      images:item?.images,
+      images: item?.images,
       note: item?.note,
       isEdited: item?.isEdited,
       historyOutput: item?.historyOutput,
@@ -32,8 +32,7 @@ export default function useInformation({ projectId }) {
       amountPerOne: item?.amountPerOne,
     }));
 
-    
-    return { outputImages, allDistributerWithAmount,output };
+    return { outputImages, allDistributerWithAmount, output };
   }, []);
   const {
     data: dataOutput,
@@ -86,7 +85,7 @@ export default function useInformation({ projectId }) {
       pesticide: [],
       other: [],
     };
-    data.forEach((item) => {
+    data.processes.forEach((item) => {
       process[item.type].push(item);
     });
 
@@ -103,6 +102,8 @@ export default function useInformation({ projectId }) {
             name: item?.cultivationActivity.name,
             description: item?.cultivationActivity.description,
           },
+          historyProcess: item?.historyProcess,
+          objectDetections: item?.objectDetections,
         });
       });
 
@@ -117,6 +118,8 @@ export default function useInformation({ projectId }) {
           density: item?.plantingActivity.density,
           description: item?.plantingActivity.description,
         },
+        historyProcess: item?.historyProcess,
+        objectDetections: item?.objectDetections,
       });
     });
 
@@ -132,6 +135,8 @@ export default function useInformation({ projectId }) {
           description: item?.fertilizationActivity.description,
           type: item?.fertilizationActivity.type,
         },
+        historyProcess: item?.historyProcess,
+        objectDetections: item?.objectDetections,
       });
     });
 
@@ -148,6 +153,8 @@ export default function useInformation({ projectId }) {
           solution: item?.pestAndDiseaseControlActivity.solution,
           type: item?.pestAndDiseaseControlActivity.type,
         },
+        historyProcess: item?.historyProcess,
+        objectDetections: item?.objectDetections,
       });
     });
 
@@ -161,6 +168,8 @@ export default function useInformation({ projectId }) {
           tx: item?.tx,
           description: item?.other.description,
         },
+        historyProcess: item?.historyProcess,
+        objectDetections: item?.objectDetections,
       });
     });
 
@@ -170,7 +179,9 @@ export default function useInformation({ projectId }) {
       return timeA - timeB;
     });
 
-    return { dataProcess };
+    const nonProcessObjectDetection = data?.nonProcessObjectDetection;
+
+    return { dataProcess, nonProcessObjectDetection };
   }, []);
 
   const {
@@ -179,7 +190,7 @@ export default function useInformation({ projectId }) {
     isLoading: isLoadingProcess,
   } = useQuery({
     queryKey: ["getProcess", projectId],
-    queryFn: () => PROJECT.getProcess(projectId),
+    queryFn: () => PROJECT.getProcessWithObjectDetections(projectId),
     staleTime: 20 * 1000,
     select: (data) => parseDataProcess(data?.data?.metadata),
     enabled: !!projectId,
@@ -252,8 +263,6 @@ export default function useInformation({ projectId }) {
       historyPlantFarmingEdit: data?.historyPlantFarmingEdit,
       createdAtTime: data?.createdAtTime,
     };
-
-    console.log("x: ", plantFarming)
     return { plantFarming };
   }, []);
   const {
@@ -271,13 +280,14 @@ export default function useInformation({ projectId }) {
   return {
     ImageProduct: dataOutput?.outputImages,
     allDistributerWithAmount: dataOutput?.allDistributerWithAmount,
-    Output: dataOutput?.output, 
+    Output: dataOutput?.output,
     isSuccessOutput,
     isLoadingOutput,
     projectInfo: dataProjectInfo?.projectInfo,
     isSuccessProjectInfo,
     isLoadingProjectInfo,
     dataProcess: dataProcess?.dataProcess,
+    nonProcessObjectDetection: dataProcess?.nonProcessObjectDetection,
     isSuccessProcess,
     isLoadingProcess,
     dataExpect: dataExpect?.expect,

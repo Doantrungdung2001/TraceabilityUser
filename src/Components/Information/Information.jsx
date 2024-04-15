@@ -31,6 +31,40 @@ import {
   formatTransactionHashTable,
 } from "../../Utils/helpers";
 import Calendar from "../Calendar/Calendar";
+import { DetailActivity } from "../Activity/DetailActivity";
+
+const nonProcessObjectDetection = [
+  {
+    _id: "660fc9b516f19df13a27ad09",
+    camera_id: "6610b6a1b2eaeaef0677316e",
+    start_time: "2024-02-22T16:51:37.000Z",
+    end_time: "2024-02-22T16:51:44.000Z",
+    video_url:
+      "https://res.cloudinary.com/agritech/video/upload/v1712310708/detected_object/660a80a6b4d17927f8c8bc68/660a80a6b4d17927f8c8bc68_2024-04-05_16-51-37_2024-04-05_16-51-44.webm",
+    concatenated_hash:
+      "bc889c2f546e33c956526e8d3e82301ab3417c952a1aed7a350232bf97f374e275b7185146c5beb83d0fb4a78c4f341c5af8a5a2b991158c52140c9d0940b6fa1ba587b4e5cf3fffea01b1e53c91a70286915b5ce0dc952fc3514c2f981ebc05",
+    date_timestamp: 1712477419,
+    timeDescription:
+      "Start Time: 2024-04-07 16:51:37, End Time: 2024-04-07 16:51:44Start Time: 2024-04-07 16:51:38, End Time: 2024-04-07 16:51:50Start Time: 2024-04-07 16:51:56, End Time: 2024-04-07 16:52:01",
+    tx_hash:
+      "0x0ae7535f7721bbb01664c4b8ecaab9c8f91ec27d87290df13e11efea79aab53f",
+  },
+  {
+    _id: "660fc9bb16f19df13a27ad0a",
+    camera_id: "6610b6a1b2eaeaef0677316e",
+    start_time: "2024-02-22T16:51:38.000Z",
+    end_time: "2024-02-22T16:51:50.000Z",
+    video_url:
+      "https://res.cloudinary.com/agritech/video/upload/v1712310714/detected_object/65e4694893820a9d084a927e/65e4694893820a9d084a927e_2024-04-05_16-51-38_2024-04-05_16-51-50.webm",
+    concatenated_hash:
+      "bc889c2f546e33c956526e8d3e82301ab3417c952a1aed7a350232bf97f374e275b7185146c5beb83d0fb4a78c4f341c5af8a5a2b991158c52140c9d0940b6fa1ba587b4e5cf3fffea01b1e53c91a70286915b5ce0dc952fc3514c2f981ebc05",
+    date_timestamp: 1712477419,
+    timeDescription:
+      "Start Time: 2024-04-07 16:51:37, End Time: 2024-04-07 16:51:44Start Time: 2024-04-07 16:51:38, End Time: 2024-04-07 16:51:50Start Time: 2024-04-07 16:51:56, End Time: 2024-04-07 16:52:01",
+    tx_hash:
+      "0x0ae7535f7721bbb01664c4b8ecaab9c8f91ec27d87290df13e11efea79aab53f",
+  },
+];
 
 const TABLE_HEAD = ["Thời gian", "Dự kiến (kg)"];
 function Icon({ id, open }) {
@@ -54,16 +88,15 @@ function Icon({ id, open }) {
   );
 }
 
-function ActivityLogItem({ text, linkText, time, note }) {
+function ActivityLogItem({ index, text, time, note }) {
   return (
     <div className="flex items-center w-full my-5 -ml-1.5 px-2">
-      <div className="w-1/12 z-10">
-        <div className="w-3.5 h-3.5 bg-blue-600 rounded-full"></div>
-      </div>
-      <div className="w-11/12">
+      <div className="">
+        <div className="text-green-500 font-bold text-xl">
+          <p>Lần thứ {index}</p>
+        </div>
         <p className="text-sm text-gray-800 font-bold py-1">
-          Sản lượng :<span className="text-gray-600"> {text} (kg)</span>
-          <span className="text-xs text-blue-600 font-bold"> ({linkText})</span>
+          Sản lượng :<span className="text-gray-600"> {text}</span>
         </p>
 
         <p className="text-xs text-gray-600">{time}</p>
@@ -154,21 +187,21 @@ const Information = () => {
       desc: (
         <DialogBody className="h-[39rem]">
           <section className="infor">
-            <>
-              <Accordion
-                open={reportsOpen === 1}
-                icon={<Icon id={1} open={reportsOpen} />}
-              >
-                <AccordionHeader
-                  onClick={() => handleReportsOpen(1)}
-                  style={{ color: "green" }}
+            {selectedProcess && (
+              <>
+                <Accordion
+                  open={reportsOpen === 1}
+                  icon={<Icon id={1} open={reportsOpen} />}
                 >
-                  Công việc
-                </AccordionHeader>
-                <AccordionBody>
-                  <div className="w-full md:w-[40rem]">
-                    {selectedProcess &&
-                      selectedProcess.type === "pesticide" && (
+                  <AccordionHeader
+                    onClick={() => handleReportsOpen(1)}
+                    style={{ color: "green" }}
+                  >
+                    Công việc
+                  </AccordionHeader>
+                  <AccordionBody>
+                    <div className="w-full md:w-[40rem]">
+                      {selectedProcess.type === "pesticide" && (
                         <div>
                           <div className="max-w-screen-md text-sm mb-3">
                             <h3 class="text-blue-600">
@@ -185,29 +218,29 @@ const Information = () => {
                             </p>
                             <h3 className="text-lg font-semibold">Đối tượng</h3>
                             <p>{selectedProcess.detail.name}</p>
-                            <ul className="list-disc ml-6 mb-4">
-                              <li>
-                                Personal Information: We may collect your name,
-                                email address, and other personal information
-                                when you provide it to us.
-                              </li>
-                              <li>
-                                Usage Information: We may collect information
-                                about your usage of our website and services,
-                                such as the pages you visit and your
-                                interactions with our content.
-                              </li>
-                            </ul>
-                            <h3 className="text-lg font-semibold">Chi tiết</h3>
+                            <h3 className="text-lg font-semibold">Kiểu</h3>
+                            <p>
+                              {selectedProcess.detail.type === "pest"
+                                ? "Sâu"
+                                : "Bệnh"}
+                            </p>
+                            <h3 className="text-lg font-semibold">
+                              Triệu chứng
+                            </h3>
                             <p>{selectedProcess.detail.symptoms}</p>
-                            <h3 className="text-lg font-semibold">Hoạt động</h3>
-                            <p>{selectedProcess.detail.solution}</p>
+                            <h3 className="text-lg font-semibold">Giải pháp</h3>
+                            {selectedProcess.detail.solution.map(
+                              (item, index) => (
+                                <p key={index}>
+                                  {index + 1}-{item}
+                                </p>
+                              )
+                            )}
                           </div>
                         </div>
                       )}
 
-                    {selectedProcess &&
-                      selectedProcess.type === "fertilize" && (
+                      {selectedProcess.type === "fertilize" && (
                         <div>
                           <div className="max-w-screen-md mb-3 text-sm">
                             <h3 class="text-blue-600">
@@ -225,24 +258,15 @@ const Information = () => {
                               })}
                             </p>
                             <h3 className="text-lg font-semibold mb-2">
-                              Đối tượng
+                              Thời điểm trồng
                             </h3>
-                            <p>{selectedProcess.detail.name}</p>
-                            {/* <ul className="list-disc ml-6 mb-4">
-                              <li>
-                                Personal Information: We may collect your name,
-                                email address, and other personal information
-                                when you provide it to us.
-                              </li>
-                              <li>
-                                Usage Information: We may collect information
-                                about your usage of our website and services,
-                                such as the pages you visit and your
-                                interactions with our content.
-                              </li>
-                            </ul> */}
+                            <p>{selectedProcess.detail.fertilizationTime}</p>
                             <h3 className="text-lg font-semibold mb-2">Kiểu</h3>
-                            <p>{selectedProcess.detail.type}</p>
+                            <p>
+                              {selectedProcess.detail.type === "baseFertilizer"
+                                ? "Bón lót"
+                                : "Bón thúc"}
+                            </p>
                             <h3 className="text-lg font-semibold mb-2">
                               Mô tả
                             </h3>
@@ -251,46 +275,7 @@ const Information = () => {
                         </div>
                       )}
 
-                    {selectedProcess && selectedProcess.type === "planting" && (
-                      <div>
-                        <div className="max-w-screen-md mb-3 text-sm">
-                          <h3 class="text-blue-600">
-                            {formatDateTime(selectedProcess.time)}
-                          </h3>
-
-                          <h4 className="text-lg font-semibold">Mã Hash</h4>
-                          <p class="text-blue-600">
-                            {formatTransactionHashTable({
-                              str: selectedProcess.detail.tx,
-                              a: 8,
-                              b: 5,
-                            })}
-                          </p>
-                          <h3 className="text-lg font-semibold">Đối tượng</h3>
-                          <p>{selectedProcess.detail.name}</p>
-                          {/* <ul className="list-disc ml-6 mb-4">
-                              <li>
-                                Personal Information: We may collect your name,
-                                email address, and other personal information
-                                when you provide it to us.
-                              </li>
-                              <li>
-                                Usage Information: We may collect information
-                                about your usage of our website and services,
-                                such as the pages you visit and your
-                                interactions with our content.
-                              </li>
-                            </ul> */}
-                          <h3 className="text-lg font-semibold">Kiểu</h3>
-                          <p>{selectedProcess.detail.density}</p>
-                          <h3 className="text-lg font-semibold">Mô tả</h3>
-                          <p>{selectedProcess.detail.description}</p>
-                        </div>
-                      </div>
-                    )}
-
-                    {selectedProcess && selectedProcess.type === "other" && (
-                      <div>
+                      {selectedProcess.type === "planting" && (
                         <div>
                           <div className="max-w-screen-md mb-3 text-sm">
                             <h3 class="text-blue-600">
@@ -305,32 +290,40 @@ const Information = () => {
                                 b: 5,
                               })}
                             </p>
-                            <h3 className="text-lg font-semibold">Đối tượng</h3>
-                            <p>{selectedProcess.detail.name}</p>
-                            {/* <ul className="list-disc ml-6 mb-4">
-                              <li>
-                                Personal Information: We may collect your name,
-                                email address, and other personal information
-                                when you provide it to us.
-                              </li>
-                              <li>
-                                Usage Information: We may collect information
-                                about your usage of our website and services,
-                                such as the pages you visit and your
-                                interactions with our content.
-                              </li>
-                            </ul> */}
-                            <h3 className="text-lg font-semibold">Kiểu</h3>
+                            <h3 className="text-lg font-semibold">Mật độ</h3>
                             <p>{selectedProcess.detail.density}</p>
                             <h3 className="text-lg font-semibold">Mô tả</h3>
                             <p>{selectedProcess.detail.description}</p>
                           </div>
                         </div>
-                      </div>
-                    )}
+                      )}
 
-                    {selectedProcess &&
-                      selectedProcess.type === "cultivation" && (
+                      {selectedProcess.type === "other" && (
+                        <div>
+                          <div>
+                            <div className="max-w-screen-md mb-3 text-sm">
+                              <h3 class="text-blue-600">
+                                {formatDateTime(selectedProcess.time)}
+                              </h3>
+
+                              <h4 className="text-lg font-semibold">Mã Hash</h4>
+                              <p class="text-blue-600">
+                                {formatTransactionHashTable({
+                                  str: selectedProcess.detail.tx,
+                                  a: 8,
+                                  b: 5,
+                                })}
+                              </p>
+                              <h3 className="text-lg font-semibold">Kiểu</h3>
+                              <p>Hoạt động khác</p>
+                              <h3 className="text-lg font-semibold">Mô tả</h3>
+                              <p>{selectedProcess.detail.description}</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {selectedProcess.type === "cultivation" && (
                         <div>
                           <div>
                             <div className="max-w-screen-md mb-3 text-sm">
@@ -347,61 +340,46 @@ const Information = () => {
                                 })}
                               </p>
                               <h3 className="text-lg font-semibold">
-                                Đối tượng
+                                Hoạt động
                               </h3>
                               <p>{selectedProcess.detail.name}</p>
-                              {/* <ul className="list-disc ml-6 mb-4">
-                              <li>
-                                Personal Information: We may collect your name,
-                                email address, and other personal information
-                                when you provide it to us.
-                              </li>
-                              <li>
-                                Usage Information: We may collect information
-                                about your usage of our website and services,
-                                such as the pages you visit and your
-                                interactions with our content.
-                              </li>
-                            </ul> */}
-                              <h3 className="text-lg font-semibold">Kiểu</h3>
-                              <p>{selectedProcess.detail.density}</p>
                               <h3 className="text-lg font-semibold">Mô tả</h3>
                               <p>{selectedProcess.detail.description}</p>
                             </div>
                           </div>
                         </div>
                       )}
-                  </div>
-                </AccordionBody>
-              </Accordion>
-              <Accordion
-                open={reportsOpen === 2}
-                icon={<Icon id={2} open={reportsOpen} />}
-              >
-                <AccordionHeader
-                  onClick={() => handleReportsOpen(2)}
-                  style={{ color: "green" }}
+                    </div>
+                  </AccordionBody>
+                </Accordion>
+                <Accordion
+                  open={reportsOpen === 2}
+                  icon={<Icon id={2} open={reportsOpen} />}
                 >
-                  Lịch sử chỉnh sửa
-                </AccordionHeader>
-                <AccordionBody>
-                  <>
-                    <ActivityLogItem
-                      text="Profile informations changed."
-                      time="3 min ago"
-                    />
-                    <ActivityLogItem
-                      text="Profile informations changed."
-                      time="3 min ago"
-                    />
-                    <ActivityLogItem
-                      text="Profile informations changed."
-                      time="3 min ago"
-                    />
-                  </>
-                </AccordionBody>
-              </Accordion>
-            </>
+                  <AccordionHeader
+                    onClick={() => handleReportsOpen(2)}
+                    style={{ color: "green" }}
+                  >
+                    Lịch sử chỉnh sửa
+                  </AccordionHeader>
+                  <AccordionBody>
+                    {selectedProcess?.historyProcess.length > 0 ? (
+                      selectedProcess.historyProcess.map((data, index) => (
+                        <div key={index}>
+                          {console.log(data)}
+                          <DetailActivity
+                            index={index + 1}
+                            dataActivity={data}
+                          />
+                        </div>
+                      ))
+                    ) : (
+                      <div>Không có chỉnh sửa</div>
+                    )}
+                  </AccordionBody>
+                </Accordion>
+              </>
+            )}
           </section>
         </DialogBody>
       ),
@@ -411,25 +389,23 @@ const Information = () => {
       value: "Input",
       desc: (
         <div>
-          <video
-            className="h-full w-full my-2 rounded-lg "
-            controls
-            autoPlay
-            muted
-          >
-            <source
-              src="https://docs.material-tailwind.com/demo.mp4"
-              type="video/mp4"
-            />
-            Your browser does not support the video ta
-          </video>
-          <video className="h-full w-full rounded-lg" controls autoPlay muted>
-            <source
-              src="https://docs.material-tailwind.com/demo.mp4"
-              type="video/mp4"
-            />
-            Your browser does not support the video ta
-          </video>
+          {selectedProcess?.objectDetections.length > 0 ? (
+            selectedProcess.objectDetections.map((data, index) => (
+              <div key={index}>
+                <video
+                  className="h-full w-full my-2 rounded-lg "
+                  controls
+                  autoPlay
+                  muted
+                >
+                  <source src={data.video_url} type="video/mp4" />
+                  Your browser does not support the video ta
+                </video>
+              </div>
+            ))
+          ) : (
+            <div>Không có video</div>
+          )}
         </div>
       ),
     },
@@ -448,7 +424,6 @@ const Information = () => {
         return "Làm đất";
     }
   };
-
   return (
     <section className="information">
       <div data-aos="fade-up" className="r-title">
@@ -684,12 +659,32 @@ const Information = () => {
         <>
           <Accordion
             open={open === 1}
-            className="mb-2 rounded-lg border border-blue-gray-300 px-2"
+            className="rounded-lg border border-blue-gray-300 px-4 mb-2"
           >
             <AccordionHeader
               onClick={() => handleOpen(1)}
               className={`border-b-0 transition-colors ${
                 open === 1 ? "text-green-400 hover:!text-green-700" : ""
+              }`}
+            >
+              Video không có hoạt động tương ứng
+            </AccordionHeader>
+            <AccordionBody className="pt-0 text-base font-normal">
+              <section className="px-4">
+                <div>
+                  <Calendar />
+                </div>
+              </section>
+            </AccordionBody>
+          </Accordion>
+          <Accordion
+            open={open === 2}
+            className="mb-2 rounded-lg border border-blue-gray-300 px-2"
+          >
+            <AccordionHeader
+              onClick={() => handleOpen(2)}
+              className={`border-b-0 transition-colors ${
+                open === 2 ? "text-green-400 hover:!text-green-700" : ""
               }`}
             >
               Thông tin dự kiến sản lượng
@@ -849,13 +844,13 @@ const Information = () => {
             </AccordionBody>
           </Accordion>
           <Accordion
-            open={open === 2}
+            open={open === 3}
             className="mb-2 rounded-lg border border-blue-gray-300 px-4"
           >
             <AccordionHeader
-              onClick={() => handleOpen(2)}
+              onClick={() => handleOpen(3)}
               className={`border-b-0 transition-colors ${
-                open === 2 ? "text-green-400 hover:!text-green-700" : ""
+                open === 3 ? "text-green-400 hover:!text-green-700" : ""
               }`}
             >
               Quy trình mẫu
@@ -1345,13 +1340,13 @@ const Information = () => {
             </AccordionBody>
           </Accordion>
           <Accordion
-            open={open === 3}
+            open={open === 4}
             className="mb-2 rounded-lg border border-blue-gray-300 px-4"
           >
             <AccordionHeader
-              onClick={() => handleOpen(3)}
+              onClick={() => handleOpen(4)}
               className={`border-b-0 transition-colors ${
-                open === 3 ? "text-green-400 hover:!text-green-700" : ""
+                open === 4 ? "text-green-400 hover:!text-green-700" : ""
               }`}
             >
               Đầu ra
@@ -1482,13 +1477,13 @@ const Information = () => {
             </AccordionBody>
           </Accordion>
           <Accordion
-            open={open === 4}
+            open={open === 5}
             className="rounded-lg border border-blue-gray-300 px-4 mb-2"
           >
             <AccordionHeader
-              onClick={() => handleOpen(4)}
+              onClick={() => handleOpen(5)}
               className={`border-b-0 transition-colors ${
-                open === 4 ? "text-green-400 hover:!text-green-700" : ""
+                open === 5 ? "text-green-400 hover:!text-green-700" : ""
               }`}
             >
               Hình ảnh và thời tiết
@@ -1502,13 +1497,13 @@ const Information = () => {
             </AccordionBody>
           </Accordion>
           <Accordion
-            open={open === 5}
-            className="rounded-lg border border-blue-gray-300 px-4"
+            open={open === 6}
+            className="rounded-lg border border-blue-gray-300 px-4 mb-2"
           >
             <AccordionHeader
-              onClick={() => handleOpen(5)}
+              onClick={() => handleOpen(6)}
               className={`border-b-0 transition-colors ${
-                open === 5 ? "text-green-400 hover:!text-green-700" : ""
+                open === 6 ? "text-green-400 hover:!text-green-700" : ""
               }`}
             >
               Các chứng nhận
@@ -1537,6 +1532,26 @@ const Information = () => {
                   {isLoadingCertificateImages && <Spinner />}
                 </div>
               </div>
+            </AccordionBody>
+          </Accordion>
+          <Accordion
+            open={open === 7}
+            className="rounded-lg border border-blue-gray-300 px-4 mb-2"
+          >
+            <AccordionHeader
+              onClick={() => handleOpen(7)}
+              className={`border-b-0 transition-colors ${
+                open === 7 ? "text-green-400 hover:!text-green-700" : ""
+              }`}
+            >
+              Các hoạt động bị xóa
+            </AccordionHeader>
+            <AccordionBody className="pt-0 text-base font-normal">
+              <section className="px-4">
+                <div>
+                  <Calendar />
+                </div>
+              </section>
             </AccordionBody>
           </Accordion>
         </>
