@@ -39,10 +39,11 @@
     "tw-elements": "^1.1.0",
     "url": "^0.11.3",
     "web-vitals": "^2.1.4",
+    "web3": "^4.7.0",
     "zlib": "^1.0.5"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=4567 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

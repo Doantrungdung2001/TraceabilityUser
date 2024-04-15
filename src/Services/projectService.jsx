@@ -91,6 +91,19 @@ const PROJECT = {
         return err;
       });
   },
+
+  getCameraIndexAndStartDateAndEndDate: async (projectIndex) => {
+    return await publicHttp({
+      method: "GET",
+      url: `/project/${projectIndex}/cameraIndex`,
+    })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
+  }
 };
 
 export default PROJECT;
