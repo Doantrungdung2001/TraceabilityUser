@@ -33,39 +33,6 @@ import {
 import Calendar from "../Calendar/Calendar";
 import { DetailActivity } from "../Activity/DetailActivity";
 
-const nonProcessObjectDetection = [
-  {
-    _id: "660fc9b516f19df13a27ad09",
-    camera_id: "6610b6a1b2eaeaef0677316e",
-    start_time: "2024-02-22T16:51:37.000Z",
-    end_time: "2024-02-22T16:51:44.000Z",
-    video_url:
-      "https://res.cloudinary.com/agritech/video/upload/v1712310708/detected_object/660a80a6b4d17927f8c8bc68/660a80a6b4d17927f8c8bc68_2024-04-05_16-51-37_2024-04-05_16-51-44.webm",
-    concatenated_hash:
-      "bc889c2f546e33c956526e8d3e82301ab3417c952a1aed7a350232bf97f374e275b7185146c5beb83d0fb4a78c4f341c5af8a5a2b991158c52140c9d0940b6fa1ba587b4e5cf3fffea01b1e53c91a70286915b5ce0dc952fc3514c2f981ebc05",
-    date_timestamp: 1712477419,
-    timeDescription:
-      "Start Time: 2024-04-07 16:51:37, End Time: 2024-04-07 16:51:44Start Time: 2024-04-07 16:51:38, End Time: 2024-04-07 16:51:50Start Time: 2024-04-07 16:51:56, End Time: 2024-04-07 16:52:01",
-    tx_hash:
-      "0x0ae7535f7721bbb01664c4b8ecaab9c8f91ec27d87290df13e11efea79aab53f",
-  },
-  {
-    _id: "660fc9bb16f19df13a27ad0a",
-    camera_id: "6610b6a1b2eaeaef0677316e",
-    start_time: "2024-02-22T16:51:38.000Z",
-    end_time: "2024-02-22T16:51:50.000Z",
-    video_url:
-      "https://res.cloudinary.com/agritech/video/upload/v1712310714/detected_object/65e4694893820a9d084a927e/65e4694893820a9d084a927e_2024-04-05_16-51-38_2024-04-05_16-51-50.webm",
-    concatenated_hash:
-      "bc889c2f546e33c956526e8d3e82301ab3417c952a1aed7a350232bf97f374e275b7185146c5beb83d0fb4a78c4f341c5af8a5a2b991158c52140c9d0940b6fa1ba587b4e5cf3fffea01b1e53c91a70286915b5ce0dc952fc3514c2f981ebc05",
-    date_timestamp: 1712477419,
-    timeDescription:
-      "Start Time: 2024-04-07 16:51:37, End Time: 2024-04-07 16:51:44Start Time: 2024-04-07 16:51:38, End Time: 2024-04-07 16:51:50Start Time: 2024-04-07 16:51:56, End Time: 2024-04-07 16:52:01",
-    tx_hash:
-      "0x0ae7535f7721bbb01664c4b8ecaab9c8f91ec27d87290df13e11efea79aab53f",
-  },
-];
-
 const TABLE_HEAD = ["Thời gian", "Dự kiến (kg)"];
 function Icon({ id, open }) {
   return (
@@ -123,6 +90,7 @@ const Information = () => {
     isSuccessProjectInfo,
     isLoadingProjectInfo,
     dataProcess,
+    nonProcessObjectDetection,
     isSuccessProcess,
     isLoadingProcess,
     dataExpect,
@@ -392,6 +360,28 @@ const Information = () => {
           {selectedProcess?.objectDetections.length > 0 ? (
             selectedProcess.objectDetections.map((data, index) => (
               <div key={index}>
+                <div>
+                  <h2 className="mt-6 text-green-700 dark:text-gray-200 font-bold">
+                    {formatDateTime(data.start_time)} -{" "}
+                    {formatDateTime(data.end_time)}
+                  </h2>
+
+                  {/* <p className="mt-2 leading-loose text-gray-600 dark:text-gray-300">
+                    Welcome to Meraki UI! You’re already on your way to creating
+                    beautiful visual products. We’ve created a quick intro video
+                    to get you up and running as soon as possible. If you have
+                    any questions,{" "}
+                  </p> */}
+                  <p>
+                    <span className="text-blue-700">
+                      {formatTransactionHashTable({
+                        str: data.tx_hash,
+                        a: 8,
+                        b: 5,
+                      })}
+                    </span>
+                  </p>
+                </div>
                 <video
                   className="h-full w-full my-2 rounded-lg "
                   controls
@@ -670,9 +660,48 @@ const Information = () => {
               Video không có hoạt động tương ứng
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
-              <section className="px-4">
-                <div>
-                  <Calendar />
+              <section className="">
+                <div className="rounded-lg shadow bg-white p-3">
+                  {isSuccessProcess && nonProcessObjectDetection.length > 0 ? (
+                    nonProcessObjectDetection.map((data, index) => (
+                      <div key={index}>
+                        <div>
+                          <h2 className="mt-4 text-black dark:text-gray-200 font-bold">
+                            {formatDateTime(data.start_time)} -{" "}
+                            {formatDateTime(data.end_time)}
+                          </h2>
+
+                          {/* <p className="mt-2 leading-loose text-gray-600 dark:text-gray-300">
+                    Welcome to Meraki UI! You’re already on your way to creating
+                    beautiful visual products. We’ve created a quick intro video
+                    to get you up and running as soon as possible. If you have
+                    any questions,{" "}
+                  </p> */}
+                          <p>
+                            <span className="text-blue-700">
+                              {formatTransactionHashTable({
+                                str: data.tx_hash,
+                                a: 8,
+                                b: 5,
+                              })}
+                            </span>
+                          </p>
+                        </div>
+                        <video
+                          className="h-full w-full my-2 rounded-lg "
+                          controls
+                          autoPlay
+                          muted
+                        >
+                          <source src={data.video_url} type="video/mp4" />
+                          Your browser does not support the video ta
+                        </video>
+                      </div>
+                    ))
+                  ) : (
+                    <div>Không có video</div>
+                  )}
+                  {isLoadingProcess && <Spinner />}
                 </div>
               </section>
             </AccordionBody>
