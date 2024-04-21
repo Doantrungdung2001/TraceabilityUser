@@ -334,7 +334,6 @@ const Information = () => {
                     {selectedProcess?.historyProcess.length > 0 ? (
                       selectedProcess.historyProcess.map((data, index) => (
                         <div key={index}>
-                          {console.log(data)}
                           <DetailActivity
                             index={index + 1}
                             dataActivity={data}
@@ -357,31 +356,30 @@ const Information = () => {
       value: "Input",
       desc: (
         <div>
+          <div className="rounded-lg border border-gray-300 p-4">
+            <p className="text-sm font-medium text-gray-900 dark:text-white">
+              Bắt đầu:{" "}
+              {formatDateTime(selectedProcess.objectDetections[0].start_time)}
+            </p>
+            <p className="text-sm font-medium text-gray-900 dark:text-white">
+              Kết thúc:{" "}
+              {formatDateTime(selectedProcess.objectDetections[0].end_time)}
+            </p>
+            <p className="text-sm text-gray-900 dark:text-white">
+              Mã hash:{" "}
+              <span className="text-blue-700">
+                {formatTransactionHashTable({
+                  str: selectedProcess.objectDetections[0].tx_hash,
+                  a: 8,
+                  b: 5,
+                })}
+              </span>
+            </p>
+          </div>
+
           {selectedProcess?.objectDetections.length > 0 ? (
             selectedProcess.objectDetections.map((data, index) => (
               <div key={index}>
-                <div>
-                  <h2 className="mt-6 text-green-700 dark:text-gray-200 font-bold">
-                    {formatDateTime(data.start_time)} -{" "}
-                    {formatDateTime(data.end_time)}
-                  </h2>
-
-                  {/* <p className="mt-2 leading-loose text-gray-600 dark:text-gray-300">
-                    Welcome to Meraki UI! You’re already on your way to creating
-                    beautiful visual products. We’ve created a quick intro video
-                    to get you up and running as soon as possible. If you have
-                    any questions,{" "}
-                  </p> */}
-                  <p>
-                    <span className="text-blue-700">
-                      {formatTransactionHashTable({
-                        str: data.tx_hash,
-                        a: 8,
-                        b: 5,
-                      })}
-                    </span>
-                  </p>
-                </div>
                 <video
                   className="h-full w-full my-2 rounded-lg "
                   controls
