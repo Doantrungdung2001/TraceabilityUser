@@ -659,34 +659,38 @@ const Information = () => {
             >
               Video không có hoạt động tương ứng
             </AccordionHeader>
-            <AccordionBody className="pt-0 text-base font-normal">
-              <section className="">
-                <div className="rounded-lg shadow bg-white p-3">
-                  {isSuccessProcess && nonProcessObjectDetection.length > 0 ? (
+            <AccordionBody className="text-base font-normal">
+              {isSuccessProcess && (
+                <section className="max-w-3xl rounded-lg px-4 py-5 mx-auto bg-white dark:bg-gray-900">
+                  {/*  */}
+                  <div>
+                    {/* <p className="text-gray-700 dark:text-gray-300">
+                      Dưới đây là tổng hợp video mà hệ thống đã ghi lại được.
+                    </p> */}
+                    <div className="rounded-lg shadow bg-green-100 p-1">
+                      <p className="text-2xl font-bold mb-4">Thông tin</p>
+                      <p className="mb-1">
+                        Bắt đầu:{" "}
+                        {formatDateTime(
+                          nonProcessObjectDetection[0].start_time
+                        )}
+                      </p>
+                      <p className="mb-1">
+                        Kết thúc:{" "}
+                        {formatDateTime(nonProcessObjectDetection[0].end_time)}
+                      </p>
+                      <p className="text-blue-700 mb-1">
+                        {formatTransactionHashTable({
+                          str: nonProcessObjectDetection[0].tx_hash,
+                          a: 8,
+                          b: 5,
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                  {nonProcessObjectDetection.length > 0 ? (
                     nonProcessObjectDetection.map((data, index) => (
-                      <div key={index}>
-                        <div>
-                          <h2 className="mt-4 text-black dark:text-gray-200 font-bold">
-                            {formatDateTime(data.start_time)} -{" "}
-                            {formatDateTime(data.end_time)}
-                          </h2>
-
-                          {/* <p className="mt-2 leading-loose text-gray-600 dark:text-gray-300">
-                    Welcome to Meraki UI! You’re already on your way to creating
-                    beautiful visual products. We’ve created a quick intro video
-                    to get you up and running as soon as possible. If you have
-                    any questions,{" "}
-                  </p> */}
-                          <p>
-                            <span className="text-blue-700">
-                              {formatTransactionHashTable({
-                                str: data.tx_hash,
-                                a: 8,
-                                b: 5,
-                              })}
-                            </span>
-                          </p>
-                        </div>
+                      <div key={index} className="mt-5 px-2">
                         <video
                           className="h-full w-full my-2 rounded-lg "
                           controls
@@ -702,8 +706,8 @@ const Information = () => {
                     <div>Không có video</div>
                   )}
                   {isLoadingProcess && <Spinner />}
-                </div>
-              </section>
+                </section>
+              )}
             </AccordionBody>
           </Accordion>
           <Accordion
