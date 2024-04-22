@@ -33,6 +33,7 @@ import {
 import Calendar from "../Calendar/Calendar";
 import { DetailActivity } from "../Activity/DetailActivity";
 import Tables from "../Tables/Tables";
+import DeleteProcess from "../Process/DeleteProcess";
 
 const TABLE_HEAD = ["Thời gian", "Dự kiến (kg)"];
 function Icon({ id, open }) {
@@ -374,7 +375,7 @@ const Information = () => {
         <div>
           {selectedProcess && (
             <div>
-              <div className="rounded-lg border border-gray-300 p-4">
+              {/* <div className="rounded-lg border border-gray-300 p-4">
                 <p className="text-sm font-medium text-gray-900 dark:text-white">
                   Bắt đầu:{" "}
                   {formatDateTime(
@@ -397,7 +398,7 @@ const Information = () => {
                     })}
                   </span>
                 </p>
-              </div>
+              </div> */}
 
               {selectedProcess?.objectDetections.length > 0 ? (
                 selectedProcess.objectDetections.map((data, index) => (
@@ -685,11 +686,7 @@ const Information = () => {
             <AccordionBody className="text-base font-normal">
               {isSuccessProcess && (
                 <section className="max-w-3xl rounded-lg px-4 py-5 mx-auto bg-white dark:bg-gray-900">
-                  {/*  */}
                   <div>
-                    {/* <p className="text-gray-700 dark:text-gray-300">
-                      Dưới đây là tổng hợp video mà hệ thống đã ghi lại được.
-                    </p> */}
                     <div className="rounded-lg shadow bg-green-100 p-1">
                       <p className="text-2xl font-bold mb-4">Thông tin</p>
                       <p className="mb-1">
@@ -726,7 +723,9 @@ const Information = () => {
                       </div>
                     ))
                   ) : (
-                    <div>Không có video</div>
+                    <div className="lg:text-lg text-gray-400 text-base mt-4 ">
+                      Không có video
+                    </div>
                   )}
                   {isLoadingProcess && <Spinner />}
                 </section>
@@ -1617,7 +1616,7 @@ const Information = () => {
                         Hoạt động canh tác
                       </AccordionHeader>
                       <AccordionBody>
-                        <section className="flex items-center justify-center">
+                        {/* <section className="flex items-center justify-center">
                           <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
                             <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
                             <div className="mt-1">
@@ -1668,7 +1667,8 @@ const Information = () => {
                               </div>
                             </div>
                           </div>
-                        </section>
+                        </section> */}
+                        <DeleteProcess />
                       </AccordionBody>
                     </Accordion>
                     <Accordion
@@ -1699,10 +1699,12 @@ const Information = () => {
                       </AccordionHeader>
                       <AccordionBody>
                         <section className="flex items-center justify-center">
-                          {dataDeleteProcess?.deletedOutput.length ? (
-                            <div>Có dữ liệu</div>
+                          {dataDeleteProcess?.deletedOutput?.length ? (
+                            <section></section>
                           ) : (
-                            <div>Không có dữ liệu</div>
+                            <div className="lg:text-2xl text-gray-400 text-base mt-5">
+                              Không có dữ liệu
+                            </div>
                           )}
                         </section>
                       </AccordionBody>

@@ -17,6 +17,21 @@ export function formatDateTime(inputDateTime) {
   return formattedDateTime;
 }
 
+export function renderTypeProcess(type) {
+  switch (type) {
+    case "pesticide":
+      return "Phòng trừ sâu bệnh";
+    case "fertilize":
+      return "Bón phân";
+    case "planting":
+      return "Gieo trồng";
+    case "other":
+      return "Hoạt động khác";
+    case "cultivation":
+      return "Làm đất";
+  }
+}
+
 export function formatTransactionHashTable({ str, a, b }) {
   if (
     a < 0 ||
