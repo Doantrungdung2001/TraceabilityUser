@@ -32,6 +32,7 @@ import {
 } from "../../Utils/helpers";
 import Calendar from "../Calendar/Calendar";
 import { DetailActivity } from "../Activity/DetailActivity";
+import Tables from "../Tables/Tables";
 
 const TABLE_HEAD = ["Thời gian", "Dự kiến (kg)"];
 function Icon({ id, open }) {
@@ -102,6 +103,9 @@ const Information = () => {
     dataPlantFarming,
     isSuccessPlantFarming,
     isLoadingPlantFarming,
+    dataDeleteProcess,
+    isSuccessDeleteProcess,
+    isLoadingDeleteProcess,
   } = useInformation({ projectId });
 
   const [active, setActive] = useState();
@@ -110,18 +114,20 @@ const Information = () => {
       setActive(dataCertificateImages[0].imgelink);
   }, [isSuccessCertificateImages]);
 
+  //open more information
   const [open, setOpen] = useState(1);
-  const [openExpect, setOpenExpect] = useState(0);
-  const [selectedProcess, setSelectedProcess] = useState(null);
-  const [selectedExpect, setSelectedExpect] = useState(null);
-  const [selectedCultivation, setSelectedCultivation] = useState(null);
-  const [selectedPlanting, setSelectedPlanting] = useState(null);
-  const [selectedFertilize, setSelectedFertilize] = useState(null);
-  const [selectedPesticide, setSelectedPesticide] = useState(null);
-
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
+
+  // open Sample process
+  const [openExpect, setOpenExpect] = useState(0);
   const handleOpenExpect = (value) =>
     setOpenExpect(openExpect === value ? 0 : value);
+
+  // delete process
+  const [openDeleteProcess, setOpenDeleteProcess] = useState(0);
+  const handleOpenDeleteProcess = (value) =>
+    setOpenDeleteProcess(openDeleteProcess === value ? 0 : value);
+
   const [openTimeline, setOpenTimeline] = useState(false);
   const handleOpenTimeline = () => setOpenTimeline(!openTimeline);
 
@@ -131,6 +137,14 @@ const Information = () => {
   const [reportsOpen, setReportsOpen] = useState(0);
   const handleReportsOpen = (value) =>
     setReportsOpen(reportsOpen === value ? 0 : value);
+
+  //process
+  const [selectedProcess, setSelectedProcess] = useState(null);
+  const [selectedExpect, setSelectedExpect] = useState(null);
+  const [selectedCultivation, setSelectedCultivation] = useState(null);
+  const [selectedPlanting, setSelectedPlanting] = useState(null);
+  const [selectedFertilize, setSelectedFertilize] = useState(null);
+  const [selectedPesticide, setSelectedPesticide] = useState(null);
 
   const [openCultivation, setOpenCultivation] = useState(false); // Làm đất
   const handleOpenCultivation = () => setOpenCultivation(!openCultivation);
@@ -144,6 +158,7 @@ const Information = () => {
   const [openHarvest, setOpenHarvest] = useState(false); // Phần output chỗ thu hoạch
   const handleOpenHarvest = () => setOpenHarvest(!openHarvest);
 
+  // output in more inoformation
   const [openOutput, setOpenOutput] = useState(0);
   const handleOpenOutput = (value) =>
     setOpenOutput(openOutput === value ? 0 : value);
@@ -347,6 +362,7 @@ const Information = () => {
                 </Accordion>
               </>
             )}
+            {isLoadingProcess && <Spinner />}
           </section>
         </DialogBody>
       ),
@@ -356,44 +372,53 @@ const Information = () => {
       value: "Input",
       desc: (
         <div>
-          <div className="rounded-lg border border-gray-300 p-4">
-            <p className="text-sm font-medium text-gray-900 dark:text-white">
-              Bắt đầu:{" "}
-              {formatDateTime(selectedProcess.objectDetections[0].start_time)}
-            </p>
-            <p className="text-sm font-medium text-gray-900 dark:text-white">
-              Kết thúc:{" "}
-              {formatDateTime(selectedProcess.objectDetections[0].end_time)}
-            </p>
-            <p className="text-sm text-gray-900 dark:text-white">
-              Mã hash:{" "}
-              <span className="text-blue-700">
-                {formatTransactionHashTable({
-                  str: selectedProcess.objectDetections[0].tx_hash,
-                  a: 8,
-                  b: 5,
-                })}
-              </span>
-            </p>
-          </div>
-
-          {selectedProcess?.objectDetections.length > 0 ? (
-            selectedProcess.objectDetections.map((data, index) => (
-              <div key={index}>
-                <video
-                  className="h-full w-full my-2 rounded-lg "
-                  controls
-                  autoPlay
-                  muted
-                >
-                  <source src={data.video_url} type="video/mp4" />
-                  Your browser does not support the video ta
-                </video>
+          {selectedProcess && (
+            <div>
+              <div className="rounded-lg border border-gray-300 p-4">
+                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  Bắt đầu:{" "}
+                  {formatDateTime(
+                    selectedProcess?.objectDetections[0].start_time
+                  )}
+                </p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  Kết thúc:{" "}
+                  {formatDateTime(
+                    selectedProcess?.objectDetections[0].end_time
+                  )}
+                </p>
+                <p className="text-sm text-gray-900 dark:text-white">
+                  Mã hash:{" "}
+                  <span className="text-blue-700">
+                    {formatTransactionHashTable({
+                      str: selectedProcess?.objectDetections[0].tx_hash,
+                      a: 8,
+                      b: 5,
+                    })}
+                  </span>
+                </p>
               </div>
-            ))
-          ) : (
-            <div>Không có video</div>
+
+              {selectedProcess?.objectDetections.length > 0 ? (
+                selectedProcess.objectDetections.map((data, index) => (
+                  <div key={index}>
+                    <video
+                      className="h-full w-full my-2 rounded-lg "
+                      controls
+                      autoPlay
+                      muted
+                    >
+                      <source src={data.video_url} type="video/mp4" />
+                      Your browser does not support the video ta
+                    </video>
+                  </div>
+                ))
+              ) : (
+                <div>Không có video</div>
+              )}
+            </div>
           )}
+          {isLoadingProcess && <Spinner />}
         </div>
       ),
     },
@@ -647,7 +672,7 @@ const Information = () => {
         <>
           <Accordion
             open={open === 1}
-            className="rounded-lg border border-blue-gray-300 px-4 mb-2"
+            className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"
           >
             <AccordionHeader
               onClick={() => handleOpen(1)}
@@ -710,7 +735,7 @@ const Information = () => {
           </Accordion>
           <Accordion
             open={open === 2}
-            className="mb-2 rounded-lg border border-blue-gray-300 px-2"
+            className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"
           >
             <AccordionHeader
               onClick={() => handleOpen(2)}
@@ -876,7 +901,7 @@ const Information = () => {
           </Accordion>
           <Accordion
             open={open === 3}
-            className="mb-2 rounded-lg border border-blue-gray-300 px-4"
+            className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"
           >
             <AccordionHeader
               onClick={() => handleOpen(3)}
@@ -1372,7 +1397,7 @@ const Information = () => {
           </Accordion>
           <Accordion
             open={open === 4}
-            className="mb-2 rounded-lg border border-blue-gray-300 px-4"
+            className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"
           >
             <AccordionHeader
               onClick={() => handleOpen(4)}
@@ -1509,7 +1534,7 @@ const Information = () => {
           </Accordion>
           <Accordion
             open={open === 5}
-            className="rounded-lg border border-blue-gray-300 px-4 mb-2"
+            className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"
           >
             <AccordionHeader
               onClick={() => handleOpen(5)}
@@ -1529,7 +1554,7 @@ const Information = () => {
           </Accordion>
           <Accordion
             open={open === 6}
-            className="rounded-lg border border-blue-gray-300 px-4 mb-2"
+            className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"
           >
             <AccordionHeader
               onClick={() => handleOpen(6)}
@@ -1567,7 +1592,7 @@ const Information = () => {
           </Accordion>
           <Accordion
             open={open === 7}
-            className="rounded-lg border border-blue-gray-300 px-4 mb-2"
+            className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"
           >
             <AccordionHeader
               onClick={() => handleOpen(7)}
@@ -1578,10 +1603,150 @@ const Information = () => {
               Các hoạt động bị xóa
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
-              <section className="px-4">
-                <div>
-                  <Calendar />
-                </div>
+              <section className="px-1">
+                {isSuccessDeleteProcess && (
+                  <>
+                    <Accordion
+                      open={openDeleteProcess === 1}
+                      icon={<Icon id={1} open={openDeleteProcess} />}
+                    >
+                      <AccordionHeader
+                        className="text-base"
+                        onClick={() => handleOpenDeleteProcess(1)}
+                      >
+                        Hoạt động canh tác
+                      </AccordionHeader>
+                      <AccordionBody>
+                        <section className="flex items-center justify-center">
+                          <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
+                            <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
+                            <div className="mt-1">
+                              <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
+                                <button
+                                  className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
+                                  onClick={() => {}}
+                                >
+                                  <div
+                                    className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                                    style={{
+                                      width: "30px",
+                                      height: "30px",
+                                      flexShrink: 0,
+                                    }}
+                                  >
+                                    <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                                      <svg
+                                        className="mx-auto h-6 w-6"
+                                        aria-hidden="true"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                        ></path>
+                                      </svg>
+                                    </span>
+                                  </div>
+                                  <div className="flex flex-col items-start text-gray-600">
+                                    <p
+                                      className="font-semibold text-blue-500"
+                                      style={{
+                                        float: "left",
+                                        width: "100%",
+                                        textAlign: "justify",
+                                      }}
+                                    >
+                                      fasdf
+                                    </p>
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          {/* <Dialog
+                          open={openCultivation}
+                          handler={handleOpenCultivation}
+                        >
+                          <DialogHeader>Họat động làm đất </DialogHeader>
+                          {selectedCultivation && (
+                            <DialogBody>
+                              <div>
+                                <div className="max-w-screen-md text-xs">
+                                  <h4 className="text-lg font-semibold  text-gray-800">
+                                    Tên hoạt động
+                                  </h4>
+                                  <p className="font-semibold text-gray-600 mb-4">
+                                    {selectedCultivation?.name}
+                                  </p>
+                                  <h3 className="text-lg  text-gray-800 font-semibold">
+                                    Mô tả
+                                  </h3>
+                                  <p className="font-semibold text-gray-600">
+                                    {selectedCultivation?.description}
+                                  </p>
+                                </div>
+                              </div>
+                            </DialogBody>
+                          )}
+
+                          <DialogFooter>
+                            <Button
+                              variant="text"
+                              color="red"
+                              onClick={handleOpenCultivation}
+                              className="mr-1"
+                            >
+                              <span>Thoát</span>
+                            </Button>
+                          </DialogFooter>
+                        </Dialog> */}
+                        </section>
+                      </AccordionBody>
+                    </Accordion>
+                    <Accordion
+                      open={openDeleteProcess === 2}
+                      icon={<Icon id={2} open={openDeleteProcess} />}
+                    >
+                      <AccordionHeader
+                        className="text-base"
+                        onClick={() => handleOpenDeleteProcess(2)}
+                      >
+                        Kỳ vọng
+                      </AccordionHeader>
+                      <AccordionBody>
+                        <section className="flex items-center justify-center">
+                          <Tables />
+                        </section>
+                      </AccordionBody>
+                    </Accordion>
+                    <Accordion
+                      open={openDeleteProcess === 3}
+                      icon={<Icon id={3} open={openDeleteProcess} />}
+                    >
+                      <AccordionHeader
+                        className="text-base"
+                        onClick={() => handleOpenDeleteProcess(3)}
+                      >
+                        Đầu ra
+                      </AccordionHeader>
+                      <AccordionBody>
+                        <section className="flex items-center justify-center">
+                          {dataDeleteProcess?.deletedOutput.length ? (
+                            <div>Có dữ liệu</div>
+                          ) : (
+                            <div>Không có dữ liệu</div>
+                          )}
+                        </section>
+                      </AccordionBody>
+                    </Accordion>
+                  </>
+                )}
+                {isLoadingDeleteProcess && <Spinner />}
               </section>
             </AccordionBody>
           </Accordion>

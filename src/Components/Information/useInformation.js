@@ -277,6 +277,32 @@ export default function useInformation({ projectId }) {
     enabled: !!projectId,
   });
 
+  //get delete process information
+  const parseDataDeleteProcess = useCallback((data) => {
+    if (!data)
+      return {
+        dataDeleteProcess: null,
+      };
+    const dataDeleteProcess = {
+      ideletedProcess: data?.deletedProcess,
+      deletedExpect: data?.deletedExpect,
+      deletedOutput: data?.deletedOutput,
+    };
+    return { dataDeleteProcess };
+  }, []);
+
+  const {
+    data: dataDeleteProcess,
+    isSuccess: isSuccessDeleteProcess,
+    isLoading: isLoadingDeleteProcess,
+  } = useQuery({
+    queryKey: ["projectDeleteProcess", projectId],
+    queryFn: () => PROJECT.getInfoDeleteProcess(projectId),
+    staleTime: 20 * 1000,
+    select: (data) => parseDataDeleteProcess(data?.data?.metadata),
+    enabled: !!projectId,
+  });
+
   return {
     ImageProduct: dataOutput?.outputImages,
     allDistributerWithAmount: dataOutput?.allDistributerWithAmount,
@@ -299,5 +325,8 @@ export default function useInformation({ projectId }) {
     dataPlantFarming: dataPlantFarming?.plantFarming,
     isSuccessPlantFarming,
     isLoadingPlantFarming,
+    dataDeleteProcess: dataDeleteProcess?.dataDeleteProcess,
+    isSuccessDeleteProcess,
+    isLoadingDeleteProcess,
   };
 }

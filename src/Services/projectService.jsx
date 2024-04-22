@@ -118,6 +118,19 @@ const PROJECT = {
         return err;
       });
   },
+  // Lấy thông tin bị xóa trong project
+  getInfoDeleteProcess: async (projectIndex) => {
+    return await publicHttp({
+      method: "GET",
+      url: `/project/${projectIndex}/deletedItem`,
+    })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
+  },
 };
 
 export default PROJECT;
