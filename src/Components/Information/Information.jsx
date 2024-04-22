@@ -1668,43 +1668,6 @@ const Information = () => {
                               </div>
                             </div>
                           </div>
-                          {/* <Dialog
-                          open={openCultivation}
-                          handler={handleOpenCultivation}
-                        >
-                          <DialogHeader>Họat động làm đất </DialogHeader>
-                          {selectedCultivation && (
-                            <DialogBody>
-                              <div>
-                                <div className="max-w-screen-md text-xs">
-                                  <h4 className="text-lg font-semibold  text-gray-800">
-                                    Tên hoạt động
-                                  </h4>
-                                  <p className="font-semibold text-gray-600 mb-4">
-                                    {selectedCultivation?.name}
-                                  </p>
-                                  <h3 className="text-lg  text-gray-800 font-semibold">
-                                    Mô tả
-                                  </h3>
-                                  <p className="font-semibold text-gray-600">
-                                    {selectedCultivation?.description}
-                                  </p>
-                                </div>
-                              </div>
-                            </DialogBody>
-                          )}
-
-                          <DialogFooter>
-                            <Button
-                              variant="text"
-                              color="red"
-                              onClick={handleOpenCultivation}
-                              className="mr-1"
-                            >
-                              <span>Thoát</span>
-                            </Button>
-                          </DialogFooter>
-                        </Dialog> */}
                         </section>
                       </AccordionBody>
                     </Accordion>
