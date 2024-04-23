@@ -189,9 +189,16 @@ const SampleProcess = ({ dataDetailSmapleProces }) => {
             <AccordionBody>{info.desc}</AccordionBody>
           </Accordion>
         ))}
-        <Dialog open={openDialog} handler={handleOpenDialog}>
+        <Dialog
+          open={openDialog}
+          handler={handleOpenDialog}
+          animate={{
+            mount: { scale: 1, y: 0 },
+            unmount: { scale: 0.9, y: -100 },
+          }}
+        >
           <DialogHeader>Thông tin chi tiết</DialogHeader>
-          <DialogBody>
+          <DialogBody className="overflow-y-scroll !px-5 max-h-96">
             <>
               {selectedSmapleProcess ? (
                 <div>
