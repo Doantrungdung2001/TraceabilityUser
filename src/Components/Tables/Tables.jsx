@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   formatDateTime,
+  formatDate,
   formatTransactionHashTable,
 } from "../../Utils/helpers";
 import {
@@ -149,7 +150,7 @@ const Tables = ({ infoData }) => {
                               key={index}
                             >
                               <td className="px-4 py-4">
-                                {historyExpect.time}
+                                {formatDate(historyExpect.time)}
                               </td>
                               <td className="px-4 py-4">
                                 {historyExpect.amount}

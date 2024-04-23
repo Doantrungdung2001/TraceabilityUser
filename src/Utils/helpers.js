@@ -2,7 +2,21 @@ export const sleep = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-//format datatime
+//format date
+export function formatDate(inputDateTime) {
+  // Tạo một đối tượng Date từ chuỗi đầu vào
+  const date = new Date(inputDateTime);
+  // Lấy ngày, tháng, năm, giờ và phút từ đối tượng Date
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Lưu ý rằng tháng bắt đầu từ 0
+  const year = date.getFullYear();
+  // Tạo chuỗi định dạng "dd/mm/yyyy giờ:phút"
+  // const formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}`;
+  const formattedDateTime = `${day}/${month}/${year}`;
+  return formattedDateTime;
+}
+
+//format datetime
 export function formatDateTime(inputDateTime) {
   // Tạo một đối tượng Date từ chuỗi đầu vào
   const date = new Date(inputDateTime);
