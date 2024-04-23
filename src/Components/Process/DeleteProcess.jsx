@@ -11,7 +11,7 @@ import {
   DialogFooter,
   DialogHeader,
 } from "@material-tailwind/react";
-
+import DialogInfoDetail from "../Dialog/DialogInfoDetail";
 const deletedProcess = [
   {
     tx: "0xc37b08bda486e8e2ae51468c8b83dfb8d106f25b864844101ee3005a91b59640",
@@ -118,89 +118,7 @@ const DeleteProcess = () => {
           <DialogHeader>Thông tin chi tiết </DialogHeader>
           {selectedDeleteProcess && (
             <DialogBody>
-              <div className="overflow-y-auto">
-                <div>
-                  <div className="max-w-screen-md text-xs border-b pb-2">
-                    <h3 className="lg:text-lg text-base font-semibold text-gray-900">
-                      Mã transaction
-                    </h3>
-                    <p className="lg:text-base font-semibold text-blue-900">
-                      {formatTransactionHashTable({
-                        str: selectedDeleteProcess.tx,
-                        a: 8,
-                        b: 5,
-                      })}
-                    </p>
-                  </div>
-                  <div className="lg:text-lg max-w-screen-md text-xs mt-4 border-b pb-2">
-                    <h3 className="lg:text-lg text-base font-semibold text-gray-900">
-                      Thời gian
-                    </h3>
-                    <p className="lg:text-base font-semibold text-gray-700">
-                      {formatDateTime(selectedDeleteProcess.time)}
-                    </p>
-                  </div>
-                  <div className="max-w-screen-md text-xs mt-4 border-b pb-2">
-                    <h3 className="lg:text-lg text-base font-semibold text-gray-900">
-                      Loại hoạt động
-                    </h3>
-                    <p className="lg:text-base font-semibold text-gray-700">
-                      {renderTypeProcess(selectedDeleteProcess.type)}
-                    </p>
-                  </div>
-
-                  {selectedDeleteProcess?.cultivationActivity && (
-                    <div>
-                      <div className="max-w-screen-md text-xs mt-4 border-b pb-2">
-                        <h3 className="lg:text-lg text-base font-semibold text-gray-900">
-                          Tên hoạt động
-                        </h3>
-                        <p className="lg:text-base mt-1 font-medium text-gray-700">
-                          {selectedDeleteProcess.cultivationActivity.name}
-                        </p>
-                      </div>
-                      <div className="max-w-screen-md text-xs mt-4 border-b pb-2">
-                        <h3 className="lg:text-lg text-base font-semibold text-gray-900">
-                          Mô tả
-                        </h3>
-                        <p className="lg:text-base mt-1 font-medium text-gray-700">
-                          {
-                            selectedDeleteProcess.cultivationActivity
-                              .description
-                          }
-                        </p>
-                      </div>
-                    </div>
-                  )}
-
-                  {selectedDeleteProcess?.fertilizationActivity && (
-                    <div>
-                      <div className="max-w-screen-md text-xs mt-4 border-b pb-2">
-                        <h3 className="lg:text-lg text-base font-semibold text-gray-900">
-                          Tần suất
-                        </h3>
-                        <p className="lg:text-base mt-1 font-medium text-gray-700">
-                          {
-                            selectedDeleteProcess.fertilizationActivity
-                              .fertilizationTime
-                          }
-                        </p>
-                      </div>
-                      <div className="max-w-screen-md text-xs mt-4 border-b pb-2">
-                        <h3 className="lg:text-lg text-base font-semibold text-gray-900">
-                          Mô tả
-                        </h3>
-                        <p className="lg:text-base mt-1 font-medium text-gray-700">
-                          {
-                            selectedDeleteProcess.fertilizationActivity
-                              .description
-                          }
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
+              <DialogInfoDetail dataDetailInfo={selectedDeleteProcess} />
             </DialogBody>
           )}
           <DialogFooter>

@@ -32,6 +32,15 @@ export function renderTypeProcess(type) {
   }
 }
 
+export function renderTypePestAndDisease(type) {
+  switch (type) {
+    case "pest":
+      return "Bị sâu";
+    case "fertilize":
+      return "Bón phân";
+  }
+}
+
 export function formatTransactionHashTable({ str, a, b }) {
   if (
     a < 0 ||
