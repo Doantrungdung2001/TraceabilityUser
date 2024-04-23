@@ -21,7 +21,7 @@ const Tables = ({ infoData }) => {
       {infoData && infoData.length > 0 ? (
         <div className="lg:w-[700px] block w-full overflow-x-auto border rounded-md bg-white">
           <table className="items-center bg-transparent w-full border-2">
-            <thead >
+            <thead>
               <tr>
                 <th className="lg:text-lg lg:px-4 px-2 bg-blueGray-50 text-blueGray-800 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                   Thời gian
@@ -73,7 +73,7 @@ const Tables = ({ infoData }) => {
         >
           <DialogHeader>Thông tin chi tiết </DialogHeader>
           {selectedDetetailDeleteExpect && (
-            <DialogBody>
+            <DialogBody className="overflow-y-scroll !px-5 max-h-96">
               <div className="overflow-y-auto">
                 <div>
                   <div className="max-w-screen-md text-xs border-b pb-2">
@@ -115,7 +115,7 @@ const Tables = ({ infoData }) => {
                 </div>
                 <div>
                   <h3 className="mt-5 text-2xl font-bold text-black">
-                    Lịch xử kỳ vọng
+                    Lịch sử kỳ vọng
                   </h3>
                   <div className="overflow-x-auto mt-6">
                     <table className="table-auto border-collapse w-full">
@@ -169,10 +169,9 @@ const Tables = ({ infoData }) => {
           )}
           <DialogFooter>
             <Button
-              variant="text"
+              variant="gradient"
               color="red"
               onClick={handleOpenDetailDeleteExpect}
-              className="mr-1"
             >
               <span>Thoát</span>
             </Button>
