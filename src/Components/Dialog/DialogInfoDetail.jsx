@@ -8,7 +8,7 @@ import {
 
 const DialogInfoDetail = ({ dataDetailInfo }) => {
   return (
-    <div className="overflow-y-auto">
+    <div className="mb-6">
       <div>
         <div className="max-w-screen-md text-xs border-b pb-2">
           <h3 className="lg:text-lg text-base font-semibold text-gray-900">
@@ -117,10 +117,13 @@ const DialogInfoDetail = ({ dataDetailInfo }) => {
                   Giải pháp
                 </h3>
                 {dataDetailInfo.pestAndDiseaseControlActivity.solution.map(
-                  (solution, index) => (
-                    <p className="lg:text-base mt-1 font-medium text-gray-700">
-                      {index + 1}:{""}
-                      {solution}
+                  (solutionInfo, index) => (
+                    <p
+                      className="lg:text-base mt-1 font-medium text-gray-700"
+                      key={index}
+                    >
+                      {index + 1} : {""}
+                      {solutionInfo}
                     </p>
                   )
                 )}

@@ -29,12 +29,12 @@ import useInformation from "./useInformation";
 import {
   formatDateTime,
   formatTransactionHashTable,
+  renderTypeProcess,
 } from "../../Utils/helpers";
 import Calendar from "../Calendar/Calendar";
-import { DetailActivity } from "../Activity/DetailActivity";
 import Tables from "../Tables/Tables";
 import DeleteProcess from "../Process/DeleteProcess";
-
+import DialogInfoDetail from "../Dialog/DialogInfoDetail";
 const TABLE_HEAD = ["Thời gian", "Dự kiến (kg)"];
 function Icon({ id, open }) {
   return (
@@ -185,154 +185,7 @@ const Information = () => {
                   </AccordionHeader>
                   <AccordionBody>
                     <div className="w-full md:w-[40rem]">
-                      {selectedProcess.type === "pesticide" && (
-                        <div>
-                          <div className="max-w-screen-md text-sm mb-3">
-                            <h3 class="text-blue-600">
-                              {formatDateTime(selectedProcess.time)}
-                            </h3>
-
-                            <h4 className="text-lg font-semibold">Mã Hash</h4>
-                            <p class="text-blue-600">
-                              {formatTransactionHashTable({
-                                str: selectedProcess.detail.tx,
-                                a: 8,
-                                b: 5,
-                              })}
-                            </p>
-                            <h3 className="text-lg font-semibold">Đối tượng</h3>
-                            <p>{selectedProcess.detail.name}</p>
-                            <h3 className="text-lg font-semibold">Kiểu</h3>
-                            <p>
-                              {selectedProcess.detail.type === "pest"
-                                ? "Sâu"
-                                : "Bệnh"}
-                            </p>
-                            <h3 className="text-lg font-semibold">
-                              Triệu chứng
-                            </h3>
-                            <p>{selectedProcess.detail.symptoms}</p>
-                            <h3 className="text-lg font-semibold">Giải pháp</h3>
-                            {selectedProcess.detail.solution.map(
-                              (item, index) => (
-                                <p key={index}>
-                                  {index + 1}-{item}
-                                </p>
-                              )
-                            )}
-                          </div>
-                        </div>
-                      )}
-
-                      {selectedProcess.type === "fertilize" && (
-                        <div>
-                          <div className="max-w-screen-md mb-3 text-sm">
-                            <h3 class="text-blue-600">
-                              {formatDateTime(selectedProcess.time)}
-                            </h3>
-
-                            <h4 className="text-lg font-semibold mb-2">
-                              Mã Hash
-                            </h4>
-                            <p class="text-blue-600">
-                              {formatTransactionHashTable({
-                                str: selectedProcess.detail.tx,
-                                a: 8,
-                                b: 5,
-                              })}
-                            </p>
-                            <h3 className="text-lg font-semibold mb-2">
-                              Thời điểm trồng
-                            </h3>
-                            <p>{selectedProcess.detail.fertilizationTime}</p>
-                            <h3 className="text-lg font-semibold mb-2">Kiểu</h3>
-                            <p>
-                              {selectedProcess.detail.type === "baseFertilizer"
-                                ? "Bón lót"
-                                : "Bón thúc"}
-                            </p>
-                            <h3 className="text-lg font-semibold mb-2">
-                              Mô tả
-                            </h3>
-                            <p>{selectedProcess.detail.description}</p>
-                          </div>
-                        </div>
-                      )}
-
-                      {selectedProcess.type === "planting" && (
-                        <div>
-                          <div className="max-w-screen-md mb-3 text-sm">
-                            <h3 class="text-blue-600">
-                              {formatDateTime(selectedProcess.time)}
-                            </h3>
-
-                            <h4 className="text-lg font-semibold">Mã Hash</h4>
-                            <p class="text-blue-600">
-                              {formatTransactionHashTable({
-                                str: selectedProcess.detail.tx,
-                                a: 8,
-                                b: 5,
-                              })}
-                            </p>
-                            <h3 className="text-lg font-semibold">Mật độ</h3>
-                            <p>{selectedProcess.detail.density}</p>
-                            <h3 className="text-lg font-semibold">Mô tả</h3>
-                            <p>{selectedProcess.detail.description}</p>
-                          </div>
-                        </div>
-                      )}
-
-                      {selectedProcess.type === "other" && (
-                        <div>
-                          <div>
-                            <div className="max-w-screen-md mb-3 text-sm">
-                              <h3 class="text-blue-600">
-                                {formatDateTime(selectedProcess.time)}
-                              </h3>
-
-                              <h4 className="text-lg font-semibold">Mã Hash</h4>
-                              <p class="text-blue-600">
-                                {formatTransactionHashTable({
-                                  str: selectedProcess.detail.tx,
-                                  a: 8,
-                                  b: 5,
-                                })}
-                              </p>
-                              <h3 className="text-lg font-semibold">Kiểu</h3>
-                              <p>Hoạt động khác</p>
-                              <h3 className="text-lg font-semibold">Mô tả</h3>
-                              <p>{selectedProcess.detail.description}</p>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      {selectedProcess.type === "cultivation" && (
-                        <div>
-                          <div>
-                            <div className="max-w-screen-md mb-3 text-sm">
-                              <h3 class="text-blue-600">
-                                {formatDateTime(selectedProcess.time)}
-                              </h3>
-
-                              <h4 className="text-lg font-semibold">Mã Hash</h4>
-                              <p class="text-blue-600">
-                                {formatTransactionHashTable({
-                                  str: selectedProcess.detail.tx,
-                                  a: 8,
-                                  b: 5,
-                                })}
-                              </p>
-                              <h3 className="text-lg font-semibold">
-                                Hoạt động
-                              </h3>
-                              <p>{selectedProcess.detail.name}</p>
-                              <h3 className="text-lg font-semibold">Mô tả</h3>
-                              <p>{selectedProcess.detail.description}</p>
-                            </div>
-                          </div>
-                        </div>
-                      )}
+                      <DialogInfoDetail dataDetailInfo={selectedProcess} />
                     </div>
                   </AccordionBody>
                 </Accordion>
@@ -350,14 +203,16 @@ const Information = () => {
                     {selectedProcess?.historyProcess.length > 0 ? (
                       selectedProcess.historyProcess.map((data, index) => (
                         <div key={index}>
-                          <DetailActivity
-                            index={index + 1}
-                            dataActivity={data}
-                          />
+                          <div className="mb-1 lg:text-lg text-base text-green-500">
+                            Chỉnh sửa lần thứ {index + 1}
+                          </div>
+                          <DialogInfoDetail dataDetailInfo={data} />
                         </div>
                       ))
                     ) : (
-                      <div>Không có chỉnh sửa</div>
+                      <div className="mt-4 lg:text-lg text-base text-gray-400 font-medium">
+                        Không có chỉnh sửa
+                      </div>
                     )}
                   </AccordionBody>
                 </Accordion>
@@ -373,9 +228,9 @@ const Information = () => {
       value: "Input",
       desc: (
         <div>
-          {selectedProcess && (
+          {selectedProcess?.objectDetections?.length > 0 ? (
             <div>
-              {/* <div className="rounded-lg border border-gray-300 p-4">
+              <div className="rounded-lg border border-gray-300 p-4">
                 <p className="text-sm font-medium text-gray-900 dark:text-white">
                   Bắt đầu:{" "}
                   {formatDateTime(
@@ -398,25 +253,25 @@ const Information = () => {
                     })}
                   </span>
                 </p>
-              </div> */}
+              </div>
 
-              {selectedProcess?.objectDetections.length > 0 ? (
-                selectedProcess.objectDetections.map((data, index) => (
-                  <div key={index}>
-                    <video
-                      className="h-full w-full my-2 rounded-lg "
-                      controls
-                      autoPlay
-                      muted
-                    >
-                      <source src={data.video_url} type="video/mp4" />
-                      Your browser does not support the video ta
-                    </video>
-                  </div>
-                ))
-              ) : (
-                <div>Không có video</div>
-              )}
+              {selectedProcess.objectDetections.map((data, index) => (
+                <div key={index}>
+                  <video
+                    className="h-full w-full my-2 rounded-lg "
+                    controls
+                    autoPlay
+                    muted
+                  >
+                    <source src={data.video_url} type="video/mp4" />
+                    Your browser does not support the video ta
+                  </video>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-4 lg:text-lg text-base text-gray-400 font-medium">
+              Không có video
             </div>
           )}
           {isLoadingProcess && <Spinner />}
@@ -424,20 +279,6 @@ const Information = () => {
       ),
     },
   ];
-  const renderType = (type) => {
-    switch (type) {
-      case "pesticide":
-        return "Phòng trừ sâu bệnh";
-      case "fertilize":
-        return "Bón phân";
-      case "planting":
-        return "Gieo trồng";
-      case "other":
-        return "Hoạt động khác";
-      case "cultivation":
-        return "Làm đất";
-    }
-  };
   return (
     <section className="information">
       <div data-aos="fade-up" className="r-title">
@@ -608,7 +449,7 @@ const Information = () => {
                               color="blue"
                               className="font-medium text-xs sm:text-xs"
                             >
-                              {renderType(process.type)}
+                              {renderTypeProcess(process.type)}
                             </Typography>
                             <Typography
                               variant="small"

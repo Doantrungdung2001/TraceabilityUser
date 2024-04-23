@@ -93,15 +93,17 @@ export default function useInformation({ projectId }) {
     if (process.cultivation && process.cultivation.length > 0)
       process.cultivation.map((item) => {
         dataProcess.push({
+          tx: item?.tx,
           _id: item?._id,
           time: item?.time,
           type: item?.type,
           name: item?.cultivationActivity.name,
-          detail: {
-            tx: item?.tx,
-            name: item?.cultivationActivity.name,
-            description: item?.cultivationActivity.description,
-          },
+          // detail: {
+          //   tx: item?.tx,
+          //   name: item?.cultivationActivity.name,
+          //   description: item?.cultivationActivity.description,
+          // },
+          cultivationActivity: item?.cultivationActivity,
           historyProcess: item?.historyProcess,
           objectDetections: item?.objectDetections,
         });
@@ -109,15 +111,17 @@ export default function useInformation({ projectId }) {
 
     process.planting.map((item) => {
       dataProcess.push({
+        tx: item?.tx,
         _id: item?._id,
         time: item?.time,
         type: item?.type,
         name: `Gieo trồng với mật độ ${item?.plantingActivity.density}`,
-        detail: {
-          tx: item?.tx,
-          density: item?.plantingActivity.density,
-          description: item?.plantingActivity.description,
-        },
+        // detail: {
+        //   tx: item?.tx,
+        //   density: item?.plantingActivity.density,
+        //   description: item?.plantingActivity.description,
+        // },
+        plantingActivity: item?.plantingActivity,
         historyProcess: item?.historyProcess,
         objectDetections: item?.objectDetections,
       });
@@ -125,16 +129,18 @@ export default function useInformation({ projectId }) {
 
     process.fertilize.map((item) => {
       dataProcess.push({
+        tx: item?.tx,
         _id: item?._id,
         time: item?.time,
         type: item?.type,
         name: `Bón phân lúc ${item?.fertilizationActivity.fertilizationTime}`,
-        detail: {
-          tx: item?.tx,
-          fertilizationTime: item?.fertilizationActivity.fertilizationTime,
-          description: item?.fertilizationActivity.description,
-          type: item?.fertilizationActivity.type,
-        },
+        // detail: {
+        //   tx: item?.tx,
+        //   fertilizationTime: item?.fertilizationActivity.fertilizationTime,
+        //   description: item?.fertilizationActivity.description,
+        //   type: item?.fertilizationActivity.type,
+        // },
+        fertilizationActivity: item?.fertilizationActivity,
         historyProcess: item?.historyProcess,
         objectDetections: item?.objectDetections,
       });
@@ -142,17 +148,19 @@ export default function useInformation({ projectId }) {
 
     process.pesticide.map((item) => {
       dataProcess.push({
+        tx: item?.tx,
         _id: item?._id,
         time: item?.time,
         type: item?.type,
         name: `Phòng trừ ${item?.pestAndDiseaseControlActivity.name}`,
-        detail: {
-          tx: item?.tx,
-          name: item?.pestAndDiseaseControlActivity.name,
-          symptoms: item?.pestAndDiseaseControlActivity.symptoms,
-          solution: item?.pestAndDiseaseControlActivity.solution,
-          type: item?.pestAndDiseaseControlActivity.type,
-        },
+        // detail: {
+        //   tx: item?.tx,
+        //   name: item?.pestAndDiseaseControlActivity.name,
+        //   symptoms: item?.pestAndDiseaseControlActivity.symptoms,
+        //   solution: item?.pestAndDiseaseControlActivity.solution,
+        //   type: item?.pestAndDiseaseControlActivity.type,
+        // },
+        pestAndDiseaseControlActivity: item?.pestAndDiseaseControlActivity,
         historyProcess: item?.historyProcess,
         objectDetections: item?.objectDetections,
       });
@@ -160,14 +168,16 @@ export default function useInformation({ projectId }) {
 
     process.other.map((item) => {
       dataProcess.push({
+        tx: item?.tx,
         _id: item?._id,
         time: item?.time,
         type: item?.type,
         name: `${item?.other.description}`,
-        detail: {
-          tx: item?.tx,
-          description: item?.other.description,
-        },
+        // detail: {
+        //   tx: item?.tx,
+        //   description: item?.other.description,
+        // },
+        other: item?.other,
         historyProcess: item?.historyProcess,
         objectDetections: item?.objectDetections,
       });
