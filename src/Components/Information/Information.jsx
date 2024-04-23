@@ -89,9 +89,6 @@ const Information = () => {
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
-  // open Sample process
-  const [openExpect, setOpenExpect] = useState(0);
-
   // delete process
   const [openDeleteProcess, setOpenDeleteProcess] = useState(0);
   const handleOpenDeleteProcess = (value) =>
@@ -570,7 +567,7 @@ const Information = () => {
                         Hoạt động canh tác
                       </AccordionHeader>
                       <AccordionBody>
-                        <DeleteProcess />
+                        <DeleteProcess dataDeleteProcess={dataDeleteProcess.deletedProcess}/>
                       </AccordionBody>
                     </Accordion>
                     <Accordion

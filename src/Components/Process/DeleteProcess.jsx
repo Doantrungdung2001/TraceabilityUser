@@ -12,55 +12,17 @@ import {
   DialogHeader,
 } from "@material-tailwind/react";
 import DialogInfoDetail from "../Dialog/DialogInfoDetail";
-const deletedProcess = [
-  {
-    tx: "0xc37b08bda486e8e2ae51468c8b83dfb8d106f25b864844101ee3005a91b59640",
-    time: "2024-02-24T11:02:00.885Z",
-    type: "cultivation",
-    cultivationActivity: {
-      name: "Nhúng rễ cây vào dung dịch Sherpa 0,1-0,15%",
-      description:
-        "Trước khi trồng nhúng rễ cây vào dung dịch Sherpa 0,1-0,15%. Nếu sử dụng polietylen phủ đất, sau khi bón lót, phủ kín mặt luống, dùng đất chèn kỹ mép luống và đục lỗ trồng.",
-    },
-    pestAndDiseaseControlActivity: {
-      solution: [],
-    },
-    createdAtTime: "2024-02-24T11:02:32.645Z",
-    isDeleted: true,
-    _id: "65d9ccc8b294f1a68b429d4e",
-    historyProcess: [],
-    deletedAt: "2024-04-15T10:17:32.461Z",
-  },
-  {
-    tx: "0x378a4ddf6869c00a535376b5128aa392a2626102222fac637e5c8ef84ae05a83",
-    time: "2024-02-24T12:33:20.470Z",
-    type: "fertilize",
-    fertilizationActivity: {
-      fertilizationTime: "Bón thúc lần 2 25NST (theo cách 1: phân đơn)",
-      type: "topFertilizer",
-      description: "Trên 1 ha, Ure: 50kg",
-    },
-    pestAndDiseaseControlActivity: {
-      solution: [],
-    },
-    createdAtTime: "2024-02-24T12:34:03.031Z",
-    isDeleted: true,
-    _id: "65d9e23bf873e020f62479d4",
-    historyProcess: [],
-    deletedAt: "2024-04-15T10:17:39.142Z",
-  },
-];
 
-const DeleteProcess = () => {
+const DeleteProcess = ({ dataDeleteProcess }) => {
   const [selectedDeleteProcess, setSelectedDeleteProcess] = useState();
   const [openDetailDeleteProcess, setOpenDetailDeleteProcess] = useState(false);
   const handleOpenDetailDeleteProcess = () =>
     setOpenDetailDeleteProcess(!openDetailDeleteProcess);
   return (
     <div>
-      {deletedProcess?.length > 0 ? (
+      {dataDeleteProcess?.length > 0 ? (
         <div className="rounded-md justify-items-center divide-y divide-gray-200">
-          {deletedProcess.map((proces, index) => (
+          {dataDeleteProcess.map((proces, index) => (
             <ul
               className="lg:w-[700px] bg-white shadow border-t border-gray-200"
               key={index}

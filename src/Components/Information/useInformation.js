@@ -294,7 +294,7 @@ export default function useInformation({ projectId }) {
         dataDeleteProcess: null,
       };
     const dataDeleteProcess = {
-      ideletedProcess: data?.deletedProcess,
+      deletedProcess: data?.deletedProcess,
       deletedExpect: data?.deletedExpect,
       deletedOutput: data?.deletedOutput,
     };
