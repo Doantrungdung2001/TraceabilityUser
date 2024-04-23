@@ -25,6 +25,7 @@ import Tables from "../Tables/Tables";
 import DeleteProcess from "../Process/DeleteProcess";
 import ProcessInformation from "../Process/ProcessInformation";
 import SampleProcess from "../Process/SampleProcess";
+import Certificates from "../CertificatesPicture/Certificates";
 
 function Icon({ id, open }) {
   return (
@@ -78,12 +79,6 @@ const Information = () => {
     isSuccessDeleteProcess,
     isLoadingDeleteProcess,
   } = useInformation({ projectId });
-
-  const [active, setActive] = useState();
-  useEffect(() => {
-    if (dataCertificateImages && dataCertificateImages.length > 0)
-      setActive(dataCertificateImages[0].imgelink);
-  }, [isSuccessCertificateImages]);
 
   //open more information
   const [open, setOpen] = useState(1);
@@ -515,29 +510,13 @@ const Information = () => {
               Các chứng nhận
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
-              <div className="grid gap-4">
-                <div>
-                  <img
-                    className="h-auto w-full max-w-full rounded-lg object-cover object-center md:h-[480px]"
-                    src={active}
-                    alt=""
-                  />
-                </div>
-                <div className="grid grid-cols-5 gap-4">
-                  {isSuccessCertificateImages &&
-                    dataCertificateImages.map(({ imgelink }, index) => (
-                      <div key={index}>
-                        <img
-                          onClick={() => setActive(imgelink)}
-                          src={imgelink}
-                          className="h-15 max-w-full cursor-pointer rounded-lg object-cover object-center"
-                          alt="gallery-image"
-                        />
-                      </div>
-                    ))}
-                  {isLoadingCertificateImages && <Spinner />}
-                </div>
-              </div>
+              {isSuccessCertificateImages && (
+                <Certificates
+                  dataPicture={dataCertificateImages}
+                  isSuccessCertificateImages={isSuccessCertificateImages}
+                />
+              )}
+              {isLoadingCertificateImages && <Spinner />}
             </AccordionBody>
           </Accordion>
           <Accordion
@@ -567,7 +546,9 @@ const Information = () => {
                         Hoạt động canh tác
                       </AccordionHeader>
                       <AccordionBody>
-                        <DeleteProcess dataDeleteProcess={dataDeleteProcess.deletedProcess}/>
+                        <DeleteProcess
+                          dataDeleteProcess={dataDeleteProcess.deletedProcess}
+                        />
                       </AccordionBody>
                     </Accordion>
                     <Accordion
