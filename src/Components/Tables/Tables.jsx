@@ -11,78 +11,14 @@ import {
   DialogHeader,
 } from "@material-tailwind/react";
 
-const Tables = ({ infoDeleteExpect }) => {
-  const deletedExpect = [
-    {
-      tx: "0x0e7947a640ca26cdeffbf1a0b6220bef053dddf50cd835aa574e0617cc76fce7",
-      time: "2024-02-22T23:30:07.826Z",
-      amount: 1002,
-      note: "Thử tại đây và sửa tiếp.",
-      isEdited: true,
-      createdAtTime: "2024-02-23T09:58:21.943Z",
-      isDeleted: true,
-      _id: "65d865d1c160169bfeb919c7",
-      historyExpect: [
-        {
-          tx: "0x1487f558a820196a5f4dd35401353853fe35144b9910b7c21078430c2c0a47c9",
-          time: "2024-02-22T23:30:07.826Z",
-          amount: 1002,
-          note: "Thử tại đây.",
-          modifiedAt: "2024-02-23T09:31:38.534Z",
-          createdAtTime: "2024-02-23T09:30:57.088Z",
-          _id: "65d865fac160169bfeb919e0",
-        },
-        {
-          tx: "0x7c21c68a8125939b2c3201aa4721fd4aa9710fddb0e79ad136d1b0481500a81c",
-          time: "2024-02-22T23:30:07.826Z",
-          amount: 1002,
-          note: "Thử tại đây và sửa.",
-          modifiedAt: "2024-02-23T09:58:21.960Z",
-          createdAtTime: "2024-02-23T09:31:38.524Z",
-          _id: "65d86c3dc160169bfeb91a44",
-        },
-      ],
-      deletedAt: "2024-04-15T10:17:48.087Z",
-    },
-    {
-      tx: "0x0e7947a640ca26cdeffbf1a0b6220bef053dddf50cd835aa574e0617cc76fce7",
-      time: "2024-02-22T23:30:07.826Z",
-      amount: 1002,
-      note: "Thử tại đây và sửa tiếp.",
-      isEdited: true,
-      createdAtTime: "2024-02-23T09:58:21.943Z",
-      isDeleted: true,
-      _id: "65d865d1c160169bfeb919c7",
-      historyExpect: [
-        {
-          tx: "0x1487f558a820196a5f4dd35401353853fe35144b9910b7c21078430c2c0a47c9",
-          time: "2024-02-22T23:30:07.826Z",
-          amount: 1002,
-          note: "Thử tại đây.",
-          modifiedAt: "2024-02-23T09:31:38.534Z",
-          createdAtTime: "2024-02-23T09:30:57.088Z",
-          _id: "65d865fac160169bfeb919e0",
-        },
-        {
-          tx: "0x7c21c68a8125939b2c3201aa4721fd4aa9710fddb0e79ad136d1b0481500a81c",
-          time: "2024-02-22T23:30:07.826Z",
-          amount: 1002,
-          note: "Thử tại đây và sửa.",
-          modifiedAt: "2024-02-23T09:58:21.960Z",
-          createdAtTime: "2024-02-23T09:31:38.524Z",
-          _id: "65d86c3dc160169bfeb91a44",
-        },
-      ],
-      deletedAt: "2024-04-15T10:17:48.087Z",
-    },
-  ];
+const Tables = ({ infoData }) => {
   const [selectedDetetailDeleteExpect, setSelectedDetailExpect] = useState();
   const [openDetailDeleteExpect, setOpenDetailDeleteExpect] = useState(false);
   const handleOpenDetailDeleteExpect = () =>
     setOpenDetailDeleteExpect(!openDetailDeleteExpect);
   return (
     <div>
-      {deletedExpect && deletedExpect.length > 0 ? (
+      {infoData && infoData.length > 0 ? (
         <div className="lg:w-[700px] block w-full overflow-x-auto border bg-white rounded-md">
           <table className="items-center bg-transparent w-full border-collapse">
             <thead>
@@ -98,7 +34,7 @@ const Tables = ({ infoDeleteExpect }) => {
             </thead>
 
             <tbody>
-              {deletedExpect.map((data, index) => (
+              {infoData.map((data, index) => (
                 <tr key={index}>
                   <th className="lg:text-base lg:px-4 border-t-0 px-2 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-3 text-left text-blueGray-700 ">
                     {formatDateTime(data.time)}
@@ -130,6 +66,10 @@ const Tables = ({ infoDeleteExpect }) => {
         <Dialog
           open={openDetailDeleteExpect}
           handler={handleOpenDetailDeleteExpect}
+          animate={{
+            mount: { scale: 1, y: 0 },
+            unmount: { scale: 0.9, y: -100 },
+          }}
         >
           <DialogHeader>Thông tin chi tiết </DialogHeader>
           {selectedDetetailDeleteExpect && (
