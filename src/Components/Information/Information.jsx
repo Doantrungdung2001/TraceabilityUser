@@ -35,6 +35,9 @@ import Calendar from "../Calendar/Calendar";
 import Tables from "../Tables/Tables";
 import DeleteProcess from "../Process/DeleteProcess";
 import DialogInfoDetail from "../Dialog/DialogInfoDetail";
+import ListActivityProcess from "../ListEvent/ListActivityProcess";
+import ProcessInformation from "../Process/ProcessInformation";
+
 const TABLE_HEAD = ["Thời gian", "Dự kiến (kg)"];
 function Icon({ id, open }) {
   return (
@@ -414,7 +417,7 @@ const Information = () => {
           </div>
         </section>
 
-        <section className="timeline">
+        {/* <section className="timeline">
           <div className="r-time">
             <div data-aos="fade-up" className="w-full sm:w-[50rem]">
               <Timeline className="flex flex-col">
@@ -506,7 +509,13 @@ const Information = () => {
                 </Button>
               </DialogFooter>
             </Dialog>
+            
           </div>
+          
+        </section> */}
+        <section className="timeline">
+          {isSuccessProcess && (<ProcessInformation processInfo={dataProcess}  />)}
+          {isLoadingProcess && <Spinner />}
         </section>
       </section>
 
