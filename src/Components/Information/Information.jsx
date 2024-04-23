@@ -26,6 +26,8 @@ import DeleteProcess from "../Process/DeleteProcess";
 import ProcessInformation from "../Process/ProcessInformation";
 import SampleProcess from "../Process/SampleProcess";
 import Certificates from "../CertificatesPicture/Certificates";
+import OutputInformation from "../Output/OutputInformation";
+import AccordionComponent from "../Accordion/AccordionComponent";
 
 function Icon({ id, open }) {
   return (
@@ -246,8 +248,8 @@ const Information = () => {
             <AccordionHeader
               onClick={() => handleOpen(1)}
               className={`border-b-0 transition-colors ${
-                open === 1 ? "text-green-400 hover:!text-green-700" : ""
-              }`}
+                open === 1 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               Video không có hoạt động tương ứng
             </AccordionHeader>
@@ -307,8 +309,8 @@ const Information = () => {
             <AccordionHeader
               onClick={() => handleOpen(2)}
               className={`border-b-0 transition-colors ${
-                open === 2 ? "text-green-400 hover:!text-green-700" : ""
-              }`}
+                open === 2 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               Thông tin dự kiến sản lượng
             </AccordionHeader>
@@ -326,8 +328,8 @@ const Information = () => {
             <AccordionHeader
               onClick={() => handleOpen(3)}
               className={`border-b-0 transition-colors ${
-                open === 3 ? "text-green-400 hover:!text-green-700" : ""
-              }`}
+                open === 3 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               Quy trình mẫu
             </AccordionHeader>
@@ -347,14 +349,14 @@ const Information = () => {
             <AccordionHeader
               onClick={() => handleOpen(4)}
               className={`border-b-0 transition-colors ${
-                open === 4 ? "text-green-400 hover:!text-green-700" : ""
-              }`}
+                open === 4 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               Đầu ra
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
               <section>
-                <>
+                {/* <>
                   {isSuccessOutput &&
                     Output.map((item, index) => (
                       <Accordion
@@ -473,7 +475,13 @@ const Information = () => {
                       </Accordion>
                     ))}
                   {isLoadingOutput && <Spinner />}
-                </>
+                </> */}
+                {isSuccessOutput && (
+                  <AccordionComponent dataAccordion={Output} />
+                )}
+
+                {/* <OutputInformation /> */}
+                {isLoadingOutput && <Spinner />}
               </section>
             </AccordionBody>
           </Accordion>
@@ -484,8 +492,8 @@ const Information = () => {
             <AccordionHeader
               onClick={() => handleOpen(5)}
               className={`border-b-0 transition-colors ${
-                open === 5 ? "text-green-400 hover:!text-green-700" : ""
-              }`}
+                open === 5 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               Hình ảnh và thời tiết
             </AccordionHeader>
@@ -504,8 +512,8 @@ const Information = () => {
             <AccordionHeader
               onClick={() => handleOpen(6)}
               className={`border-b-0 transition-colors ${
-                open === 6 ? "text-green-400 hover:!text-green-700" : ""
-              }`}
+                open === 6 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               Các chứng nhận
             </AccordionHeader>
@@ -526,8 +534,8 @@ const Information = () => {
             <AccordionHeader
               onClick={() => handleOpen(7)}
               className={`border-b-0 transition-colors ${
-                open === 7 ? "text-green-400 hover:!text-green-700" : ""
-              }`}
+                open === 7 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               Các hoạt động bị xóa
             </AccordionHeader>
