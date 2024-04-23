@@ -32,12 +32,21 @@ export function renderTypeProcess(type) {
   }
 }
 
+export function renderTypeFertilization(type) {
+  switch (type) {
+    case "baseFertilizer":
+      return "Bón lót";
+    case "topFertilizer":
+      return "Bón thúc";
+  }
+}
+
 export function renderTypePestAndDisease(type) {
   switch (type) {
     case "pest":
-      return "Bị sâu";
-    case "fertilize":
-      return "Bón phân";
+      return "Sâu";
+    case "disease":
+      return "Bệnh";
   }
 }
 

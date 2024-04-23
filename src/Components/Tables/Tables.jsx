@@ -19,9 +19,9 @@ const Tables = ({ infoData }) => {
   return (
     <div>
       {infoData && infoData.length > 0 ? (
-        <div className="lg:w-[700px] block w-full overflow-x-auto border bg-white rounded-md">
-          <table className="items-center bg-transparent w-full border-collapse">
-            <thead>
+        <div className="lg:w-[700px] block w-full overflow-x-auto border rounded-md bg-white">
+          <table className="items-center bg-transparent w-full border-2">
+            <thead >
               <tr>
                 <th className="lg:text-lg lg:px-4 px-2 bg-blueGray-50 text-blueGray-800 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                   Thời gian

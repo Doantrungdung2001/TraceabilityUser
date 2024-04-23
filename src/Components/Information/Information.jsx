@@ -4,19 +4,9 @@ import { Card, Typography, Carousel, Spinner } from "@material-tailwind/react";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import {
-  Tabs,
-  TabsHeader,
-  TabsBody,
-  TabPanel,
-  Tab,
   Accordion,
   AccordionHeader,
   AccordionBody,
-  Timeline,
-  TimelineItem,
-  TimelineConnector,
-  TimelineHeader,
-  TimelineIcon,
   Button,
   Dialog,
   DialogHeader,
@@ -29,16 +19,13 @@ import useInformation from "./useInformation";
 import {
   formatDateTime,
   formatTransactionHashTable,
-  renderTypeProcess,
 } from "../../Utils/helpers";
 import Calendar from "../Calendar/Calendar";
 import Tables from "../Tables/Tables";
 import DeleteProcess from "../Process/DeleteProcess";
-import DialogInfoDetail from "../Dialog/DialogInfoDetail";
-import ListActivityProcess from "../ListEvent/ListActivityProcess";
 import ProcessInformation from "../Process/ProcessInformation";
+import SampleProcess from "../Process/SampleProcess";
 
-const TABLE_HEAD = ["Thời gian", "Dự kiến (kg)"];
 function Icon({ id, open }) {
   return (
     <svg
@@ -57,26 +44,6 @@ function Icon({ id, open }) {
         d="M19.5 8.25l-7.5 7.5-7.5-7.5"
       />
     </svg>
-  );
-}
-
-function ActivityLogItem({ index, text, time, note }) {
-  return (
-    <div className="flex items-center w-full my-5 -ml-1.5 px-2">
-      <div className="">
-        <div className="text-green-500 font-bold text-xl">
-          <p>Lần thứ {index}</p>
-        </div>
-        <p className="text-sm text-gray-800 font-bold py-1">
-          Sản lượng :<span className="text-gray-600"> {text}</span>
-        </p>
-
-        <p className="text-xs text-gray-600">{time}</p>
-        <p className="text-sm  text-gray-800 font-bold">
-          Ghi chú : <span className="text-xs text-gray-600 ">{note}</span>
-        </p>
-      </div>
-    </div>
   );
 }
 
@@ -396,483 +363,486 @@ const Information = () => {
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
               {isSuccessPlantFarming && (
-                <section className="px-4">
-                  <>
-                    <Accordion
-                      open={openExpect === 1}
-                      icon={<Icon id={1} open={openExpect} />}
-                    >
-                      <AccordionHeader
-                        className="text-base"
-                        onClick={() => handleOpenExpect(1)}
-                      >
-                        Hoạt động làm đất
-                      </AccordionHeader>
-                      <AccordionBody>
-                        <section className="flex items-center justify-center">
-                          <div
-                            className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100"
-                            onClick={handleOpenCultivation}
-                          >
-                            <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
-                            <div className="mt-1">
-                              <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
-                                {dataPlantFarming?.cultivationActivities?.map(
-                                  (item, index) => (
-                                    <button
-                                      key={index}
-                                      className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
-                                      onClick={() => {
-                                        setSelectedCultivation(item);
-                                        handleOpenCultivation();
-                                      }}
-                                    >
-                                      <div
-                                        className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                        style={{
-                                          width: "30px",
-                                          height: "30px",
-                                          flexShrink: 0,
-                                        }}
-                                      >
-                                        <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                          <svg
-                                            className="mx-auto h-6 w-6"
-                                            aria-hidden="true"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                          >
-                                            <path
-                                              d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                            ></path>
-                                          </svg>
-                                        </span>
-                                      </div>
-                                      <div className="flex flex-col items-start text-gray-600">
-                                        <p
-                                          className="font-semibold text-blue-500"
-                                          style={{
-                                            float: "left",
-                                            width: "100%",
-                                            textAlign: "justify",
-                                          }}
-                                        >
-                                          {item?.name}
-                                        </p>
-                                      </div>
-                                    </button>
-                                  )
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                          <Dialog
-                            open={openCultivation}
-                            handler={handleOpenCultivation}
-                          >
-                            <DialogHeader>Họat động làm đất </DialogHeader>
-                            {selectedCultivation && (
-                              <DialogBody>
-                                <div>
-                                  <div className="max-w-screen-md text-xs">
-                                    <h4 className="text-lg font-semibold  text-gray-800">
-                                      Tên hoạt động
-                                    </h4>
-                                    <p className="font-semibold text-gray-600 mb-4">
-                                      {selectedCultivation?.name}
-                                    </p>
-                                    <h3 className="text-lg  text-gray-800 font-semibold">
-                                      Mô tả
-                                    </h3>
-                                    <p className="font-semibold text-gray-600">
-                                      {selectedCultivation?.description}
-                                    </p>
-                                  </div>
-                                </div>
-                              </DialogBody>
-                            )}
+                // <section className="px-4">
+                //   <>
+                //     <Accordion
+                //       open={openExpect === 1}
+                //       icon={<Icon id={1} open={openExpect} />}
+                //     >
+                //       <AccordionHeader
+                //         className="text-base"
+                //         onClick={() => handleOpenExpect(1)}
+                //       >
+                //         Hoạt động làm đất
+                //       </AccordionHeader>
+                //       <AccordionBody>
+                //         <section className="flex items-center justify-center">
+                //           <div
+                //             className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100"
+                //             onClick={handleOpenCultivation}
+                //           >
+                //             <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
+                //             <div className="mt-1">
+                //               <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
+                //                 {dataPlantFarming?.cultivationActivities?.map(
+                //                   (item, index) => (
+                //                     <button
+                //                       key={index}
+                //                       className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
+                //                       onClick={() => {
+                //                         setSelectedCultivation(item);
+                //                         handleOpenCultivation();
+                //                       }}
+                //                     >
+                //                       <div
+                //                         className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                //                         style={{
+                //                           width: "30px",
+                //                           height: "30px",
+                //                           flexShrink: 0,
+                //                         }}
+                //                       >
+                //                         <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                //                           <svg
+                //                             className="mx-auto h-6 w-6"
+                //                             aria-hidden="true"
+                //                             fill="none"
+                //                             stroke="currentColor"
+                //                             strokeWidth="2"
+                //                             viewBox="0 0 24 24"
+                //                             xmlns="http://www.w3.org/2000/svg"
+                //                           >
+                //                             <path
+                //                               d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                //                               strokeLinecap="round"
+                //                               strokeLinejoin="round"
+                //                             ></path>
+                //                           </svg>
+                //                         </span>
+                //                       </div>
+                //                       <div className="flex flex-col items-start text-gray-600">
+                //                         <p
+                //                           className="font-semibold text-blue-500"
+                //                           style={{
+                //                             float: "left",
+                //                             width: "100%",
+                //                             textAlign: "justify",
+                //                           }}
+                //                         >
+                //                           {item?.name}
+                //                         </p>
+                //                       </div>
+                //                     </button>
+                //                   )
+                //                 )}
+                //               </div>
+                //             </div>
+                //           </div>
+                //           <Dialog
+                //             open={openCultivation}
+                //             handler={handleOpenCultivation}
+                //           >
+                //             <DialogHeader>Họat động làm đất </DialogHeader>
+                //             {selectedCultivation && (
+                //               <DialogBody>
+                //                 <div>
+                //                   <div className="max-w-screen-md text-xs">
+                //                     <h4 className="text-lg font-semibold  text-gray-800">
+                //                       Tên hoạt động
+                //                     </h4>
+                //                     <p className="font-semibold text-gray-600 mb-4">
+                //                       {selectedCultivation?.name}
+                //                     </p>
+                //                     <h3 className="text-lg  text-gray-800 font-semibold">
+                //                       Mô tả
+                //                     </h3>
+                //                     <p className="font-semibold text-gray-600">
+                //                       {selectedCultivation?.description}
+                //                     </p>
+                //                   </div>
+                //                 </div>
+                //               </DialogBody>
+                //             )}
 
-                            <DialogFooter>
-                              <Button
-                                variant="text"
-                                color="red"
-                                onClick={handleOpenCultivation}
-                                className="mr-1"
-                              >
-                                <span>Thoát</span>
-                              </Button>
-                            </DialogFooter>
-                          </Dialog>
-                        </section>
-                      </AccordionBody>
-                    </Accordion>
-                    <Accordion
-                      open={openExpect === 2}
-                      icon={<Icon id={2} open={openExpect} />}
-                    >
-                      <AccordionHeader
-                        className="text-base"
-                        onClick={() => handleOpenExpect(2)}
-                      >
-                        Hoạt động gieo trồng
-                      </AccordionHeader>
-                      <AccordionBody>
-                        <section className="flex items-center justify-center">
-                          <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
-                            <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
-                            <div className="mt-1">
-                              <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
-                                <button
-                                  className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
-                                  onClick={() => {
-                                    setSelectedPlanting(
-                                      dataPlantFarming?.plantingActivity
-                                    );
-                                    handleOpenpPlanting();
-                                  }}
-                                >
-                                  <div
-                                    className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                    style={{
-                                      width: "30px",
-                                      height: "30px",
-                                      flexShrink: 0,
-                                    }}
-                                  >
-                                    <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                      <svg
-                                        className="mx-auto h-6 w-6"
-                                        aria-hidden="true"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                        ></path>
-                                      </svg>
-                                    </span>
-                                  </div>
+                //             <DialogFooter>
+                //               <Button
+                //                 variant="text"
+                //                 color="red"
+                //                 onClick={handleOpenCultivation}
+                //                 className="mr-1"
+                //               >
+                //                 <span>Thoát</span>
+                //               </Button>
+                //             </DialogFooter>
+                //           </Dialog>
+                //         </section>
+                //       </AccordionBody>
+                //     </Accordion>
+                //     <Accordion
+                //       open={openExpect === 2}
+                //       icon={<Icon id={2} open={openExpect} />}
+                //     >
+                //       <AccordionHeader
+                //         className="text-base"
+                //         onClick={() => handleOpenExpect(2)}
+                //       >
+                //         Hoạt động gieo trồng
+                //       </AccordionHeader>
+                //       <AccordionBody>
+                //         <section className="flex items-center justify-center">
+                //           <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
+                //             <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
+                //             <div className="mt-1">
+                //               <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
+                //                 <button
+                //                   className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
+                //                   onClick={() => {
+                //                     setSelectedPlanting(
+                //                       dataPlantFarming?.plantingActivity
+                //                     );
+                //                     handleOpenpPlanting();
+                //                   }}
+                //                 >
+                //                   <div
+                //                     className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                //                     style={{
+                //                       width: "30px",
+                //                       height: "30px",
+                //                       flexShrink: 0,
+                //                     }}
+                //                   >
+                //                     <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                //                       <svg
+                //                         className="mx-auto h-6 w-6"
+                //                         aria-hidden="true"
+                //                         fill="none"
+                //                         stroke="currentColor"
+                //                         strokeWidth="2"
+                //                         viewBox="0 0 24 24"
+                //                         xmlns="http://www.w3.org/2000/svg"
+                //                       >
+                //                         <path
+                //                           d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                //                           strokeLinecap="round"
+                //                           strokeLinejoin="round"
+                //                         ></path>
+                //                       </svg>
+                //                     </span>
+                //                   </div>
 
-                                  <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                    <p
-                                      className="font-semibold text-blue-500"
-                                      style={{
-                                        float: "left",
-                                        width: "100%",
-                                        textAlign: "justify",
-                                      }}
-                                    >
-                                      {
-                                        dataPlantFarming?.plantingActivity
-                                          .density
-                                      }
-                                    </p>
-                                  </div>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                          <Dialog
-                            open={openpPlanting}
-                            handler={handleOpenpPlanting}
-                          >
-                            <DialogHeader> Hoạt động gieo trồng </DialogHeader>
-                            {selectedPlanting && (
-                              <DialogBody>
-                                <div>
-                                  <div className="max-w-screen-md text-xs">
-                                    <h4 className="text-lg font-semibold  text-gray-800">
-                                      Nội dung
-                                    </h4>
-                                    <p className="font-semibold text-gray-600 mb-4">
-                                      {selectedPlanting.density}
-                                    </p>
-                                    <h3 className="text-lg  text-gray-800 font-semibold">
-                                      Mô tả
-                                    </h3>
-                                    <p className="font-semibold text-gray-600">
-                                      {selectedPlanting.description}
-                                    </p>
-                                  </div>
-                                </div>
-                              </DialogBody>
-                            )}
+                //                   <div className="flex flex-col items-start justify-between font-light text-gray-600">
+                //                     <p
+                //                       className="font-semibold text-blue-500"
+                //                       style={{
+                //                         float: "left",
+                //                         width: "100%",
+                //                         textAlign: "justify",
+                //                       }}
+                //                     >
+                //                       {
+                //                         dataPlantFarming?.plantingActivity
+                //                           .density
+                //                       }
+                //                     </p>
+                //                   </div>
+                //                 </button>
+                //               </div>
+                //             </div>
+                //           </div>
+                //           <Dialog
+                //             open={openpPlanting}
+                //             handler={handleOpenpPlanting}
+                //           >
+                //             <DialogHeader> Hoạt động gieo trồng </DialogHeader>
+                //             {selectedPlanting && (
+                //               <DialogBody>
+                //                 <div>
+                //                   <div className="max-w-screen-md text-xs">
+                //                     <h4 className="text-lg font-semibold  text-gray-800">
+                //                       Nội dung
+                //                     </h4>
+                //                     <p className="font-semibold text-gray-600 mb-4">
+                //                       {selectedPlanting.density}
+                //                     </p>
+                //                     <h3 className="text-lg  text-gray-800 font-semibold">
+                //                       Mô tả
+                //                     </h3>
+                //                     <p className="font-semibold text-gray-600">
+                //                       {selectedPlanting.description}
+                //                     </p>
+                //                   </div>
+                //                 </div>
+                //               </DialogBody>
+                //             )}
 
-                            <DialogFooter>
-                              <Button
-                                variant="text"
-                                color="red"
-                                onClick={handleOpenpPlanting}
-                                className="mr-1"
-                              >
-                                <span>Thoát</span>
-                              </Button>
-                            </DialogFooter>
-                          </Dialog>
-                        </section>
-                      </AccordionBody>
-                    </Accordion>
-                    <Accordion
-                      open={openExpect === 3}
-                      icon={<Icon id={3} open={openExpect} />}
-                    >
-                      <AccordionHeader
-                        className="text-base"
-                        onClick={() => handleOpenExpect(3)}
-                      >
-                        Hoạt động bón phân
-                      </AccordionHeader>
-                      <AccordionBody>
-                        <section className="flex items-center justify-center">
-                          <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
-                            <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
-                            <div className="mt-1">
-                              <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
-                                {dataPlantFarming?.fertilizationActivities?.map(
-                                  (item, index) => (
-                                    <button
-                                      key={index}
-                                      className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
-                                      onClick={() => {
-                                        setSelectedFertilize(item);
-                                        handleOpenFertilize();
-                                      }}
-                                    >
-                                      <div
-                                        className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                        style={{
-                                          width: "30px",
-                                          height: "30px",
-                                          flexShrink: 0,
-                                        }}
-                                      >
-                                        <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                          <svg
-                                            className="mx-auto h-6 w-6"
-                                            aria-hidden="true"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                          >
-                                            <path
-                                              d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                            ></path>
-                                          </svg>
-                                        </span>
-                                      </div>
-                                      <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                        <p
-                                          className="font-semibold text-blue-500"
-                                          style={{
-                                            float: "left",
-                                            width: "100%",
-                                            textAlign: "justify",
-                                          }}
-                                        >
-                                          {item?.fertilizationTime}
-                                        </p>
-                                      </div>
-                                    </button>
-                                  )
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                          <Dialog
-                            open={openFertilize}
-                            handler={handleOpenFertilize}
-                          >
-                            <DialogHeader>Hoạt động bón phân </DialogHeader>
-                            {selectedFertilize && (
-                              <DialogBody>
-                                <div>
-                                  <div className="max-w-screen-md text-xs">
-                                    <h4 className="text-lg font-semibold  text-gray-800">
-                                      Quy trình
-                                    </h4>
-                                    <p className="font-semibold text-gray-600 mb-4">
-                                      {selectedFertilize.fertilizationTime}
-                                    </p>
-                                    <h3 className="text-lg  text-gray-800 font-semibold">
-                                      Kiểu
-                                    </h3>
-                                    <p className="font-semibold text-gray-600 mb-4">
-                                      {selectedFertilize.type}
-                                    </p>
-                                    <h3 className="text-lg  text-gray-800 font-semibold">
-                                      Mô tả
-                                    </h3>
-                                    <p className="font-semibold text-gray-600">
-                                      {selectedFertilize.description}
-                                    </p>
-                                  </div>
-                                </div>
-                              </DialogBody>
-                            )}
+                //             <DialogFooter>
+                //               <Button
+                //                 variant="text"
+                //                 color="red"
+                //                 onClick={handleOpenpPlanting}
+                //                 className="mr-1"
+                //               >
+                //                 <span>Thoát</span>
+                //               </Button>
+                //             </DialogFooter>
+                //           </Dialog>
+                //         </section>
+                //       </AccordionBody>
+                //     </Accordion>
+                //     <Accordion
+                //       open={openExpect === 3}
+                //       icon={<Icon id={3} open={openExpect} />}
+                //     >
+                //       <AccordionHeader
+                //         className="text-base"
+                //         onClick={() => handleOpenExpect(3)}
+                //       >
+                //         Hoạt động bón phân
+                //       </AccordionHeader>
+                //       <AccordionBody>
+                //         <section className="flex items-center justify-center">
+                //           <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
+                //             <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
+                //             <div className="mt-1">
+                //               <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
+                //                 {dataPlantFarming?.fertilizationActivities?.map(
+                //                   (item, index) => (
+                //                     <button
+                //                       key={index}
+                //                       className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
+                //                       onClick={() => {
+                //                         setSelectedFertilize(item);
+                //                         handleOpenFertilize();
+                //                       }}
+                //                     >
+                //                       <div
+                //                         className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                //                         style={{
+                //                           width: "30px",
+                //                           height: "30px",
+                //                           flexShrink: 0,
+                //                         }}
+                //                       >
+                //                         <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                //                           <svg
+                //                             className="mx-auto h-6 w-6"
+                //                             aria-hidden="true"
+                //                             fill="none"
+                //                             stroke="currentColor"
+                //                             strokeWidth="2"
+                //                             viewBox="0 0 24 24"
+                //                             xmlns="http://www.w3.org/2000/svg"
+                //                           >
+                //                             <path
+                //                               d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                //                               strokeLinecap="round"
+                //                               strokeLinejoin="round"
+                //                             ></path>
+                //                           </svg>
+                //                         </span>
+                //                       </div>
+                //                       <div className="flex flex-col items-start justify-between font-light text-gray-600">
+                //                         <p
+                //                           className="font-semibold text-blue-500"
+                //                           style={{
+                //                             float: "left",
+                //                             width: "100%",
+                //                             textAlign: "justify",
+                //                           }}
+                //                         >
+                //                           {item?.fertilizationTime}
+                //                         </p>
+                //                       </div>
+                //                     </button>
+                //                   )
+                //                 )}
+                //               </div>
+                //             </div>
+                //           </div>
+                //           <Dialog
+                //             open={openFertilize}
+                //             handler={handleOpenFertilize}
+                //           >
+                //             <DialogHeader>Hoạt động bón phân </DialogHeader>
+                //             {selectedFertilize && (
+                //               <DialogBody>
+                //                 <div>
+                //                   <div className="max-w-screen-md text-xs">
+                //                     <h4 className="text-lg font-semibold  text-gray-800">
+                //                       Quy trình
+                //                     </h4>
+                //                     <p className="font-semibold text-gray-600 mb-4">
+                //                       {selectedFertilize.fertilizationTime}
+                //                     </p>
+                //                     <h3 className="text-lg  text-gray-800 font-semibold">
+                //                       Kiểu
+                //                     </h3>
+                //                     <p className="font-semibold text-gray-600 mb-4">
+                //                       {selectedFertilize.type}
+                //                     </p>
+                //                     <h3 className="text-lg  text-gray-800 font-semibold">
+                //                       Mô tả
+                //                     </h3>
+                //                     <p className="font-semibold text-gray-600">
+                //                       {selectedFertilize.description}
+                //                     </p>
+                //                   </div>
+                //                 </div>
+                //               </DialogBody>
+                //             )}
 
-                            <DialogFooter>
-                              <Button
-                                variant="text"
-                                color="red"
-                                onClick={handleOpenFertilize}
-                                className="mr-1"
-                              >
-                                <span>Thoát</span>
-                              </Button>
-                            </DialogFooter>
-                          </Dialog>
-                        </section>
-                      </AccordionBody>
-                    </Accordion>
-                    <Accordion
-                      open={openExpect === 4}
-                      icon={<Icon id={4} open={openExpect} />}
-                    >
-                      <AccordionHeader
-                        className="text-base"
-                        onClick={() => handleOpenExpect(4)}
-                      >
-                        Phòng trừ sâu bệnh
-                      </AccordionHeader>
-                      <AccordionBody>
-                        <section className="flex items-center justify-center">
-                          <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
-                            <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
-                            <div className="mt-1">
-                              <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
-                                {dataPlantFarming?.pestAndDiseaseControlActivities?.map(
-                                  (item, index) => (
-                                    <button
-                                      key={index}
-                                      className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
-                                      onClick={() => {
-                                        setSelectedPesticide(item);
-                                        handleOpenPesticide();
-                                      }}
-                                    >
-                                      <div
-                                        className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
-                                        style={{
-                                          width: "30px",
-                                          height: "30px",
-                                          flexShrink: 0,
-                                        }}
-                                      >
-                                        <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
-                                          <svg
-                                            className="mx-auto h-6 w-6"
-                                            aria-hidden="true"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                          >
-                                            <path
-                                              d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                            ></path>
-                                          </svg>
-                                        </span>
-                                      </div>
+                //             <DialogFooter>
+                //               <Button
+                //                 variant="text"
+                //                 color="red"
+                //                 onClick={handleOpenFertilize}
+                //                 className="mr-1"
+                //               >
+                //                 <span>Thoát</span>
+                //               </Button>
+                //             </DialogFooter>
+                //           </Dialog>
+                //         </section>
+                //       </AccordionBody>
+                //     </Accordion>
+                //     <Accordion
+                //       open={openExpect === 4}
+                //       icon={<Icon id={4} open={openExpect} />}
+                //     >
+                //       <AccordionHeader
+                //         className="text-base"
+                //         onClick={() => handleOpenExpect(4)}
+                //       >
+                //         Phòng trừ sâu bệnh
+                //       </AccordionHeader>
+                //       <AccordionBody>
+                //         <section className="flex items-center justify-center">
+                //           <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-1 shadow-md shadow-gray-100">
+                //             <div className="flex items-center justify-between px-2 text-lg md:text-base font-medium text-gray-700"></div>
+                //             <div className="mt-1">
+                //               <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
+                //                 {dataPlantFarming?.pestAndDiseaseControlActivities?.map(
+                //                   (item, index) => (
+                //                     <button
+                //                       key={index}
+                //                       className="group flex items-center gap-x-5 rounded-md px-2.5 py-2 transition-all duration-75 hover:bg-green-100"
+                //                       onClick={() => {
+                //                         setSelectedPesticide(item);
+                //                         handleOpenPesticide();
+                //                       }}
+                //                     >
+                //                       <div
+                //                         className="flex items-center rounded-lg bg-gray-200 text-black group-hover:bg-green-200"
+                //                         style={{
+                //                           width: "30px",
+                //                           height: "30px",
+                //                           flexShrink: 0,
+                //                         }}
+                //                       >
+                //                         <span className="tag w-full text-center text-xl font-medium text-gray-700 group-hover:text-green-900">
+                //                           <svg
+                //                             className="mx-auto h-6 w-6"
+                //                             aria-hidden="true"
+                //                             fill="none"
+                //                             stroke="currentColor"
+                //                             strokeWidth="2"
+                //                             viewBox="0 0 24 24"
+                //                             xmlns="http://www.w3.org/2000/svg"
+                //                           >
+                //                             <path
+                //                               d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                //                               strokeLinecap="round"
+                //                               strokeLinejoin="round"
+                //                             ></path>
+                //                           </svg>
+                //                         </span>
+                //                       </div>
 
-                                      <div className="flex flex-col items-start justify-between font-light text-gray-600">
-                                        <p
-                                          className="font-semibold text-blue-500"
-                                          style={{
-                                            float: "left",
-                                            width: "100%",
-                                            textAlign: "justify",
-                                          }}
-                                        >
-                                          {item?.name}
-                                        </p>
-                                      </div>
-                                    </button>
-                                  )
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                          <Dialog
-                            open={openPesticide}
-                            handler={handleOpenPesticide}
-                          >
-                            <DialogHeader> Phòng trừ sâu bệnh </DialogHeader>
-                            {selectedPesticide && (
-                              <DialogBody>
-                                <div>
-                                  <div className="max-w-screen-md text-xs">
-                                    <h4 className="text-lg font-semibold  text-gray-800">
-                                      Tên
-                                    </h4>
-                                    <p className="font-semibold text-gray-600 mb-4">
-                                      {selectedPesticide.name}
-                                    </p>
-                                    <h3 className="text-lg  text-gray-800 font-semibold">
-                                      Kiểu
-                                    </h3>
-                                    <p className="font-semibold text-gray-600 mb-4">
-                                      {selectedPesticide.type}
-                                    </p>
-                                    <h3 className="text-lg  text-gray-800 font-semibold">
-                                      Triệu chứng
-                                    </h3>
-                                    <p className="font-semibold text-gray-600 mb-4">
-                                      {selectedPesticide.symptoms}
-                                    </p>
-                                    <h3 className="text-lg  text-gray-800 font-semibold">
-                                      Mô tả
-                                    </h3>
-                                    <p className="font-semibold text-gray-600 mb-4">
-                                      {selectedPesticide.description}
-                                    </p>
-                                    <h3 className="text-lg  text-gray-800 font-semibold">
-                                      Giải pháp
-                                    </h3>
-                                    <ul>
-                                      {selectedPesticide?.solution.map(
-                                        (data) => (
-                                          <li className="font-semibold text-gray-600">
-                                            {data}
-                                          </li>
-                                        )
-                                      )}
-                                    </ul>
-                                  </div>
-                                </div>
-                              </DialogBody>
-                            )}
-                            <DialogFooter>
-                              <Button
-                                variant="text"
-                                color="red"
-                                onClick={handleOpenPesticide}
-                                className="mr-1"
-                              >
-                                <span>Thoát</span>
-                              </Button>
-                            </DialogFooter>
-                          </Dialog>
-                        </section>
-                      </AccordionBody>
-                    </Accordion>
-                  </>
+                //                       <div className="flex flex-col items-start justify-between font-light text-gray-600">
+                //                         <p
+                //                           className="font-semibold text-blue-500"
+                //                           style={{
+                //                             float: "left",
+                //                             width: "100%",
+                //                             textAlign: "justify",
+                //                           }}
+                //                         >
+                //                           {item?.name}
+                //                         </p>
+                //                       </div>
+                //                     </button>
+                //                   )
+                //                 )}
+                //               </div>
+                //             </div>
+                //           </div>
+                //           <Dialog
+                //             open={openPesticide}
+                //             handler={handleOpenPesticide}
+                //           >
+                //             <DialogHeader> Phòng trừ sâu bệnh </DialogHeader>
+                //             {selectedPesticide && (
+                //               <DialogBody>
+                //                 <div>
+                //                   <div className="max-w-screen-md text-xs">
+                //                     <h4 className="text-lg font-semibold  text-gray-800">
+                //                       Tên
+                //                     </h4>
+                //                     <p className="font-semibold text-gray-600 mb-4">
+                //                       {selectedPesticide.name}
+                //                     </p>
+                //                     <h3 className="text-lg  text-gray-800 font-semibold">
+                //                       Kiểu
+                //                     </h3>
+                //                     <p className="font-semibold text-gray-600 mb-4">
+                //                       {selectedPesticide.type}
+                //                     </p>
+                //                     <h3 className="text-lg  text-gray-800 font-semibold">
+                //                       Triệu chứng
+                //                     </h3>
+                //                     <p className="font-semibold text-gray-600 mb-4">
+                //                       {selectedPesticide.symptoms}
+                //                     </p>
+                //                     <h3 className="text-lg  text-gray-800 font-semibold">
+                //                       Mô tả
+                //                     </h3>
+                //                     <p className="font-semibold text-gray-600 mb-4">
+                //                       {selectedPesticide.description}
+                //                     </p>
+                //                     <h3 className="text-lg  text-gray-800 font-semibold">
+                //                       Giải pháp
+                //                     </h3>
+                //                     <ul>
+                //                       {selectedPesticide?.solution.map(
+                //                         (data) => (
+                //                           <li className="font-semibold text-gray-600">
+                //                             {data}
+                //                           </li>
+                //                         )
+                //                       )}
+                //                     </ul>
+                //                   </div>
+                //                 </div>
+                //               </DialogBody>
+                //             )}
+                //             <DialogFooter>
+                //               <Button
+                //                 variant="text"
+                //                 color="red"
+                //                 onClick={handleOpenPesticide}
+                //                 className="mr-1"
+                //               >
+                //                 <span>Thoát</span>
+                //               </Button>
+                //             </DialogFooter>
+                //           </Dialog>
+                //         </section>
+                //       </AccordionBody>
+                //     </Accordion>
+                //   </>
+                // </section>
+                <section>
+                  <SampleProcess dataDetailSmapleProces={dataPlantFarming} />
                 </section>
               )}
               {isLoadingPlantFarming && <Spinner />}
