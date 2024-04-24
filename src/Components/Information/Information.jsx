@@ -7,11 +7,6 @@ import {
   Accordion,
   AccordionHeader,
   AccordionBody,
-  Button,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
 } from "@material-tailwind/react";
 
 import { useParams } from "react-router-dom";
@@ -26,9 +21,9 @@ import DeleteProcess from "../Process/DeleteProcess";
 import ProcessInformation from "../Process/ProcessInformation";
 import SampleProcess from "../Process/SampleProcess";
 import Certificates from "../CertificatesPicture/Certificates";
-import OutputInformation from "../Output/OutputInformation";
 import AccordionComponent from "../Accordion/AccordionComponent";
 import AccordionOutput from "../Accordion/AccordionOutput";
+import InformationOverview from "./InformationOverview";
 
 function Icon({ id, open }) {
   return (
@@ -92,14 +87,6 @@ const Information = () => {
   const handleOpenDeleteProcess = (value) =>
     setOpenDeleteProcess(openDeleteProcess === value ? 0 : value);
 
-  const [openHarvest, setOpenHarvest] = useState(false); // Phần output chỗ thu hoạch
-  const handleOpenHarvest = () => setOpenHarvest(!openHarvest);
-
-  // output in more inoformation
-  const [openOutput, setOpenOutput] = useState(0);
-  const handleOpenOutput = (value) =>
-    setOpenOutput(openOutput === value ? 0 : value);
-
   return (
     <section className="information">
       <div data-aos="fade-up" className="r-title">
@@ -108,7 +95,7 @@ const Information = () => {
 
       <section className="content">
         <section className="infor">
-          <div className=" p-10 flex flex-col justify-between lg:flex-row gap-10 lg:items-center">
+          {/* <div className=" p-10 flex flex-col justify-between lg:flex-row gap-10 lg:items-center">
             <div data-aos="fade-up" className="picture">
               <Carousel
                 className="rounded-xl"
@@ -232,7 +219,17 @@ const Information = () => {
                 {isLoadingProjectInfo && <Spinner />}
               </div>
             </div>
-          </div>
+          </div> */}
+          {isSuccessProjectInfo && (
+            <InformationOverview
+              dataImage={ImageProduct}
+              allDistributerWithAmount={allDistributerWithAmount}
+              isSuccessImage={isSuccessOutput}
+              isLoadingImage={isLoadingOutput}
+              dataInfoOverview={projectInfo}
+            />
+          )}
+          {isLoadingProjectInfo && <Spinner />}
         </section>
         <section className="timeline">
           {isSuccessProcess && <ProcessInformation processInfo={dataProcess} />}

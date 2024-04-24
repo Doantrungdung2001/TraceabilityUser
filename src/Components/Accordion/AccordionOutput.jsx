@@ -4,7 +4,6 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
-import TableOutput from "../Tables/TableOutput";
 import OutputInformation from "../Output/OutputInformation";
 
 function Icon({ id, open }) {
@@ -48,7 +47,7 @@ const AccordionOutput = ({ dataAccordion }) => {
             Thu hoạch lần thứ {index + 1}
           </AccordionHeader>
           <AccordionBody>
-            <OutputInformation OutputInfo={data}/>
+            <OutputInformation OutputInfo={data} />
           </AccordionBody>
         </Accordion>
       ))}

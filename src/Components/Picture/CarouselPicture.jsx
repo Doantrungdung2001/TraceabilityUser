@@ -20,9 +20,9 @@ const CarouselPicture = ({ dataImage }) => {
     >
       {dataImage?.map((imgae, index) => (
         <img
-          src={imgae}
+          src={imgae?.img || imgae}
           alt={index + 1}
-          className="h-40 w-full object-cover rounded-xl lg:h-64    "
+          className="h-40 w-full object-cover rounded-xl lg:h-64 "
           key={index}
         />
       ))}
