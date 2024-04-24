@@ -68,15 +68,6 @@ const ListVideo = ({ dataListVideo }) => {
             </div>
             <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-700">
-                Khoảng thời gian (giờ)
-              </dt>
-              <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2 sm:pl-6">
-                {dataListVideo[0].date_timestamp / 3600}
-                {""}h
-              </dd>
-            </div>
-            <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-700">
                 Số lượng video
               </dt>
               <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
@@ -121,16 +112,8 @@ const ListVideo = ({ dataListVideo }) => {
           )}
         </DialogBody>
         <DialogFooter>
-          <Button
-            variant="text"
-            color="red"
-            onClick={handleOpen}
-            className="mr-1"
-          >
-            <span>Cancel</span>
-          </Button>
-          <Button variant="gradient" color="green" onClick={handleOpen}>
-            <span>Confirm</span>
+          <Button variant="gradient" color="red" onClick={handleOpen}>
+            <span>Thoát</span>
           </Button>
         </DialogFooter>
       </Dialog>
