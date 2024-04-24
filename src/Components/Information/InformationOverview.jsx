@@ -13,14 +13,12 @@ const InformationOverview = ({
   isLoadingImage,
   dataInfoOverview,
 }) => {
-  console.log(allDistributerWithAmount);
-  console.log(dataInfoOverview);
   return (
     <div className="min-h-screen flex flex-col sm:p-14 md:p-20 justify-center bg-white rounded-2xl">
       <div className="mx-auto max-w-6xl">
         <section className="font-sans text-black">
           <div className="[ lg:flex lg:items-center ] [ fancy-corners fancy-corners--large fancy-corners--top-left fancy-corners--bottom-right ]">
-            <div className="flex-shrink-0 self-stretch sm:flex-basis-40 md:flex-basis-50 xl:flex-basis-60">
+            <div className="flex-shrink-0 self-stretch sm:flex-basis-40 md:flex-basis-50 xl:flex-basis-60 p-2">
               {isSuccessImage && <CarouselPicture dataImage={dataImage} />}
               {isLoadingImage && <Spinner />}
             </div>

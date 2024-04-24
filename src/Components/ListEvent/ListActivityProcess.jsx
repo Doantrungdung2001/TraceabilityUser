@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   renderTypeProcess,
   formatTransactionHashTable,
+  formatDateTime,
   formatDate,
 } from "../../Utils/helpers";
 import {
@@ -27,7 +28,6 @@ const ListActivityProcess = ({ listActivity }) => {
   const [openDetailProcess, setOpenDetailProcess] = useState(false);
   const handleOpenDetailDeleteProcess = () =>
     setOpenDetailProcess(!openDetailProcess);
-  //process
   const [selectedProcess, setSelectedProcess] = useState(null);
 
   const [reportsOpen, setReportsOpen] = useState(0);
@@ -102,31 +102,48 @@ const ListActivityProcess = ({ listActivity }) => {
         <div>
           {selectedProcess?.objectDetections?.length > 0 ? (
             <div>
-              {/* <div className="rounded-lg border border-gray-300 p-4">
-                <p className="text-sm font-medium text-gray-900 dark:text-white">
-                  Bắt đầu:{" "}
-                  {formatDateTime(
-                    selectedProcess?.objectDetections[0].start_time
-                  )}
-                </p>
-                <p className="text-sm font-medium text-gray-900 dark:text-white">
-                  Kết thúc:{" "}
-                  {formatDateTime(
-                    selectedProcess?.objectDetections[0].end_time
-                  )}
-                </p>
-                <p className="text-sm text-gray-900 dark:text-white">
-                  Mã hash:{" "}
-                  <span className="text-blue-700">
-                    {formatTransactionHashTable({
-                      str: selectedProcess?.objectDetections[0].tx_hash,
-                      a: 8,
-                      b: 5,
-                    })}
-                  </span>
-                </p>
-              </div> */}
-
+              <div className="mt-2 bg-white overflow-hidden shadow rounded-lg border">
+                <div className="lg:py-5 px-4 py-2">
+                  <h3 className="lg:text-lg text-base leading-6 font-medium text-green-500">
+                    Thông tin chung
+                  </h3>
+                </div>
+                <div className="border-t border-gray-200 lg:px-4 lg:py-5 sm:p-0 px-5 py-1">
+                  <dl className="sm:divide-y sm:divide-gray-200">
+                    <div className="lg:py-3 py-1 sm:py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-700">
+                        Mã Transaction
+                      </dt>
+                      <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                        {formatTransactionHashTable({
+                          str: selectedProcess?.objectDetections[0].tx_hash,
+                          a: 8,
+                          b: 5,
+                        })}
+                      </dd>
+                    </div>
+                    <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-700">
+                        Thời gian bắt đầu
+                      </dt>
+                      <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                        {selectedProcess?.objectDetections[0]?.start_time}
+                      </dd>
+                    </div>
+                    <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-700">
+                        Thời gian kết thúc
+                      </dt>
+                      <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                        {selectedProcess?.objectDetections[0]?.end_time}
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+              <div className="px-2 mt-4 lg:text-xl text-base font-bold text-green-600">
+                Danh sách video
+              </div>
               {selectedProcess.objectDetections.map((data, index) => (
                 <div key={index}>
                   <video
@@ -151,7 +168,7 @@ const ListActivityProcess = ({ listActivity }) => {
     },
   ];
   return (
-    <div className="rounded-lg p-2">
+    <div className="rounded-xl p-2">
       <div className="mx-auto flex justify-center h-screen">
         <div
           className="w-full h-full overflow-auto shadow bg-white "
@@ -169,16 +186,15 @@ const ListActivityProcess = ({ listActivity }) => {
                     }}
                   >
                     <td className="lg:pl-5 lg:pr-3 pl-2 whitespace-no-wrap">
-                      {/* <div className="text-gray-400">Today</div> */}
                       <div className="text-gray-400">
                         {formatDate(activity.time)}
                       </div>
                     </td>
                     <td className="px-2 py-2 whitespace-no-wrap">
-                      <div className="leading-5 text-black font-medium text-base lg:text-2xl">
+                      <div className="leading-5 text-green-500 font-medium text-base lg:text-xl">
                         {renderTypeProcess(activity.type)}
                       </div>
-                      <div className="leading-5 text-gray-900 text-sm lg:text-lg">
+                      <div className="leading-5 text-gray-900 text-sm lg:text-base">
                         {activity.name.length > 20
                           ? activity.name.slice(0, 20) + "..."
                           : activity.name}{" "}
