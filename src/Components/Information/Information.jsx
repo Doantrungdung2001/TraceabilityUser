@@ -28,6 +28,7 @@ import SampleProcess from "../Process/SampleProcess";
 import Certificates from "../CertificatesPicture/Certificates";
 import OutputInformation from "../Output/OutputInformation";
 import AccordionComponent from "../Accordion/AccordionComponent";
+import AccordionOutput from "../Accordion/AccordionOutput";
 
 function Icon({ id, open }) {
   return (
@@ -356,131 +357,7 @@ const Information = () => {
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
               <section>
-                {/* <>
-                  {isSuccessOutput &&
-                    Output.map((item, index) => (
-                      <Accordion
-                        key={index} // Make sure to provide a unique key for each item
-                        open={openOutput === 1}
-                        icon={<Icon id={1} open={openOutput} />}
-                      >
-                        <AccordionHeader
-                          className="text-base"
-                          onClick={() => handleOpenOutput(1)}
-                        >
-                          Lần thu hoạch thứ {index + 1}
-                        </AccordionHeader>
-                        <AccordionBody>
-                          <section className="flex items-center justify-center">
-                            <div className="max-w-[500px] w-full rounded-xl border border-gray-200 bg-white py-4 px-3 shadow-md shadow-gray-100">
-                              <div className="flex max-h-[400px] w-full flex-col overflow-y-scroll">
-                                <div className="flex items-center">
-                                  <p className="text-gray-900 font-semibold mr-2">
-                                    Transaction :
-                                  </p>
-                                  <p className="font-semibold text-blue-700">
-                                    {formatTransactionHashTable({
-                                      str: item?.tx,
-                                      a: 8,
-                                      b: 5,
-                                    })}
-                                  </p>
-                                </div>
-                                <div className="flex items-center">
-                                  <p className="text-gray-900 font-semibold mr-2">
-                                    Thời gian :
-                                  </p>
-                                  <p className="font-semibold text-gray-500">
-                                    {formatDateTime(item?.time)}
-                                  </p>
-                                </div>
-                                <div className="flex items-center">
-                                  <p className="text-gray-900 font-semibold mr-2">
-                                    Số lượng :
-                                  </p>
-                                  <p className="font-semibold text-gray-500">
-                                    {item?.amount}
-                                  </p>
-                                </div>
-                                <div className="flex items-center">
-                                  <p className="text-gray-900 font-semibold mr-2">
-                                    Sản lượng / 1 sản phẩm :
-                                  </p>
-                                  <p className="font-semibold text-gray-500">
-                                    {item?.amountPerOne}
-                                  </p>
-                                </div>
-                                <div>
-                                  <p className="text-gray-900 font-semibold mr-2">
-                                    Nhà phân phối :
-                                  </p>
-                                  <ul>
-                                    {item.distributerWithAmount?.map(
-                                      (data, index) => (
-                                        <li
-                                          key={index}
-                                          className="font-semibold text-gray-500"
-                                        >
-                                          {data.distributer.name} (Số lượng :{" "}
-                                          {data.amount})
-                                        </li>
-                                      )
-                                    )}
-                                  </ul>
-                                </div>
-                                <p className="text-blue-800 font-semibold mr-2">
-                                  <span
-                                    className="italic underline cursor-pointer"
-                                    onClick={handleOpenHarvest}
-                                  >
-                                    Lịch sử chỉnh sửa(Click vào)
-                                  </span>
-                                </p>
-                              </div>
-                            </div>
-                            <Dialog
-                              open={openHarvest}
-                              handler={handleOpenHarvest}
-                            >
-                              <DialogHeader> Lịch sử chỉnh sửa </DialogHeader>
-                              <DialogBody>
-                                <div>
-                                  <div className="max-w-screen-md text-xs">
-                                    <h4 className="text-lg font-semibold  text-gray-900">
-                                      Mã Hash
-                                    </h4>
-                                    <p className="text-blue-500 mb-4">afdsfa</p>
-                                    <h3 className="text-lg  text-gray-900 font-semibold">
-                                      afsafd
-                                    </h3>
-                                    <p className="font-semibold text-gray-500">
-                                      afafa
-                                    </p>
-                                  </div>
-                                </div>
-                              </DialogBody>
-                              <DialogFooter>
-                                <Button
-                                  variant="text"
-                                  color="red"
-                                  onClick={handleOpenHarvest}
-                                  className="mr-1"
-                                >
-                                  <span>Thoát</span>
-                                </Button>
-                              </DialogFooter>
-                            </Dialog>
-                          </section>
-                        </AccordionBody>
-                      </Accordion>
-                    ))}
-                  {isLoadingOutput && <Spinner />}
-                </> */}
-                {isSuccessOutput && (
-                  <AccordionComponent dataAccordion={Output} />
-                )}
-
-                {/* <OutputInformation /> */}
+                {isSuccessOutput && <AccordionOutput dataAccordion={Output} />}
                 {isLoadingOutput && <Spinner />}
               </section>
             </AccordionBody>

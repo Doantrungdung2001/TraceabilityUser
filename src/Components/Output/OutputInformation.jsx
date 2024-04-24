@@ -1,7 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import TableOutput from "../Tables/TableOutput";
+import {
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+} from "@material-tailwind/react";
+import CarouselPicture from "../Picture/CarouselPicture";
+import TableDetailOutput from "../Tables/TableDetailOutput";
+import TabComponet from "../Tabs/TabComponet";
 
-const OutputInformation = () => {
+const OutputInformation = ({ OutputInfo }) => {
+  const [selectedDataOutput, setSelectedDataOutput] = useState();
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(!open);
+
+  const dataDetailOutput = [
+    {
+      label: "Thông tin",
+      value: "Info",
+      desc: (
+        <>
+          {/* <CarouselPicture dataImage={selectedDataOutput.images} /> */}
+          <TableDetailOutput detailOutput={selectedDataOutput} />
+        </>
+      ),
+    },
+    {
+      label: "Lịch sử",
+      value: "history",
+      desc: (
+        <>
+          {/* <CarouselPicture dataImage={selectedDataOutput.images} /> */}
+          <TableDetailOutput detailOutput={selectedDataOutput} />
+        </>
+      ),
+    },
+  ];
   return (
     <div className="flex items-center justify-center">
       <div className="bg-white lg:p-8 p-2 w-[96rem]">
@@ -23,9 +60,15 @@ const OutputInformation = () => {
         </header>
         <h2 className="font-bold text-base mt- lg:text-xl">Thông tin cơ bản</h2>
 
-        <TableOutput />
+        <TableOutput dataInfoOutput={OutputInfo} />
         <div className="flex justify-end">
-          <button className="bg-green-600 text-white font-semibold py-2 px-5 text-sm mt-6 inline-flex items-center group rounded-md">
+          <button
+            className="bg-green-600 text-white font-semibold py-2 px-5 text-sm mt-6 inline-flex items-center group rounded-md"
+            onClick={() => {
+              handleOpen();
+              setSelectedDataOutput(OutputInfo);
+            }}
+          >
             <p>Chi tiết</p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -44,6 +87,29 @@ const OutputInformation = () => {
           </button>
         </div>
       </div>
+      <>
+        <Dialog open={open} handler={handleOpen}>
+          <DialogHeader>Thông tin chi tiết</DialogHeader>
+          <DialogBody className="overflow-y-scroll !px-5 max-h-96">
+            {selectedDataOutput ? (
+              <div>
+                {/* <CarouselPicture dataImage={selectedDataOutput.images} /> */}
+                <TabComponet data={dataDetailOutput} />
+                {/* <TableDetailOutput detailOutput={selectedDataOutput} /> */}
+              </div>
+            ) : (
+              <div className="lg:text-xl lg:mt-4 text-base text-gray-400 font-normal px-2 mt-2">
+                Dữ liệu chưa cập nhật
+              </div>
+            )}
+          </DialogBody>
+          <DialogFooter>
+            <Button variant="gradient" color="red" onClick={handleOpen}>
+              <span>Thoát</span>
+            </Button>
+          </DialogFooter>
+        </Dialog>
+      </>
     </div>
   );
 };
