@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./infor.css";
-import { Card, Typography, Carousel, Spinner } from "@material-tailwind/react";
+import { Spinner } from "@material-tailwind/react";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import {
@@ -24,6 +24,7 @@ import Certificates from "../CertificatesPicture/Certificates";
 import AccordionComponent from "../Accordion/AccordionComponent";
 import AccordionOutput from "../Accordion/AccordionOutput";
 import InformationOverview from "./InformationOverview";
+import ListVideo from "../ListEvent/ListVideo";
 
 function Icon({ id, open }) {
   return (
@@ -81,7 +82,6 @@ const Information = () => {
   //open more information
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
-
   // delete process
   const [openDeleteProcess, setOpenDeleteProcess] = useState(0);
   const handleOpenDeleteProcess = (value) =>
@@ -95,131 +95,6 @@ const Information = () => {
 
       <section className="content">
         <section className="infor">
-          {/* <div className=" p-10 flex flex-col justify-between lg:flex-row gap-10 lg:items-center">
-            <div data-aos="fade-up" className="picture">
-              <Carousel
-                className="rounded-xl"
-                navigation={({ setActiveIndex, activeIndex, length }) => (
-                  <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
-                    {new Array(length).fill("").map((_, i) => (
-                      <span
-                        key={i}
-                        className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
-                          activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/50"
-                        }`}
-                        onClick={() => setActiveIndex(i)}
-                      />
-                    ))}
-                  </div>
-                )}
-              >
-                {isSuccessOutput &&
-                  ImageProduct.map((url, index) => (
-                    <img
-                      key={index}
-                      src={url.img}
-                      className="h-full w-full object-cover rounded-xl"
-                      style={{ maxWidth: "100%", height: "auto" }}
-                    />
-                  ))}
-                {isLoadingOutput && <Spinner />}
-              </Carousel>
-            </div>
-            <div data-aos="fade-up" className="product">
-              <div className="flex flex-col gap-6 lg:w-2/4">
-                {isSuccessProjectInfo && (
-                  <div>
-                    <div className="px-4 sm:px-0">
-                      <h3 className="text-base font-semibold leading-7 text-gray-900">
-                        Thông tin chi tiết của sản phẩm
-                      </h3>
-                    </div>
-                    <div className="mt-6 border-t border-gray-900">
-                      <dl className="divide-y divide-gray-800">
-                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                          <dt className="text-sm font-medium leaading-3 text-gray-900">
-                            Transaction Hash (Khởi tạo dự án)
-                          </dt>
-                          <dd className="mt-1 text-sm font-semibold leaading-3 text-blue-900 sm:col-span-2 sm:mt-0">
-                            {formatTransactionHashTable({
-                              str: projectInfo?.txHash,
-                              a: 8,
-                              b: 5,
-                            })}
-                          </dd>
-                        </div>
-                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                          <dt className="text-sm font-medium leaading-3 text-gray-900">
-                            Nông trại sản xuất
-                          </dt>
-                          <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                            {projectInfo?.farm?.name}
-                          </dd>
-                        </div>
-
-                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                          <dt className="text-sm font-medium leaading-3 text-gray-900">
-                            Tên cây
-                          </dt>
-                          <dd className="mt-0 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                            {projectInfo?.plant?.plant_name}
-                          </dd>
-                        </div>
-
-                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                          <dt className="text-sm font-medium leaading-3 text-gray-900">
-                            Tên hạt giống
-                          </dt>
-                          <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                            {projectInfo?.seed?.seed_name}
-                          </dd>
-                        </div>
-                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                          <dt className="text-sm font-medium leaading-3 text-gray-900">
-                            Ngày trồng
-                          </dt>
-                          <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                            {formatDateTime(projectInfo?.startDate)}
-                          </dd>
-                        </div>
-                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                          <dt className="text-sm font-medium leaading-3 text-gray-900">
-                            Diện tích trồng (m2 )
-                          </dt>
-                          <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                            {projectInfo?.square}
-                          </dd>
-                        </div>
-                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                          <dt className="text-sm font-medium leaading-3 text-gray-900">
-                            Mô tả
-                          </dt>
-                          <dd className="mt-1 text-sm font-semibold leaading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                            {projectInfo?.description}
-                          </dd>
-                        </div>
-                        <div className="px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                          <dt className="text-sm font-medium leaading-3 text-gray-900">
-                            Nhà phân phối
-                          </dt>
-                          <dd className="mt-1 text-sm font-semibold leading-3 text-gray-900 sm:col-span-2 sm:mt-0">
-                            <ul className="py-1">
-                              {allDistributerWithAmount?.map((item, index) => (
-                                <li className="py-1" key={index}>
-                                  {item.distributer?.name}
-                                </li>
-                              ))}
-                            </ul>
-                          </dd>
-                        </div>
-                      </dl>
-                    </div>
-                  </div>
-                )}
-                {isLoadingProjectInfo && <Spinner />}
-              </div>
-            </div>
-          </div> */}
           {isSuccessProjectInfo && (
             <InformationOverview
               dataImage={ImageProduct}
@@ -252,51 +127,14 @@ const Information = () => {
               Video không có hoạt động tương ứng
             </AccordionHeader>
             <AccordionBody className="text-base font-normal">
-              {isSuccessProcess && (
-                <section className="max-w-3xl rounded-lg px-4 py-5 mx-auto bg-white dark:bg-gray-900">
-                  <div>
-                    <div className="rounded-lg shadow bg-green-100 p-1">
-                      <p className="text-2xl font-bold mb-4">Thông tin</p>
-                      <p className="mb-1">
-                        Bắt đầu:{" "}
-                        {formatDateTime(
-                          nonProcessObjectDetection[0].start_time
-                        )}
-                      </p>
-                      <p className="mb-1">
-                        Kết thúc:{" "}
-                        {formatDateTime(nonProcessObjectDetection[0].end_time)}
-                      </p>
-                      <p className="text-blue-700 mb-1">
-                        {formatTransactionHashTable({
-                          str: nonProcessObjectDetection[0].tx_hash,
-                          a: 8,
-                          b: 5,
-                        })}
-                      </p>
-                    </div>
-                  </div>
-                  {nonProcessObjectDetection.length > 0 ? (
-                    nonProcessObjectDetection.map((data, index) => (
-                      <div key={index} className="mt-5 px-2">
-                        <video
-                          className="h-full w-full my-2 rounded-lg "
-                          controls
-                          autoPlay
-                          muted
-                        >
-                          <source src={data.video_url} type="video/mp4" />
-                          Your browser does not support the video ta
-                        </video>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="lg:text-lg text-gray-400 text-base mt-4 ">
-                      Không có video
-                    </div>
-                  )}
-                  {isLoadingProcess && <Spinner />}
-                </section>
+              {nonProcessObjectDetection?.length ? (
+                <>
+                  <ListVideo dataListVideo={nonProcessObjectDetection} />
+                </>
+              ) : (
+                <div className="text-base text-gray-300 font-normal p-4">
+                  Không có video
+                </div>
               )}
             </AccordionBody>
           </Accordion>
