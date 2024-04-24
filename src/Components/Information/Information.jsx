@@ -465,7 +465,9 @@ const Information = () => {
                       <AccordionBody>
                         <section className="flex items-center justify-center">
                           {dataDeleteProcess?.deletedOutput?.length ? (
-                            <section></section>
+                            <AccordionOutput
+                              dataAccordion={dataDeleteProcess.deletedOutput}
+                            />
                           ) : (
                             <div className="lg:text-2xl text-gray-400 text-base mt-5">
                               Không có dữ liệu
