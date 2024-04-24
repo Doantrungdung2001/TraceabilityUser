@@ -17,28 +17,6 @@ const OutputInformation = ({ OutputInfo }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
 
-  const dataDetailOutput = [
-    {
-      label: "Thông tin",
-      value: "Info",
-      desc: (
-        <>
-          {/* <CarouselPicture dataImage={selectedDataOutput.images} /> */}
-          <TableDetailOutput detailOutput={selectedDataOutput} />
-        </>
-      ),
-    },
-    {
-      label: "Lịch sử",
-      value: "history",
-      desc: (
-        <>
-          {/* <CarouselPicture dataImage={selectedDataOutput.images} /> */}
-          <TableDetailOutput detailOutput={selectedDataOutput} />
-        </>
-      ),
-    },
-  ];
   return (
     <div className="flex items-center justify-center">
       <div className="bg-white lg:p-8 p-2 w-[96rem]">
@@ -93,9 +71,46 @@ const OutputInformation = ({ OutputInfo }) => {
           <DialogBody className="overflow-y-scroll !px-5 max-h-96">
             {selectedDataOutput ? (
               <div>
-                {/* <CarouselPicture dataImage={selectedDataOutput.images} /> */}
-                <TabComponet data={dataDetailOutput} />
-                {/* <TableDetailOutput detailOutput={selectedDataOutput} /> */}
+                {(() => {
+                  const dataDetailOutput = [
+                    {
+                      label: "Thông tin",
+                      value: "Info",
+                      desc: (
+                        <>
+                          <CarouselPicture
+                            dataImage={selectedDataOutput.images}
+                          />
+                          <TableDetailOutput
+                            detailOutput={selectedDataOutput}
+                          />
+                        </>
+                      ),
+                    },
+                    {
+                      label: "Lịch sử",
+                      value: "history",
+                      desc: (
+                        <>
+                          {selectedDataOutput.historyOutput?.map(
+                            (dataHistoryOutput, index) => (
+                              <>
+                                <div className="bg-green-500 text-white py-2 px-4 text-base lg:text-xl rounded-xl font-bold mt-3">
+                                  Lần chỉnh sửa thứ {index + 1}
+                                </div>
+                                <TableDetailOutput
+                                  detailOutput={dataHistoryOutput}
+                                  key={index}
+                                />
+                              </>
+                            )
+                          )}
+                        </>
+                      ),
+                    },
+                  ];
+                  return <TabComponet data={dataDetailOutput} />;
+                })()}
               </div>
             ) : (
               <div className="lg:text-xl lg:mt-4 text-base text-gray-400 font-normal px-2 mt-2">
