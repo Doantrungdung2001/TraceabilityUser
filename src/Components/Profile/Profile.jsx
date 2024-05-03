@@ -80,10 +80,17 @@ const ProfileFarm = () => {
                     className="w-[40%] rounded-full mt-7"
                   />
                   <p className="mt-3 font-semibold text-lg">{farmInfo.name}</p>
-                  <span className="text-slate-500 rounded-xl border-slate-100 text-sm mt-2 pl-3 pr-3 border-[1px]">
-                    <span className="bg-green-500 w-2 h-2 rounded-full mt-0.5 inline-block"></span>{" "}
-                    Active
-                  </span>
+                  {farmInfo.status === "active" ? (
+                    <span className="text-slate-500 rounded-xl border-slate-100 text-sm mt-2 pl-3 pr-3 border-[1px]">
+                      <span className="bg-green-500 w-2 h-2 rounded-full mt-0.5 inline-block"></span>{" "}
+                      Đang hoạt động
+                    </span>
+                  ) : (
+                    <span className="text-slate-500 rounded-xl border-slate-100 text-sm mt-2 pl-3 pr-3 border-[1px]">
+                      <span className="bg-red-500 w-2 h-2 rounded-full mt-0.5 inline-block"></span>{" "}
+                      Dừng hoạt động
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -91,7 +98,7 @@ const ProfileFarm = () => {
           {isLoadingFarmInfo && <Spinner />}
         </section>
       </div>
-      
+
       {isSuccessPlant && <Plant dataPlant={allPlant} />}
       {isLoadingPlant && <Spinner />}
 
