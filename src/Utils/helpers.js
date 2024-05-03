@@ -110,3 +110,19 @@ export function formatTransactionHashTable({ str, a, b }) {
     </a>
   );
 }
+
+export function formatLongText({ str, a, b }) {
+  if (
+    a < 0 ||
+    b < 0 ||
+    a >= str.length ||
+    b >= str.length ||
+    a + b > str.length
+  ) {
+    return "Invalid input";
+  }
+  const prefix = str.slice(0, a);
+  const suffix = str.slice(-b);
+  const formatedFormatTransactionHash = prefix + "..." + suffix;
+  return <span>{formatedFormatTransactionHash}</span>;
+}

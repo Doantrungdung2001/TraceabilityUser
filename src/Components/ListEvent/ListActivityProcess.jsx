@@ -3,6 +3,8 @@ import {
   renderTypeProcess,
   formatTransactionHashTable,
   formatDate,
+  formatLongText,
+  formatDateTime,
 } from "../../Utils/helpers";
 import {
   Tabs,
@@ -37,7 +39,7 @@ const ListActivityProcess = ({ listActivity }) => {
       label: "Thông tin",
       value: "infor",
       desc: (
-        <DialogBody className="h-[39rem]">
+        <DialogBody className="">
           <section className="infor">
             {selectedProcess ? (
               <>
@@ -71,7 +73,7 @@ const ListActivityProcess = ({ listActivity }) => {
                     {selectedProcess?.historyProcess.length > 0 ? (
                       selectedProcess.historyProcess.map((data, index) => (
                         <div key={index}>
-                          <div className="mb-1 lg:text-lg text-base text-blue-500 font-bold">
+                          <div className="mb-5 lg:text-lg text-base text-blue-500 font-bold border-b bg-gray-200 py-4 px-4 rounded-xl">
                             Chỉnh sửa lần thứ {index + 1}
                           </div>
                           <DialogInfoDetail dataDetailInfo={data} />
@@ -113,7 +115,7 @@ const ListActivityProcess = ({ listActivity }) => {
                       <dt className="text-sm font-medium text-gray-700">
                         Mã Transaction
                       </dt>
-                      <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                      <dd className="mt-1 text-sm text-blue-500 lg:text-base font-medium sm:mt-0 sm:col-span-2">
                         {formatTransactionHashTable({
                           str: selectedProcess?.objectDetections[0].tx_hash,
                           a: 8,
@@ -123,28 +125,29 @@ const ListActivityProcess = ({ listActivity }) => {
                     </div>
                     <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-700">
-                        Thời gian bắt đầu
+                        Video Hash
                       </dt>
                       <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
-                        {selectedProcess?.objectDetections[0]?.start_time}
-                      </dd>
-                    </div>
-                    <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt className="text-sm font-medium text-gray-700">
-                        Thời gian kết thúc
-                      </dt>
-                      <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
-                        {selectedProcess?.objectDetections[0]?.end_time}
+                        {formatLongText({
+                          str: selectedProcess?.objectDetections[0]
+                            .concatenated_hash,
+                          a: 8,
+                          b: 5,
+                        })}
                       </dd>
                     </div>
                   </dl>
                 </div>
               </div>
-              <div className="px-2 mt-4 lg:text-xl text-base font-bold text-green-600">
+              <div className="px-2 mt-4 lg:text-xl text-base font-bold text-green-600 lg:mb-5 mb-3">
                 Danh sách video
               </div>
               {selectedProcess.objectDetections.map((data, index) => (
                 <div key={index}>
+                  <span className="ml-1 text-base">
+                    {formatDateTime(data.start_time)} -{" "}
+                    {formatDateTime(data.end_time)}
+                  </span>
                   <video
                     className="h-full w-full my-2 rounded-lg "
                     controls
@@ -194,17 +197,22 @@ const ListActivityProcess = ({ listActivity }) => {
                         {renderTypeProcess(activity.type)}
                       </div>
                       <div className="leading-5 text-gray-900 text-sm lg:text-base">
-                        {activity.name.length > 20
-                          ? activity.name.slice(0, 20) + "..."
-                          : activity.name}{" "}
-                        {"    "}
-                        <a className="text-blue-500 hover:underline">
+                        {window.innerWidth > 300 ? (
+                          <span>{activity.name}</span>
+                        ) : (
+                          <span>
+                            {activity.name.length > 20
+                              ? activity.name.slice(0, 20) + "..."
+                              : activity.name}
+                          </span>
+                        )}
+                        <p className="text-blue-500 hover:underline text-sm">
                           {formatTransactionHashTable({
                             str: activity.tx,
                             a: 8,
                             b: 5,
                           })}
-                        </a>
+                        </p>
                       </div>
                       <div className="leading-2 text-blue-400 text-xs">
                         Nhấn vào để xem chi tiết
@@ -220,7 +228,7 @@ const ListActivityProcess = ({ listActivity }) => {
       <Dialog open={openDetailProcess} handler={handleOpenDetailDeleteProcess}>
         <DialogHeader>Chi tiết công việc</DialogHeader>
 
-        <DialogBody className="h-[25rem] overflow-scroll">
+        <DialogBody className="h-[35rem] overflow-y-auto">
           <Tabs className="tab" id="custom-animation" value="infor">
             <TabsHeader className="tab-header">
               {data.map(({ label, value }) => (
@@ -229,13 +237,7 @@ const ListActivityProcess = ({ listActivity }) => {
                 </Tab>
               ))}
             </TabsHeader>
-            <TabsBody
-              animate={{
-                initial: { y: 250 },
-                mount: { y: 0 },
-                unmount: { y: 250 },
-              }}
-            >
+            <TabsBody>
               {data.map(({ value, desc }) => (
                 <TabPanel key={value} value={value}>
                   {desc}

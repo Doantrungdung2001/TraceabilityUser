@@ -99,7 +99,7 @@ const Tables = ({ infoData }) => {
                   </div>
                   <div className="max-w-screen-md text-xs mt-4 border-b pb-2">
                     <h3 className="lg:text-lg text-base font-semibold text-gray-900">
-                      Số lượng(kg)
+                      Sản lượng (kg)
                     </h3>
                     <p className="lg:text-base font-semibold text-gray-700">
                       {selectedDetetailDeleteExpect.amount}
@@ -116,7 +116,7 @@ const Tables = ({ infoData }) => {
                 </div>
                 <div>
                   <h3 className="mt-5 text-2xl font-bold text-black">
-                    Lịch sử kỳ vọng
+                    Lịch sử chỉnh sửa
                   </h3>
                   <div className="overflow-x-auto mt-6">
                     <table className="table-auto border-collapse w-full">
@@ -129,10 +129,16 @@ const Tables = ({ infoData }) => {
                             Thời gian
                           </th>
                           <th
+                            className="px-4 py-2 bg-gray-200 "
+                            style={{ backgroundColor: "#f8f8f8" }}
+                          >
+                            Transaction Hash
+                          </th>
+                          <th
                             className="px-4 py-2 "
                             style={{ backgroundColor: "#f8f8f8" }}
                           >
-                            Số lượng
+                            Sản lượng (kg)
                           </th>
                           <th
                             className="px-4 py-2 "
@@ -151,6 +157,13 @@ const Tables = ({ infoData }) => {
                             >
                               <td className="px-4 py-4">
                                 {formatDate(historyExpect.time)}
+                              </td>
+                              <td className="px-4 py-4 text-blue-500  ">
+                                {formatTransactionHashTable({
+                                  str: historyExpect.tx,
+                                  a: 8,
+                                  b: 5,
+                                })}
                               </td>
                               <td className="px-4 py-4">
                                 {historyExpect.amount}

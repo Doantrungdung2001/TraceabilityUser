@@ -51,7 +51,7 @@ const DeleteProcess = ({ dataDeleteProcess }) => {
                       handleOpenDetailDeleteProcess();
                     }}
                   >
-                    <span className="font-medium">Chi tiết</span>
+                    <button className="font-medium">Chi tiết</button>
                     <svg
                       className="w-4"
                       fill="none"

@@ -17,10 +17,10 @@ import DeleteProcess from "../Process/DeleteProcess";
 import ProcessInformation from "../Process/ProcessInformation";
 import SampleProcess from "../Process/SampleProcess";
 import Certificates from "../CertificatesPicture/Certificates";
-import AccordionComponent from "../Accordion/AccordionComponent";
 import AccordionOutput from "../Accordion/AccordionOutput";
 import InformationOverview from "./InformationOverview";
 import ListVideo from "../ListEvent/ListVideo";
+import AccordionListVideo from "../Accordion/AccordionListVideo";
 
 function Icon({ id, open }) {
   return (
@@ -130,10 +130,11 @@ const Information = () => {
             </AccordionHeader>
             <AccordionBody className="text-base font-normal">
               {nonProcessObjectDetection?.length ? (
-                <>
-                  <ListVideo dataListVideo={nonProcessObjectDetection} />
-                </>
+                <AccordionListVideo dataAccordion={nonProcessObjectDetection} />
               ) : (
+                // <>
+                //   <ListVideo dataListVideo={nonProcessObjectDetection} />
+                // </>
                 <div className="text-base text-gray-300 font-normal p-4">
                   Không có video
                 </div>
