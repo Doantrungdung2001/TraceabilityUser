@@ -126,3 +126,23 @@ export function formatLongText({ str, a, b }) {
   const formatedFormatTransactionHash = prefix + "..." + suffix;
   return <span>{formatedFormatTransactionHash}</span>;
 }
+
+export function formatWalletAddress({ str, a, b }) {
+  if (
+    a < 0 ||
+    b < 0 ||
+    a >= str.length ||
+    b >= str.length ||
+    a + b > str.length
+  ) {
+    return "Invalid input";
+  }
+  const prefix = str.slice(0, a);
+  const suffix = str.slice(-b);
+  const formatedFormatTransactionHash = prefix + "..." + suffix;
+  return (
+    <a href={`https://escan.live/address/${str}`} target="_blank" rel="noreferrer">
+      {formatedFormatTransactionHash}
+    </a>
+  );
+}

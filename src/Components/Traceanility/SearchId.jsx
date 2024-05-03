@@ -3,12 +3,18 @@ import {
   Accordion,
   AccordionHeader,
   AccordionBody,
-  Spinner
+  Spinner,
 } from "@material-tailwind/react";
 import Web3 from "web3";
 import PROJECT from "../../Services/projectService";
-import { abi, contractAddress, jsonRpcURL, video_abi, videoContractAddress } from "../../constants";
-
+import {
+  abi,
+  contractAddress,
+  jsonRpcURL,
+  video_abi,
+  videoContractAddress,
+} from "../../constants";
+import { formatDateTime, formatWalletAddress } from "../../Utils/helpers";
 function Icon({ id, open }) {
   return (
     <svg
@@ -40,7 +46,6 @@ const SearchId = () => {
   const [project, setProject] = React.useState(null);
   const [videos, setVideos] = React.useState(null);
   const [connectionLoss, setConnectionLoss] = React.useState(null);
-  
 
   const [loadingProcesses, setLoadingProcesses] = React.useState(false);
   const [loadingExpects, setLoadingExpects] = React.useState(false);
@@ -48,94 +53,107 @@ const SearchId = () => {
   const [loadingProject, setLoadingProject] = React.useState(false);
   const [loadingVideos, setLoadingVideos] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [loadingConnectionLoss, setLoadingConnectionLoss] = React.useState(false);
+  const [loadingConnectionLoss, setLoadingConnectionLoss] =
+    React.useState(false);
 
+  const web3 = new Web3(jsonRpcURL);
 
-  const web3 = new Web3(jsonRpcURL)
-
-  const contract = new web3.eth.Contract(abi, contractAddress)
-  const videoContract = new web3.eth.Contract(video_abi, videoContractAddress)
+  const contract = new web3.eth.Contract(abi, contractAddress);
+  const videoContract = new web3.eth.Contract(video_abi, videoContractAddress);
 
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
   const handleQueryBlockchain = async () => {
     console.log("query blockchain", projectIndex);
-    setLoading(true)
-    setLoadingProcesses(false)
-    setLoadingExpects(false)
-    setLoadingOutputs(false)
-    setLoadingProject(false)
-    setLoadingConnectionLoss(false)
-    setLoadingVideos(false)
-    const project = await contract.methods.getProject(projectIndex).call()
-    setLoadingProject(true)
-    setProject(project)
-    console.log("project: ", project)
+    setLoading(true);
+    setLoadingProcesses(false);
+    setLoadingExpects(false);
+    setLoadingOutputs(false);
+    setLoadingProject(false);
+    setLoadingConnectionLoss(false);
+    setLoadingVideos(false);
+    const project = await contract.methods.getProject(projectIndex).call();
+    setLoadingProject(true);
+    setProject(project);
+    console.log("project: ", project);
 
-    const processes = await contract.methods.getProjectProcesses(projectIndex).call()
-    setLoadingProcesses(true)
-    setProcesses(processes)
+    const processes = await contract.methods
+      .getProjectProcesses(projectIndex)
+      .call();
+    setLoadingProcesses(true);
+    setProcesses(processes);
 
-    const expects = await contract.methods.getProjectExpects(projectIndex).call()
-    setLoadingExpects(true)
-    setExpects(expects)
+    const expects = await contract.methods
+      .getProjectExpects(projectIndex)
+      .call();
+    setLoadingExpects(true);
+    setExpects(expects);
 
-    const outputs = await contract.methods.getProjectOutputs(projectIndex).call()
-    setLoadingOutputs(true)
-    setOutputs(outputs)
-
+    const outputs = await contract.methods
+      .getProjectOutputs(projectIndex)
+      .call();
+    setLoadingOutputs(true);
+    setOutputs(outputs);
 
     // 1. call api to get list of cameraIndex and startDate and endTime
-    const data = await PROJECT.getCameraIndexAndStartDateAndEndDate(projectIndex)
-    console.log("data: ", data)
+    const data = await PROJECT.getCameraIndexAndStartDateAndEndDate(
+      projectIndex
+    );
+    console.log("data: ", data);
     // 2. query in blockchain video by cameraIndex
     // assume cameraIndex = [0], startDate = 2022-01-01, endTime = 2025-01-02
-    const cameraIndex = data?.data?.metadata?.cameraIndex
+    const cameraIndex = data?.data?.metadata?.cameraIndex;
     // convert startDate and endTime to unix time stamp
-    let startDate = data?.data?.metadata?.startDate
-    let endTime = data?.data?.metadata?.endDate
+    let startDate = data?.data?.metadata?.startDate;
+    let endTime = data?.data?.metadata?.endDate;
 
-    console.log("camera index", cameraIndex)
-    console.log("time: ", typeof(startDate), endTime)
+    console.log("camera index", cameraIndex);
+    console.log("time: ", typeof startDate, endTime);
 
-    startDate = new Date(startDate).getTime() / 1000
-    endTime = new Date(endTime).getTime() / 1000
-    console.log("startDate: ", startDate)
-    console.log("end time: ", endTime)
+    startDate = new Date(startDate).getTime() / 1000;
+    endTime = new Date(endTime).getTime() / 1000;
+    console.log("startDate: ", startDate);
+    console.log("end time: ", endTime);
     // loop in cameraIndex and query
-    const videos = []
-    const connectionLoss = []
+    const videos = [];
+    const connectionLoss = [];
     for (let i = 0; i < cameraIndex.length; i++) {
-      const video = await videoContract.methods.getVideosByCamera(cameraIndex[i]).call()
-      console.log("video: ", video)
+      const video = await videoContract.methods
+        .getVideosByCamera(cameraIndex[i])
+        .call();
+      console.log("video: ", video);
 
       // loop in video and print date
-      video.forEach(item => console.log("date: ", Number(item.date)))
+      video.forEach((item) => console.log("date: ", Number(item.date)));
 
       // loop in video to get list of videoItem with date between startDate and endTime, remember to convert date from unix time stamp to date
-      const videoItem = video.filter(item => Number(item.date) >= startDate && Number(item.date) <= endTime)
+      const videoItem = video.filter(
+        (item) => Number(item.date) >= startDate && Number(item.date) <= endTime
+      );
 
-      videos.push(...videoItem)
-      const connection = await videoContract.methods.getConnectionLossByCamera(cameraIndex[i]).call()
+      videos.push(...videoItem);
+      const connection = await videoContract.methods
+        .getConnectionLossByCamera(cameraIndex[i])
+        .call();
 
-      
-      console.log("connection: ", connection)
+      console.log("connection: ", connection);
 
-      connection.forEach(item => console.log("date: ", Number(item.date)))
+      connection.forEach((item) => console.log("date: ", Number(item.date)));
 
-      const connectionItem = connection.filter(item => Number(item.date) >= startDate && Number(item.date) <= endTime)
-      connectionLoss.push(...connectionItem)
+      const connectionItem = connection.filter(
+        (item) => Number(item.date) >= startDate && Number(item.date) <= endTime
+      );
+      connectionLoss.push(...connectionItem);
     }
 
-    console.log("videos: ", videos)
-    console.log("connectionLoss: ", connectionLoss)
+    console.log("videos: ", videos);
+    console.log("connectionLoss: ", connectionLoss);
 
-    setVideos(videos)
-    setConnectionLoss(connectionLoss)
-    setLoadingVideos(true)
-    setLoadingConnectionLoss(true)
-    setLoading(false)
-
-  }
+    setVideos(videos);
+    setConnectionLoss(connectionLoss);
+    setLoadingVideos(true);
+    setLoadingConnectionLoss(true);
+    setLoading(false);
+  };
   return (
     <section className="">
       <section>
@@ -154,7 +172,10 @@ const SearchId = () => {
                 className="border-2 rounded-lg w-full h-12 px-4"
                 onChange={(e) => setProjectIndex(e.target.value)}
               />
-              <button className="bg-green-400 text-white rounded-md font-semibold px-4 py-3 w-full" onClick={handleQueryBlockchain}>
+              <button
+                className="bg-green-400 text-white rounded-md font-semibold px-4 py-3 w-full"
+                onClick={handleQueryBlockchain}
+              >
                 Tra cứu
               </button>
             </div>
@@ -166,12 +187,22 @@ const SearchId = () => {
           <>
             <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
               <AccordionHeader onClick={() => handleOpen(1)}>
-              Địa chỉ ví ghi lên Blockchain: {project ? project[0] : ""}
+                <div>
+                  <span>Địa chỉ ví ghi lên Blockchain:</span>
+                  <p className="text-base text-blue-500 mt-2">
+                    {project
+                      ? formatWalletAddress({ str: project[0], a: 8, b: 5 })
+                      : ""}
+                  </p>
+                </div>
               </AccordionHeader>
             </Accordion>
             <Accordion open={open === 2} icon={<Icon id={2} open={open} />}>
               <AccordionHeader onClick={() => handleOpen(2)}>
-                Id Nông trại: {project ? project[1] : ""}
+                <div>
+                  <span>Id Nông trại:</span>
+                  <p className="text-base mt-2">{project ? project[1] : ""}</p>
+                </div>
               </AccordionHeader>
             </Accordion>
             <Accordion open={open === 3} icon={<Icon id={3} open={open} />}>
@@ -179,80 +210,79 @@ const SearchId = () => {
                 Đầu vào
               </AccordionHeader>
               <AccordionBody>
-                {
-                  loadingProject && project ? 
+                {loadingProject && project ? (
                   <>
-                  {
-                  project['2'].map((input, index) => (
-                    <div key={index} className="bg-gray-100 overflow-hidden shadow rounded-lg border ">
-                      <div className="px-4 py-5 sm:px-6">
-                        <h3 className="text-lg leading-6 font-medium text-gray-900">
-                          Thông tin {index + 1}
-                        </h3>
-                        <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                          {input}
-                        </p>
+                    {project["2"].map((input, index) => (
+                      <div
+                        key={index}
+                        className="bg-gray-100 overflow-hidden shadow rounded-lg border mb-2"
+                      >
+                        <div className="px-4 py-5 sm:px-6">
+                          <h3 className="text-lg leading-6 font-medium text-gray-900">
+                            Thông tin {index + 1}
+                          </h3>
+                          <p className="mt-1 text-sm text-gray-500">{input}</p>
+                        </div>
                       </div>
-                      </div>
-                      ))
-                  }
-                  </> : <p>Chưa có thông tin</p>
-                }
+                    ))}
+                  </>
+                ) : (
+                  <p>Chưa có thông tin</p>
+                )}
               </AccordionBody>
             </Accordion>
             <Accordion open={open === 4} icon={<Icon id={4} open={open} />}>
               <AccordionHeader onClick={() => handleOpen(4)}>
                 Quá trình
               </AccordionHeader>
-                <AccordionBody>
-                { loadingProcesses && (processes || processes.length === 0)  ? 
-                <>
-                {
-                  processes.map((process, index) => (
-                    <div key={index} className="bg-gray-100 overflow-hidden shadow rounded-lg border ">
-                      <div className="px-4 py-5 sm:px-6">
-                        <h3 className="text-lg leading-6 font-medium text-gray-900">
-                          Thông tin {index + 1}
-                        </h3>
-                        <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                          {process}
-                        </p>
+              <AccordionBody>
+                {loadingProcesses && (processes || processes.length === 0) ? (
+                  <>
+                    {processes.map((process, index) => (
+                      <div
+                        key={index}
+                        className="bg-gray-100 overflow-hidden shadow rounded-lg border mb-2"
+                      >
+                        <div className="px-4 py-5 sm:px-6">
+                          <h3 className="text-lg leading-6 font-medium text-gray-900">
+                            Thông tin {index + 1}
+                          </h3>
+                          <p className="mt-1 text-sm text-gray-500">
+                            {process}
+                          </p>
+                        </div>
                       </div>
-                      </div>
-                      ))
-                  }
-                </> 
-                : <p>Chưa có thông tin</p>
-                  
-                }
+                    ))}
+                  </>
+                ) : (
+                  <p>Chưa có thông tin</p>
+                )}
               </AccordionBody>
-              
             </Accordion>
             <Accordion open={open === 5} icon={<Icon id={5} open={open} />}>
               <AccordionHeader onClick={() => handleOpen(5)}>
                 Dự đoán
               </AccordionHeader>
               <AccordionBody>
-                {
-                  loadingExpects && (expects || expects.length === 0)  ?
+                {loadingExpects && (expects || expects.length === 0) ? (
                   <>
-                  {
-                    expects.map((expect, index) => (
-                      <div key={index} className="bg-gray-100 overflow-hidden shadow rounded-lg border ">
+                    {expects.map((expect, index) => (
+                      <div
+                        key={index}
+                        className="bg-gray-100 overflow-hidden shadow rounded-lg border mb-2"
+                      >
                         <div className="px-4 py-5 sm:px-6">
                           <h3 className="text-lg leading-6 font-medium text-gray-900">
                             Thông tin {index + 1}
                           </h3>
-                          <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                            {expect}
-                          </p>
+                          <p className="mt-1 text-sm text-gray-500">{expect}</p>
                         </div>
                       </div>
-                    ))
-                  }
+                    ))}
                   </>
-                  : <p>Chưa có thông tin</p>
-                }
+                ) : (
+                  <p>Chưa có thông tin</p>
+                )}
               </AccordionBody>
             </Accordion>
             <Accordion open={open === 6} icon={<Icon id={6} open={open} />}>
@@ -260,24 +290,25 @@ const SearchId = () => {
                 Đầu ra
               </AccordionHeader>
               <AccordionBody>
-                { loadingOutputs && (outputs || outputs.length === 0)  ? 
-               <>
-                {
-                  outputs.map((output, index) => (
-                    <div key={index} className="bg-gray-100 overflow-hidden shadow rounded-lg border ">
-                      <div className="px-4 py-5 sm:px-6">
-                        <h3 className="text-lg leading-6 font-medium text-gray-900">
-                          Thông tin {index + 1}
-                        </h3>
-                        <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                          {output}
-                        </p>
+                {loadingOutputs && (outputs || outputs.length === 0) ? (
+                  <>
+                    {outputs.map((output, index) => (
+                      <div
+                        key={index}
+                        className="bg-gray-100 overflow-hidden shadow rounded-lg border mb-2"
+                      >
+                        <div className="px-4 py-5 sm:px-6">
+                          <h3 className="text-lg leading-6 font-medium text-gray-900">
+                            Thông tin {index + 1}
+                          </h3>
+                          <p className="mt-1 text-sm text-gray-500">{output}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))
-                }
-               </> : <p>Chưa có thông tin</p>
-                }
+                    ))}
+                  </>
+                ) : (
+                  <p>Chưa có thông tin</p>
+                )}
               </AccordionBody>
             </Accordion>
             <Accordion open={open === 7} icon={<Icon id={7} open={open} />}>
@@ -285,32 +316,32 @@ const SearchId = () => {
                 Hình ảnh và video
               </AccordionHeader>
               <AccordionBody>
-                {
-                  loadingVideos && (videos || videos.length === 0)  ? 
+                {loadingVideos && (videos || videos.length === 0) ? (
                   <>
-                  {
-                    videos.map((video, index) => (
-                      <div key={index} className="bg-gray-100 overflow-hidden shadow rounded-lg border ">
+                    {videos.map((video, index) => (
+                      <div
+                        key={index}
+                        className="bg-gray-100 overflow-hidden shadow rounded-lg border mb-2 "
+                      >
                         <div className="px-4 py-5 sm:px-6">
                           <h3 className="text-lg leading-6 font-medium text-gray-900">
-                          {new Date(Number(video.date) * 1000).toISOString()}
+                            {formatDateTime(
+                              new Date(Number(video.date) * 1000)
+                            )}
                           </h3>
-                          <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                          <p className="mt-1 text-sm text-gray-500">
                             <ul>
-                              <li>
-                                Video hash: {video.hash}
-                              </li>
-                              <li>
-                                Time description: {video.timeDesciption}
-                              </li>
+                              <li>Video hash: {video.hash}</li>
+                              <li>Time description: {video.timeDesciption}</li>
                             </ul>
                           </p>
                         </div>
                       </div>
-                    ))
-                  }
-                  </> : <p>Chưa có thông tin</p>
-                }
+                    ))}
+                  </>
+                ) : (
+                  <p>Chưa có thông tin</p>
+                )}
               </AccordionBody>
             </Accordion>
             <Accordion open={open === 8} icon={<Icon id={8} open={open} />}>
@@ -318,20 +349,25 @@ const SearchId = () => {
                 Kết nối
               </AccordionHeader>
               <AccordionBody>
-                {
-                  loadingConnectionLoss && (connectionLoss || connectionLoss.length === 0)  ? 
+                {loadingConnectionLoss &&
+                (connectionLoss || connectionLoss.length === 0) ? (
                   <>
-                  {
-                    connectionLoss.map((connection, index) => (
-                      <div key={index} className="bg-gray-100 overflow-hidden shadow rounded-lg border ">
+                    {connectionLoss.map((connection, index) => (
+                      <div
+                        key={index}
+                        className="bg-gray-100 overflow-hidden shadow rounded-lg border mb-2 "
+                      >
                         <div className="px-4 py-5 sm:px-6">
                           <h3 className="text-lg leading-6 font-medium text-gray-900">
-                          {new Date(Number(connection.date) * 1000).toISOString()}
+                            {formatDateTime(new Date(
+                              Number(connection.date) * 1000
+                            ))}
                           </h3>
-                          <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                          <p className="mt-1 text-sm text-gray-500">
                             <ul>
                               <li>
-                                Total loss per day (second): {Number(connection.totalLossPerDay)}
+                                Total loss per day (second):{" "}
+                                {Number(connection.totalLossPerDay)}
                               </li>
                               <li>
                                 Connection loss: {connection.connectionLoss}
@@ -340,18 +376,17 @@ const SearchId = () => {
                           </p>
                         </div>
                       </div>
-
-                    ))
-                } </> : <p>Chưa có thông tin</p>
-              }
+                    ))}{" "}
+                  </>
+                ) : (
+                  <p>Chưa có thông tin</p>
+                )}
               </AccordionBody>
             </Accordion>
           </>
         </section>
       )}
-      {
-        loading && <Spinner />
-      }
+      {loading && <Spinner />}
     </section>
   );
 };
