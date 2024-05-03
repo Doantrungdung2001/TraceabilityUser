@@ -15,6 +15,7 @@ import Avarta from "../Avarta/Avarta";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { useNavigate } from "react-router-dom";
+import { renderTypePlant } from "../../Utils/helpers";
 const MAX_DESCRIPTION_LENGTH = 100; // Số ký tự tối đa bạn muốn hiển thị
 
 const ListPlant = () => {
@@ -34,20 +35,6 @@ const ListPlant = () => {
     farmId,
   });
 
-  const renderPlantType = (type) => {
-    switch (type) {
-      case "herb":
-        return "Rau gia vị";
-      case "leafy":
-        return "Rau ăn lá";
-      case "root":
-        return "Củ";
-      case "fruit":
-        return "Quả";
-      default:
-        return type;
-    }
-  };
   return (
     <>
       <div data-aos="fade-up" className="mx-auto pt-20">
@@ -100,7 +87,7 @@ const ListPlant = () => {
                     <img
                       src={card.image}
                       alt="ui/ux review check"
-                      className="h-32"
+                      className="h-48"
                     />
                   </CardHeader>
                   <CardBody>
@@ -131,7 +118,7 @@ const ListPlant = () => {
                       Chi tiết
                     </Button>
                     <Typography className="font-normal">
-                      {renderPlantType(card.type)}
+                      {renderTypePlant(card.type)}
                     </Typography>
                   </CardFooter>
                 </Card>

@@ -34,7 +34,6 @@ const SliderButton = () => {
 };
 
 const Plant = ({ dataPlant }) => {
-  console.log(dataPlant);
   const navigate = useNavigate();
   return (
     <section data-aos="fade-up" className="r-wrapper">

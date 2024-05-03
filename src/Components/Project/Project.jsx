@@ -27,7 +27,6 @@ const SliderButton = () => {
 };
 
 const Project = ({ dataProject }) => {
-  console.log(dataProject);
   const navigate = useNavigate();
   return (
     <section data-aos="fade-up" className="r-wrapper">
