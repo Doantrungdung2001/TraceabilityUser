@@ -64,6 +64,18 @@ export function renderTypePestAndDisease(type) {
   }
 }
 
+export function renderTypePlant(type) {
+  switch (type) {
+    case "herb":
+      return "Rau gia vị";
+    case "leafy":
+      return "Rau ăn lá";
+    case "root":
+      return "Củ";
+    case "fruit":
+      return "Quả";
+  }
+}
 export function formatTransactionHashTable({ str, a, b }) {
   if (
     a < 0 ||

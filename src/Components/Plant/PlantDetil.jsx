@@ -222,7 +222,7 @@ const PlantDetil = () => {
                   </div>
                   {farmInfo?.email?.map((email) => (
                     <div className="mb-2 text-blue-500 mt-3">
-                      <i class="fas fa-mail-bulk mr-2 text-lg"></i>
+                      <i className="fas fa-mail-bulk mr-2 text-lg"></i>
                       <span>{email}</span>
                     </div>
                   ))}

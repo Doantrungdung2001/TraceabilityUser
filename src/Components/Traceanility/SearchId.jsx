@@ -184,12 +184,12 @@ const SearchId = () => {
                   <>
                   {
                   project['2'].map((input, index) => (
-                    <div key={index} class="bg-gray-100 overflow-hidden shadow rounded-lg border ">
-                      <div class="px-4 py-5 sm:px-6">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900">
+                    <div key={index} className="bg-gray-100 overflow-hidden shadow rounded-lg border ">
+                      <div className="px-4 py-5 sm:px-6">
+                        <h3 className="text-lg leading-6 font-medium text-gray-900">
                           Thông tin {index + 1}
                         </h3>
-                        <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                        <p className="mt-1 max-w-2xl text-sm text-gray-500">
                           {input}
                         </p>
                       </div>
@@ -209,12 +209,12 @@ const SearchId = () => {
                 <>
                 {
                   processes.map((process, index) => (
-                    <div key={index} class="bg-gray-100 overflow-hidden shadow rounded-lg border ">
-                      <div class="px-4 py-5 sm:px-6">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900">
+                    <div key={index} className="bg-gray-100 overflow-hidden shadow rounded-lg border ">
+                      <div className="px-4 py-5 sm:px-6">
+                        <h3 className="text-lg leading-6 font-medium text-gray-900">
                           Thông tin {index + 1}
                         </h3>
-                        <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                        <p className="mt-1 max-w-2xl text-sm text-gray-500">
                           {process}
                         </p>
                       </div>
@@ -238,12 +238,12 @@ const SearchId = () => {
                   <>
                   {
                     expects.map((expect, index) => (
-                      <div key={index} class="bg-gray-100 overflow-hidden shadow rounded-lg border ">
-                        <div class="px-4 py-5 sm:px-6">
-                          <h3 class="text-lg leading-6 font-medium text-gray-900">
+                      <div key={index} className="bg-gray-100 overflow-hidden shadow rounded-lg border ">
+                        <div className="px-4 py-5 sm:px-6">
+                          <h3 className="text-lg leading-6 font-medium text-gray-900">
                             Thông tin {index + 1}
                           </h3>
-                          <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                          <p className="mt-1 max-w-2xl text-sm text-gray-500">
                             {expect}
                           </p>
                         </div>
@@ -264,12 +264,12 @@ const SearchId = () => {
                <>
                 {
                   outputs.map((output, index) => (
-                    <div key={index} class="bg-gray-100 overflow-hidden shadow rounded-lg border ">
-                      <div class="px-4 py-5 sm:px-6">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900">
+                    <div key={index} className="bg-gray-100 overflow-hidden shadow rounded-lg border ">
+                      <div className="px-4 py-5 sm:px-6">
+                        <h3 className="text-lg leading-6 font-medium text-gray-900">
                           Thông tin {index + 1}
                         </h3>
-                        <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                        <p className="mt-1 max-w-2xl text-sm text-gray-500">
                           {output}
                         </p>
                       </div>
@@ -290,12 +290,12 @@ const SearchId = () => {
                   <>
                   {
                     videos.map((video, index) => (
-                      <div key={index} class="bg-gray-100 overflow-hidden shadow rounded-lg border ">
-                        <div class="px-4 py-5 sm:px-6">
-                          <h3 class="text-lg leading-6 font-medium text-gray-900">
+                      <div key={index} className="bg-gray-100 overflow-hidden shadow rounded-lg border ">
+                        <div className="px-4 py-5 sm:px-6">
+                          <h3 className="text-lg leading-6 font-medium text-gray-900">
                           {new Date(Number(video.date) * 1000).toISOString()}
                           </h3>
-                          <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                          <p className="mt-1 max-w-2xl text-sm text-gray-500">
                             <ul>
                               <li>
                                 Video hash: {video.hash}
@@ -323,12 +323,12 @@ const SearchId = () => {
                   <>
                   {
                     connectionLoss.map((connection, index) => (
-                      <div key={index} class="bg-gray-100 overflow-hidden shadow rounded-lg border ">
-                        <div class="px-4 py-5 sm:px-6">
-                          <h3 class="text-lg leading-6 font-medium text-gray-900">
+                      <div key={index} className="bg-gray-100 overflow-hidden shadow rounded-lg border ">
+                        <div className="px-4 py-5 sm:px-6">
+                          <h3 className="text-lg leading-6 font-medium text-gray-900">
                           {new Date(Number(connection.date) * 1000).toISOString()}
                           </h3>
-                          <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                          <p className="mt-1 max-w-2xl text-sm text-gray-500">
                             <ul>
                               <li>
                                 Total loss per day (second): {Number(connection.totalLossPerDay)}

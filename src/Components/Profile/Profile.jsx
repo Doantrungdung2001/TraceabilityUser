@@ -26,7 +26,6 @@ const ProfileFarm = () => {
   } = useProfile({
     farmId,
   });
-  console.log(allPlant)
   return (
     <>
       <div data-aos="fade-up" className="mx-auto pt-20">
@@ -46,7 +45,7 @@ const ProfileFarm = () => {
                 </div>
                 {farmInfo?.email?.map((email) => (
                   <div className="mb-2 text-blue-500 mt-3">
-                    <i class="fas fa-mail-bulk mr-2 text-lg"></i>
+                    <i className="fas fa-mail-bulk mr-2 text-lg"></i>
                     <span>{email}</span>
                   </div>
                 ))}
@@ -85,9 +84,6 @@ const ProfileFarm = () => {
                     <span className="bg-green-500 w-2 h-2 rounded-full mt-0.5 inline-block"></span>{" "}
                     Active
                   </span>
-                  {/* <button className="w-full gradient rounded-md text-white p-4 mt-4 hover:shadow-xl transition-all duration-200 ease-in">
-                Send a message
-              </button> */}
                 </div>
               </div>
             </div>
