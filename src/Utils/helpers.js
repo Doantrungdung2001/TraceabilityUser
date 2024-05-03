@@ -52,6 +52,10 @@ export function renderTypeFertilization(type) {
       return "Bón lót";
     case "topFertilizer":
       return "Bón thúc";
+    case "pest":
+      return "Sâu";
+    case "disease":
+      return "Bệnh";
   }
 }
 
@@ -83,7 +87,7 @@ export function renderTypeProcessProject(type) {
     case "finished":
       return "Hoàn thành";
     default:
-      return "Đã hủy"
+      return "Đã hủy";
   }
 }
 

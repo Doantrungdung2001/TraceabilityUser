@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Avarta from "../Avarta/Avarta";
-import {
-  formatDateTime,
-  formatTransactionHashTable,
-} from "../../Utils/helpers";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { useParams } from "react-router-dom";
@@ -21,7 +17,12 @@ import {
   Spinner,
 } from "@material-tailwind/react";
 import useProfile from "../Profile/useProfile";
-import { renderTypePlant } from "../../Utils/helpers";
+import {
+  renderTypePlant,
+  renderTypeFertilization,
+  renderTypePestAndDisease,
+} from "../../Utils/helpers";
+
 const PlantDetil = () => {
   const { farmId, plantId } = useParams();
   const { farmInfo, isSuccessFarmInfo, isLoadingFarmInfo } = useProfile({
@@ -63,6 +64,12 @@ const PlantDetil = () => {
       !openDialogPestAndDiseaseControlActivities
     );
 
+  const [dataFertilizationActivities, setDataFertilizationActivities] =
+    useState();
+  const [
+    dataPestAndDiseaseControlActivities,
+    setDataPestAndDiseaseControlActivities,
+  ] = useState();
   function Icon({ id, open }) {
     return (
       <svg
@@ -88,6 +95,7 @@ const PlantDetil = () => {
   }, []);
 
   function DialogDefault({ data, isOpen, handleClose }) {
+    console.log(data);
     return (
       <>
         <Dialog open={isOpen} handler={handleClose}>
@@ -100,7 +108,7 @@ const PlantDetil = () => {
                     <h4 className="text-lg font-semibold  text-gray-900 mb-2">
                       Tên hoạt động :
                     </h4>
-                    <p className="font-semibold text-gray-700 mb-4">
+                    <p className="font-semibold text-gray-600 mb-4 lg:text-base">
                       {data?.name}
                     </p>
                   </div>
@@ -108,20 +116,10 @@ const PlantDetil = () => {
                 {data?.density && (
                   <div className="max-w-screen-md text-xs">
                     <h4 className="text-lg font-semibold  text-gray-900 mb-2">
-                      Tỷ trọng :
+                      Mật độ :
                     </h4>
-                    <p className="font-semibold text-gray-700 mb-4">
+                    <p className="font-semibold text-gray-600 mb-4 lg:text-base">
                       {data?.density}
-                    </p>
-                  </div>
-                )}
-                {data?.description && (
-                  <div className="max-w-screen-md text-xs">
-                    <h4 className="text-lg font-semibold  text-gray-900 mb-2">
-                      Mô tả :
-                    </h4>
-                    <p className="font-semibold text-gray-700 mb-4">
-                      {data?.description}
                     </p>
                   </div>
                 )}
@@ -130,7 +128,7 @@ const PlantDetil = () => {
                     <h4 className="text-lg font-semibold  text-gray-900 mb-2">
                       Thời điểm :
                     </h4>
-                    <p className="font-semibold text-gray-700 mb-4">
+                    <p className="font-semibold text-gray-600 mb-4 lg:text-base">
                       {data?.fertilizationTime}
                     </p>
                   </div>
@@ -140,8 +138,9 @@ const PlantDetil = () => {
                     <h4 className="text-lg font-semibold  text-gray-900 mb-2">
                       Kiểu loại :
                     </h4>
-                    <p className="font-semibold text-gray-700 mb-4">
-                      {data?.type}
+                    <p className="font-semibold text-gray-600 mb-4 lg:text-base">
+                      {renderTypeFertilization(data.type)}
+                      {/* {renderTypePestAndDisease(data.type)} */}
                     </p>
                   </div>
                 )}
@@ -150,8 +149,18 @@ const PlantDetil = () => {
                     <h4 className="text-lg font-semibold  text-gray-900 mb-2">
                       Triệu chứng :
                     </h4>
-                    <p className="font-semibold text-gray-700 mb-4">
+                    <p className="font-semibold text-gray-600 lg:text-base mb-4">
                       {data?.symptoms}
+                    </p>
+                  </div>
+                )}
+                {data?.description && (
+                  <div className="max-w-screen-md text-xs">
+                    <h4 className="text-lg font-semibold  text-gray-900 mb-2">
+                      Mô tả :
+                    </h4>
+                    <p className="font-semibold text-gray-600 lg:text-base mb-4">
+                      {data?.description}
                     </p>
                   </div>
                 )}
@@ -162,7 +171,7 @@ const PlantDetil = () => {
                     </h4>
 
                     {data?.solution.map((solution, index) => (
-                      <p className="font-semibold text-gray-700 mb-4">
+                      <p className="font-semibold text-gray-600 mb-4 lg:text-base">
                         Giải pháp {index + 1} : {solution}
                       </p>
                     ))}
@@ -426,32 +435,32 @@ const PlantDetil = () => {
                               <section>
                                 {plantFarming.fertilizationActivities.map(
                                   (fertilizationActivities, index) => (
-                                    <>
+                                    <div key={index}>
                                       <Button
-                                        key={index}
                                         className="m-1"
                                         style={{ backgroundColor: "#A5DD9B" }}
                                         onClick={() => {
                                           handleOpenFertilizationActivities();
+                                          setDataFertilizationActivities(
+                                            fertilizationActivities
+                                          );
                                         }}
                                       >
                                         {
                                           fertilizationActivities.fertilizationTime
                                         }
                                       </Button>
-                                      {openDialogFertilizationActivities && (
-                                        <DialogDefault
-                                          data={fertilizationActivities}
-                                          isOpen={
-                                            openDialogFertilizationActivities
-                                          }
-                                          handleClose={
-                                            handleOpenFertilizationActivities
-                                          }
-                                        />
-                                      )}
-                                    </>
+                                    </div>
                                   )
+                                )}
+                                {openDialogFertilizationActivities && (
+                                  <DialogDefault
+                                    data={dataFertilizationActivities}
+                                    isOpen={openDialogFertilizationActivities}
+                                    handleClose={
+                                      handleOpenFertilizationActivities
+                                    }
+                                  />
                                 )}
                               </section>
                             </AccordionBody>
@@ -480,23 +489,26 @@ const PlantDetil = () => {
                                         style={{ backgroundColor: "#A5DD9B" }}
                                         onClick={() => {
                                           handleOpenPestAndDiseaseControlActivities();
+                                          setDataPestAndDiseaseControlActivities(
+                                            pestAndDiseaseControlActivities
+                                          );
                                         }}
                                       >
                                         {pestAndDiseaseControlActivities.name}
                                       </Button>
-                                      {openDialogPestAndDiseaseControlActivities && (
-                                        <DialogDefault
-                                          data={pestAndDiseaseControlActivities}
-                                          isOpen={
-                                            openDialogPestAndDiseaseControlActivities
-                                          }
-                                          handleClose={
-                                            handleOpenPestAndDiseaseControlActivities
-                                          }
-                                        />
-                                      )}
                                     </>
                                   )
+                                )}
+                                {openDialogPestAndDiseaseControlActivities && (
+                                  <DialogDefault
+                                    data={dataPestAndDiseaseControlActivities}
+                                    isOpen={
+                                      openDialogPestAndDiseaseControlActivities
+                                    }
+                                    handleClose={
+                                      handleOpenPestAndDiseaseControlActivities
+                                    }
+                                  />
                                 )}
                               </section>
                             </AccordionBody>
