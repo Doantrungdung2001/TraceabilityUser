@@ -189,9 +189,37 @@ export default function useInformation({ projectId }) {
       return timeA - timeB;
     });
 
+    // Mảng ban đầu chứa các đối tượng ObjectDetection
     const nonProcessObjectDetection = data?.nonProcessObjectDetection;
 
-    return { dataProcess, nonProcessObjectDetection };
+    // Tạo một đối tượng Map để nhóm các ObjectDetection theo ngày
+    const groupedByDate = new Map();
+
+    // Lặp qua từng ObjectDetection
+    nonProcessObjectDetection.forEach((objectDetection) => {
+      // Lấy ra ngày của start_time
+      const date = new Date(objectDetection.start_time).toLocaleDateString();
+
+      // Kiểm tra xem đã có một phần tử trong Map cho ngày này chưa
+      if (groupedByDate.has(date)) {
+        // Nếu đã có, thêm ObjectDetection vào mảng của ngày đó
+        groupedByDate.get(date).objectDetections.push(objectDetection);
+      } else {
+        // Nếu chưa có, tạo một phần tử mới và thêm vào Map
+        groupedByDate.set(date, {
+          date: date,
+          objectDetections: [objectDetection],
+        });
+      }
+    });
+
+    // Chuyển Map thành mảng để thuận tiện cho việc sử dụng
+    const formatedNonProcessObjectDetectionewArray = [...groupedByDate.values()];
+
+    // In ra mảng mới
+    console.log(formatedNonProcessObjectDetectionewArray);
+
+    return { dataProcess, formatedNonProcessObjectDetectionewArray };
   }, []);
 
   const {
@@ -323,7 +351,7 @@ export default function useInformation({ projectId }) {
     isSuccessProjectInfo,
     isLoadingProjectInfo,
     dataProcess: dataProcess?.dataProcess,
-    nonProcessObjectDetection: dataProcess?.nonProcessObjectDetection,
+    nonProcessObjectDetection: dataProcess?.formatedNonProcessObjectDetectionewArray,
     isSuccessProcess,
     isLoadingProcess,
     dataExpect: dataExpect?.expect,

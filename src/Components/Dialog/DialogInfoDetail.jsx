@@ -65,7 +65,7 @@ const DialogInfoDetail = ({ dataDetailInfo }) => {
           <div>
             <div className="max-w-screen-md text-xs mt-4 border-b pb-2">
               <h3 className="lg:text-lg text-base font-semibold text-gray-900">
-                Tần suất
+                Thời điểm bón
               </h3>
               <p className="lg:text-base mt-1 font-medium text-gray-700">
                 {dataDetailInfo.fertilizationActivity.fertilizationTime}

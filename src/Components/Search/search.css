@@ -72,7 +72,6 @@
     }
 
     .searchDiv {
-      /* width: 70%; */
       position: relative;
       padding: 2rem;
       background-color: var(--whiteColor);

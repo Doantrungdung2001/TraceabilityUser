@@ -7,8 +7,9 @@ import Project from "../Project/Project";
 import Avarta from "../Avarta/Avarta";
 import Aos from "aos";
 import "aos/dist/aos.css";
-
+import { useNavigate } from "react-router-dom";
 const ProfileFarm = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     Aos.init({ duration: 2000 });
   }, []);
@@ -26,15 +27,17 @@ const ProfileFarm = () => {
   } = useProfile({
     farmId,
   });
-  console.log(allPlant)
+  if (isSuccessFarmInfo && !farmInfo.id) {
+    navigate("/404-notfound");
+  }
   return (
     <>
       <div data-aos="fade-up" className="mx-auto pt-20">
-        {isSuccessFarmInfo && <Avarta data={farmInfo.images} />}
+        {isSuccessFarmInfo && farmInfo.id && <Avarta data={farmInfo.images} />}
         {isLoadingFarmInfo && <Spinner />}
 
         <section data-aos="fade-up" className="relative py-8 bg-blueGray-200">
-          {isSuccessFarmInfo && (
+          {isSuccessFarmInfo && farmInfo.id && (
             <div className="container mx-auto px-4">
               <div className="text-center mt-1">
                 <h3 className="text-4xl font-semibold leading-normal text-blueGray-700 mb-1">
@@ -46,7 +49,7 @@ const ProfileFarm = () => {
                 </div>
                 {farmInfo?.email?.map((email) => (
                   <div className="mb-2 text-blue-500 mt-3">
-                    <i class="fas fa-mail-bulk mr-2 text-lg"></i>
+                    <i className="fas fa-mail-bulk mr-2 text-lg"></i>
                     <span>{email}</span>
                   </div>
                 ))}
@@ -63,7 +66,7 @@ const ProfileFarm = () => {
         </section>
 
         <section>
-          {isSuccessFarmInfo && (
+          {isSuccessFarmInfo && farmInfo.id && (
             <div
               data-aos="fade-up"
               className="bg-[#f3f6ff] flex justify-center items-center min-h-screen"
@@ -81,13 +84,17 @@ const ProfileFarm = () => {
                     className="w-[40%] rounded-full mt-7"
                   />
                   <p className="mt-3 font-semibold text-lg">{farmInfo.name}</p>
-                  <span className="text-slate-500 rounded-xl border-slate-100 text-sm mt-2 pl-3 pr-3 border-[1px]">
-                    <span className="bg-green-500 w-2 h-2 rounded-full mt-0.5 inline-block"></span>{" "}
-                    Active
-                  </span>
-                  {/* <button className="w-full gradient rounded-md text-white p-4 mt-4 hover:shadow-xl transition-all duration-200 ease-in">
-                Send a message
-              </button> */}
+                  {farmInfo.status === "active" ? (
+                    <span className="text-slate-500 rounded-xl border-slate-100 text-sm mt-2 pl-3 pr-3 border-[1px]">
+                      <span className="bg-green-500 w-2 h-2 rounded-full mt-0.5 inline-block"></span>{" "}
+                      Đang hoạt động
+                    </span>
+                  ) : (
+                    <span className="text-slate-500 rounded-xl border-slate-100 text-sm mt-2 pl-3 pr-3 border-[1px]">
+                      <span className="bg-red-500 w-2 h-2 rounded-full mt-0.5 inline-block"></span>{" "}
+                      Dừng hoạt động
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -95,7 +102,7 @@ const ProfileFarm = () => {
           {isLoadingFarmInfo && <Spinner />}
         </section>
       </div>
-      
+
       {isSuccessPlant && <Plant dataPlant={allPlant} />}
       {isLoadingPlant && <Spinner />}
 

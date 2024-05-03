@@ -38,14 +38,14 @@ const TableOutput = ({ dataInfoOutput }) => {
               </dd>
             </div>
             <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-700">Số lượng</dt>
+              <dt className="text-sm font-medium text-gray-700">Sản lượng (kg)</dt>
               <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
                 {dataInfoOutput.amount}
               </dd>
             </div>
             <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-700">
-                Số lượng/1 sản phẩm
+                Sản lượng/1 sản phẩm (kg)
               </dt>
               <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
                 {dataInfoOutput.amountPerOne}

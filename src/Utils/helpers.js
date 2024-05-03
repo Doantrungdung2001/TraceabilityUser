@@ -52,6 +52,10 @@ export function renderTypeFertilization(type) {
       return "Bón lót";
     case "topFertilizer":
       return "Bón thúc";
+    case "pest":
+      return "Sâu";
+    case "disease":
+      return "Bệnh";
   }
 }
 
@@ -61,6 +65,29 @@ export function renderTypePestAndDisease(type) {
       return "Sâu";
     case "disease":
       return "Bệnh";
+  }
+}
+
+export function renderTypePlant(type) {
+  switch (type) {
+    case "herb":
+      return "Rau gia vị";
+    case "leafy":
+      return "Rau ăn lá";
+    case "root":
+      return "Củ";
+    case "fruit":
+      return "Quả";
+  }
+}
+export function renderTypeProcessProject(type) {
+  switch (type) {
+    case "inProgress":
+      return "Đang thực hiện";
+    case "finished":
+      return "Hoàn thành";
+    default:
+      return "Đã hủy";
   }
 }
 
@@ -79,6 +106,42 @@ export function formatTransactionHashTable({ str, a, b }) {
   const formatedFormatTransactionHash = prefix + "..." + suffix;
   return (
     <a href={`https://escan.live/tx/${str}`} target="_blank" rel="noreferrer">
+      {formatedFormatTransactionHash}
+    </a>
+  );
+}
+
+export function formatLongText({ str, a, b }) {
+  if (
+    a < 0 ||
+    b < 0 ||
+    a >= str.length ||
+    b >= str.length ||
+    a + b > str.length
+  ) {
+    return "Invalid input";
+  }
+  const prefix = str.slice(0, a);
+  const suffix = str.slice(-b);
+  const formatedFormatTransactionHash = prefix + "..." + suffix;
+  return <span>{formatedFormatTransactionHash}</span>;
+}
+
+export function formatWalletAddress({ str, a, b }) {
+  if (
+    a < 0 ||
+    b < 0 ||
+    a >= str.length ||
+    b >= str.length ||
+    a + b > str.length
+  ) {
+    return "Invalid input";
+  }
+  const prefix = str.slice(0, a);
+  const suffix = str.slice(-b);
+  const formatedFormatTransactionHash = prefix + "..." + suffix;
+  return (
+    <a href={`https://escan.live/address/${str}`} target="_blank" rel="noreferrer">
       {formatedFormatTransactionHash}
     </a>
   );

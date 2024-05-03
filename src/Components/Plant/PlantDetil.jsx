@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Avarta from "../Avarta/Avarta";
-import {
-  formatDateTime,
-  formatTransactionHashTable,
-} from "../../Utils/helpers";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { useParams } from "react-router-dom";
@@ -19,9 +15,13 @@ import {
   DialogFooter,
   Button,
   Spinner,
-  Typography,
 } from "@material-tailwind/react";
 import useProfile from "../Profile/useProfile";
+import {
+  renderTypePlant,
+  renderTypeFertilization,
+  renderTypePestAndDisease,
+} from "../../Utils/helpers";
 
 const PlantDetil = () => {
   const { farmId, plantId } = useParams();
@@ -63,20 +63,13 @@ const PlantDetil = () => {
     setOpenDialogPestAndDiseaseControlActivities(
       !openDialogPestAndDiseaseControlActivities
     );
-  const renderPlantType = (type) => {
-    switch (type) {
-      case "herb":
-        return "Rau gia vị";
-      case "leafy":
-        return "Rau ăn lá";
-      case "root":
-        return "Củ";
-      case "fruit":
-        return "Quả";
-      default:
-        return type;
-    }
-  };
+
+  const [dataFertilizationActivities, setDataFertilizationActivities] =
+    useState();
+  const [
+    dataPestAndDiseaseControlActivities,
+    setDataPestAndDiseaseControlActivities,
+  ] = useState();
   function Icon({ id, open }) {
     return (
       <svg
@@ -102,8 +95,7 @@ const PlantDetil = () => {
   }, []);
 
   function DialogDefault({ data, isOpen, handleClose }) {
-    console.log("data", data);
-    console.log("isOpen", isOpen);
+    console.log(data);
     return (
       <>
         <Dialog open={isOpen} handler={handleClose}>
@@ -116,7 +108,7 @@ const PlantDetil = () => {
                     <h4 className="text-lg font-semibold  text-gray-900 mb-2">
                       Tên hoạt động :
                     </h4>
-                    <p className="font-semibold text-gray-700 mb-4">
+                    <p className="font-semibold text-gray-600 mb-4 lg:text-base">
                       {data?.name}
                     </p>
                   </div>
@@ -124,20 +116,10 @@ const PlantDetil = () => {
                 {data?.density && (
                   <div className="max-w-screen-md text-xs">
                     <h4 className="text-lg font-semibold  text-gray-900 mb-2">
-                      Tỷ trọng :
+                      Mật độ :
                     </h4>
-                    <p className="font-semibold text-gray-700 mb-4">
+                    <p className="font-semibold text-gray-600 mb-4 lg:text-base">
                       {data?.density}
-                    </p>
-                  </div>
-                )}
-                {data?.description && (
-                  <div className="max-w-screen-md text-xs">
-                    <h4 className="text-lg font-semibold  text-gray-900 mb-2">
-                      Mô tả :
-                    </h4>
-                    <p className="font-semibold text-gray-700 mb-4">
-                      {data?.description}
                     </p>
                   </div>
                 )}
@@ -146,7 +128,7 @@ const PlantDetil = () => {
                     <h4 className="text-lg font-semibold  text-gray-900 mb-2">
                       Thời điểm :
                     </h4>
-                    <p className="font-semibold text-gray-700 mb-4">
+                    <p className="font-semibold text-gray-600 mb-4 lg:text-base">
                       {data?.fertilizationTime}
                     </p>
                   </div>
@@ -156,8 +138,9 @@ const PlantDetil = () => {
                     <h4 className="text-lg font-semibold  text-gray-900 mb-2">
                       Kiểu loại :
                     </h4>
-                    <p className="font-semibold text-gray-700 mb-4">
-                      {data?.type}
+                    <p className="font-semibold text-gray-600 mb-4 lg:text-base">
+                      {renderTypeFertilization(data.type)}
+                      {/* {renderTypePestAndDisease(data.type)} */}
                     </p>
                   </div>
                 )}
@@ -166,8 +149,18 @@ const PlantDetil = () => {
                     <h4 className="text-lg font-semibold  text-gray-900 mb-2">
                       Triệu chứng :
                     </h4>
-                    <p className="font-semibold text-gray-700 mb-4">
+                    <p className="font-semibold text-gray-600 lg:text-base mb-4">
                       {data?.symptoms}
+                    </p>
+                  </div>
+                )}
+                {data?.description && (
+                  <div className="max-w-screen-md text-xs">
+                    <h4 className="text-lg font-semibold  text-gray-900 mb-2">
+                      Mô tả :
+                    </h4>
+                    <p className="font-semibold text-gray-600 lg:text-base mb-4">
+                      {data?.description}
                     </p>
                   </div>
                 )}
@@ -178,7 +171,9 @@ const PlantDetil = () => {
                     </h4>
 
                     {data?.solution.map((solution, index) => (
-                      <p className="font-semibold text-gray-700 mb-4">Giải pháp {index + 1} : {solution}</p>
+                      <p className="font-semibold text-gray-600 mb-4 lg:text-base">
+                        Giải pháp {index + 1} : {solution}
+                      </p>
                     ))}
                   </div>
                 )}
@@ -222,7 +217,7 @@ const PlantDetil = () => {
                   </div>
                   {farmInfo?.email?.map((email) => (
                     <div className="mb-2 text-blue-500 mt-3">
-                      <i class="fas fa-mail-bulk mr-2 text-lg"></i>
+                      <i className="fas fa-mail-bulk mr-2 text-lg"></i>
                       <span>{email}</span>
                     </div>
                   ))}
@@ -243,7 +238,7 @@ const PlantDetil = () => {
             <section className="mb-5">
               <div className="container mx-auto my-5 px-2 sm:px-0">
                 <div className="md:flex md:flex-wrap">
-                  <div className="w-full md:w-3/12 md:pr-2">
+                  <div className="w-full md:pr-2">
                     <div className="bg-white p-3 border-t-4 border-green-400">
                       <div className="image overflow-hidden">
                         <img
@@ -255,106 +250,34 @@ const PlantDetil = () => {
                       <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
                         Thông tin chung
                       </h1>
-                      <h3 className="text-gray-900 font-bold text-semibold leading-7">
+                      <h3 className="text-gray-900 font-bold text-semibold leading-7 text-xl">
                         {dataPlantFarm[0].plant.plant_name}
                       </h3>
-                      <p className="text-sm text-gray-600 hover:text-gray-600 leading-6">
+                      <p className="text-base text-gray-600 hover:text-gray-600 leading-6">
                         {dataPlantFarm[0].plant.plant_description}
                       </p>
-                      <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
-                        <li className="flex items-center py-3">
+                      <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3  rounded shadow-sm">
+                        <li className="flex items-center py-3 lg:text-xl text-base">
                           <span>Phân loại</span>
                           <span className="ml-auto">
-                            <span className="bg-green-500 py-1 px-2 rounded text-white text-sm">
-                              {renderPlantType(
+                            <span className="bg-green-500 py-1 px-2 rounded text-white text-base lg:text-xl">
+                              {renderTypePlant(
                                 dataPlantFarm[0].plant.plant_type
                               )}
                             </span>
                           </span>
                         </li>
-                        {/* <li className="flex items-center py-3">
-                          <span>Ngày bắt đầu</span>
-                          <span className="ml-auto">
-                            {formatDateTime(dataPlantFarm[0].createdAtTime)}
-                          </span>
-                        </li> */}
                       </ul>
                     </div>
-                    <div className="my-4"></div>
-                  </div>
-                  <div className="w-full md:w-9/12 md:pl-2">
-                    <div className="bg-white p-3 shadow-sm rounded-sm">
-                      <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-                        <span className="text-green-500">
-                          <svg
-                            className="h-5"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                            />
-                          </svg>
-                        </span>
-                        <span className="tracking-wide">Thông tin</span>
-                      </div>
-                      <div className="text-gray-700">
-                        <div className="grid md:grid-cols-2 text-sm">
-                          <div className="grid grid-cols-2">
-                            <div className="px-4 py-2 font-semibold">
-                              Tên dự án
-                            </div>
-                            <div className="px-4 py-2">
-                              {dataPlantFarm[0].plant.plant_name}
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2">
-                            <div className="px-4 py-2 font-semibold">
-                              Phân loại
-                            </div>
-                            <div className="px-4 py-2">
-                              {renderPlantType(
-                                dataPlantFarm[0].plant.plant_type
-                              )}
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2">
-                            <div className="px-4 py-2 font-semibold">
-                              Hạt giống
-                            </div>
-                            <div className="px-4 py-2">
-                              {dataPlantFarm.map((seedPlant) => (
-                                <span>
-                                  <p></p>
-                                  {seedPlant.seed.seed_name}{" "}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2">
-                            <div className="px-4 py-2 font-semibold">Mô tả</div>
-                            <div className="px-4 py-2">
-                              {dataPlantFarm[0].plant.plant_description}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <button className="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
-                        Xem chi tiết dưới đây
-                      </button>
-                    </div>
-
                     <div className="my-4"></div>
                   </div>
                 </div>
               </div>
             </section>
-            <section className="m-3 px-5 rounded-2xl bg-white">
+            <div className="text-green-500 font-bold text-2xl m-5 lg:ml-20 lg:mr-20">
+              Danh sách các hạt giống{" "}
+            </div>
+            <section className="m-3 px-5 rounded-2xl bg-white lg:ml-20 lg:mr-20">
               {dataPlantFarm.map((plantFarming, index) => (
                 <>
                   <Accordion
@@ -384,7 +307,7 @@ const PlantDetil = () => {
                             <AccordionBody className="pt-0 text-base font-normal">
                               <section>
                                 <div className="grid md:grid-cols-2 text-sm">
-                                  <div className="grid grid-cols-2">
+                                  <div className="grid grid-cols-2 lg:text-base">
                                     <div className="px-4 py-2 font-semibold">
                                       Số hiệu
                                     </div>
@@ -392,7 +315,7 @@ const PlantDetil = () => {
                                       {plantFarming.id}
                                     </div>
                                   </div>
-                                  <div className="grid grid-cols-2">
+                                  <div className="grid grid-cols-2 lg:text-base">
                                     <div className="px-4 py-2 font-semibold">
                                       Tên
                                     </div>
@@ -400,18 +323,8 @@ const PlantDetil = () => {
                                       {plantFarming.seed.seed_name}
                                     </div>
                                   </div>
-                                  <div className="grid grid-cols-2">
-                                    <div className="px-4 py-2 font-semibold">
-                                      Hình ảnh
-                                    </div>
-                                    <a
-                                      href={plantFarming.seed.seed_thumb}
-                                      className="px-4 py-2 text-blue-900"
-                                    >
-                                      Tại đây
-                                    </a>
-                                  </div>
-                                  <div className="grid grid-cols-2">
+
+                                  <div className="grid grid-cols-2 lg:text-base">
                                     <div className="px-4 py-2 font-semibold">
                                       Mô tả
                                     </div>
@@ -471,7 +384,7 @@ const PlantDetil = () => {
                           </Accordion>
                           <Accordion
                             open={openPlantFarming === 3}
-                            className="rounded-lg border border-blue-gray-100 px-4"
+                            className="mb-2 rounded-lg border border-blue-gray-100 px-4"
                           >
                             <AccordionHeader
                               onClick={() => handleOpenPlantFarming(3)}
@@ -506,7 +419,7 @@ const PlantDetil = () => {
                           </Accordion>
                           <Accordion
                             open={openPlantFarming === 4}
-                            className="rounded-lg border border-blue-gray-100 px-4"
+                            className="mb-2 rounded-lg border border-blue-gray-100 px-4"
                           >
                             <AccordionHeader
                               onClick={() => handleOpenPlantFarming(4)}
@@ -522,39 +435,39 @@ const PlantDetil = () => {
                               <section>
                                 {plantFarming.fertilizationActivities.map(
                                   (fertilizationActivities, index) => (
-                                    <>
+                                    <div key={index}>
                                       <Button
-                                        key={index}
                                         className="m-1"
                                         style={{ backgroundColor: "#A5DD9B" }}
                                         onClick={() => {
                                           handleOpenFertilizationActivities();
+                                          setDataFertilizationActivities(
+                                            fertilizationActivities
+                                          );
                                         }}
                                       >
                                         {
                                           fertilizationActivities.fertilizationTime
                                         }
                                       </Button>
-                                      {openDialogFertilizationActivities && (
-                                        <DialogDefault
-                                          data={fertilizationActivities}
-                                          isOpen={
-                                            openDialogFertilizationActivities
-                                          }
-                                          handleClose={
-                                            handleOpenFertilizationActivities
-                                          }
-                                        />
-                                      )}
-                                    </>
+                                    </div>
                                   )
+                                )}
+                                {openDialogFertilizationActivities && (
+                                  <DialogDefault
+                                    data={dataFertilizationActivities}
+                                    isOpen={openDialogFertilizationActivities}
+                                    handleClose={
+                                      handleOpenFertilizationActivities
+                                    }
+                                  />
                                 )}
                               </section>
                             </AccordionBody>
                           </Accordion>
                           <Accordion
                             open={openPlantFarming === 5}
-                            className="rounded-lg border border-blue-gray-100 px-4"
+                            className="mb-2 rounded-lg border border-blue-gray-100 px-4"
                           >
                             <AccordionHeader
                               onClick={() => handleOpenPlantFarming(5)}
@@ -576,23 +489,26 @@ const PlantDetil = () => {
                                         style={{ backgroundColor: "#A5DD9B" }}
                                         onClick={() => {
                                           handleOpenPestAndDiseaseControlActivities();
+                                          setDataPestAndDiseaseControlActivities(
+                                            pestAndDiseaseControlActivities
+                                          );
                                         }}
                                       >
                                         {pestAndDiseaseControlActivities.name}
                                       </Button>
-                                      {openDialogPestAndDiseaseControlActivities && (
-                                        <DialogDefault
-                                          data={pestAndDiseaseControlActivities}
-                                          isOpen={
-                                            openDialogPestAndDiseaseControlActivities
-                                          }
-                                          handleClose={
-                                            handleOpenPestAndDiseaseControlActivities
-                                          }
-                                        />
-                                      )}
                                     </>
                                   )
+                                )}
+                                {openDialogPestAndDiseaseControlActivities && (
+                                  <DialogDefault
+                                    data={dataPestAndDiseaseControlActivities}
+                                    isOpen={
+                                      openDialogPestAndDiseaseControlActivities
+                                    }
+                                    handleClose={
+                                      handleOpenPestAndDiseaseControlActivities
+                                    }
+                                  />
                                 )}
                               </section>
                             </AccordionBody>
