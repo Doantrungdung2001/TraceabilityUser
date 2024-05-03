@@ -329,7 +329,8 @@ const SearchTransactionHash = () => {
   const getTransactionInfo = async () => {
     try {
       setLoading(true);
-      const web3 = new Web3('https://evmos-pokt.nodies.app');
+      const jsonRpcURL = process.env.REACT_APP_jsonRpcURL || "https://evmos-pokt.nodies.app"; 
+      const web3 = new Web3(jsonRpcURL);
       const transaction = await web3.eth.getTransaction(transactionHash);
       
       
