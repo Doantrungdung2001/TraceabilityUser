@@ -21,7 +21,7 @@ const Avarta = ({ data }) => {
           )}
         >
           {data?.map((url, index) => (
-            <img key={index} src={url} className="object-cover h-48" />
+            <img key={index} src={url} className="object-cover max-h-96 " />
           ))}
         </Carousel>
       </div>

@@ -35,5 +35,5 @@ export const NormalRoutes = [
   { path: "/search/index", element: <Index /> },
   { path: "/news", element: <New /> },
   { path: "/about-us", element: <About /> },
-  { path: "/404-notfound", element: <NotFound /> },
+  { path: "*", element: <NotFound /> },
 ];
