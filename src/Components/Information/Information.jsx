@@ -9,12 +9,8 @@ import {
   AccordionBody,
 } from "@material-tailwind/react";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useInformation from "./useInformation";
-import {
-  formatDateTime,
-  formatTransactionHashTable,
-} from "../../Utils/helpers";
 import Calendar from "../Calendar/Calendar";
 import Tables from "../Tables/Tables";
 import DeleteProcess from "../Process/DeleteProcess";
@@ -48,6 +44,7 @@ function Icon({ id, open }) {
 }
 
 const Information = () => {
+  const navigate = useNavigate();
   const projectId = useParams().projectId;
   useEffect(() => {
     Aos.init({ duration: 2000 });
@@ -87,6 +84,9 @@ const Information = () => {
   const handleOpenDeleteProcess = (value) =>
     setOpenDeleteProcess(openDeleteProcess === value ? 0 : value);
 
+  if (isSuccessProjectInfo && !projectInfo.id) {
+    navigate("/404-notfound");
+  }
   return (
     <section className="information">
       <div data-aos="fade-up" className="r-title">
@@ -95,7 +95,7 @@ const Information = () => {
 
       <section className="content">
         <section className="infor">
-          {isSuccessProjectInfo && (
+          {isSuccessProjectInfo && projectInfo.id && (
             <InformationOverview
               dataImage={ImageProduct}
               allDistributerWithAmount={allDistributerWithAmount}
@@ -107,7 +107,9 @@ const Information = () => {
           {isLoadingProjectInfo && <Spinner />}
         </section>
         <section className="timeline">
-          {isSuccessProcess && <ProcessInformation processInfo={dataProcess} />}
+          {isSuccessProcess && dataProcess && (
+            <ProcessInformation processInfo={dataProcess} />
+          )}
           {isLoadingProcess && <Spinner />}
         </section>
       </section>
@@ -152,7 +154,9 @@ const Information = () => {
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
               <section>
-                {isSuccessExpect && <Tables infoData={dataExpect} />}
+                {isSuccessExpect && dataExpect && (
+                  <Tables infoData={dataExpect} />
+                )}
                 {isLoadingExpect && <Spinner />}
               </section>
             </AccordionBody>
@@ -170,7 +174,7 @@ const Information = () => {
               Quy trình mẫu
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
-              {isSuccessPlantFarming && (
+              {isSuccessPlantFarming && dataPlantFarming && (
                 <section>
                   <SampleProcess dataDetailSmapleProces={dataPlantFarming} />
                 </section>
@@ -192,7 +196,9 @@ const Information = () => {
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
               <section>
-                {isSuccessOutput && <AccordionOutput dataAccordion={Output} />}
+                {isSuccessOutput && Output && (
+                  <AccordionOutput dataAccordion={Output} />
+                )}
                 {isLoadingOutput && <Spinner />}
               </section>
             </AccordionBody>
@@ -230,7 +236,7 @@ const Information = () => {
               Các chứng nhận
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
-              {isSuccessCertificateImages && (
+              {isSuccessCertificateImages && dataCertificateImages && (
                 <Certificates
                   dataPicture={dataCertificateImages}
                   isSuccessCertificateImages={isSuccessCertificateImages}
@@ -253,7 +259,7 @@ const Information = () => {
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
               <section className="px-1">
-                {isSuccessDeleteProcess && (
+                {isSuccessDeleteProcess && dataDeleteProcess && (
                   <>
                     <Accordion
                       open={openDeleteProcess === 1}

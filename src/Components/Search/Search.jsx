@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Alert } from "@material-tailwind/react";
 import "./search.css";
 import video from "../../Assets/Video/video1.mp4";
 import Aos from "aos";
@@ -13,7 +12,6 @@ const Search = () => {
   const handleChange = (event) => {
     setInputData(event.target.value);
   };
-  // Create a react hook to add aa scroll animation
   useEffect(() => {
     Aos.init({ duration: 2000 });
   }, []);

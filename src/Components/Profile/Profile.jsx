@@ -7,8 +7,9 @@ import Project from "../Project/Project";
 import Avarta from "../Avarta/Avarta";
 import Aos from "aos";
 import "aos/dist/aos.css";
-
+import { useNavigate } from "react-router-dom";
 const ProfileFarm = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     Aos.init({ duration: 2000 });
   }, []);
@@ -26,14 +27,17 @@ const ProfileFarm = () => {
   } = useProfile({
     farmId,
   });
+  if (isSuccessFarmInfo && !farmInfo.id) {
+    navigate("/404-notfound");
+  }
   return (
     <>
       <div data-aos="fade-up" className="mx-auto pt-20">
-        {isSuccessFarmInfo && <Avarta data={farmInfo.images} />}
+        {isSuccessFarmInfo && farmInfo.id && <Avarta data={farmInfo.images} />}
         {isLoadingFarmInfo && <Spinner />}
 
         <section data-aos="fade-up" className="relative py-8 bg-blueGray-200">
-          {isSuccessFarmInfo && (
+          {isSuccessFarmInfo && farmInfo.id && (
             <div className="container mx-auto px-4">
               <div className="text-center mt-1">
                 <h3 className="text-4xl font-semibold leading-normal text-blueGray-700 mb-1">
@@ -62,7 +66,7 @@ const ProfileFarm = () => {
         </section>
 
         <section>
-          {isSuccessFarmInfo && (
+          {isSuccessFarmInfo && farmInfo.id && (
             <div
               data-aos="fade-up"
               className="bg-[#f3f6ff] flex justify-center items-center min-h-screen"
