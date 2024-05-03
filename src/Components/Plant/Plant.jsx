@@ -34,7 +34,7 @@ const SliderButton = () => {
 };
 
 const Plant = ({ dataPlant }) => {
-  console.log(dataPlant)
+  console.log(dataPlant);
   const navigate = useNavigate();
   return (
     <section data-aos="fade-up" className="r-wrapper">
@@ -60,7 +60,9 @@ const Plant = ({ dataPlant }) => {
                   <div
                     className="max-w-xs w-full sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl cursor-pointer rounded-lg bg-white p-4 sm:p-6 shadow-md duration-150 hover:scale-105 hover:shadow-lg"
                     onClick={() => {
-                      navigate(`/farm/detail/${dataPlant[0].farmid}/plants/${card.id}`);
+                      navigate(
+                        `/farm/detail/${dataPlant[0].farmid}/plants/${card.id}`
+                      );
                     }}
                   >
                     <img
@@ -68,7 +70,7 @@ const Plant = ({ dataPlant }) => {
                       src={card.image}
                       alt="product"
                     />
-                    <p className="my-2 sm:my-4 pl-4 text-gray-500 text-xs sm:text-base md:text-lg lg:text-base">
+                    <p className="my-2 sm:my-4 pl-4 text-gray-500 text-base sm:text-base md:text-lg lg:text-sm">
                       {renderTypePlant(card.type)}
                     </p>
                     <p className="mb-1 sm:mb-4 ml-4 text-lg font-semibold text-gray-800">

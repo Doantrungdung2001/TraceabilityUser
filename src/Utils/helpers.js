@@ -76,6 +76,17 @@ export function renderTypePlant(type) {
       return "Quả";
   }
 }
+export function renderTypeProcessProject(type) {
+  switch (type) {
+    case "inProgress":
+      return "Đang thực hiện";
+    case "finished":
+      return "Hoàn thành";
+    default:
+      return "Đã hủy"
+  }
+}
+
 export function formatTransactionHashTable({ str, a, b }) {
   if (
     a < 0 ||

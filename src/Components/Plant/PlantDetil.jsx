@@ -102,8 +102,6 @@ const PlantDetil = () => {
   }, []);
 
   function DialogDefault({ data, isOpen, handleClose }) {
-    console.log("data", data);
-    console.log("isOpen", isOpen);
     return (
       <>
         <Dialog open={isOpen} handler={handleClose}>
@@ -272,12 +270,6 @@ const PlantDetil = () => {
                             </span>
                           </span>
                         </li>
-                        {/* <li className="flex items-center py-3">
-                          <span>Ngày bắt đầu</span>
-                          <span className="ml-auto">
-                            {formatDateTime(dataPlantFarm[0].createdAtTime)}
-                          </span>
-                        </li> */}
                       </ul>
                     </div>
                     <div className="my-4"></div>
