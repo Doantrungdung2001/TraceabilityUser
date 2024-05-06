@@ -52,12 +52,12 @@ export default function useInformation({ projectId }) {
       plant: data?.plant,
       seed: data?.seed,
       startDate: data?.startDate,
-      square: data?.square,
+      square: data?.square || "",
       status: data?.status,
-      description: data?.description,
+      description: data?.description || "",
       isGarden: data?.isGarden,
-      projectIndex: data?.projectIndex,
-      txHash: data?.txHash,
+      projectIndex: data?.projectIndex || "",
+      txHash: data?.txHash || "",
       farm: data?.farm,
     };
     return {
@@ -214,7 +214,9 @@ export default function useInformation({ projectId }) {
     });
 
     // Chuyển Map thành mảng để thuận tiện cho việc sử dụng
-    const formatedNonProcessObjectDetectionewArray = [...groupedByDate.values()];
+    const formatedNonProcessObjectDetectionewArray = [
+      ...groupedByDate.values(),
+    ];
 
     // In ra mảng mới
     console.log(formatedNonProcessObjectDetectionewArray);
@@ -351,7 +353,8 @@ export default function useInformation({ projectId }) {
     isSuccessProjectInfo,
     isLoadingProjectInfo,
     dataProcess: dataProcess?.dataProcess,
-    nonProcessObjectDetection: dataProcess?.formatedNonProcessObjectDetectionewArray,
+    nonProcessObjectDetection:
+      dataProcess?.formatedNonProcessObjectDetectionewArray,
     isSuccessProcess,
     isLoadingProcess,
     dataExpect: dataExpect?.expect,
