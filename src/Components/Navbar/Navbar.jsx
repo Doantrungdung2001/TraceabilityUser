@@ -136,7 +136,7 @@ const Navbar = () => {
                     className="uppercase"
                     color="blue-gray"
                     variant="h6"
-                    onClick={() => navigate(`/search/transactionhash`)}
+                    onClick={() => navigate(`/search/transaction-hash-query`)}
                   >
                     Transaction Hash
                   </Typography>
@@ -151,7 +151,7 @@ const Navbar = () => {
                     className="uppercase"
                     color="blue-gray"
                     variant="h6"
-                    onClick={() => navigate(`/search/index`)}
+                    onClick={() => navigate(`/search/index-query`)}
                   >
                     Project index
                   </Typography>

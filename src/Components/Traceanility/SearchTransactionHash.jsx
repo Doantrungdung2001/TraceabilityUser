@@ -323,17 +323,19 @@ const SearchTransactionHash = () => {
             <li>Time Description: {event.data.timeDesciption}</li>
           </ul>
         )
+    }
   }
-}
 
   const getTransactionInfo = async () => {
     try {
       setLoading(true);
-      const jsonRpcURL = process.env.REACT_APP_jsonRpcURL || "https://evmos-pokt.nodies.app"; 
+      const jsonRpcURL = process.env.REACT_APP_jsonRpcURL || "https://evmos-pokt.nodies.app";
+
       const web3 = new Web3(jsonRpcURL);
+      console.log("transaction hash: ", transactionHash)
       const transaction = await web3.eth.getTransaction(transactionHash);
-      
-      
+
+
       if (!transaction) {
         alert('Transaction not found');
         setLoading(false);
@@ -345,7 +347,7 @@ const SearchTransactionHash = () => {
       const logs = receipt.logs.map(log => {
         const eventData = eventMap[log.topics[0]]; // Lấy thông tin về sự kiện từ map
         console.log("event data: ", eventData)
-        
+
         if (!eventData) return null;
 
         return {
@@ -407,72 +409,74 @@ const SearchTransactionHash = () => {
       {
         loading ? <Spinner /> : transactionInfo && (
           <section className="bg-gray-100 p-4 md:p-10 mx-2 md:mx-5">
-        <div className="bg-white overflow-hidden shadow rounded-lg border">
-          <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">
-              Thông tin
-            </h3>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500">
-            Dưới đây là thông tin từ transaction hash của bạn
-            </p>
-          </div>
-          <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
-            <dl className="sm:divide-y sm:divide-gray-200">
-              <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">Transaction hash</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {transactionInfo.transactionHash}
-                </dd>
+            <div className="bg-white overflow-hidden shadow rounded-lg border">
+              <div className="px-4 py-5 sm:px-6">
+                <h3 className="text-lg leading-6 font-medium text-gray-900">
+                  Thông tin
+                </h3>
+                <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                  Dưới đây là thông tin từ transaction hash của bạn
+                </p>
               </div>
-              <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">Block number</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {transactionInfo.blockNumber}
-                </dd>
+              <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+                <dl className="sm:divide-y sm:divide-gray-200">
+                  <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-500">Transaction hash</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      <a href={`https://escan.live/tx/${transactionInfo.transactionHash}`} target="_blank" rel="noreferrer" className="text-blue-500">
+                        {transactionInfo.transactionHash}
+                      </a>
+                    </dd>
+                  </div>
+                  <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-500">Block number</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      {transactionInfo.blockNumber}
+                    </dd>
+                  </div>
+                  <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-500">From:</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      {transactionInfo.from}
+                    </dd>
+                  </div>
+                  <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-500">To:</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      {transactionInfo.to}
+                    </dd>
+                  </div>
+                  <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-500">Gas used:</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      {transactionInfo.gasUsed}
+                    </dd>
+                  </div>
+                  <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-500">Time:</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      {transactionInfo.timestamp.toString()}
+                    </dd>
+                  </div>
+                  <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-500">Name event:</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      {transactionInfo.events[0].name}
+                    </dd>
+                  </div>
+                  <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-500">Data:</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      {eventMapData(transactionInfo.events[0])}
+                    </dd>
+                  </div>
+                </dl>
               </div>
-              <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">From:</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {transactionInfo.from}
-                </dd>
-              </div>
-              <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">To:</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {transactionInfo.to}
-                </dd>
-              </div>
-              <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">Gas used:</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {transactionInfo.gasUsed}
-                </dd>
-              </div>
-              <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">Time:</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {transactionInfo.timestamp.toString()}
-                </dd>
-              </div>
-              <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">Name event:</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {transactionInfo.events[0].name}
-                </dd>
-              </div>
-              <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500">Data:</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {eventMapData(transactionInfo.events[0])}
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </section>
+            </div>
+          </section>
         )
       }
-      
+
     </section>
   );
 };
