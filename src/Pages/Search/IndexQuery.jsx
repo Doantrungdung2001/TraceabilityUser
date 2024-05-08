@@ -3,7 +3,7 @@ import Navbar from '../../Components/Navbar/Navbar'
 import SearchId from '../../Components/Traceanility/SearchId'
 import Footer from '../../Components/Footer/Footer'
 
-const Index = () => {
+const IndexQuery = () => {
   return (
     <>
         <Navbar />
@@ -13,4 +13,4 @@ const Index = () => {
   )
 }
 
-export default Index
+export default IndexQuery

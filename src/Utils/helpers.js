@@ -105,7 +105,7 @@ export function formatTransactionHashTable({ str, a, b }) {
   const suffix = str.slice(-b);
   const formatedFormatTransactionHash = prefix + "..." + suffix;
   return (
-    <a href={`https://escan.live/tx/${str}`} target="_blank" rel="noreferrer">
+    <a href={`https://traceabilityuser.onrender.com/search/transaction-hash/${str}`} target="_blank" rel="noreferrer">
       {formatedFormatTransactionHash}
     </a>
   );

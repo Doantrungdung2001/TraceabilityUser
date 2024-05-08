@@ -17,8 +17,11 @@ import NotFound from "../Pages/404/NotFound";
 import PlantFarm from "../Pages/Farm/PlantFarm";
 import ProjectFarm from "../Pages/Farm/ProjectFarm";
 import PlantDetailFarm from "../Pages/Farm/PlantDetailFarm";
-import TransactionHash from "../Pages/Search/TransactionHash";
-import Index from "../Pages/Search/Index";
+
+import TransactionHashQuery from "../Pages/Search/TransactionHashQuery";
+import IndexQuery from "../Pages/Search/IndexQuery";
+import TransactionHash from "../Pages/TransactionHashQuery";
+import ProjectQuery from "../Pages/ProjectQuery";
 export const NormalRoutes = [
   { path: "/", element: <Home /> },
   { path: "/results/:projectId", element: <Result /> },
@@ -31,8 +34,10 @@ export const NormalRoutes = [
     path: "/farm/detail/:farmId/plants/:plantId",
     element: <PlantDetailFarm />,
   },
-  { path: "/search/transactionhash", element: <TransactionHash /> },
-  { path: "/search/index", element: <Index /> },
+  { path: "/search/transaction-hash-query", element: <TransactionHashQuery /> },
+  { path: "/search/transaction-hash/:transactionHash", element: <TransactionHash /> },
+  { path: "/search/index-query", element: <IndexQuery /> },
+  { path: "/search/index/:projectIndex", element: <ProjectQuery /> },
   { path: "/news", element: <New /> },
   { path: "/about-us", element: <About /> },
   { path: "*", element: <NotFound /> },

@@ -14,6 +14,7 @@ import {
   videoContractAddress,
 } from "../../constants";
 import { formatDateTime, formatWalletAddress } from "../../Utils/helpers";
+import { useParams } from "react-router-dom";
 function Icon({ id, open }) {
   return (
     <svg
@@ -36,7 +37,6 @@ function Icon({ id, open }) {
 
 const SearchId = () => {
   const [open, setOpen] = React.useState(0);
-  const [projectIndex, setProjectIndex] = React.useState("");
   const [processes, setProcesses] = React.useState(null);
   const [expects, setExpects] = React.useState(null);
   const [outputs, setOutputs] = React.useState(null);
@@ -60,7 +60,7 @@ const SearchId = () => {
   const videoContract = new web3.eth.Contract(video_abi, videoContractAddress);
 
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
-  const handleQueryBlockchain = async () => {
+  const handleQueryBlockchain = async (projectIndex) => {
     setError(null);
     try {
       console.log("query blockchain", projectIndex);
@@ -159,36 +159,14 @@ const SearchId = () => {
       setLoading(false);
       setError("Không tìm thấy dữ liệu. Vui lòng thử lại.")
     }
-
   };
+
+  const projectIndex = useParams().projectIndex
+  React.useEffect(() => {
+    handleQueryBlockchain(projectIndex);
+  }, [projectIndex]);
   return (
-    <section className="">
-      <section>
-        <div className="flex items-center justify-center min-h-screen bg-green-100">
-          <div className="mx-5 bg-white rounded-2xl border shadow-xl p-5 md:p-10 max-w-lg w-full md:w-3/4 lg:w-2/3 xl:w-1/2 ">
-            <div className="flex flex-col items-center space-y-4">
-              <h1 className="font-bold text-2xl text-gray-700 w-full text-center">
-                Project Index
-              </h1>
-              <p className="text-sm text-gray-500 text-center w-full">
-                Hãy nhập mã project index sau đó kết qua tra cứu sẽ hiển thị.
-              </p>
-              <input
-                type="text"
-                placeholder="project index"
-                className="border-2 rounded-lg w-full h-12 px-4"
-                onChange={(e) => setProjectIndex(e.target.value)}
-              />
-              <button
-                className="bg-green-400 text-white rounded-md font-semibold px-4 py-3 w-full"
-                onClick={handleQueryBlockchain}
-              >
-                Tra cứu
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+    <section className="" style={{ paddingTop: "10vh" }}>
       {!loading && !error && (
         <section className="m-4 sm:m-16 px-4 bg-white">
           <>
@@ -395,12 +373,12 @@ const SearchId = () => {
       )}
       {
         error && (
-          <div className="text-red-500 text-center">
+          <div className="text-red-500 text-center" style={{ paddingTop: "10vh" }}>
             <p>{error}</p>
           </div>
         )
       }
-      {loading && <p className="text-center">Đang tải dữ liệu...</p>}
+      {loading && <p className="text-center" style={{ paddingTop: "10vh" }}>Đang tải dữ liệu...</p>}
     </section>
   );
 };
