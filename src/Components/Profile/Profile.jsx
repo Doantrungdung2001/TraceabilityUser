@@ -24,6 +24,17 @@ const ProfileFarm = () => {
     allProject,
     isSuccessProject,
     isLoadingProject,
+    plantsCount,
+    inProgressProjectsCount,
+    finishedProjectsCount,
+    canceledProjectsCount,
+    totalQRCount,
+    scannedQRCount,
+    distributorsByFarm,
+    isSuccessQR,
+    isLoadingQR,
+    isSuccessDistributorByFarm,
+    isLoadingDistributorByFarm,
   } = useProfile({
     farmId,
   });
@@ -71,7 +82,7 @@ const ProfileFarm = () => {
               data-aos="fade-up"
               className="bg-[#f3f6ff] flex justify-center items-center min-h-screen"
             >
-              <div className="w-full ml-1 mr-1 flex flex-col justify-center items-center sm:w-96 border-gray-700 text-center">
+              <div className="w-full ml-1 mr-1 flex flex-col justify-center items-center sm:w-96 border-gray-700 text-center lg:w-[900px]">
                 <div className="w-full rounded-2xl p-8 text-white bg-gradient-to-br from-[#5f99f9] to-[#8868dc] pb-44 relative">
                   <h1 className="text-xl mb-4">Lời giới thiệu</h1>
                   <p>{farmInfo.description}</p>
@@ -102,6 +113,57 @@ const ProfileFarm = () => {
           {isLoadingFarmInfo && <Spinner />}
         </section>
       </div>
+      {
+        isSuccessQR && isSuccessDistributorByFarm && isSuccessPlant && isSuccessProject && (
+          <section>
+            <span className="primaryText">Tổng quan trang trại</span>
+            <div className="border border-gray-300 shadow-sm rounded-lg overflow-hidden mx-auto mt-8 lg:w-[900px]">
+              <table className="w-full text-sm leading-5 lg:text-lg">
+                <tbody>
+                  <tr>
+                    <td className="py-3 px-4 text-left font-medium text-gray-600">Số cây trang trại canh tác</td>
+                    <td className="py-3 px-4 text-left">{plantsCount}</td>
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="py-3 px-4 text-left font-medium text-gray-600">Số dự án đang thực hiện</td>
+                    <td className="py-3 px-4 text-left">{inProgressProjectsCount}</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-4 text-left font-medium text-gray-600">Số dự án đã hoàn thành</td>
+                    <td className="py-3 px-4 text-left">{finishedProjectsCount}</td>
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="py-3 px-4 text-left font-medium text-gray-600">Số dự án đã hủy</td>
+                    <td className="py-3 px-4 text-left">{canceledProjectsCount}</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-4 text-left font-medium text-gray-600">Tổng số mã QR đã tạo</td>
+                    <td className="py-3 px-4 text-left">{totalQRCount}</td>
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="py-3 px-4 text-left font-medium text-gray-600">Tổng số mã QR đã quét</td>
+                    <td className="py-3 px-4 text-left">{scannedQRCount}</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-4 text-left font-medium text-gray-600">Số lượng đối tác phân phối</td>
+                    <td className="py-3 px-4 text-left">
+                      <ul>
+                        {
+                          distributorsByFarm.map(distributor => {
+                            return (
+                              <li>{distributor.name} - {distributor.totalAmount} (sản phẩm)</li>
+                            )
+                          })
+                        }
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )
+      }
 
       {isSuccessPlant && <Plant dataPlant={allPlant} />}
       {isLoadingPlant && <Spinner />}
