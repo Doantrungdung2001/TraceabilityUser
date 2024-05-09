@@ -61,7 +61,9 @@ const Tables = ({ infoData }) => {
           </table>
         </div>
       ) : (
-        <div>Không có dữ liệu</div>
+        <div className="lg:text-2xl text-gray-400 text-base mt-5">
+          Không có dữ liệu
+        </div>
       )}
       <div>
         <Dialog
