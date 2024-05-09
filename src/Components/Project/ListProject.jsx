@@ -14,16 +14,19 @@ import {
   DialogHeader,
   DialogBody,
   DialogFooter,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 
 import useProfile from "../Profile/useProfile";
 import Avarta from "../Avarta/Avarta";
-import { formatDateTime } from "../../Utils/helpers";
+import { formatDate, formatDateTime } from "../../Utils/helpers";
 import { useNavigate } from "react-router-dom";
 const MAX_DESCRIPTION_LENGTH = 100; // Số ký tự tối đa bạn muốn hiển thị
 
 const ListProject = () => {
   const navigate = useNavigate();
+  const [projectStatus, setProjectStatus] = React.useState("all");
   useEffect(() => {
     Aos.init({ duration: 2000 });
   }, []);
@@ -38,6 +41,26 @@ const ListProject = () => {
   } = useProfile({
     farmId,
   });
+
+  const filterProjects = allProject ? allProject.filter((project) => {
+    console.log("project: ", project)
+    if (projectStatus === "all") {
+      return true;
+    }
+    if (projectStatus === "inProgress") {
+      return project.status === "inProgress" && project.output?.length === 0;
+    }
+    if (projectStatus === "inSell") {
+      return project.status === "inProgress" && project.output?.length > 0;
+    }
+    if (projectStatus === "done") {
+      return project.status === "finished";
+    }
+    if (projectStatus === "cancel") {
+      return project.status === "cancel";
+    }
+  }): [];
+  
   return (
     <>
       <div data-aos="fade-up" className="mx-auto pt-20">
@@ -73,9 +96,24 @@ const ListProject = () => {
         </section>
         <section className="pt-[4vh] px-8 mb-5 ">
           <span className="orangeText">Danh sách dự án</span>
+          <div className="w-72">
+      <Select
+        label="Lựa chọn trạng thái dự án"
+        value={projectStatus}
+        onChange={(val) => {
+          console.log("val: ", val)
+          setProjectStatus(val)}}
+      >
+        <Option value="all">Tất cả</Option>
+        <Option value="inProgress">Chưa thu hoạch</Option>
+        <Option value="inSell">Đang bày bán</Option>
+        <Option value="done">Đã kết thúc</Option>
+        <Option value="cancel">Đã hủy</Option>
+      </Select>
+    </div>
           <div className=" mx-auto grid flex justify-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
             {isSuccessProject &&
-              allProject?.map((card) => (
+              filterProjects?.map((card) => (
                 <Card className="max-w-xs overflow-hidden mt-5">
                   <CardHeader
                     floated={false}
@@ -108,42 +146,15 @@ const ListProject = () => {
                   </CardBody>
                   <CardFooter className="flex items-center justify-between">
                     <Button onClick={()=>{navigate(`/results/${card.id}`)}}>Chi tiết</Button>
-                    <Typography className="font-normal">{formatDateTime(card.startDate)}</Typography>
+                    <div className="flex items-center flex-col">
+                    <Typography className="font-normal">{formatDate(card.startDate)}</Typography>
+                    <Typography className="font-normal">{formatDate(card.expectedEndDate)}</Typography>
+                    </div>
                   </CardFooter>
                 </Card>
               ))}{" "}
           </div>
           {isLoadingProject && <Spinner />}
-          {/* <Dialog open={openPlantDetail} handler={handleOpenPlantDetail}>
-            <DialogHeader>Họat động làm đất </DialogHeader>
-            {selectedPlantDetail && (
-              <DialogBody>
-                <div>
-                  <div className="max-w-screen-md text-xs">
-                    <h4 className="text-lg font-semibold  text-gray-800">
-                      Tên hoạt động
-                    </h4>
-                    <p className="font-semibold text-gray-600 mb-4">ầdfadf</p>
-                    <h3 className="text-lg  text-gray-800 font-semibold">
-                      Mô tả
-                    </h3>
-                    <p className="font-semibold text-gray-600">fadadfasd</p>
-                  </div>
-                </div>
-              </DialogBody>
-            )}
-
-            <DialogFooter>
-              <Button
-                variant="text"
-                color="red"
-                onClick={handleOpenPlantDetail}
-                className="mr-1"
-              >
-                <span>Thoát</span>
-              </Button>
-            </DialogFooter>
-          </Dialog> */}
         </section>
       </div>
     </>

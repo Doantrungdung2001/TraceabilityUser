@@ -59,6 +59,8 @@ export default function useInformation({ projectId }) {
       projectIndex: data?.projectIndex || "",
       txHash: data?.txHash || "",
       farm: data?.farm,
+      expectedEndDate: data?.expectedEndDate,
+      expectedOutput: data?.expectedOutput,
     };
     return {
       projectInfo,

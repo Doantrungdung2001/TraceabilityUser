@@ -2,6 +2,7 @@ import React from "react";
 import CarouselPicture from "../Picture/CarouselPicture";
 import { Spinner } from "@material-tailwind/react";
 import {
+  formatDate,
   formatDateTime,
   formatTransactionHashTable,
 } from "../../Utils/helpers";
@@ -72,7 +73,27 @@ const InformationOverview = ({
                         Ngày trồng
                       </dt>
                       <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
-                        {formatDateTime(dataInfoOverview?.startDate)}
+                        {formatDate(dataInfoOverview?.startDate)}
+                      </dd>
+                    </div>
+                    {
+                      dataInfoOverview.status === 'inProgress' && (
+                        <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-700">
+                        Ngày dự kiến thu hoạch
+                      </dt>
+                      <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                        {formatDate(dataInfoOverview?.expectedEndDate)}
+                      </dd>
+                    </div>
+                      )
+                    }                    
+                    <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-700">
+                        Dự kiến sản lượng ban đầu (kg)
+                      </dt>
+                      <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                        {dataInfoOverview?.expectedOutput}
                       </dd>
                     </div>
                     <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -101,6 +122,11 @@ const InformationOverview = ({
                             {data.distributer.name} <br />
                           </p>
                         ))}
+                        {
+                          !allDistributerWithAmount || allDistributerWithAmount.length === 0 && (
+                            <p> Không có thông tin </p>
+                          ) 
+                        }
                       </dd>
                     </div>
                   </dl>
