@@ -70,7 +70,9 @@ const DeleteProcess = ({ dataDeleteProcess }) => {
           ))}
         </div>
       ) : (
-        <div>Khong co du lieu</div>
+        <div className="lg:text-2xl text-gray-400 text-base mt-5">
+          Không có dữ liệu
+        </div>
       )}
       <div>
         <Dialog

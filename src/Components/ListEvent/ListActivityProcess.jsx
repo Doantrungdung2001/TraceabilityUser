@@ -171,12 +171,16 @@ const ListActivityProcess = ({ listActivity }) => {
   ];
   return (
     <div className="rounded-xl p-2">
-      <div className="mx-auto flex justify-center h-screen">
+      <div
+        className={`mx-auto flex justify-center ${
+          listActivity ? (listActivity?.length > 5 ? "h-screen" : "") : ""
+        }`}
+      >
         <div
           className="w-full h-full overflow-auto shadow bg-white "
           id="journal-scroll"
         >
-          {listActivity?.length > 0 && (
+          {listActivity?.length > 0 ? (
             <table className="w-full">
               {listActivity.map((activity, index) => (
                 <tbody key={index}>
@@ -222,6 +226,10 @@ const ListActivityProcess = ({ listActivity }) => {
                 </tbody>
               ))}
             </table>
+          ) : (
+            <div className="mt-5 justify-center items-center m-2 p-1">
+              <h3 className="text-gray-400">Không có dữ liệu</h3>
+            </div>
           )}
         </div>
       </div>

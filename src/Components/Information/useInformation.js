@@ -48,17 +48,17 @@ export default function useInformation({ projectId }) {
 
   const parseDataProjectInfo = useCallback((data) => {
     const projectInfo = {
-      id: data?._id,
-      plant: data?.plant,
-      seed: data?.seed,
-      startDate: data?.startDate,
-      square: data?.square || "",
-      status: data?.status,
-      description: data?.description || "",
-      isGarden: data?.isGarden,
-      projectIndex: data?.projectIndex || "",
-      txHash: data?.txHash || "",
-      farm: data?.farm,
+      id: data?._id || "Không có dữ liệu",
+      plant: data?.plant || "Không có dữ liệu",
+      seed: data?.seed || "Không có dữ liệu",
+      startDate: data?.startDate || "Không có dữ liệu",
+      square: data?.square || "Không có dữ liệu",
+      status: data?.status || "Không có dữ liệu",
+      description: data?.description || "Không có dữ liệu",
+      isGarden: data?.isGarden || "Không có dữ liệu",
+      projectIndex: data?.projectIndex || "Không có dữ liệu",
+      txHash: data?.txHash || "Không có dữ liệu",
+      farm: data?.farm || "Không có dữ liệu",
     };
     return {
       projectInfo,
