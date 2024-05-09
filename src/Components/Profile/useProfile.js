@@ -4,6 +4,7 @@ import FARM from "../../Services/farmService";
 import PLANT from "../../Services/plantService";
 import PROJECT from "../../Services/projectService";
 import { formatDateTime } from "../../Utils/helpers";
+import QR from "../../Services/qrService";
 export default function useProfile({ farmId }) {
   const parseDataFarmById = useCallback((data) => {
     const farmInfo = {
@@ -53,7 +54,9 @@ export default function useProfile({ farmId }) {
       updatedAt: plant.updatedAt,
       plant_slug: plant.plant_slug,
     }));
-    return { allplant };
+
+    const plantsCount = allplant.length;
+    return { allplant, plantsCount };
   }, []);
 
   const {
@@ -89,8 +92,24 @@ export default function useProfile({ farmId }) {
           }`,
       };
     });
+
+    const inProgressProjectsCount = projects.filter(
+      (project) => project.status === "inProgress"
+    ).length;
+
+    const finishedProjectsCount = projects.filter(
+      (project) => project.status === "finished"
+    ).length;
+
+    const canceledProjectsCount = projects.filter(
+      (project) => project.status === "cancel"
+    ).length;
+
     return {
       projects,
+      inProgressProjectsCount,
+      finishedProjectsCount,
+      canceledProjectsCount,
     };
   }, []);
 
@@ -106,6 +125,52 @@ export default function useProfile({ farmId }) {
     enabled: !!farmId,
   });
 
+  const parseDataQR = useCallback((data) => {
+    const totalQRCount = data?.totalQRCount;
+    const scannedQRCount = data?.scannedQRCount;
+    return {
+      totalQRCount,
+      scannedQRCount,
+    };
+  }, []);
+
+  const {
+    data: statsQR,
+    isSuccess: isSuccessQR,
+    isLoading: isLoadingQR,
+  } = useQuery({
+    queryKey: ["getStatsQRByFarmId", farmId],
+    queryFn: () => QR.getStatsQRByFarmId(farmId) ,
+    staleTime: 20 * 1000,
+    select: (data) => parseDataQR(data.data.metadata),
+    enabled: !!farmId,
+  });
+
+  const parseDataDistributorByFarm = useCallback((data) => {
+    const distributorsByFarm = data.map((item) => {
+      return {
+        id: item?._id,
+        name: item?.name,
+        totalAmount: item?.totalAmount,
+      };
+    });
+    return {
+      distributorsByFarm,
+    };
+  }, []);
+
+  const {
+    data: distributorsByFarm,
+    isSuccess: isSuccessDistributorByFarm,
+    isLoading: isLoadingDistributorByFarm,
+  } = useQuery({
+    queryKey: ["getDistributorsByFarmId", farmId],
+    queryFn: () => FARM.getDistributorsByFarmId(farmId),
+    staleTime: 20 * 1000,
+    select: (data) => parseDataDistributorByFarm(data.data.metadata),
+    enabled: !!farmId,
+  });
+
   
 
   return {
@@ -113,10 +178,21 @@ export default function useProfile({ farmId }) {
     isSuccessFarmInfo,
     isLoadingFarmInfo,
     allPlant: dataAllPlant?.allplant,
+    plantsCount: dataAllPlant?.plantsCount,
     isSuccessPlant,
     isLoadingPlant,
     allProject: allProject?.projects,
+    inProgressProjectsCount: allProject?.inProgressProjectsCount,
+    finishedProjectsCount: allProject?.finishedProjectsCount,
+    canceledProjectsCount: allProject?.canceledProjectsCount,
     isSuccessProject,
     isLoadingProject,
+    totalQRCount: statsQR?.totalQRCount,
+    scannedQRCount: statsQR?.scannedQRCount,
+    isSuccessQR,
+    isLoadingQR,
+    distributorsByFarm: distributorsByFarm?.distributorsByFarm,
+    isSuccessDistributorByFarm,
+    isLoadingDistributorByFarm,
   };
 }

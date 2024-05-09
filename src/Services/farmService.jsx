@@ -25,6 +25,18 @@ const FARM = {
         return err;
       });
   },
+  getDistributorsByFarmId: async (farmId) => {
+    return await publicHttp({
+      method: "GET",
+      url: `/farm/distributors/${farmId}`,
+    })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
+  }
 };
 
 export default FARM;
