@@ -59,6 +59,8 @@ export default function useInformation({ projectId }) {
       projectIndex: data?.projectIndex || "Không có dữ liệu",
       txHash: data?.txHash || "Không có dữ liệu",
       farm: data?.farm || "Không có dữ liệu",
+      expectedEndDate: data?.expectedEndDate,
+      expectedOutput: data?.expectedOutput,
     };
     return {
       projectInfo,

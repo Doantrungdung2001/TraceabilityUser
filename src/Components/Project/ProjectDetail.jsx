@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Avarta from "../Avarta/Avarta";
 import {
+  formatDate,
   formatDateTime,
   formatTransactionHashTable,
 } from "../../Utils/helpers";
@@ -79,44 +80,6 @@ const ProjectDetail = () => {
             </div>
           </section>
           <section className="mb-5">
-            {/* <div className="p-8">
-              <div className="bg-white p-4 rounded-lg shadow-xl py-8 mt-12">
-                <h4 className="text-4xl font-bold text-gray-800 tracking-widest uppercase text-center">
-                  FAQ
-                </h4>
-                <p className="text-center text-gray-600 text-sm mt-2">
-                  Here are some of the frequently asked questions
-                </p>
-                <div className="space-y-12 px-2 xl:px-16 mt-12">
-                  <div className="mt-4 flex">
-                    <div>
-                      <div className="flex items-center h-16 border-l-4 border-blue-600">
-                        <span className="text-4xl text-blue-600 px-4">Q.</span>
-                      </div>
-                      <div className="flex items-center h-16 border-l-4 border-gray-400">
-                        <span className="text-4xl text-gray-400 px-4">A.</span>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex items-center h-16">
-                        <span className="text-lg text-blue-600 font-bold">
-                          Lorem ipsum dolor sit amet?
-                        </span>
-                      </div>
-                      <div className="flex items-center py-2">
-                        <span className="text-gray-500">
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Quae, dignissimos. Neque eos, dignissimos
-                          provident reiciendis debitis repudiandae commodi
-                          perferendis et itaque, similique fugiat cumque impedit
-                          iusto vitae dolorum. Nostrum, fugit!
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
             <div className="container mx-auto my-5 px-2 sm:px-0">
               <div className="md:flex md:flex-wrap">
                 <div className="w-full md:w-3/12 md:pr-2">
@@ -219,31 +182,6 @@ const ProjectDetail = () => {
                             {ProjectDetail.square} (m2)
                           </div>
                         </div>
-                        {/* <div className="grid grid-cols-2">
-                          <div className="px-4 py-2 font-semibold">
-                            Permanant Address
-                          </div>
-                          <div className="px-4 py-2">
-                            Arlington Heights, IL, Illinois
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-2">
-                          <div className="px-4 py-2 font-semibold">Email.</div>
-                          <div className="px-4 py-2">
-                            <a
-                              className="text-blue-800"
-                              href="mailto:jane@example.com"
-                            >
-                              jane@example.com
-                            </a>
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-2">
-                          <div className="px-4 py-2 font-semibold">
-                            Birthday
-                          </div>
-                          <div className="px-4 py-2">Feb 06, 1998</div>
-                        </div> */}
                       </div>
                     </div>
                     <button className="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
@@ -333,7 +271,7 @@ const ProjectDetail = () => {
                           Ngày bắt đầu
                         </div>
                         <div className="px-4 py-2">
-                          {formatDateTime(ProjectDetail.seed.createdAt)}
+                          {formatDate(ProjectDetail.startDate)}
                         </div>
                       </div>
                       <div className="grid grid-cols-2">

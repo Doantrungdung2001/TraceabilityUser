@@ -24,6 +24,7 @@ export default function useProject({ projectId }) {
         }`,
       txHash: data?.txHash,
       historyProcess: data?.historyInfo,
+      output: data?.output,
     };
     return {
       projectdetail,

@@ -90,6 +90,8 @@ export default function useProfile({ farmId }) {
           )}, cho ${item?.plant?.plant_name} với hạt giống là ${
             item?.seed?.seed_name
           }`,
+        output: item?.output,
+        expectedEndDate: item?.expectedEndDate,
       };
     });
 
