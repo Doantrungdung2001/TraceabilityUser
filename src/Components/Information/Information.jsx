@@ -30,9 +30,8 @@ function Icon({ id, open }) {
       viewBox="0 0 24 24"
       strokeWidth={2}
       stroke="currentColor"
-      className={`${
-        id === open ? "rotate-180" : ""
-      } h-5 w-5 transition-transform`}
+      className={`${id === open ? "rotate-180" : ""
+        } h-5 w-5 transition-transform`}
     >
       <path
         strokeLinecap="round"
@@ -42,6 +41,25 @@ function Icon({ id, open }) {
     </svg>
   );
 }
+
+const VideoPlayer = ({ imageList, frameRate }) => {
+  const [currentFrame, setCurrentFrame] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentFrame(currentFrame => (currentFrame + 1) % imageList.length);
+    }, 1000 / frameRate);
+    return () => clearInterval(interval);
+  }, [frameRate, imageList.length]);
+  console.log("imageList", imageList);
+  return (
+    <video width="500" height="300" controls autoPlay>
+      {imageList.map((imageUrl, index) => (
+        <source key={index} src={imageUrl} type="image/jpeg" />
+      ))}
+      Your browser does not support the video tag.
+    </video>
+  );
+};
 
 const Information = () => {
   const navigate = useNavigate();
@@ -74,8 +92,30 @@ const Information = () => {
     dataDeleteProcess,
     isSuccessDeleteProcess,
     isLoadingDeleteProcess,
+    dataConnectionLoss,
+    totalConnectionLossBySeconds,
+    isSuccessConnectionLoss,
+    isLoadingConnectionLoss,
+    dataImage,
+    isSuccessImage,
+    isLoadingImage,
+    dataCamera,
+    totalCamera,
+    isSuccessCamera,
+    isLoadingCamera,
+    totalEditProcess,
+    processWithoutObjectDetectionCount,
+    totalDeletedItem,
+    editExpectCount,
+    editOutputCount,
+    totalQR,
+    totalScannedQR,
+    allDistributerWithQR,
+    isSuccessQR,
+    isLoadingQR,
   } = useInformation({ projectId });
 
+  console.log("allDistributerWithQR", allDistributerWithQR);
   //open more information
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
@@ -95,13 +135,19 @@ const Information = () => {
 
       <section className="content">
         <section className="infor">
-          {isSuccessProjectInfo && projectInfo.id && (
+          {isSuccessProjectInfo && isSuccessQR && isSuccessCamera && isSuccessConnectionLoss && isSuccessDeleteProcess && isSuccessProcess && isSuccessExpect && isSuccessOutput && projectInfo.id && (
             <InformationOverview
               dataImage={ImageProduct}
-              allDistributerWithAmount={allDistributerWithAmount}
+              allDistributerWithQR={allDistributerWithQR}
               isSuccessImage={isSuccessOutput}
               isLoadingImage={isLoadingOutput}
               dataInfoOverview={projectInfo}
+              totalConnectionLossBySeconds={totalConnectionLossBySeconds}
+              processWithoutObjectDetectionCount={processWithoutObjectDetectionCount}
+              deletedItemCount={totalDeletedItem}
+              editItemCount={totalEditProcess + editExpectCount + editOutputCount}
+              totalItemCount={dataProcess?.length + dataExpect?.length + Output?.length}
+              totalCamera={totalCamera}
             />
           )}
           {isLoadingProjectInfo && <Spinner />}
@@ -115,6 +161,17 @@ const Information = () => {
       </section>
 
       <section data-aos="fade-up" className="more-infor">
+      {
+        isSuccessImage && dataImage && (
+          <div>
+      <h1>Overview video</h1>
+      <VideoPlayer imageList={dataImage.map((image) => image.image_url)} frameRate={24} />
+    </div>
+        )
+      }
+      </section>
+
+      <section data-aos="fade-up" className="more-infor">
         <>
           <Accordion
             open={open === 1}
@@ -122,9 +179,8 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(1)}
-              className={`border-b-0 transition-colors ${
-                open === 1 ? "text-green-400 hover:text-green-700" : ""
-              } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${open === 1 ? "text-green-400 hover:text-green-700" : ""
+                } text-base lg:text-2xl`}
             >
               Video không có hoạt động tương ứng
             </AccordionHeader>
@@ -147,9 +203,8 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(2)}
-              className={`border-b-0 transition-colors ${
-                open === 2 ? "text-green-400 hover:text-green-700" : ""
-              } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${open === 2 ? "text-green-400 hover:text-green-700" : ""
+                } text-base lg:text-2xl`}
             >
               Thông tin dự kiến sản lượng
             </AccordionHeader>
@@ -168,9 +223,8 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(3)}
-              className={`border-b-0 transition-colors ${
-                open === 3 ? "text-green-400 hover:text-green-700" : ""
-              } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${open === 3 ? "text-green-400 hover:text-green-700" : ""
+                } text-base lg:text-2xl`}
             >
               Quy trình mẫu
             </AccordionHeader>
@@ -189,9 +243,8 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(4)}
-              className={`border-b-0 transition-colors ${
-                open === 4 ? "text-green-400 hover:text-green-700" : ""
-              } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${open === 4 ? "text-green-400 hover:text-green-700" : ""
+                } text-base lg:text-2xl`}
             >
               Đầu ra
             </AccordionHeader>
@@ -210,9 +263,8 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(5)}
-              className={`border-b-0 transition-colors ${
-                open === 5 ? "text-green-400 hover:text-green-700" : ""
-              } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${open === 5 ? "text-green-400 hover:text-green-700" : ""
+                } text-base lg:text-2xl`}
             >
               Hình ảnh và thời tiết
             </AccordionHeader>
@@ -230,9 +282,8 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(6)}
-              className={`border-b-0 transition-colors ${
-                open === 6 ? "text-green-400 hover:text-green-700" : ""
-              } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${open === 6 ? "text-green-400 hover:text-green-700" : ""
+                } text-base lg:text-2xl`}
             >
               Các chứng nhận
             </AccordionHeader>
@@ -252,9 +303,8 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(7)}
-              className={`border-b-0 transition-colors ${
-                open === 7 ? "text-green-400 hover:text-green-700" : ""
-              } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${open === 7 ? "text-green-400 hover:text-green-700" : ""
+                } text-base lg:text-2xl`}
             >
               Các hoạt động bị xóa
             </AccordionHeader>

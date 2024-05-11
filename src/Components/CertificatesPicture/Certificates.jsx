@@ -9,28 +9,33 @@ const Certificates = ({ dataPicture, isSuccessCertificateImages }) => {
 
   return (
     <div className="grid gap-4">
+      
       {dataPicture.length ? (
-        dataPicture.map(({ imgelink }, index) => (
-          <div key={index}>
-            <div>
+        <>
+        <div>
               <img
                 className="h-auto w-full max-w-full rounded-lg object-cover object-center md:h-[480px]"
                 src={active}
                 alt=""
               />
             </div>
-            <div className="grid grid-cols-5 gap-4">
-              <div>
-                <img
-                  onClick={() => setActive(imgelink)}
-                  src={imgelink}
-                  className="h-15 max-w-full cursor-pointer rounded-lg object-cover object-center"
-                  alt="gallery-image"
-                />
-              </div>
-            </div>
-          </div>
-        ))
+            {
+              dataPicture.map(({ imgelink }, index) => (
+                <div key={index} >
+                  <div className="grid grid-cols-5 gap-4">
+                    <div>
+                      <img
+                        onClick={() => setActive(imgelink)}
+                        src={imgelink}
+                        className="h-15 max-w-full cursor-pointer rounded-lg object-cover object-center"
+                        alt="gallery-image"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+        </>
       ) : (
         <div className="lg:text-2xl text-gray-400 text-base mt-5">
           Không có dữ liệu
