@@ -33,24 +33,30 @@ const AccordionOutput = ({ dataAccordion }) => {
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
   return (
     <>
-      {dataAccordion?.map((data, index) => (
-        <Accordion
-          open={open === index + 1}
-          icon={<Icon id={index + 1} open={open} />}
-        >
-          <AccordionHeader
-            onClick={() => handleOpen(index + 1)}
-            className={`border-b-0 transition-colors ${
-              open === index + 1 ? "text-green-200 hover:text-green-500" : ""
-            } text-sm lg:text-xl`}
+      {dataAccordion.lenght ? (
+        dataAccordion?.map((data, index) => (
+          <Accordion
+            open={open === index + 1}
+            icon={<Icon id={index + 1} open={open} />}
           >
-            Thu hoạch lần thứ {index + 1}
-          </AccordionHeader>
-          <AccordionBody>
-            <OutputInformation OutputInfo={data} />
-          </AccordionBody>
-        </Accordion>
-      ))}
+            <AccordionHeader
+              onClick={() => handleOpen(index + 1)}
+              className={`border-b-0 transition-colors ${
+                open === index + 1 ? "text-green-200 hover:text-green-500" : ""
+              } text-sm lg:text-xl`}
+            >
+              Thu hoạch lần thứ {index + 1}
+            </AccordionHeader>
+            <AccordionBody>
+              <OutputInformation OutputInfo={data} />
+            </AccordionBody>
+          </Accordion>
+        ))
+      ) : (
+        <div className="lg:text-2xl text-gray-400 text-base mt-5">
+          Không có dữ liệu
+        </div>
+      )}
     </>
   );
 };
