@@ -117,31 +117,25 @@ const ScanInfo = () => {
                   </dd>
                 </div>
                 <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-700">Tên cây</dt>
-                  <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
-                    {projectInfo.plant.plant_name}
-                  </dd>
-                </div>
-                <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-700">Mô tả</dt>
-                  <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
-                    {projectInfo.description}
-                  </dd>
-                </div>
-                <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm font-medium text-gray-700">
                     Số hiệu dự án Blockchain
                   </dt>
                   <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
-                    {projectInfo.projectIndex} -
+                    {projectInfo.projectIndex} {" "}
                     <a
                       className="text-blue-800 text-sm italic cursor-pointer hover:text-blue-600"
                       onClick={() =>
                         navigate(`/search/index/${projectInfo.projectIndex}`)
                       }
                     >
-                      Xem thông tin trên Blockchain cho số hiệu
+                      Xem thông tin trên Blockchain
                     </a>
+                  </dd>
+                </div>
+                <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  <dt className="text-sm font-medium text-gray-700">Tên cây</dt>
+                  <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                    {projectInfo.plant.plant_name}
                   </dd>
                 </div>
                 <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -152,6 +146,12 @@ const ScanInfo = () => {
                     {projectInfo.farm.name}
                   </dd>
                 </div>
+                <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  <dt className="text-sm font-medium text-gray-700">Mô tả</dt>
+                  <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                    {projectInfo.description}
+                  </dd>
+                </div>                
                 <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm font-medium text-gray-700">
                     Cửa hàng cung cấp
@@ -185,28 +185,28 @@ const ScanInfo = () => {
                       <div>
                         <h1>QR is scanned for the first time</h1>
                         <h2>Time: {formatDateTime(qrInfo.timeScanned)}</h2>
-                        <h3>
+                        <h2 className="text-blue-800">
                           Transaction:{" "}
                           {formatTransactionHashTable({
                             str: qrInfo.txScan,
                             a: 8,
                             b: 5,
                           })}
-                        </h3>
+                        </h2>
                       </div>
                     )}
                     {qrInfo && !qrInfo.firstScan && (
                       <div>
                         <h1>QR is already scanned</h1>
                         <h2>Time: {formatDateTime(qrInfo.timeScanned)}</h2>
-                        <h3>
+                        <h2 className="text-blue-800">
                           Transaction:{" "}
                           {formatTransactionHashTable({
                             str: qrInfo.txScan,
                             a: 8,
                             b: 5,
                           })}
-                        </h3>
+                        </h2>
                       </div>
                     )}
                   </dd>

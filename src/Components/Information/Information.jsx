@@ -30,9 +30,8 @@ function Icon({ id, open }) {
       viewBox="0 0 24 24"
       strokeWidth={2}
       stroke="currentColor"
-      className={`${
-        id === open ? "rotate-180" : ""
-      } h-5 w-5 transition-transform`}
+      className={`${id === open ? "rotate-180" : ""
+        } h-5 w-5 transition-transform`}
     >
       <path
         strokeLinecap="round"
@@ -43,22 +42,13 @@ function Icon({ id, open }) {
   );
 }
 
-const VideoPlayer = ({ imageList, frameRate }) => {
-  const [currentFrame, setCurrentFrame] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentFrame((currentFrame) => (currentFrame + 1) % imageList.length);
-    }, 1000 / frameRate);
-    return () => clearInterval(interval);
-  }, [frameRate, imageList.length]);
-  console.log("imageList", imageList);
+const VideoPlayer = ({ video_urls }) => {
   return (
-    <video width="500" height="300" controls autoPlay>
-      {imageList.map((imageUrl, index) => (
-        <source key={index} src={imageUrl} type="image/jpeg" />
-      ))}
-      Your browser does not support the video tag.
-    </video>
+    video_urls.map((url, index) => (
+      <video key={index} controls autoPlay className="mb-4 w-full h-full">
+        <source src={url} type="video/mp4" />
+      </video>
+    ))
   );
 };
 
@@ -167,6 +157,23 @@ const Information = () => {
             )}
           {isLoadingProjectInfo && <Spinner />}
         </section>
+        <section data-aos="fade-up" className="more-infor">
+          <div className="mb-4">Video tổng quan</div>
+          {isSuccessProjectInfo && projectInfo.video_urls?.length > 0 && (
+            <div>
+              <VideoPlayer
+                video_urls={projectInfo.video_urls}
+              />
+            </div>
+          )}
+          {
+            isSuccessProjectInfo && projectInfo.video_urls?.length === 0 && (
+              <div className="text-base text-gray-300 font-normal p-4">
+                Không có video tổng quan
+              </div>
+            )
+          }
+        </section>
         <section className="timeline">
           {isSuccessProcess && dataProcess && (
             <ProcessInformation processInfo={dataProcess} />
@@ -175,25 +182,7 @@ const Information = () => {
         </section>
       </section>
 
-      <section data-aos="fade-up" className="more-infor">
-        {isSuccessImage && dataImage && (
-          <div>
-            <h1>Overview video</h1>
-            <VideoPlayer
-              imageList={dataImage.map((image) => image.image_url)}
-              frameRate={24}
-            />
-          </div>
-        )}
-      </section>
-      <section>
-        <section className="timeline">
-          {isSuccessProcess && dataProcess && (
-            <ProcessInformation processInfo={dataProcess} />
-          )}
-          {isLoadingProcess && <Spinner />}
-        </section>
-      </section>
+
 
       <section data-aos="fade-up" className="more-infor">
         <>
@@ -203,9 +192,8 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(1)}
-              className={`border-b-0 transition-colors ${
-                open === 1 ? "text-green-400 hover:text-green-700" : ""
-              } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${open === 1 ? "text-green-400 hover:text-green-700" : ""
+                } text-base lg:text-2xl`}
             >
               Video không có hoạt động tương ứng
             </AccordionHeader>
@@ -228,9 +216,8 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(2)}
-              className={`border-b-0 transition-colors ${
-                open === 2 ? "text-green-400 hover:text-green-700" : ""
-              } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${open === 2 ? "text-green-400 hover:text-green-700" : ""
+                } text-base lg:text-2xl`}
             >
               <div className="flex items-center space-x-8">
                 <h1> Thông tin dự kiến sản lượng</h1>
@@ -271,9 +258,8 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(3)}
-              className={`border-b-0 transition-colors ${
-                open === 3 ? "text-green-400 hover:text-green-700" : ""
-              } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${open === 3 ? "text-green-400 hover:text-green-700" : ""
+                } text-base lg:text-2xl`}
             >
               Quy trình mẫu
             </AccordionHeader>
@@ -292,9 +278,8 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(4)}
-              className={`border-b-0 transition-colors ${
-                open === 4 ? "text-green-400 hover:text-green-700" : ""
-              } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${open === 4 ? "text-green-400 hover:text-green-700" : ""
+                } text-base lg:text-2xl`}
             >
               <div className="flex items-center space-x-24">
                 <h1> Đầu ra </h1>
@@ -335,9 +320,8 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(5)}
-              className={`border-b-0 transition-colors ${
-                open === 5 ? "text-green-400 hover:text-green-700" : ""
-              } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${open === 5 ? "text-green-400 hover:text-green-700" : ""
+                } text-base lg:text-2xl`}
             >
               Hình ảnh và thời tiết
             </AccordionHeader>
@@ -355,9 +339,8 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(6)}
-              className={`border-b-0 transition-colors ${
-                open === 6 ? "text-green-400 hover:text-green-700" : ""
-              } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${open === 6 ? "text-green-400 hover:text-green-700" : ""
+                } text-base lg:text-2xl`}
             >
               Các chứng nhận
             </AccordionHeader>
@@ -377,9 +360,8 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(7)}
-              className={`border-b-0 transition-colors ${
-                open === 7 ? "text-green-400 hover:text-green-700" : ""
-              } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${open === 7 ? "text-green-400 hover:text-green-700" : ""
+                } text-base lg:text-2xl`}
             >
               <div className="flex items-center space-x-8">
                 <h1> Các hoạt động bị xóa</h1>

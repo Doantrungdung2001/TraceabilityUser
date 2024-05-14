@@ -67,6 +67,7 @@ export default function useInformation({ projectId }) {
       farm: data?.farm || "Không có dữ liệu",
       expectedEndDate: data?.expectedEndDate,
       expectedOutput: data?.expectedOutput,
+      video_urls: data?.video_urls,
     };
     return {
       projectInfo,
