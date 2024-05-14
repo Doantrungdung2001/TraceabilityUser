@@ -3,12 +3,14 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import useScan from "./useScan";
 import QR from "../../Services/qrService";
+import { useNavigate } from "react-router";
 import {
   formatDateTime,
   formatTransactionHashTable,
 } from "../../Utils/helpers";
 
 const ScanInfo = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
   const [scanned, setScanned] = React.useState(false);
@@ -102,6 +104,19 @@ const ScanInfo = () => {
             <div className="border-t border-gray-200 lg:px-4 lg:py-5 sm:p-0 px-5 py-1">
               <dl className="sm:divide-y sm:divide-gray-200">
                 <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  <dt className="text-sm font-medium text-gray-700">
+                    Mã truy xuất
+                  </dt>
+                  <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                    <a
+                      className="text-blue-800 text-sm italic cursor-pointer hover:text-blue-600"
+                      onClick={() => navigate(`/results/${projectInfo.id}`)}
+                    >
+                      {projectInfo.id}
+                    </a>
+                  </dd>
+                </div>
+                <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm font-medium text-gray-700">Tên cây</dt>
                   <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
                     {projectInfo.plant.plant_name}
@@ -115,10 +130,18 @@ const ScanInfo = () => {
                 </div>
                 <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm font-medium text-gray-700">
-                    Số hiệu dự án
+                    Số hiệu dự án Blockchain
                   </dt>
                   <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
-                    {projectInfo.projectIndex}
+                    {projectInfo.projectIndex} -
+                    <a
+                      className="text-blue-800 text-sm italic cursor-pointer hover:text-blue-600"
+                      onClick={() =>
+                        navigate(`/search/index/${projectInfo.projectIndex}`)
+                      }
+                    >
+                      Xem thông tin trên Blockchain cho số hiệu
+                    </a>
                   </dd>
                 </div>
                 <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -150,18 +173,14 @@ const ScanInfo = () => {
                         onClick={() => handleScanQR({ projectId, privateId })}
                         disabled={scanned}
                       >
-                        Scan QR
+                        Xác nhận mua hàng
                       </button>
                     </div>
                   </dt>
                   <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
                     {isLoadingProjectInfo ||
-                      (isLoadingQR && (
-                        <div>Loading...</div>
-                      ))}
-                    {loading && (
-                      <div>Scanning QR...</div>
-                    )}
+                      (isLoadingQR && <div>Loading...</div>)}
+                    {loading && <div>Scanning QR...</div>}
                     {qrInfo && qrInfo.firstScan && (
                       <div>
                         <h1>QR is scanned for the first time</h1>
