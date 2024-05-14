@@ -30,8 +30,9 @@ function Icon({ id, open }) {
       viewBox="0 0 24 24"
       strokeWidth={2}
       stroke="currentColor"
-      className={`${id === open ? "rotate-180" : ""
-        } h-5 w-5 transition-transform`}
+      className={`${
+        id === open ? "rotate-180" : ""
+      } h-5 w-5 transition-transform`}
     >
       <path
         strokeLinecap="round"
@@ -46,7 +47,7 @@ const VideoPlayer = ({ imageList, frameRate }) => {
   const [currentFrame, setCurrentFrame] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentFrame(currentFrame => (currentFrame + 1) % imageList.length);
+      setCurrentFrame((currentFrame) => (currentFrame + 1) % imageList.length);
     }, 1000 / frameRate);
     return () => clearInterval(interval);
   }, [frameRate, imageList.length]);
@@ -135,32 +136,55 @@ const Information = () => {
       
       <section className="content">
         <section className="infor">
-          {isSuccessProjectInfo && isSuccessQR && isSuccessCamera && isSuccessConnectionLoss && isSuccessDeleteProcess && isSuccessProcess && isSuccessExpect && isSuccessOutput && projectInfo.id && (
-            <InformationOverview
-              dataImage={ImageProduct}
-              allDistributerWithQR={allDistributerWithQR}
-              isSuccessImage={isSuccessOutput}
-              isLoadingImage={isLoadingOutput}
-              dataInfoOverview={projectInfo}
-              totalConnectionLossBySeconds={totalConnectionLossBySeconds}
-              processWithoutObjectDetectionCount={processWithoutObjectDetectionCount}
-              deletedItemCount={totalDeletedItem}
-              editItemCount={totalEditProcess + editExpectCount + editOutputCount}
-              totalItemCount={dataProcess?.length + dataExpect?.length + Output?.length}
-              totalCamera={totalCamera}
-            />
-          )}
+          {isSuccessProjectInfo &&
+            isSuccessQR &&
+            isSuccessCamera &&
+            isSuccessConnectionLoss &&
+            isSuccessDeleteProcess &&
+            isSuccessProcess &&
+            isSuccessExpect &&
+            isSuccessOutput &&
+            projectInfo.id && (
+              <InformationOverview
+                dataImage={ImageProduct}
+                allDistributerWithQR={allDistributerWithQR}
+                isSuccessImage={isSuccessOutput}
+                isLoadingImage={isLoadingOutput}
+                dataInfoOverview={projectInfo}
+                totalConnectionLossBySeconds={totalConnectionLossBySeconds}
+                processWithoutObjectDetectionCount={
+                  processWithoutObjectDetectionCount
+                }
+                deletedItemCount={totalDeletedItem}
+                editItemCount={
+                  totalEditProcess + editExpectCount + editOutputCount
+                }
+                totalItemCount={
+                  dataProcess?.length + dataExpect?.length + Output?.length
+                }
+                totalCamera={totalCamera}
+              />
+            )}
           {isLoadingProjectInfo && <Spinner />}
         </section>
-        <section data-aos="fade-up" className="more-infor">
-      {
-        isSuccessImage && dataImage && (
+        <section className="timeline">
+          {isSuccessProcess && dataProcess && (
+            <ProcessInformation processInfo={dataProcess} />
+          )}
+          {isLoadingProcess && <Spinner />}
+        </section>
+      </section>
+
+      <section data-aos="fade-up" className="more-infor">
+        {isSuccessImage && dataImage && (
           <div>
-      <h1>Overview video</h1>
-      <VideoPlayer imageList={dataImage.map((image) => image.image_url)} frameRate={24} />
-    </div>
-        )
-      }
+            <h1>Overview video</h1>
+            <VideoPlayer
+              imageList={dataImage.map((image) => image.image_url)}
+              frameRate={24}
+            />
+          </div>
+        )}
       </section>
         <section className="timeline">
           {isSuccessProcess && dataProcess && (
@@ -180,8 +204,9 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(1)}
-              className={`border-b-0 transition-colors ${open === 1 ? "text-green-400 hover:text-green-700" : ""
-                } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${
+                open === 1 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               Video không có hoạt động tương ứng
             </AccordionHeader>
@@ -204,10 +229,33 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(2)}
-              className={`border-b-0 transition-colors ${open === 2 ? "text-green-400 hover:text-green-700" : ""
-                } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${
+                open === 2 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
-              Thông tin dự kiến sản lượng
+              <div className="flex items-center space-x-8">
+                <h1> Thông tin dự kiến sản lượng</h1>
+                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center space-x-3 text-xs">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5 text-white" // Kích thước lớn hơn và màu xanh
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
+                    />
+                  </svg>
+
+                  <h1 className="text-white font-bold italic">
+                    Đã được ghi trên blockchain
+                  </h1>
+                </div>
+              </div>
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
               <section>
@@ -224,8 +272,9 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(3)}
-              className={`border-b-0 transition-colors ${open === 3 ? "text-green-400 hover:text-green-700" : ""
-                } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${
+                open === 3 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               Quy trình mẫu
             </AccordionHeader>
@@ -244,10 +293,33 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(4)}
-              className={`border-b-0 transition-colors ${open === 4 ? "text-green-400 hover:text-green-700" : ""
-                } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${
+                open === 4 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
-              Đầu ra
+              <div className="flex items-center space-x-24">
+                <h1> Đầu ra </h1>
+                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center space-x-3 text-xs">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5 text-white" // Kích thước lớn hơn và màu xanh
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
+                    />
+                  </svg>
+
+                  <h1 className="text-white font-bold italic">
+                    Đã được ghi trên blockchain
+                  </h1>
+                </div>
+              </div>
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
               <section>
@@ -264,8 +336,9 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(5)}
-              className={`border-b-0 transition-colors ${open === 5 ? "text-green-400 hover:text-green-700" : ""
-                } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${
+                open === 5 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               Hình ảnh và thời tiết
             </AccordionHeader>
@@ -283,8 +356,9 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(6)}
-              className={`border-b-0 transition-colors ${open === 6 ? "text-green-400 hover:text-green-700" : ""
-                } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${
+                open === 6 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               Các chứng nhận
             </AccordionHeader>
@@ -304,10 +378,33 @@ const Information = () => {
           >
             <AccordionHeader
               onClick={() => handleOpen(7)}
-              className={`border-b-0 transition-colors ${open === 7 ? "text-green-400 hover:text-green-700" : ""
-                } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${
+                open === 7 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
-              Các hoạt động bị xóa
+              <div className="flex items-center space-x-8">
+                <h1> Các hoạt động bị xóa</h1>
+                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center space-x-3 text-xs">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5 text-white" // Kích thước lớn hơn và màu xanh
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
+                    />
+                  </svg>
+
+                  <h1 className="text-white font-bold italic">
+                    Đã được ghi trên blockchain
+                  </h1>
+                </div>
+              </div>
             </AccordionHeader>
             <AccordionBody className="pt-0 text-base font-normal">
               <section className="px-1">
