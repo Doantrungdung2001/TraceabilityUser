@@ -100,7 +100,7 @@ const PlantDetil = () => {
       <>
         <Dialog open={isOpen} handler={handleClose}>
           <DialogHeader>Thông tin</DialogHeader>
-          <DialogBody>
+          <DialogBody className="lg:h-[35rem] h-[25rem] overflow-y-auto">
             <section>
               <div>
                 {data?.name && (
@@ -140,7 +140,6 @@ const PlantDetil = () => {
                     </h4>
                     <p className="font-semibold text-gray-600 mb-4 lg:text-base">
                       {renderTypeFertilization(data.type)}
-                      {/* {renderTypePestAndDisease(data.type)} */}
                     </p>
                   </div>
                 )}
