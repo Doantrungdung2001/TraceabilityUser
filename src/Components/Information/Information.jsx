@@ -132,7 +132,7 @@ const Information = () => {
       <div data-aos="fade-up" className="r-title">
         <button className="button">Mã truy xuất : {projectId}</button>
       </div>
-
+      
       <section className="content">
         <section className="infor">
           {isSuccessProjectInfo && isSuccessQR && isSuccessCamera && isSuccessConnectionLoss && isSuccessDeleteProcess && isSuccessProcess && isSuccessExpect && isSuccessOutput && projectInfo.id && (
@@ -152,15 +152,7 @@ const Information = () => {
           )}
           {isLoadingProjectInfo && <Spinner />}
         </section>
-        <section className="timeline">
-          {isSuccessProcess && dataProcess && (
-            <ProcessInformation processInfo={dataProcess} />
-          )}
-          {isLoadingProcess && <Spinner />}
-        </section>
-      </section>
-
-      <section data-aos="fade-up" className="more-infor">
+        <section data-aos="fade-up" className="more-infor">
       {
         isSuccessImage && dataImage && (
           <div>
@@ -170,6 +162,15 @@ const Information = () => {
         )
       }
       </section>
+        <section className="timeline">
+          {isSuccessProcess && dataProcess && (
+            <ProcessInformation processInfo={dataProcess} />
+          )}
+          {isLoadingProcess && <Spinner />}
+        </section>
+      </section>
+
+      
 
       <section data-aos="fade-up" className="more-infor">
         <>

@@ -25,6 +25,23 @@ const QR = {
       .catch((err) => {
         return err;
       });
+  },
+
+  scanQR: async ({projectId, privateId}) => {
+    return await publicHttp({
+      method: "POST",
+      url: `/qr/scan-incognito`,
+      data: {
+        projectId,
+        privateId,
+      },
+    })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
   }
 };
 

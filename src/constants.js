@@ -1381,6 +1381,46 @@ const eventMap = {
           }
       ]
   },
+  '0xe00e4f65a00c922549446ceed84c198bbf0086cfd35f5acf201dcce9721b6e8d': {
+      name: 'ProductPurchased',
+      dataStructure: [
+        {
+          indexed: false,
+          name: "projectId",
+          type: "string"
+        },
+        {
+          indexed: false,
+          name: "privateId",
+          type: "string"
+        },
+        {
+          indexed: false,
+          name: "purchaseInfo",
+          type: "string"
+        }
+      ],
+    },
+  '0x57817d1e9e317bce739cb023bbafa94e3b315ce6fbcf0c60b86aeedb898f483d': {
+    name: 'QRGenerated',
+    dataStructure: [
+      {
+        indexed: false,
+        name: "projectId",
+        type: "string"
+      },
+      {
+        indexed: false,
+        name: "generateQRInfo",
+        type: "string"
+      },
+      {
+        indexed: false,
+        name: "timeGenerate",
+        type: "uint256"
+      }
+    ]
+  }
 };
 
 const eventMapData = (event) => {
@@ -1466,6 +1506,22 @@ const eventMapData = (event) => {
                   <li>Video Hash: {event.data.videoHash}</li>
                   <li>Date: {Number(event.data.date)}</li>
                   <li>Time Description: {event.data.timeDesciption}</li>
+              </ul>
+          )
+      case 'ProductPurchased':
+          return (
+              <ul>
+                  <li>Project Id: {event.data.projectId}</li>
+                  <li>Private Id: {event.data.privateId}</li>
+                  <li>Purchase Info: {event.data.purchaseInfo}</li>
+              </ul>
+          )
+      case 'QRGenerated':
+          return (
+              <ul>
+                  <li>Project Id: {event.data.projectId}</li>
+                  <li>Generate QR Info: {event.data.generateQRInfo}</li>
+                  <li>Time Generate: {Number(event.data.timeGenerate)}</li>
               </ul>
           )
   }
