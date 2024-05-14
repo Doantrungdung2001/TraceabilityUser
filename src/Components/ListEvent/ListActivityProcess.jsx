@@ -222,6 +222,17 @@ const ListActivityProcess = ({ listActivity }) => {
                         Nhấn vào để xem chi tiết
                       </div>
                     </td>
+                    <td>
+                      {activity.objectDetections.length > 0 ? (
+                        <div className="item-center justify-center text-green-500">
+                          <h3>Có video</h3>
+                        </div>
+                      ) : (
+                        <div className="item-center justify-center text-red-500">
+                          Không có video
+                        </div>
+                      )}
+                    </td>
                   </tr>
                 </tbody>
               ))}
