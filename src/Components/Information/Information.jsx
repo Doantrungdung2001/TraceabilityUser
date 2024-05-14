@@ -133,7 +133,7 @@ const Information = () => {
       <div data-aos="fade-up" className="r-title">
         <button className="button">Mã truy xuất : {projectId}</button>
       </div>
-      
+
       <section className="content">
         <section className="infor">
           {isSuccessProjectInfo &&
@@ -186,6 +186,7 @@ const Information = () => {
           </div>
         )}
       </section>
+      <section>
         <section className="timeline">
           {isSuccessProcess && dataProcess && (
             <ProcessInformation processInfo={dataProcess} />
@@ -193,8 +194,6 @@ const Information = () => {
           {isLoadingProcess && <Spinner />}
         </section>
       </section>
-
-      
 
       <section data-aos="fade-up" className="more-infor">
         <>
