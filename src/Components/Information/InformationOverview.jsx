@@ -1,6 +1,13 @@
 import React from "react";
 import CarouselPicture from "../Picture/CarouselPicture";
-import { Spinner } from "@material-tailwind/react";
+import {
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+  Spinner
+} from "@material-tailwind/react";
 import {
   formatDate,
   formatDateTime,
@@ -10,15 +17,31 @@ import { useNavigate } from "react-router";
 
 const InformationOverview = ({
   dataImage,
-  allDistributerWithAmount,
+  allDistributerWithQR,
   isSuccessImage,
   isLoadingImage,
   dataInfoOverview,
+  totalConnectionLossBySeconds,
+  processWithoutObjectDetectionCount,
+  deletedItemCount,
+  editItemCount,
+  totalCamera,
+  totalItemCount
 }) => {
   const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => setOpen(!open);
   return (
     <section className="justify-center">
+
       <div className="min-h-screen flex flex-col sm:p-14 md:p-20 justify-center bg-white rounded-2xl">
+        <div className="flex justify-center items-center">
+          <h3 className="text-green-700 font-semibold text-lg mr-2">
+            Mức độ tin tưởng: Trung bình
+          </h3>
+          <a onClick={handleOpen} className="text-blue-400 cursor-pointer">(Chi tiết...)</a>
+        </div>
         <button
           className="flex justify-center items-center rounded-md font-bold text-lg mb-2 bg-green-800 p-3 ml-5 mr-5 mt-3 lg:ml-80 lg:mr-80"
           onClick={() =>
@@ -87,29 +110,29 @@ const InformationOverview = ({
                           Ngày trồng
                         </dt>
                         <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
-                          {formatDateTime(dataInfoOverview?.startDate)}
+                          {formatDate(dataInfoOverview?.startDate)}
                         </dd>
                       </div>
                       {
-                      dataInfoOverview.status === 'inProgress' && (
-                        <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt className="text-sm font-medium text-gray-700">
-                        Ngày dự kiến thu hoạch
-                      </dt>
-                      <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
-                        {formatDate(dataInfoOverview?.expectedEndDate)}
-                      </dd>
-                    </div>
-                      )
-                    }                    
-                    <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt className="text-sm font-medium text-gray-700">
-                        Dự kiến sản lượng ban đầu (kg)
-                      </dt>
-                      <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
-                        {dataInfoOverview?.expectedOutput}
-                      </dd>
-                    </div>
+                        dataInfoOverview.status === 'inProgress' && (
+                          <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt className="text-sm font-medium text-gray-700">
+                              Ngày dự kiến thu hoạch
+                            </dt>
+                            <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                              {formatDate(dataInfoOverview?.expectedEndDate)}
+                            </dd>
+                          </div>
+                        )
+                      }
+                      <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt className="text-sm font-medium text-gray-700">
+                          Dự kiến sản lượng ban đầu (kg)
+                        </dt>
+                        <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                          {dataInfoOverview?.expectedOutput}
+                        </dd>
+                      </div>
                       <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-700">
                           Diện tích trồng (m2 )
@@ -128,12 +151,13 @@ const InformationOverview = ({
                       </div>
                       <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-700">
-                          Nhà cung cấp
+                          Cửa hàng cùng số lượng đã bán / tổng số
                         </dt>
                         <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
-                          {allDistributerWithAmount?.map((data, index) => (
+                          {console.log("allDistributerWithQR here", allDistributerWithQR)}
+                          {allDistributerWithQR?.map((data, index) => (
                             <p key={index}>
-                              {data.distributer.name} <br />
+                              {data.name}: {data.totalScannedQR}/{data.totalQR} <br />
                             </p>
                           ))}
                         </dd>
@@ -146,6 +170,64 @@ const InformationOverview = ({
           </section>
         </div>
       </div>
+      <Dialog open={open} handler={handleOpen}>
+        <DialogHeader>Thông tin đánh giá</DialogHeader>
+        <DialogBody>
+          <div className="bg-grey">
+            <div className="bg-white overflow-hidden shadow rounded-lg border">
+              <div className="border-t border-gray-200 lg:px-4 lg:py-5 sm:p-0 px-5 py-1">
+                <dl className="sm:divide-y sm:divide-gray-200">
+                  <div className="lg:py-3 py-1 sm:py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 lg:grid-cols-2">
+                    <dt className="text-sm font-medium text-gray-700">
+                      Số thời gian camera bị mất kết nối
+                    </dt>
+                    <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                      {totalConnectionLossBySeconds / 60} phút
+                    </dd>
+                  </div>
+                  <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-700">
+                      Số hoạt động không có video đi kèm
+                    </dt>
+                    <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                      {processWithoutObjectDetectionCount}
+                    </dd>
+                  </div>
+                  <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-700">
+                      Số lượng khai báo bị xoá
+                    </dt>
+                    <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                      {deletedItemCount}
+                    </dd>
+                  </div>
+                  <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-700">
+                      Số lượng khai báo bị sửa đổi
+                    </dt>
+                    <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                      {editItemCount} / {totalItemCount}
+                    </dd>
+                  </div>
+                  <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-700">
+                      Số lượng camera
+                    </dt>
+                    <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                      {totalCamera}
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </DialogBody>0
+        <DialogFooter>
+          <Button variant="gradient" color="red" onClick={handleOpen}>
+            <span>Thoát</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
     </section>
   );
 };

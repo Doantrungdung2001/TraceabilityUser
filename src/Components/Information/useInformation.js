@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import PROJECT from "../../Services/projectService";
+import QR from "../../Services/qrService";
 export default function useInformation({ projectId }) {
   // output images
   const parseData = useCallback((data) => {
@@ -32,7 +33,12 @@ export default function useInformation({ projectId }) {
       amountPerOne: item?.amountPerOne,
     }));
 
-    return { outputImages, allDistributerWithAmount, output };
+    const editOutputCount = output.reduce(
+      (total, item) => total + item.historyOutput.length,
+      0
+    );
+
+    return { outputImages, allDistributerWithAmount, output, editOutputCount };
   }, []);
   const {
     data: dataOutput,
@@ -220,10 +226,17 @@ export default function useInformation({ projectId }) {
       ...groupedByDate.values(),
     ];
 
-    // In ra mảng mới
-    console.log(formatedNonProcessObjectDetectionewArray);
+    const processWithoutObjectDetectionCount = dataProcess.filter(
+      (item) => item.objectDetections.length === 0
+    ).length;
 
-    return { dataProcess, formatedNonProcessObjectDetectionewArray };
+    // check number of edit process base on number of item in historyProcess each
+    let totalEditProcess = 0;
+    dataProcess.forEach((item) => {
+      totalEditProcess += item.historyProcess.length;
+    });
+
+    return { dataProcess, formatedNonProcessObjectDetectionewArray, processWithoutObjectDetectionCount, totalEditProcess };
   }, []);
 
   const {
@@ -249,7 +262,12 @@ export default function useInformation({ projectId }) {
       historyExpect: item?.historyExpect,
       createdAtTime: item?.createdAtTime,
     }));
-    return { expect };
+
+    const editExpectCount = expect.reduce(
+      (total, item) => total + item.historyExpect.length,
+      0
+    );
+    return { expect, editExpectCount };
   }, []);
 
   const {
@@ -330,7 +348,9 @@ export default function useInformation({ projectId }) {
       deletedExpect: data?.deletedExpect,
       deletedOutput: data?.deletedOutput,
     };
-    return { dataDeleteProcess };
+
+    const totalDeletedItem = dataDeleteProcess.deletedProcess.length + dataDeleteProcess.deletedExpect.length + dataDeleteProcess.deletedOutput.length;
+    return { dataDeleteProcess, totalDeletedItem };
   }, []);
 
   const {
@@ -342,6 +362,122 @@ export default function useInformation({ projectId }) {
     queryFn: () => PROJECT.getInfoDeleteProcess(projectId),
     staleTime: 20 * 1000,
     select: (data) => parseDataDeleteProcess(data?.data?.metadata),
+    enabled: !!projectId,
+  });
+
+  const parseDataConnectionLoss = useCallback((data) => {
+    const connectionLosses = data.map((item) => ({
+      id: item?._id,
+      camera_id: item?.camera_id,
+      start_time: item?.start_time,
+      end_time: item?.end_time,
+      tx_hash: item?.tx_hash,
+    }));
+
+    connectionLosses.map((item) => {
+      item.start_time = new Date(item.start_time);
+    });
+
+    const totalConnectionLossBySeconds = connectionLosses.reduce(
+      (total, item) => total + (new Date(item.end_time)?.getTime()  - new Date(item.start_time)?.getTime()) / 1000 ,
+      0
+    );
+    return { connectionLosses, totalConnectionLossBySeconds };
+  }, []);
+
+  const {
+    data: dataConnectionLoss,
+    isSuccess: isSuccessConnectionLoss,
+    isLoading: isLoadingConnectionLoss,
+  } = useQuery({
+    queryKey: ["getConnectionLossByProject", projectId],
+    queryFn: () => PROJECT.getConnectionLossByProject(projectId),
+    staleTime: 20 * 1000,
+    select: (data) => parseDataConnectionLoss(data?.data?.metadata),
+    enabled: !!projectId,
+  });
+
+  const parseDataImage = useCallback((data) => {
+    const images = data.map((item) => ({
+      id: item?._id,
+      camera_id: item?.camera_id,
+      capture_time: item?.capture_time,
+      image_url: item?.image_url,
+    }));
+
+    return { images };
+  }, []);
+
+  const {
+    data: dataImage,
+    isSuccess: isSuccessImage,
+    isLoading: isLoadingImage,
+  } = useQuery({
+    queryKey: ["getImageByProject", projectId],
+    queryFn: () => PROJECT.getImageByProject(projectId),
+    staleTime: 20 * 1000,
+    select: (data) => parseDataImage(data?.data?.metadata),
+    enabled: !!projectId,
+  });
+
+  const parseDataCamera = useCallback((data) => {
+    const cameras = data.map((item) => ({
+      id: item?._id,
+      name: item?.name,
+      rtsp_link: item?.rtsp_link,
+    }));
+
+    const totalCamera = cameras.length;
+
+    return { cameras, totalCamera };
+  }, []);
+
+  const {
+    data: dataCamera,
+    isSuccess: isSuccessCamera,
+    isLoading: isLoadingCamera,
+  } = useQuery({
+    queryKey: ["getCameraByProject", projectId],
+    queryFn: () => PROJECT.getCameraByProject(projectId),
+    staleTime: 20 * 1000,
+    select: (data) => parseDataCamera(data?.data?.metadata),
+    enabled: !!projectId,
+  });
+
+  const parseQRProject = useCallback((data) => {
+    // group based on distributer.name then count totalQR and totalScannedQR each
+    const groupedByDistributer = new Map();
+    data.forEach((item) => {
+      const distributer = item.distributer;
+      if (groupedByDistributer.has(distributer.name)) {
+        const current = groupedByDistributer.get(distributer.name);
+        current.totalQR += 1;
+        current.totalScannedQR += item.isScanned ? 1 : 0;
+      } else {
+        groupedByDistributer.set(distributer.name, {
+          name: distributer.name,
+          totalQR: 1,
+          totalScannedQR: item.isScanned ? 1 : 0,
+        });
+      }
+    });
+
+    return {
+      totalQR: data.length,
+      totalScannedQR: data.filter((item) => item.isScanned).length,
+      allDistributerWithQR: [...groupedByDistributer.values()],
+    };
+  }, []);
+
+  const {
+    data: dataQR,
+    isSuccess: isSuccessQR,
+    isLoading: isLoadingQR,
+  } = useQuery({
+    queryKey: ["getQRByProjectId", projectId],
+    queryFn: () => QR.getQRByProjectId(projectId),
+    staleTime: 20 * 1000,
+    select: (data) => parseQRProject(data?.data?.metadata),
     enabled: !!projectId,
   });
 
@@ -371,5 +507,26 @@ export default function useInformation({ projectId }) {
     dataDeleteProcess: dataDeleteProcess?.dataDeleteProcess,
     isSuccessDeleteProcess,
     isLoadingDeleteProcess,
+    dataConnectionLoss: dataConnectionLoss?.connectionLosses,
+    totalConnectionLossBySeconds: dataConnectionLoss?.totalConnectionLossBySeconds,
+    isSuccessConnectionLoss,
+    isLoadingConnectionLoss,
+    dataImage: dataImage?.images,
+    isSuccessImage,
+    isLoadingImage,
+    dataCamera: dataCamera?.cameras,
+    totalCamera: dataCamera?.totalCamera,
+    isSuccessCamera,
+    isLoadingCamera,
+    totalEditProcess: dataProcess?.totalEditProcess,
+    processWithoutObjectDetectionCount: dataProcess?.processWithoutObjectDetectionCount,
+    totalDeletedItem: dataDeleteProcess?.totalDeletedItem,
+    editExpectCount: dataExpect?.editExpectCount,
+    editOutputCount: dataOutput?.editOutputCount,
+    totalQR: dataQR?.totalQR,
+    totalScannedQR: dataQR?.totalScannedQR,
+    allDistributerWithQR: dataQR?.allDistributerWithQR,
+    isSuccessQR,
+    isLoadingQR,
   };
 }

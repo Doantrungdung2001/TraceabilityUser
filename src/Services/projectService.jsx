@@ -131,6 +131,45 @@ const PROJECT = {
         return err;
       });
   },
+
+  getConnectionLossByProject: async (projectId) => {
+    return await publicHttp({
+      method: "GET",
+      url: `/project/${projectId}/connectionLoss`,
+    })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
+  },
+
+  getImageByProject: async (projectId) => {
+    return await publicHttp({
+      method: "GET",
+      url: `/project/${projectId}/image`,
+    })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
+  },
+
+  getCameraByProject: async (projectId) => {
+    return await publicHttp({
+      method: "GET",
+      url: `/project/${projectId}/camera`,
+    })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
+  },
 };
 
 export default PROJECT;

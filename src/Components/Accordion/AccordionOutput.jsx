@@ -33,7 +33,7 @@ const AccordionOutput = ({ dataAccordion }) => {
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
   return (
     <>
-      {dataAccordion.lenght ? (
+      {dataAccordion.length ? (
         dataAccordion?.map((data, index) => (
           <Accordion
             open={open === index + 1}
