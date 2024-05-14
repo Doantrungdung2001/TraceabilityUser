@@ -113,57 +113,103 @@ const ProfileFarm = () => {
           {isLoadingFarmInfo && <Spinner />}
         </section>
       </div>
-      {
-        isSuccessQR && isSuccessDistributorByFarm && isSuccessPlant && isSuccessProject && (
-          <section>
-            <span className="primaryText">Tổng quan trang trại</span>
-            <div className="border border-gray-300 shadow-sm rounded-lg overflow-hidden mx-auto mt-8 lg:w-[900px]">
-              <table className="w-full text-sm leading-5 lg:text-lg">
-                <tbody>
-                  <tr>
-                    <td className="py-3 px-4 text-left font-medium text-gray-600">Số cây trang trại canh tác</td>
-                    <td className="py-3 px-4 text-left">{plantsCount}</td>
-                  </tr>
-                  <tr className="bg-gray-50">
-                    <td className="py-3 px-4 text-left font-medium text-gray-600">Số dự án đang thực hiện</td>
-                    <td className="py-3 px-4 text-left">{inProgressProjectsCount}</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 px-4 text-left font-medium text-gray-600">Số dự án đã hoàn thành</td>
-                    <td className="py-3 px-4 text-left">{finishedProjectsCount}</td>
-                  </tr>
-                  <tr className="bg-gray-50">
-                    <td className="py-3 px-4 text-left font-medium text-gray-600">Số dự án đã hủy</td>
-                    <td className="py-3 px-4 text-left">{canceledProjectsCount}</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 px-4 text-left font-medium text-gray-600">Tổng số mã QR đã tạo</td>
-                    <td className="py-3 px-4 text-left">{totalQRCount}</td>
-                  </tr>
-                  <tr className="bg-gray-50">
-                    <td className="py-3 px-4 text-left font-medium text-gray-600">Tổng số mã QR đã quét</td>
-                    <td className="py-3 px-4 text-left">{scannedQRCount}</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 px-4 text-left font-medium text-gray-600">Số lượng đối tác phân phối</td>
-                    <td className="py-3 px-4 text-left">
-                      <ul>
-                        {
-                          distributorsByFarm.map(distributor => {
-                            return (
-                              <li>{distributor.name} - {distributor.totalAmount} (sản phẩm)</li>
-                            )
-                          })
-                        }
-                      </ul>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+      {isSuccessQR &&
+        isSuccessDistributorByFarm &&
+        isSuccessPlant &&
+        isSuccessProject && (
+          <section className="flex justify-center">
+            <div className="w-full lg:w-[900px] p-6 bg-grey lg:ml-20 lg:mr-20">
+              <div className="bg-white overflow-hidden shadow rounded-lg border">
+                <div className="lg:py-5 px-4 py-3">
+                  <div className="justify-between items-center text-sm">
+                    <div>
+                      <h3 className="text-lg leading-6 font-medium text-green-700 lg:text-2xl">
+                        Tổng quan trang trại
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+                <div className="border-t border-gray-200 lg:px-4 lg:py-5 sm:p-0 px-5 py-1">
+                  <dl className="sm:divide-y sm:divide-gray-200">
+                    <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-700">
+                        Số cây trang trại canh tác
+                      </dt>
+                      <dd className="lg:ml-52 mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                        {plantsCount}
+                      </dd>
+                    </div>
+                    <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-700">
+                        Số dự án đang thực hiện
+                      </dt>
+                      <dd className="lg:ml-52 mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                        {inProgressProjectsCount}
+                      </dd>
+                    </div>
+                    <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-700">
+                        Số dự án đã hoàn thành
+                      </dt>
+                      <dd className="lg:ml-52 mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                        {finishedProjectsCount}
+                      </dd>
+                    </div>
+                    <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-700">
+                        Số dự án đã hủy
+                      </dt>
+                      <dd className="lg:ml-52 mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                        {canceledProjectsCount}
+                      </dd>
+                    </div>
+                    <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-700">
+                        Tổng số mã QR đã tạo
+                      </dt>
+                      <dd className="lg:ml-52 mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                        {totalQRCount}
+                      </dd>
+                    </div>
+                    <div className=" lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-700">
+                        Tổng số mã QR đã quét
+                      </dt>
+                      <dd className="lg:ml-52 mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                        {scannedQRCount}
+                      </dd>
+                    </div>
+                    <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-700">
+                        Số dự án đã hủy
+                      </dt>
+                      <dd className="lg:ml-52 mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                        {canceledProjectsCount}
+                      </dd>
+                    </div>
+                    <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-700">
+                        Số lượng đối tác phân phối
+                      </dt>
+                      <dd className="lg:ml-52 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                        {distributorsByFarm.map((distributer) => (
+                          <div key={distributer.name}>
+                            <h1>
+                              {distributer.name}- {distributer.totalAmount}
+                              {""}
+                              sản phẩm
+                            </h1>
+                            <br />
+                          </div>
+                        ))}
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
             </div>
           </section>
-        )
-      }
+        )}
 
       {isSuccessPlant && <Plant dataPlant={allPlant} />}
       {isLoadingPlant && <Spinner />}
