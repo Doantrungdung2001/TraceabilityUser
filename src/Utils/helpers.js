@@ -92,6 +92,7 @@ export function renderTypeProcessProject(type) {
 }
 
 export function formatTransactionHashTable({ str, a, b }) {
+  if(!str) return "Transaction not found";
   if (
     a < 0 ||
     b < 0 ||
