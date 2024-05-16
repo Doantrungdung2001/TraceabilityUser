@@ -21,6 +21,7 @@ import {
   AccordionBody,
   Button,
 } from "@material-tailwind/react";
+import { FaCopy } from "react-icons/fa"; // Import icon copy từ react-icons
 
 import { Icon } from "@mui/material";
 import DialogInfoDetail from "../Dialog/DialogInfoDetail";
@@ -34,6 +35,10 @@ const ListActivityProcess = ({ listActivity }) => {
   const [reportsOpen, setReportsOpen] = useState(0);
   const handleReportsOpen = (value) =>
     setReportsOpen(reportsOpen === value ? 0 : value);
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+    alert("Copy thành công!");
+  };
   const data = [
     {
       label: "Thông tin",
@@ -115,25 +120,41 @@ const ListActivityProcess = ({ listActivity }) => {
                       <dt className="text-sm font-medium text-gray-700">
                         Mã Transaction
                       </dt>
-                      <dd className="mt-1 text-sm text-blue-500 lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                      <dd className="mt-1 text-sm text-blue-500 lg:text-base font-medium sm:mt-0 sm:col-span-2 flex items-center">
                         {formatTransactionHashTable({
                           str: selectedProcess?.objectDetections[0].tx_hash,
                           a: 8,
                           b: 5,
                         })}
+                        <FaCopy
+                          className="ml-20 cursor-pointer text-blue-400 hover:text-blue-800"
+                          onClick={() =>
+                            copyToClipboard(
+                              selectedProcess.objectDetections[0].tx_hash
+                            )
+                          }
+                        />
                       </dd>
                     </div>
                     <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-700">
                         Video Hash
                       </dt>
-                      <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                      <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2 flex items-center">
                         {formatLongText({
                           str: selectedProcess?.objectDetections[0]
                             .concatenated_hash,
                           a: 8,
                           b: 5,
                         })}
+                        <FaCopy
+                          className="ml-20 cursor-pointer text-gray-400 hover:text-gray-700"
+                          onClick={() =>
+                            copyToClipboard(
+                              selectedProcess.objectDetections[0].tx_hash
+                            )
+                          }
+                        />
                       </dd>
                     </div>
                   </dl>

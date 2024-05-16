@@ -21,7 +21,7 @@ const CarouselPicture = ({ dataImage }) => {
       {dataImage?.map((image, index) => (
         <div
           key={index}
-          className="h-44 flex justify-center items-center h-full"
+          className="h-44 flex justify-center items-center"
         >
           <img
             src={image?.img || image}
