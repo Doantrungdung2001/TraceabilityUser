@@ -3,7 +3,7 @@ import { Carousel } from "@material-tailwind/react";
 const CarouselPicture = ({ dataImage }) => {
   return (
     <Carousel
-      className="rounded-xl"
+      className="rounded-xl lg:h-72 lg:w-96"
       navigation={({ setActiveIndex, activeIndex, length }) => (
         <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
           {new Array(length).fill("").map((_, i) => (
@@ -18,13 +18,17 @@ const CarouselPicture = ({ dataImage }) => {
         </div>
       )}
     >
-      {dataImage?.map((imgae, index) => (
-        <img
-          src={imgae?.img || imgae}
-          alt={index + 1}
-          className="h-40 w-full object-cover rounded-xl lg:h-64 "
+      {dataImage?.map((image, index) => (
+        <div
           key={index}
-        />
+          className="h-44 flex justify-center items-center h-full"
+        >
+          <img
+            src={image?.img || image}
+            alt={`Image ${index + 1}`}
+            className="object-contain rounded-xl"
+          />
+        </div>
       ))}
     </Carousel>
   );
