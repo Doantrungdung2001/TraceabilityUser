@@ -54,7 +54,7 @@ const ScanInfo = () => {
 
       if (res.status === 200 && !res.data.metadata.message) {
         setQRInfo({
-          timeScanned: res.data.metadata?.qrItem?.timeScanned,
+          timeScanned: res.data.metadata?.timeScanned,
           txScan: res.data.metadata?.txScan,
           firstScan: true,
         });
