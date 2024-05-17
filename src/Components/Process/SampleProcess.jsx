@@ -37,7 +37,7 @@ function Icon({ id, open }) {
   );
 }
 
-const SampleProcess = ({ dataDetailSmapleProces }) => {
+const SampleProcess = ({ dataDetailSmapleProces, dataProcess }) => {
   const [open, setOpen] = useState(0);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
