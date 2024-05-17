@@ -30,7 +30,7 @@ export default function useInformation({ projectId }) {
       historyOutput: item?.historyOutput,
       createdAtTime: item?.createdAtTime,
       distributerWithAmount: item?.distributerWithAmount,
-      amountPerOne: item?.amountPerOne,
+      quantity: item?.quantity,
     }));
 
     const editOutputCount = output.reduce(

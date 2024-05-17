@@ -43,10 +43,10 @@ const TableDetailOutput = ({ detailOutput }) => {
             </div>
             <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-700">
-                Sản lượng/1 sản phẩm (kg)
+              Số lượng lượng sản phẩm
               </dt>
               <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
-                {detailOutput.amountPerOne}
+                {detailOutput.quantity}
               </dd>
             </div>
             <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -80,9 +80,9 @@ const TableDetailOutput = ({ detailOutput }) => {
           <div className="border-t border-gray-200 lg:px-4 lg:py-5 sm:p-0 px-5 py-1">
             <dl className="sm:divide-y sm:divide-gray-200">
               <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-700">Số lượng</dt>
+                <dt className="text-sm font-medium text-gray-700">Số lượng sản phẩm </dt>
                 <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
-                  {dataDistributer.amount}
+                  {dataDistributer.quantity}
                 </dd>
               </div>
               <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
