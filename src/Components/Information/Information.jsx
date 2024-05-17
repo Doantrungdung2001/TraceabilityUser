@@ -90,6 +90,9 @@ const Information = () => {
     dataImage,
     isSuccessImage,
     isLoadingImage,
+    dataWeather,
+    isSuccessWeather,
+    isLoadingWeather,
     dataCamera,
     totalCamera,
     isSuccessCamera,
@@ -159,7 +162,7 @@ const Information = () => {
         </section>
         <section data-aos="fade-up" className="more-infor">
           <div className="mb-4">Video tổng quan</div>
-          {isSuccessProjectInfo && projectInfo.video_urls?.length > 0 && (
+          {isSuccessProjectInfo && projectInfo?.video_urls?.length > 0 && (
             <div>
               <VideoPlayer
                 video_urls={projectInfo.video_urls}
@@ -167,7 +170,7 @@ const Information = () => {
             </div>
           )}
           {
-            isSuccessProjectInfo && projectInfo.video_urls?.length === 0 && (
+            isSuccessProjectInfo && !projectInfo?.video_urls ||projectInfo?.video_urls?.length === 0 && (
               <div className="text-base text-gray-300 font-normal p-4">
                 Không có video tổng quan
               </div>
@@ -195,7 +198,7 @@ const Information = () => {
               className={`border-b-0 transition-colors ${open === 1 ? "text-green-400 hover:text-green-700" : ""
                 } text-base lg:text-2xl`}
             >
-              Video không có hoạt động tương ứng
+              Video không tương ứng với hoạt động canh tác nào
             </AccordionHeader>
             <AccordionBody className="text-base font-normal">
               {nonProcessObjectDetection?.length ? (
@@ -266,7 +269,7 @@ const Information = () => {
             <AccordionBody className="pt-0 text-base font-normal">
               {isSuccessPlantFarming && dataPlantFarming && (
                 <section>
-                  <SampleProcess dataDetailSmapleProces={dataPlantFarming} />
+                  <SampleProcess dataDetailSmapleProces={dataPlantFarming} dataProcess={dataProcess}/>
                 </section>
               )}
               {isLoadingPlantFarming && <Spinner />}
@@ -314,7 +317,8 @@ const Information = () => {
               </section>
             </AccordionBody>
           </Accordion>
-          <Accordion
+          { isSuccessImage && isSuccessWeather &&
+            <Accordion
             open={open === 5}
             className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"
           >
@@ -328,11 +332,18 @@ const Information = () => {
             <AccordionBody className="pt-0 text-base font-normal">
               <section className="px-4">
                 <div>
-                  <Calendar />
+                  <Calendar 
+                  dataImage={dataImage}
+                  dataWeather={dataWeather}
+                  />
                 </div>
               </section>
             </AccordionBody>
           </Accordion>
+          }
+          {
+            isLoadingImage || isLoadingWeather && <Spinner />
+          }
           <Accordion
             open={open === 6}
             className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"

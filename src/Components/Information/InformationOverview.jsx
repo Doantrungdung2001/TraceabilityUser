@@ -184,16 +184,17 @@ const InformationOverview = ({
                           Cửa hàng cùng số lượng đã bán / tổng số
                         </dt>
                         <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
-                          {console.log(
-                            "allDistributerWithQR here",
-                            allDistributerWithQR
-                          )}
                           {allDistributerWithQR?.map((data, index) => (
                             <p key={index}>
                               {data.name}: {data.totalScannedQR}/{data.totalQR}{" "}
                               <br />
                             </p>
                           ))}
+                          {
+                            !allDistributerWithQR || allDistributerWithQR.length === 0 && (
+                              <p>Không có dữ liệu</p>
+                            ) 
+                          }
                         </dd>
                       </div>
                     </dl>

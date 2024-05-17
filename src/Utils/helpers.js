@@ -4,6 +4,7 @@ export const sleep = (ms) => {
 
 //format date
 export function formatDate(inputDateTime) {
+  if (!inputDateTime) return "";
   // Tạo một đối tượng Date từ chuỗi đầu vào
   const date = new Date(inputDateTime);
   // Lấy ngày, tháng, năm, giờ và phút từ đối tượng Date
@@ -18,6 +19,7 @@ export function formatDate(inputDateTime) {
 
 //format datetime
 export function formatDateTime(inputDateTime) {
+  if (!inputDateTime) return "";
   // Tạo một đối tượng Date từ chuỗi đầu vào
   const date = new Date(inputDateTime);
   // Lấy ngày, tháng, năm, giờ và phút từ đối tượng Date

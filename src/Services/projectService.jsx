@@ -158,6 +158,19 @@ const PROJECT = {
       });
   },
 
+  getWeatherByProject: async (projectId) => {
+    return await publicHttp({
+      method: "GET",
+      url: `/project/${projectId}/weather`,
+    })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
+  },
+
   getCameraByProject: async (projectId) => {
     return await publicHttp({
       method: "GET",

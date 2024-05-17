@@ -404,6 +404,8 @@ export default function useInformation({ projectId }) {
       camera_id: item?.camera_id,
       capture_time: item?.capture_time,
       image_url: item?.image_url,
+      tx_hash: item?.tx_hash,
+      image_hash: item?.image_hash,
     }));
 
     return { images };
@@ -418,6 +420,32 @@ export default function useInformation({ projectId }) {
     queryFn: () => PROJECT.getImageByProject(projectId),
     staleTime: 20 * 1000,
     select: (data) => parseDataImage(data?.data?.metadata),
+    enabled: !!projectId,
+  });
+
+  const parseDataWeather = useCallback((data) => {
+    const weathers = data.map((item) => ({
+      id: item?._id,
+      district: item?.district,
+      time: item?.time,
+      description: item?.description,
+      temp: item?.temp,
+      humidity: item?.humidity,
+      windSpeed: item?.windSpeed,
+    }));
+
+    return { weathers };
+  }, []);
+
+  const {
+    data: dataWeather,
+    isSuccess: isSuccessWeather,
+    isLoading: isLoadingWeather,
+  } = useQuery({
+    queryKey: ["getWeatherByProject", projectId],
+    queryFn: () => PROJECT.getWeatherByProject(projectId),
+    staleTime: 20 * 1000,
+    select: (data) => parseDataWeather(data?.data?.metadata),
     enabled: !!projectId,
   });
 
@@ -515,6 +543,9 @@ export default function useInformation({ projectId }) {
     dataImage: dataImage?.images,
     isSuccessImage,
     isLoadingImage,
+    dataWeather: dataWeather?.weathers,
+    isSuccessWeather,
+    isLoadingWeather,
     dataCamera: dataCamera?.cameras,
     totalCamera: dataCamera?.totalCamera,
     isSuccessCamera,
