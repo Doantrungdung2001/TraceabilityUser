@@ -41,26 +41,42 @@ const ListProject = () => {
   } = useProfile({
     farmId,
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
-  const filterProjects = allProject ? allProject.filter((project) => {
-    console.log("project: ", project)
-    if (projectStatus === "all") {
-      return true;
-    }
-    if (projectStatus === "inProgress") {
-      return project.status === "inProgress" && project.output?.length === 0;
-    }
-    if (projectStatus === "inSell") {
-      return project.status === "inProgress" && project.output?.length > 0;
-    }
-    if (projectStatus === "done") {
-      return project.status === "finished";
-    }
-    if (projectStatus === "cancel") {
-      return project.status === "cancel";
-    }
-  }): [];
-  
+  const filterProjects = allProject
+    ? allProject.filter((project) => {
+        if (projectStatus === "all") {
+          return true;
+        }
+        if (projectStatus === "inProgress") {
+          return (
+            project.status === "inProgress" && project.output?.length === 0
+          );
+        }
+        if (projectStatus === "inSell") {
+          return project.status === "inProgress" && project.output?.length > 0;
+        }
+        if (projectStatus === "done") {
+          return project.status === "finished";
+        }
+        if (projectStatus === "cancel") {
+          return project.status === "cancel";
+        }
+      })
+    : [];
+
+  const totalPages = Math.ceil(filterProjects.length / itemsPerPage);
+
+  const currentProjects = filterProjects.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <>
       <div data-aos="fade-up" className="mx-auto pt-20">
@@ -97,23 +113,24 @@ const ListProject = () => {
         <section className="pt-[4vh] px-8 mb-5 ">
           <span className="orangeText">Danh sách dự án</span>
           <div className="w-72">
-      <Select
-        label="Lựa chọn trạng thái dự án"
-        value={projectStatus}
-        onChange={(val) => {
-          console.log("val: ", val)
-          setProjectStatus(val)}}
-      >
-        <Option value="all">Tất cả</Option>
-        <Option value="inProgress">Chưa thu hoạch</Option>
-        <Option value="inSell">Đang bày bán</Option>
-        <Option value="done">Đã kết thúc</Option>
-        <Option value="cancel">Đã hủy</Option>
-      </Select>
-    </div>
+            <Select
+              label="Lựa chọn trạng thái dự án"
+              value={projectStatus}
+              onChange={(val) => {
+                console.log("val: ", val);
+                setProjectStatus(val);
+              }}
+            >
+              <Option value="all">Tất cả</Option>
+              <Option value="inProgress">Chưa thu hoạch</Option>
+              <Option value="inSell">Đang bày bán</Option>
+              <Option value="done">Đã kết thúc</Option>
+              <Option value="cancel">Đã hủy</Option>
+            </Select>
+          </div>
           <div className=" mx-auto grid flex justify-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
             {isSuccessProject &&
-              filterProjects?.map((card) => (
+              currentProjects?.map((card) => (
                 <Card className="max-w-xs overflow-hidden mt-5">
                   <CardHeader
                     floated={false}
@@ -145,14 +162,39 @@ const ListProject = () => {
                     </Typography>
                   </CardBody>
                   <CardFooter className="flex items-center justify-between">
-                    <Button onClick={()=>{navigate(`/results/${card.id}`)}}>Chi tiết</Button>
+                    <Button
+                      onClick={() => {
+                        navigate(`/results/${card.id}`);
+                      }}
+                    >
+                      Chi tiết
+                    </Button>
                     <div className="flex items-center flex-col">
-                    <Typography className="font-normal">{formatDate(card.startDate)}</Typography>
-                    <Typography className="font-normal">{formatDate(card.expectedEndDate)}</Typography>
+                      <Typography className="font-normal">
+                        {formatDate(card.startDate)}
+                      </Typography>
+                      <Typography className="font-normal">
+                        {formatDate(card.expectedEndDate)}
+                      </Typography>
                     </div>
                   </CardFooter>
                 </Card>
-              ))}{" "}
+              ))}
+          </div>
+          <div className="mt-8 flex justify-center">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`mx-1 px-3 py-1 rounded-md ${
+                  currentPage === index + 1
+                    ? "bg-teal-600 text-white"
+                    : "bg-white text-teal-600"
+                } border border-teal-600 hover:bg-teal-700 hover:text-white`}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
           </div>
           {isLoadingProject && <Spinner />}
         </section>
