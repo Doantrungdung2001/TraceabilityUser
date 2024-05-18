@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CarouselPicture from "../Picture/CarouselPicture";
 import {
   Button,
@@ -7,12 +7,11 @@ import {
   DialogBody,
   DialogFooter,
   Spinner,
+  Drawer,
+  Typography,
+  IconButton,
 } from "@material-tailwind/react";
-import {
-  formatDate,
-  formatDateTime,
-  formatTransactionHashTable,
-} from "../../Utils/helpers";
+import { formatDate, formatTransactionHashTable } from "../../Utils/helpers";
 import { useNavigate } from "react-router";
 
 const InformationOverview = ({
@@ -32,6 +31,10 @@ const InformationOverview = ({
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(!open);
+  const [openTop, setOpenTop] = useState(false);
+  const openDrawerTop = () => setOpenTop(true);
+  const closeDrawerTop = () => setOpenTop(false);
+
   return (
     <section className="justify-center">
       <div className="min-h-screen flex flex-col sm:p-14 md:p-20 justify-center bg-white rounded-2xl">
@@ -76,6 +79,7 @@ const InformationOverview = ({
                         <h3 className="text-lg leading-6 font-medium text-green-700">
                           Thông tin chung
                         </h3>
+                        <Button onClick={openDrawerTop}>Thông tin hướng dẫn sử dụng</Button>
                       </div>
                       <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center space-x-3">
                         <svg
@@ -190,11 +194,10 @@ const InformationOverview = ({
                               <br />
                             </p>
                           ))}
-                          {
-                            !allDistributerWithQR || allDistributerWithQR.length === 0 && (
+                          {!allDistributerWithQR ||
+                            (allDistributerWithQR.length === 0 && (
                               <p>Không có dữ liệu</p>
-                            ) 
-                          }
+                            ))}
                         </dd>
                       </div>
                     </dl>
@@ -205,6 +208,43 @@ const InformationOverview = ({
           </section>
         </div>
       </div>
+      <Drawer
+        placement="top"
+        open={openTop}
+        onClose={closeDrawerTop}
+        className="p-4"
+      >
+        <div className="mb-6 flex items-center justify-between">
+          <Typography variant="h5" color="blue-gray">
+            Hướng dẫn sử dụng
+          </Typography>
+          <IconButton variant="text" color="blue-gray" onClick={closeDrawerTop}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="h-5 w-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </IconButton>
+        </div>
+        <Typography color="gray" className="mb-8 pr-4 font-normal">
+          Nội dung ghi ở đây 
+        </Typography>
+        <div className="flex gap-2">
+          <Button size="sm" variant="outlined">
+            Nếu cần
+          </Button>
+          <Button size="sm">Get Started</Button>
+        </div>
+      </Drawer>
       <Dialog open={open} handler={handleOpen}>
         <DialogHeader>Thông tin đánh giá</DialogHeader>
         <DialogBody>
