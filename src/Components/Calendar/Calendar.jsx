@@ -170,13 +170,18 @@ const Calendar = ({ dataImage, dataWeather }) => {
               <div>
                 {filterImages.map((item, index) => {
                   return (
-                    <div key={index} className="flex gap-5 items-center">
-                      <div className="w-1/2">
-                        <p className="text-gray-800">{item.capture_time}</p>
+                    <div
+                      key={index}
+                      className="flex gap-4 items-center p-4 bg-white shadow-md rounded-lg"
+                    >
+                      <div className="flex-1">
+                        <p className="text-gray-600 text-sm">
+                          {formatDateTime(item.capture_time)}
+                        </p>
                       </div>
-                      <div className="w-1/2">
+                      <div className="flex-shrink-0">
                         <img
-                          className="w-20 h-20 rounded-lg object-cover object-center"
+                          className="w-40 h-40 rounded-lg object-cover object-center border border-gray-200"
                           src={item.image_url}
                           alt="gallery-photo"
                         />
