@@ -17,6 +17,26 @@ const ListFarm = () => {
   const handleChange = (event) => {
     setInputData(event.target.value);
   };
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  const filteredFarms = allFarm.filter(
+    (farm) =>
+      farm.name.toLowerCase().includes(inputData.toLowerCase()) ||
+      farm.address.toLowerCase().includes(inputData.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(filteredFarms.length / itemsPerPage);
+
+  const currentFarms = filteredFarms.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
   return (
     <section className="mx-auto sm:px-6 lg:px-8 py-24 justify-center">
       <div className="relative w-full lg:max-w-4xl mx-auto bg-white rounded-full mt-2 mb-10">
@@ -51,14 +71,9 @@ const ListFarm = () => {
         </button>
       </div>
       {isSuccessAllFarm && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
-          {allFarm
-            .filter(
-              (farm) =>
-                farm.name.toLowerCase().includes(inputData.toLowerCase()) ||
-                farm.address.toLowerCase().includes(inputData.toLowerCase())
-            )
-            .map((farm) => (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+            {currentFarms.map((farm) => (
               <div
                 data-aos="fade-up"
                 className="mx-auto relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
@@ -98,7 +113,23 @@ const ListFarm = () => {
                 </div>
               </div>
             ))}
-        </div>
+          </div>
+          <div className="mt-8 flex justify-center">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`mx-1 px-3 py-1 rounded-md ${
+                  currentPage === index + 1
+                    ? "bg-teal-600 text-white"
+                    : "bg-white text-teal-600"
+                } border border-teal-600 hover:bg-teal-700 hover:text-white`}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        </>
       )}
       {isLoadingAllFarm && <Spinner />}
     </section>
