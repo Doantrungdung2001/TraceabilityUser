@@ -35,6 +35,20 @@ const ListPlant = () => {
     farmId,
   });
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  const totalPages = Math.ceil(allPlant?.length / itemsPerPage);
+
+  const currentPlants = allPlant?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <>
       <div data-aos="fade-up" className="mx-auto pt-20">
@@ -76,7 +90,7 @@ const ListPlant = () => {
           <span className="orangeText">Danh sách cây trồng</span>
           <div className=" mx-auto grid flex justify-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
             {isSuccessPlant &&
-              allPlant?.map((card) => (
+              currentPlants?.map((card) => (
                 <Card className="max-w-xs overflow-hidden mt-5">
                   <CardHeader
                     floated={false}
@@ -123,7 +137,23 @@ const ListPlant = () => {
                   </CardFooter>
                 </Card>
               ))}
+
             {isLoadingPlant && <Spinner />}
+          </div>
+          <div className="mt-8 flex justify-center">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`mx-1 px-3 py-1 rounded-md ${
+                  currentPage === index + 1
+                    ? "bg-teal-600 text-white"
+                    : "bg-white text-teal-600"
+                } border border-teal-600 hover:bg-teal-700 hover:text-white`}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
           </div>
         </section>
       </div>
