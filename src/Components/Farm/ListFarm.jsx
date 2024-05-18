@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import "./listfarm.css";
 import useListFarm from "./useListFarm";
 import { Spinner } from "@material-tailwind/react";
@@ -21,11 +21,13 @@ const ListFarm = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  const filteredFarms = allFarm.filter(
-    (farm) =>
-      farm.name.toLowerCase().includes(inputData.toLowerCase()) ||
-      farm.address.toLowerCase().includes(inputData.toLowerCase())
-  );
+  const filteredFarms = useMemo(() => {
+    return (allFarm || []).filter(
+      (farm) =>
+        farm.name.toLowerCase().includes(inputData.toLowerCase()) ||
+        farm.address.toLowerCase().includes(inputData.toLowerCase())
+    );
+  }, [allFarm, inputData]);
 
   const totalPages = Math.ceil(filteredFarms.length / itemsPerPage);
 
