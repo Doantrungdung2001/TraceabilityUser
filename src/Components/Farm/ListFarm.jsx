@@ -91,8 +91,10 @@ const ListFarm = () => {
                     <p className="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
                       {farm.name}
                     </p>
-                    <p className="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
-                      {farm.status ? "active" : <span>Online</span>}
+                    <p className="block font-sans text-base font-medium leading-relaxed text-green-500 antialiased">
+                      {farm.status === "active"
+                        ? "Đang hoạt động"
+                        : "Chưa cập nhật"}
                     </p>
                   </div>
                   <p className="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75">
