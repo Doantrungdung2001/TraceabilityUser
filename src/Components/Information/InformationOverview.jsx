@@ -79,7 +79,7 @@ const InformationOverview = ({
                         <h3 className="text-lg leading-6 font-medium text-green-700">
                           Thông tin chung
                         </h3>
-                        <Button onClick={openDrawerTop}>Thông tin hướng dẫn sử dụng</Button>
+                        {/* <Button onClick={openDrawerTop}>Thông tin hướng dẫn sử dụng</Button> */}
                       </div>
                       <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center space-x-3">
                         <svg
