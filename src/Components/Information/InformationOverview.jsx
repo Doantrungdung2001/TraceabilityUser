@@ -81,7 +81,7 @@ const InformationOverview = ({
                         </h3>
                         {/* <Button onClick={openDrawerTop}>Thông tin hướng dẫn sử dụng</Button> */}
                       </div>
-                      <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center space-x-3">
+                      <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -98,7 +98,7 @@ const InformationOverview = ({
                         </svg>
 
                         <h1 className="text-white font-bold italic">
-                          Đã được ghi trên blockchain
+                          Trusted
                         </h1>
                       </div>
                     </div>

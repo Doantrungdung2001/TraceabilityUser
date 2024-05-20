@@ -9,7 +9,7 @@ const ProcessInformation = ({ processInfo }) => {
           <div className="lg:text-3xl text-base text-black font-bold px-5 py-2 lg:py-6 shadow border-b border-gray-300 rounded-lg">
             Thông tin quá trình canh tác
           </div>
-          <div className="bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center space-x-3 text-sm ">
+          <div className="bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center text-sm ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -26,7 +26,7 @@ const ProcessInformation = ({ processInfo }) => {
             </svg>
 
             <h3 className="text-white font-bold italic">
-              Đã được ghi trên blockchain
+              Trusted
             </h3>
           </div>
         </div>

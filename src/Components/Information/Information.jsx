@@ -193,7 +193,27 @@ const Information = () => {
                 open === 1 ? "text-green-400 hover:text-green-700" : ""
               } text-base lg:text-2xl`}
             >
-              Video không tương ứng với hoạt động canh tác nào
+              <h1>Video không tương ứng với hoạt động canh tác nào</h1>
+              <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center  text-xs">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5 text-white" // Kích thước lớn hơn và màu xanh
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
+                    />
+                  </svg>
+
+                  <h1 className="text-white font-bold italic">
+                    Trusted
+                  </h1>
+                </div>
             </AccordionHeader>
             <AccordionBody className="text-base font-normal">
               {nonProcessObjectDetection?.length ? (
@@ -218,9 +238,9 @@ const Information = () => {
                 open === 2 ? "text-green-400 hover:text-green-700" : ""
               } text-base lg:text-2xl`}
             >
-              <div className="flex items-center space-x-8">
+              <div className="flex items-center ">
                 <h1> Thông tin dự kiến sản lượng</h1>
-                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center space-x-3 text-xs">
+                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center  text-xs">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -237,7 +257,7 @@ const Information = () => {
                   </svg>
 
                   <h1 className="text-white font-bold italic">
-                    Đã được ghi trên blockchain
+                    Trusted
                   </h1>
                 </div>
               </div>
@@ -285,9 +305,9 @@ const Information = () => {
                 open === 4 ? "text-green-400 hover:text-green-700" : ""
               } text-base lg:text-2xl`}
             >
-              <div className="flex items-center space-x-24 flex-nowrap">
+              <div className="flex items-center  flex-nowrap">
                 <h1 className="whitespace-nowrap">Đầu ra</h1>
-                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center space-x-3 text-xs">
+                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center  text-xs">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -304,7 +324,7 @@ const Information = () => {
                   </svg>
 
                   <h1 className="text-white font-bold italic">
-                    Đã được ghi trên blockchain
+                    Trusted
                   </h1>
                 </div>
               </div>
@@ -329,7 +349,27 @@ const Information = () => {
                   open === 5 ? "text-green-400 hover:text-green-700" : ""
                 } text-base lg:text-2xl`}
               >
-                Hình ảnh và thời tiết
+                <h1>Hình ảnh và thời tiết</h1>
+                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center  text-xs">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5 text-white" // Kích thước lớn hơn và màu xanh
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
+                    />
+                  </svg>
+
+                  <h1 className="text-white font-bold italic">
+                    Trusted
+                  </h1>
+                </div>
               </AccordionHeader>
               <AccordionBody className="pt-0 text-base font-normal">
                 <section className="px-4">
@@ -373,9 +413,9 @@ const Information = () => {
                 open === 7 ? "text-green-400 hover:text-green-700" : ""
               } text-base lg:text-2xl`}
             >
-              <div className="flex items-center space-x-8">
+              <div className="flex items-center ">
                 <h1> Các hoạt động bị xóa</h1>
-                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center space-x-3 text-xs">
+                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center  text-xs">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -392,7 +432,7 @@ const Information = () => {
                   </svg>
 
                   <h1 className="text-white font-bold italic">
-                    Đã được ghi trên blockchain
+                    Trusted
                   </h1>
                 </div>
               </div>
