@@ -21,9 +21,10 @@ import {
   AccordionBody,
   Button,
 } from "@material-tailwind/react";
-import { FaCopy } from "react-icons/fa"; // Import icon copy từ react-icons
+import { FaCopy, FaArrowCircleRight, FaArrowCircleLeft } from "react-icons/fa"; // Import icon copy từ react-icons
 
 import { Icon } from "@mui/material";
+
 import DialogInfoDetail from "../Dialog/DialogInfoDetail";
 
 const ListActivityProcess = ({ listActivity }) => {
@@ -39,6 +40,16 @@ const ListActivityProcess = ({ listActivity }) => {
     navigator.clipboard.writeText(text);
     alert("Copy thành công!");
   };
+
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const handleScroll = (scrollOffset) => {
+    const slider = document.getElementById("slider");
+    const newScrollLeft = scrollLeft + scrollOffset;
+    setScrollLeft(newScrollLeft);
+    slider.scrollLeft = newScrollLeft;
+  };
+
   const data = [
     {
       label: "Thông tin",
@@ -204,9 +215,12 @@ const ListActivityProcess = ({ listActivity }) => {
           {listActivity?.length > 0 ? (
             <table className="w-full">
               {listActivity.map((activity, index) => (
-                <tbody key={index}>
+                <tbody
+                  key={index}
+                  className="border-b-2 border-gray-300 cursor-default bg-gray-200 bg-opacity-25"
+                >
                   <tr
-                    className="relative transform scale-100 text-xs lg:text-base py-1 border-b-2 border-gray-300 cursor-default bg-gray-200 bg-opacity-25"
+                    className="relative transform scale-100 text-xs lg:text-base py-1 "
                     onClick={() => {
                       handleOpenDetailDeleteProcess();
                       setSelectedProcess(activity);
@@ -255,6 +269,50 @@ const ListActivityProcess = ({ listActivity }) => {
                       )}
                     </td>
                   </tr>
+                  {activity.objectDetections.length > 0 && (
+                    <tr>
+                      <td colSpan="3">
+                        <div className="relative overflow-hidden bg-gray-100">
+                          <div className="flex justify-between items-center px-2">
+                            <button
+                              className="flex items-center justify-center lg:w-10 lg:h-10 w-5 h-5 bg-green-600 text-white rounded-full shadow-md"
+                              onClick={() => handleScroll(-100)}
+                            >
+                              <FaArrowCircleLeft className="w-5 h-5" />
+                            </button>
+                            <div
+                              id="slider"
+                              className="flex space-x-2 overflow-x-auto p-2"
+                              onScroll={(e) =>
+                                setScrollLeft(e.target.scrollLeft)
+                              }
+                            >
+                              {activity.objectDetections?.map(
+                                (video, vidIndex) => (
+                                  <div key={vidIndex} className="flex-shrink-0">
+                                    <video
+                                      className="w-24 h-24 lg:w-32 lg:h-32 object-cover rounded-lg shadow-md"
+                                      controls
+                                      src={video.video_url}
+                                      autoPlay
+                                      loop
+                                      muted
+                                    ></video>
+                                  </div>
+                                )
+                              )}
+                            </div>
+                            <button
+                              className="flex items-center justify-center lg:w-10 lg:h-10 w-5 h-5 bg-green-600 text-white rounded-full shadow-md"
+                              onClick={() => handleScroll(100)}
+                            >
+                              <FaArrowCircleRight className="w-5 h-5" />
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               ))}
             </table>
