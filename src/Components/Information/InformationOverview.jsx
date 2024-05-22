@@ -54,7 +54,7 @@ const InformationOverview = ({
             Mã dự án trên blockchain : {dataInfoOverview.projectIndex}
           </h3>
           <a
-            className="text-blue-800 text-sm italic cursor-pointer hover:text-blue-600"
+            className="text-white text-sm italic cursor-pointer hover:text-blue-800"
             onClick={() =>
               navigate(`/search/index/${dataInfoOverview.projectIndex}`)
             }
@@ -67,10 +67,6 @@ const InformationOverview = ({
         <div className="mx-auto max-w-6xl">
           <section className="font-sans text-black">
             <div className="[ lg:flex lg:items-center ] [ fancy-corners fancy-corners--large fancy-corners--top-left fancy-corners--bottom-right ]">
-              <div className="flex-shrink-0 self-stretch sm:flex-basis-40 md:flex-basis-50 xl:flex-basis-60 p-2">
-                {isSuccessImage && <CarouselPicture dataImage={dataImage} />}
-                {isLoadingImage && <Spinner />}
-              </div>
               <div className="p-6 bg-grey">
                 <div className="bg-white overflow-hidden shadow rounded-lg border">
                   <div className="lg:py-5 px-4 py-3">
@@ -152,10 +148,12 @@ const InformationOverview = ({
                       {dataInfoOverview.status === "inProgress" && (
                         <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                           <dt className="text-sm font-medium text-gray-700">
-                            Ngày dự kiến thu hoạch
+                            {dataInfoOverview?.endDate ? "Ngày kết thúc" : "Dự kiến ngày kết thúc"}
                           </dt>
                           <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
-                            {formatDate(dataInfoOverview?.expectedEndDate)}
+                            {
+                              dataInfoOverview?.endDate
+                                ? formatDate(dataInfoOverview?.endDate) : formatDate(dataInfoOverview?.expectedEndDate)}
                           </dd>
                         </div>
                       )}
