@@ -238,7 +238,23 @@ export default function useInformation({ projectId }) {
       totalEditProcess += item.historyProcess.length;
     });
 
-    return { dataProcess, formatedNonProcessObjectDetectionewArray, processWithoutObjectDetectionCount, totalEditProcess };
+    // Chuyển đổi các chuỗi thời gian thành đối tượng Date
+    const times = dataProcess.map((p) => new Date(p.time));
+
+    // Tìm thời gian bắt đầu (sớm nhất)
+    const startTime = new Date(Math.min(...times));
+
+    // Tìm thời gian kết thúc (muộn nhất)
+    const endTime = new Date(Math.max(...times));
+
+    return {
+      dataProcess,
+      formatedNonProcessObjectDetectionewArray,
+      processWithoutObjectDetectionCount,
+      totalEditProcess,
+      startTime,
+      endTime,
+    };
   }, []);
 
   const {
@@ -281,7 +297,6 @@ export default function useInformation({ projectId }) {
       const timeB = new Date(b.time).getTime();
       return timeA - timeB;
     });
-    
 
     const editExpectCount = expect.reduce(
       (total, item) => total + item.historyExpect.length,
@@ -369,7 +384,10 @@ export default function useInformation({ projectId }) {
       deletedOutput: data?.deletedOutput,
     };
 
-    const totalDeletedItem = dataDeleteProcess.deletedProcess.length + dataDeleteProcess.deletedExpect.length + dataDeleteProcess.deletedOutput.length;
+    const totalDeletedItem =
+      dataDeleteProcess.deletedProcess.length +
+      dataDeleteProcess.deletedExpect.length +
+      dataDeleteProcess.deletedOutput.length;
     return { dataDeleteProcess, totalDeletedItem };
   }, []);
 
@@ -399,7 +417,11 @@ export default function useInformation({ projectId }) {
     });
 
     const totalConnectionLossBySeconds = connectionLosses.reduce(
-      (total, item) => total + (new Date(item.end_time)?.getTime()  - new Date(item.start_time)?.getTime()) / 1000 ,
+      (total, item) =>
+        total +
+        (new Date(item.end_time)?.getTime() -
+          new Date(item.start_time)?.getTime()) /
+          1000,
       0
     );
     return { connectionLosses, totalConnectionLossBySeconds };
@@ -539,6 +561,8 @@ export default function useInformation({ projectId }) {
     isSuccessProjectInfo,
     isLoadingProjectInfo,
     dataProcess: dataProcess?.dataProcess,
+    startTime: dataProcess?.startTime,
+    endTime: dataProcess?.endTime,
     nonProcessObjectDetection:
       dataProcess?.formatedNonProcessObjectDetectionewArray,
     isSuccessProcess,
@@ -556,7 +580,8 @@ export default function useInformation({ projectId }) {
     isSuccessDeleteProcess,
     isLoadingDeleteProcess,
     dataConnectionLoss: dataConnectionLoss?.connectionLosses,
-    totalConnectionLossBySeconds: dataConnectionLoss?.totalConnectionLossBySeconds,
+    totalConnectionLossBySeconds:
+      dataConnectionLoss?.totalConnectionLossBySeconds,
     isSuccessConnectionLoss,
     isLoadingConnectionLoss,
     dataImage: dataImage?.images,
@@ -570,7 +595,8 @@ export default function useInformation({ projectId }) {
     isSuccessCamera,
     isLoadingCamera,
     totalEditProcess: dataProcess?.totalEditProcess,
-    processWithoutObjectDetectionCount: dataProcess?.processWithoutObjectDetectionCount,
+    processWithoutObjectDetectionCount:
+      dataProcess?.processWithoutObjectDetectionCount,
     totalDeletedItem: dataDeleteProcess?.totalDeletedItem,
     editExpectCount: dataExpect?.editExpectCount,
     editOutputCount: dataOutput?.editOutputCount,

@@ -13,11 +13,20 @@ import {
 import {
   formatTransactionHashTable,
   formatDateTime,
+  formatDate,
 } from "../../Utils/helpers";
 
-const Calendar = ({ dataImage, dataWeather }) => {
+const Calendar = ({ dataImage, dataWeather, startTime, endTime }) => {
   const days = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
   const currentDate = dayjs();
+  console.log("fsdfdsafdf------------", startTime, endTime);
+  const startDate = startTime
+    ? dayjs(startTime).subtract(1, "day").format("YYYY-MM-DD")
+    : dayjs("2020-01-01");
+  const endDate = endTime
+    ? dayjs(endTime).add(1, "day").format("YYYY-MM-DD")
+    : currentDate.add(1, "day").format("YYYY-MM-DD");
+
   const [today, setToday] = useState(currentDate);
   const [selectDate, setSelectDate] = useState(currentDate);
   const [filterImages, setFilterImages] = useState([]);
@@ -28,8 +37,6 @@ const Calendar = ({ dataImage, dataWeather }) => {
   const handleOpen = () => {
     setOpen(!open);
   };
-
-  console.log("dataImage", dataImage);
 
   const handleFilter = () => {
     setFilterImages(
@@ -54,22 +61,27 @@ const Calendar = ({ dataImage, dataWeather }) => {
     );
     handleOpen();
   };
-  console.log("selectDate out", selectDate);
 
   useEffect(() => {
     handleFilter();
     console.log("selectDate", selectDate);
   }, [selectDate]);
 
+  const isDateWithinRange = (date) => {
+    return date.isAfter(startDate) && date.isBefore(endDate);
+  };
+
   return (
     <section>
       <div className="flex flex-col sm:flex-row justify-center items-center gap-5 sm:w-3/4 mx-auto">
         <div className="w-full sm:w-96">
           <h1 className="font-semibold text-sm">
-            Lịch trình ngày {selectDate.toDate().toDateString()}
+            Dự án bắt đầu từ ngày {formatDate(startTime)} đến{" "}
+            {formatDate(endTime)}{" "}
           </h1>
           <p className="text-gray-400 text-xs">
-            Chọn ngày tháng để xem hình ảnh
+            Vui lòng chọn ngày tháng trong dự án để xem thông tin(Ngoài ra không
+            xem được)
           </p>
         </div>
         <div className="w-full sm:w-96">
@@ -116,24 +128,30 @@ const Calendar = ({ dataImage, dataWeather }) => {
           <div className="grid grid-cols-7 ">
             {generateDate(today.month(), today.year()).map(
               ({ date, currentMonth, today }, index) => {
+                const isWithinRange = isDateWithinRange(date);
                 return (
                   <div
                     key={index}
-                    className="p-1 text-center h-10 w-10 grid place-content-center text-xs border-t"
+                    className={`p-1 text-center h-10 w-10 grid place-content-center text-xs border-t ${
+                      isWithinRange ? "" : "cursor-not-allowed"
+                    }`}
                   >
                     <h1
                       className={cn(
                         currentMonth ? "" : "text-gray-400",
                         today ? "bg-red-600 text-white" : "",
-                        selectDate.toDate().toDateString() ===
-                          date.toDate().toDateString()
+                        selectDate.isSame(date, "day")
                           ? "bg-black text-white"
                           : "",
-                        "h-6 w-6 rounded-full grid place-content-center hover:bg-black hover:text-white transition-all cursor-pointer select-none"
+                        "h-6 w-6 rounded-full grid place-content-center",
+                        isWithinRange
+                          ? "hover:bg-black hover:text-white transition-all cursor-pointer select-none"
+                          : "text-gray-300"
                       )}
                       onClick={() => {
-                        console.log("date here", date.toDate().toDateString());
-                        setSelectDate(date);
+                        if (isWithinRange) {
+                          setSelectDate(date);
+                        }
                       }}
                     >
                       {date.date()}
