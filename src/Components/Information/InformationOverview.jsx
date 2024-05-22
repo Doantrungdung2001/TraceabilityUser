@@ -4,12 +4,12 @@ import {
   Drawer,
   Typography,
   IconButton,
+  Tooltip,
 } from "@material-tailwind/react";
 import { formatDate, formatTransactionHashTable } from "../../Utils/helpers";
-import { useNavigate } from "react-router";
+
 
 const InformationOverview = ({ allDistributerWithQR, dataInfoOverview }) => {
-  const navigate = useNavigate();
 
   const [openTop, setOpenTop] = useState(false);
   const openDrawerTop = () => setOpenTop(true);
@@ -69,8 +69,12 @@ const InformationOverview = ({ allDistributerWithQR, dataInfoOverview }) => {
                         <dt className="text-sm font-medium text-gray-700">
                           Nông trại sản xuất
                         </dt>
-                        <dd className="mt-1 text-sm text-black lg:text-base font-medium sm:mt-0 sm:col-span-2">
+                        <dd className="mt-1 text-sm text-blue-600 lg:text-base font-medium sm:mt-0 sm:col-span-2 cursor-pointer">
+                        <Tooltip color="light" content="Xem chi tiết nông trại">
+                          <a href={`https://traceabilityuser.onrender.com/farm/detail/${dataInfoOverview?.farm?._id}`} target='_blank'> 
                           {dataInfoOverview?.farm?.name}
+                          </a>
+                        </Tooltip>
                         </dd>
                       </div>
                       <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

@@ -39,8 +39,7 @@ const Plant = ({ dataPlant }) => {
     <section data-aos="fade-up" className="r-wrapper">
       <div className="paddings innerWidth r-container">
         <div className="r-head flexColStart">
-          <span className="orangeText">Danh sách cây trồng</span>
-          <span className="primaryText">Cây trồng phổ biến</span>
+          <span className="primaryText">Danh sách cây trồng</span>
           <button
             onClick={() =>
               navigate(`/farm/detail/${dataPlant[0].farmid}/plants`)
