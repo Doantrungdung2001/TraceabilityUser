@@ -113,7 +113,7 @@ const ListActivityProcess = ({ listActivity }) => {
       ),
     },
     {
-      label: "Video",
+      label: "Video được phân tích tự động",
       value: "Input",
       desc: (
         <div>
@@ -328,10 +328,12 @@ const ListActivityProcess = ({ listActivity }) => {
 
         <DialogBody className="h-[35rem] overflow-y-auto">
           <Tabs className="tab" id="custom-animation" value="infor">
-            <TabsHeader className="tab-header">
+            <TabsHeader className="tab-header" style={{height: '80px'}}>
               {data.map(({ label, value }) => (
-                <Tab key={value} value={value}>
-                  {label}
+                <Tab key={value} value={value} style={{height: '70px'}}>
+                  <span className="text-lg leading-5">
+                    {label}
+                  </span>
                 </Tab>
               ))}
             </TabsHeader>

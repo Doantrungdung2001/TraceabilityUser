@@ -32,8 +32,7 @@ const Project = ({ dataProject }) => {
     <section data-aos="fade-up" className="r-wrapper">
       <div className="paddings innerWidth r-container">
         <div className="r-head flexColStart">
-          <span className="orangeText">Danh sách dự án</span>
-          <span className="primaryText">Dự án nổi bật</span>
+          <span className="primaryText">Danh sách dự án</span>
           <button
             onClick={() =>
               navigate(`/farm/detail/${dataProject[0].farmid}/projects`)

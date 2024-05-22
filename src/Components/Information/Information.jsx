@@ -122,7 +122,22 @@ const Information = () => {
   if (isSuccessProjectInfo && !projectInfo.id) {
     navigate("/404-notfound");
   }
+  const renderStatus = (status, output) => {
+    if (status === "inProgress" && output?.length === 0) {
+      return "Chưa thu hoạch";
+    }
+    if (status === "inProgress" && output?.length > 0) {
+      return "Đang bày bán ";
+    }
 
+    if (status === "finished") {
+      return "Đã kết thúc";
+    }
+
+    if (status === "cancel") {
+      return "Đã hủy";
+    }
+  }
   return (
     <section className="information">
       <div data-aos="fade-up" className="r-title">
@@ -137,6 +152,13 @@ const Information = () => {
             Mã dự án trên blockchain : {projectInfo.projectIndex}
           </button>
         )}
+        {
+          isSuccessProjectInfo && isSuccessOutput && (
+            <button className="button">
+              Trạng thái: {renderStatus(projectInfo.status, Output)}
+            </button>
+          )
+        }
         {isLoadingProjectInfo && <Spinner />}
       </div>
 
