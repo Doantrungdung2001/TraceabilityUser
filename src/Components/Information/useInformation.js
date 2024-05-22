@@ -247,14 +247,13 @@ export default function useInformation({ projectId }) {
     // Tìm thời gian kết thúc (muộn nhất)
     const endTime = new Date(Math.max(...times));
 
-    console.log("Thời điểm bắt đầu:", startTime.toISOString());
-    console.log("Thời điểm kết thúc:", endTime.toISOString());
-
     return {
       dataProcess,
       formatedNonProcessObjectDetectionewArray,
       processWithoutObjectDetectionCount,
       totalEditProcess,
+      startTime,
+      endTime,
     };
   }, []);
 
@@ -562,6 +561,8 @@ export default function useInformation({ projectId }) {
     isSuccessProjectInfo,
     isLoadingProjectInfo,
     dataProcess: dataProcess?.dataProcess,
+    startTime: dataProcess?.startTime,
+    endTime: dataProcess?.endTime,
     nonProcessObjectDetection:
       dataProcess?.formatedNonProcessObjectDetectionewArray,
     isSuccessProcess,

@@ -68,6 +68,8 @@ const Information = () => {
     isLoadingProjectInfo,
     dataProcess,
     nonProcessObjectDetection,
+    startTime,
+    endTime,
     isSuccessProcess,
     isLoadingProcess,
     dataExpect,
@@ -120,6 +122,7 @@ const Information = () => {
   if (isSuccessProjectInfo && !projectInfo.id) {
     navigate("/404-notfound");
   }
+
   return (
     <section className="information">
       <div data-aos="fade-up" className="r-title">
@@ -419,7 +422,12 @@ const Information = () => {
               <AccordionBody className="pt-0 text-base font-normal">
                 <section className="px-4">
                   <div>
-                    <Calendar dataImage={dataImage} dataWeather={dataWeather} />
+                    <Calendar
+                      dataImage={dataImage}
+                      dataWeather={dataWeather}
+                      startTime={startTime}
+                      endTime={endTime}
+                    />
                   </div>
                 </section>
               </AccordionBody>
