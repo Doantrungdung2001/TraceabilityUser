@@ -29,8 +29,6 @@ const Calendar = ({ dataImage, dataWeather }) => {
     setOpen(!open);
   };
 
-  console.log("dataImage", dataImage);
-
   const handleFilter = () => {
     setFilterImages(
       dataImage.filter((item) => {
@@ -54,7 +52,6 @@ const Calendar = ({ dataImage, dataWeather }) => {
     );
     handleOpen();
   };
-  console.log("selectDate out", selectDate);
 
   useEffect(() => {
     handleFilter();
