@@ -250,7 +250,7 @@ const Information = () => {
               } text-base lg:text-2xl`}
             >
               <h1>Video không tương ứng với hoạt động canh tác nào</h1>
-              <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center  text-xs">
+              <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center text-xs px-4 lg:px-6">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -294,7 +294,7 @@ const Information = () => {
             >
               <div className="flex items-center ">
                 <h1> Thông tin dự kiến sản lượng</h1>
-                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center  text-xs">
+                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center text-xs px-4 lg:px-6">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -359,7 +359,7 @@ const Information = () => {
             >
               <div className="flex items-center  flex-nowrap">
                 <h1 className="whitespace-nowrap">Đầu ra</h1>
-                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center  text-xs">
+                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center text-xs px-4 lg:px-6">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -400,7 +400,7 @@ const Information = () => {
                 } text-base lg:text-2xl`}
               >
                 <h1>Hình ảnh và thời tiết</h1>
-                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center  text-xs">
+                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center text-xs px-4 lg:px-6">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -468,7 +468,7 @@ const Information = () => {
             >
               <div className="flex items-center ">
                 <h1> Các hoạt động bị xóa</h1>
-                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center  text-xs">
+                <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center text-xs px-4 lg:px-6">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
