@@ -124,10 +124,77 @@ const Information = () => {
     <section className="information">
       <div data-aos="fade-up" className="r-title">
         <button className="button">Mã truy xuất : {projectId}</button>
+        {isSuccessProjectInfo && (
+          <button
+            className="button"
+            onClick={() =>
+              navigate(`/search/index/${projectInfo.projectIndex}`)
+            }
+          >
+            Mã dự án trên blockchain : {projectInfo.projectIndex}
+          </button>
+        )}
+        {isLoadingProjectInfo && <Spinner />}
       </div>
 
       <section className="content">
-      <section className="more-infor">
+        <section className="more-infor">
+          <div className="px-4 text-gray-900 text-2xl font-bold mt-8 mb-4 lg:ml-8">
+            Thông tin đánh giá
+            <h3 className="text-green-700 font-semibold text-lg mr-2">
+              Mức độ tin tưởng: Trung bình
+            </h3>
+          </div>
+
+          <div className="block w-full overflow-x-auto lg:max-w-4xl border rounded-lg mx-auto mt-6 mb-4">
+            <table className="items-center w-full bg-transparent border-collapse">
+              <tbody className="divide-y divide-gray-100 ">
+                <tr className="text-gray-500">
+                  <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
+                    Số thời gian camera bị mất kết nối
+                  </th>
+                  <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
+                    {totalConnectionLossBySeconds / 60} phút
+                  </td>
+                </tr>
+                <tr className="text-gray-500">
+                  <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
+                    Số hoạt động không có video đi kèm
+                  </th>
+                  <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
+                    {processWithoutObjectDetectionCount}
+                  </td>
+                </tr>
+                <tr className="text-gray-500">
+                  <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
+                    Số lượng khai báo bị xoá
+                  </th>
+                  <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
+                    {totalDeletedItem}
+                  </td>
+                </tr>
+                <tr className="text-gray-500">
+                  <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
+                    Số lượng khai báo bị sửa đổi
+                  </th>
+                  <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
+                    {totalEditProcess + editExpectCount + editOutputCount} /{" "}
+                    {dataProcess?.length + dataExpect?.length + Output?.length}
+                  </td>
+                </tr>
+                <tr className="text-gray-500">
+                  <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
+                    Số lượng camera
+                  </th>
+                  <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
+                    {totalCamera}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section className="more-infor">
           <div className="mb-4">Video tổng quan</div>
           {isSuccessProjectInfo && projectInfo?.video_urls?.length > 0 && (
             <div>
@@ -152,28 +219,13 @@ const Information = () => {
             isSuccessOutput &&
             projectInfo.id && (
               <InformationOverview
-                dataImage={ImageProduct}
                 allDistributerWithQR={allDistributerWithQR}
-                isSuccessImage={isSuccessOutput}
-                isLoadingImage={isLoadingOutput}
                 dataInfoOverview={projectInfo}
-                totalConnectionLossBySeconds={totalConnectionLossBySeconds}
-                processWithoutObjectDetectionCount={
-                  processWithoutObjectDetectionCount
-                }
-                deletedItemCount={totalDeletedItem}
-                editItemCount={
-                  totalEditProcess + editExpectCount + editOutputCount
-                }
-                totalItemCount={
-                  dataProcess?.length + dataExpect?.length + Output?.length
-                }
-                totalCamera={totalCamera}
               />
             )}
           {isLoadingProjectInfo && <Spinner />}
         </section>
-        
+
         <section className="timeline">
           {isSuccessProcess && dataProcess && (
             <ProcessInformation processInfo={dataProcess} />
@@ -196,25 +248,23 @@ const Information = () => {
             >
               <h1>Video không tương ứng với hoạt động canh tác nào</h1>
               <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center  text-xs">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-5 h-5 text-white" // Kích thước lớn hơn và màu xanh
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
-                    />
-                  </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-5 h-5 text-white" // Kích thước lớn hơn và màu xanh
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
+                  />
+                </svg>
 
-                  <h1 className="text-white font-bold italic">
-                    Trusted
-                  </h1>
-                </div>
+                <h1 className="text-white font-bold italic">Trusted</h1>
+              </div>
             </AccordionHeader>
             <AccordionBody className="text-base font-normal">
               {nonProcessObjectDetection?.length ? (
@@ -257,9 +307,7 @@ const Information = () => {
                     />
                   </svg>
 
-                  <h1 className="text-white font-bold italic">
-                    Trusted
-                  </h1>
+                  <h1 className="text-white font-bold italic">Trusted</h1>
                 </div>
               </div>
             </AccordionHeader>
@@ -324,9 +372,7 @@ const Information = () => {
                     />
                   </svg>
 
-                  <h1 className="text-white font-bold italic">
-                    Trusted
-                  </h1>
+                  <h1 className="text-white font-bold italic">Trusted</h1>
                 </div>
               </div>
             </AccordionHeader>
@@ -367,9 +413,7 @@ const Information = () => {
                     />
                   </svg>
 
-                  <h1 className="text-white font-bold italic">
-                    Trusted
-                  </h1>
+                  <h1 className="text-white font-bold italic">Trusted</h1>
                 </div>
               </AccordionHeader>
               <AccordionBody className="pt-0 text-base font-normal">
@@ -432,9 +476,7 @@ const Information = () => {
                     />
                   </svg>
 
-                  <h1 className="text-white font-bold italic">
-                    Trusted
-                  </h1>
+                  <h1 className="text-white font-bold italic">Trusted</h1>
                 </div>
               </div>
             </AccordionHeader>
