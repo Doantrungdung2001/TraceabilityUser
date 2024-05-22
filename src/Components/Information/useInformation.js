@@ -58,6 +58,7 @@ export default function useInformation({ projectId }) {
       plant: data?.plant || "Không có dữ liệu",
       seed: data?.seed || "Không có dữ liệu",
       startDate: data?.startDate || "Không có dữ liệu",
+      endDate: data?.endDate,
       square: data?.square || "Không có dữ liệu",
       status: data?.status || "Không có dữ liệu",
       description: data?.description || "Không có dữ liệu",
@@ -264,11 +265,29 @@ export default function useInformation({ projectId }) {
       createdAtTime: item?.createdAtTime,
     }));
 
+    let expectFull = [];
+
+    // in each expect item in expect, push item in historyExpect to expect array
+    expect.forEach((item) => {
+      expectFull.push(item);
+      item.historyExpect.forEach((historyItem) => {
+        expectFull.push(historyItem);
+      });
+    });
+
+    // sort by time
+    expectFull.sort((a, b) => {
+      const timeA = new Date(a.time).getTime();
+      const timeB = new Date(b.time).getTime();
+      return timeA - timeB;
+    });
+    
+
     const editExpectCount = expect.reduce(
       (total, item) => total + item.historyExpect.length,
       0
     );
-    return { expect, editExpectCount };
+    return { expectFull, editExpectCount };
   }, []);
 
   const {
@@ -524,7 +543,7 @@ export default function useInformation({ projectId }) {
       dataProcess?.formatedNonProcessObjectDetectionewArray,
     isSuccessProcess,
     isLoadingProcess,
-    dataExpect: dataExpect?.expect,
+    dataExpect: dataExpect?.expectFull,
     isSuccessExpect,
     isLoadingExpect,
     dataCertificateImages: dataCertificateImages?.certificateImages,

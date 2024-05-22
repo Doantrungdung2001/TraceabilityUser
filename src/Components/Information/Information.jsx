@@ -127,6 +127,20 @@ const Information = () => {
       </div>
 
       <section className="content">
+      <section className="more-infor">
+          <div className="mb-4">Video tổng quan</div>
+          {isSuccessProjectInfo && projectInfo?.video_urls?.length > 0 && (
+            <div>
+              <VideoPlayer video_urls={projectInfo.video_urls} />
+            </div>
+          )}
+          {(isSuccessProjectInfo && !projectInfo?.video_urls) ||
+            (projectInfo?.video_urls?.length === 0 && (
+              <div className="text-base text-gray-300 font-normal p-4">
+                Không có video tổng quan
+              </div>
+            ))}
+        </section>
         <section className="infor">
           {isSuccessProjectInfo &&
             isSuccessQR &&
@@ -159,20 +173,7 @@ const Information = () => {
             )}
           {isLoadingProjectInfo && <Spinner />}
         </section>
-        <section data-aos="fade-up" className="more-infor">
-          <div className="mb-4">Video tổng quan</div>
-          {isSuccessProjectInfo && projectInfo?.video_urls?.length > 0 && (
-            <div>
-              <VideoPlayer video_urls={projectInfo.video_urls} />
-            </div>
-          )}
-          {(isSuccessProjectInfo && !projectInfo?.video_urls) ||
-            (projectInfo?.video_urls?.length === 0 && (
-              <div className="text-base text-gray-300 font-normal p-4">
-                Không có video tổng quan
-              </div>
-            ))}
-        </section>
+        
         <section className="timeline">
           {isSuccessProcess && dataProcess && (
             <ProcessInformation processInfo={dataProcess} />
