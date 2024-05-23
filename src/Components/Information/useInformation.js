@@ -53,7 +53,7 @@ export default function useInformation({ projectId }) {
   });
 
   const parseDataProjectInfo = useCallback((data) => {
-    const projectInfo = {
+    let projectInfo = {
       id: data?._id || "Không có dữ liệu",
       plant: data?.plant || "Không có dữ liệu",
       seed: data?.seed || "Không có dữ liệu",
@@ -70,6 +70,15 @@ export default function useInformation({ projectId }) {
       expectedOutput: data?.expectedOutput,
       video_urls: data?.video_urls,
     };
+
+    let endTime = new Date()
+
+    if(projectInfo.endDate){
+      endTime = new Date(projectInfo.endDate)
+    }
+
+    projectInfo.totalTime = Math.abs(endTime - new Date(projectInfo.startDate)) / (1000 * 60)
+
     return {
       projectInfo,
     };
