@@ -76,8 +76,8 @@ const Calendar = ({ dataImage, dataWeather, startTime, endTime }) => {
       <div className="flex flex-col sm:flex-row justify-center items-center gap-5 sm:w-3/4 mx-auto">
         <div className="w-full sm:w-96">
           <h1 className="font-semibold text-sm">
-            Dự án bắt đầu từ ngày {formatDate(startTime)} đến{" "}
-            {formatDate(endTime)}{" "}
+            Dự án bắt đầu từ ngày {formatDate(startDate)} đến{" "}
+            {formatDate(endDate)}{" "}
           </h1>
           <p className="text-gray-400 text-xs">
             Vui lòng chọn ngày tháng trong dự án để xem thông tin(Ngoài ra không

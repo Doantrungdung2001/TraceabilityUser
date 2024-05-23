@@ -19,7 +19,6 @@ import SampleProcess from "../Process/SampleProcess";
 import Certificates from "../CertificatesPicture/Certificates";
 import AccordionOutput from "../Accordion/AccordionOutput";
 import InformationOverview from "./InformationOverview";
-import ListVideo from "../ListEvent/ListVideo";
 import AccordionListVideo from "../Accordion/AccordionListVideo";
 
 function Icon({ id, open }) {
@@ -68,8 +67,6 @@ const Information = () => {
     isLoadingProjectInfo,
     dataProcess,
     nonProcessObjectDetection,
-    startTime,
-    endTime,
     isSuccessProcess,
     isLoadingProcess,
     dataExpect,
@@ -137,7 +134,7 @@ const Information = () => {
     if (status === "cancel") {
       return "Đã hủy";
     }
-  }
+  };
   return (
     <section className="information">
       <div data-aos="fade-up" className="r-title">
@@ -152,13 +149,11 @@ const Information = () => {
             Mã dự án trên blockchain : {projectInfo.projectIndex}
           </button>
         )}
-        {
-          isSuccessProjectInfo && isSuccessOutput && (
-            <button className="button">
-              Trạng thái: {renderStatus(projectInfo.status, Output)}
-            </button>
-          )
-        }
+        {isSuccessProjectInfo && isSuccessOutput && (
+          <button className="button">
+            Trạng thái: {renderStatus(projectInfo.status, Output)}
+          </button>
+        )}
         {isLoadingProjectInfo && <Spinner />}
       </div>
 
@@ -447,8 +442,8 @@ const Information = () => {
                     <Calendar
                       dataImage={dataImage}
                       dataWeather={dataWeather}
-                      startTime={startTime}
-                      endTime={endTime}
+                      startTime={projectInfo.startDate}
+                      endTime={projectInfo.endDate}
                     />
                   </div>
                 </section>
