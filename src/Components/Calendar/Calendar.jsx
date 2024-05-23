@@ -71,13 +71,26 @@ const Calendar = ({ dataImage, dataWeather, startTime, endTime }) => {
     return date.isAfter(startDate) && date.isBefore(endDate);
   };
 
+  // Hàm tìm kiếm thời tiết gần nhất với thời gian chụp của hình ảnh
+  const findClosestWeather = (imageTime) => {
+    if (!filterWeather || filterWeather.length === 0) return null;
+    return filterWeather.reduce((closest, weather) => {
+      const weatherTime = new Date(weather.time).getTime();
+      const imageTimeMs = new Date(imageTime).getTime();
+      const closestTimeMs = new Date(closest.time).getTime();
+      return Math.abs(weatherTime - imageTimeMs) <
+        Math.abs(closestTimeMs - imageTimeMs)
+        ? weather
+        : closest;
+    }, filterWeather[0]);
+  };
   return (
     <section>
       <div className="flex flex-col sm:flex-row justify-center items-center gap-5 sm:w-3/4 mx-auto">
         <div className="w-full sm:w-96">
           <h1 className="font-semibold text-sm">
-            Dự án bắt đầu từ ngày {formatDate(startTime)} đến{" "}
-            {formatDate(endTime)}{" "}
+            Dự án bắt đầu từ ngày {formatDate(startDate)} đến{" "}
+            {formatDate(endDate)}{" "}
           </h1>
           <p className="text-gray-400 text-xs">
             Vui lòng chọn ngày tháng trong dự án để xem thông tin(Ngoài ra không
@@ -187,22 +200,51 @@ const Calendar = ({ dataImage, dataWeather, startTime, endTime }) => {
               <h4 className="text-lg font-semibold  text-gray-800">Hình ảnh</h4>
               <div>
                 {filterImages.map((item, index) => {
+                  const closestWeather = findClosestWeather(item.capture_time);
                   return (
                     <div
                       key={index}
-                      className="flex gap-4 items-center p-4 bg-white shadow-md rounded-lg"
+                      className="flex flex-col lg:flex-row items-center gap-4 p-4 bg-white shadow-md rounded-lg mb-4"
                     >
-                      <div className="flex-1">
-                        <p className="text-gray-600 text-sm">
-                          {formatDateTime(item.capture_time)}
-                        </p>
-                      </div>
                       <div className="flex-shrink-0">
                         <img
-                          className="w-40 h-40 rounded-lg object-cover object-center border border-gray-200"
+                          className="w-60 h-40 lg:w-80 lg:h-72 rounded-lg object-cover object-center border border-gray-200"
                           src={item.image_url}
                           alt="gallery-photo"
                         />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-gray-800 text-base lg:ml-4 lg:text-xl font-semibold lg:mb-2">
+                          {formatDateTime(item.capture_time)}
+                        </p>
+                        {closestWeather && (
+                          <div className="text-gray-600 text-sm lg:text-base mt-2 lg:mt-0 lg:ml-4 space-y-1">
+                            <p className="flex items-center">
+                              <span className="font-medium text-gray-800">
+                                Mô tả:
+                              </span>{" "}
+                              {closestWeather.description}
+                            </p>
+                            <p className="flex items-center">
+                              <span className="font-medium text-gray-800">
+                                Nhiệt độ:
+                              </span>{" "}
+                              {closestWeather.temp}°C
+                            </p>
+                            <p className="flex items-center">
+                              <span className="font-medium text-gray-800">
+                                Độ ẩm:
+                              </span>{" "}
+                              {closestWeather.humidity}%
+                            </p>
+                            <p className="flex items-center">
+                              <span className="font-medium text-gray-800">
+                                Tốc độ gió:
+                              </span>{" "}
+                              {closestWeather.windSpeed}m/s
+                            </p>
+                          </div>
+                        )}
                       </div>
                     </div>
                   );
@@ -211,59 +253,6 @@ const Calendar = ({ dataImage, dataWeather, startTime, endTime }) => {
                   (filterImages.length === 0 && (
                     <p className="lg:text-base">Không có dữ liệu</p>
                   ))}
-              </div>
-            </div>
-          </div>
-          <div className="mb-4 mt-2">
-            <div className="max-w-screen-md text-xs">
-              <h4 className="text-lg font-semibold text-gray-800">Thời tiết</h4>
-              <div className="overflow-x-auto">
-                {filterWeather && filterWeather.length > 0 ? (
-                  <table className="min-w-full divide-y divide-gray-200 text-xs md:text-sm">
-                    <thead>
-                      <tr>
-                        <th className="px-4 py-2 text-left font-medium text-black uppercase tracking-wider">
-                          Thời gian
-                        </th>
-                        <th className="px-4 py-2 text-left font-medium text-black uppercase tracking-wider">
-                          Mô tả
-                        </th>
-                        <th className="px-4 py-2 text-left font-medium text-black uppercase tracking-wider">
-                          Nhiệt độ
-                        </th>
-                        <th className="px-4 py-2 text-left font-medium text-black uppercase tracking-wider">
-                          Độ ẩm
-                        </th>
-                        <th className="px-4 py-2 text-left font-medium text-black uppercase tracking-wider">
-                          Tốc độ gió
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {filterWeather.map((item, index) => (
-                        <tr key={index}>
-                          <td className="px-4 py-2 whitespace-nowrap text-gray-800">
-                            {formatDateTime(item.time)}
-                          </td>
-                          <td className="px-4 py-2 whitespace-nowrap text-gray-800">
-                            {item.description}
-                          </td>
-                          <td className="px-4 py-2 whitespace-nowrap text-gray-800">
-                            {item.temp}°C
-                          </td>
-                          <td className="px-4 py-2 whitespace-nowrap text-gray-800">
-                            {item.humidity}%
-                          </td>
-                          <td className="px-4 py-2 whitespace-nowrap text-gray-800">
-                            {item.windSpeed}m/s
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                ) : (
-                  <p>Không có dữ liệu</p>
-                )}
               </div>
             </div>
           </div>

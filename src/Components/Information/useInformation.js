@@ -237,23 +237,11 @@ export default function useInformation({ projectId }) {
     dataProcess.forEach((item) => {
       totalEditProcess += item.historyProcess.length;
     });
-
-    // Chuyển đổi các chuỗi thời gian thành đối tượng Date
-    const times = dataProcess.map((p) => new Date(p.time));
-
-    // Tìm thời gian bắt đầu (sớm nhất)
-    const startTime = new Date(Math.min(...times));
-
-    // Tìm thời gian kết thúc (muộn nhất)
-    const endTime = new Date(Math.max(...times));
-
     return {
       dataProcess,
       formatedNonProcessObjectDetectionewArray,
       processWithoutObjectDetectionCount,
       totalEditProcess,
-      startTime,
-      endTime,
     };
   }, []);
 
@@ -561,8 +549,6 @@ export default function useInformation({ projectId }) {
     isSuccessProjectInfo,
     isLoadingProjectInfo,
     dataProcess: dataProcess?.dataProcess,
-    startTime: dataProcess?.startTime,
-    endTime: dataProcess?.endTime,
     nonProcessObjectDetection:
       dataProcess?.formatedNonProcessObjectDetectionewArray,
     isSuccessProcess,
