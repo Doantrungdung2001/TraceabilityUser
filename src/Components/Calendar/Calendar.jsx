@@ -71,18 +71,25 @@ const Calendar = ({ dataImage, dataWeather, startTime, endTime }) => {
     return date.isAfter(startDate) && date.isBefore(endDate);
   };
 
-  // Hàm tìm kiếm thời tiết gần nhất với thời gian chụp của hình ảnh
-  const findClosestWeather = (imageTime) => {
+  // Hàm tìm kiếm thời tiết trong khoảng thời gian của hình ảnh
+  const findWeatherInTimeRange = (imageTime) => {
     if (!filterWeather || filterWeather.length === 0) return null;
-    return filterWeather.reduce((closest, weather) => {
-      const weatherTime = new Date(weather.time).getTime();
-      const imageTimeMs = new Date(imageTime).getTime();
-      const closestTimeMs = new Date(closest.time).getTime();
-      return Math.abs(weatherTime - imageTimeMs) <
-        Math.abs(closestTimeMs - imageTimeMs)
-        ? weather
-        : closest;
-    }, filterWeather[0]);
+
+    const imageDate = new Date(imageTime);
+    const startHour = new Date(imageDate);
+    startHour.setMinutes(0);
+    startHour.setSeconds(0);
+    startHour.setMilliseconds(0);
+
+    const endHour = new Date(startHour);
+    endHour.setHours(startHour.getHours() + 1);
+
+    const weatherInRange = filterWeather.filter((weather) => {
+      const weatherTime = new Date(weather.time);
+      return weatherTime >= startHour && weatherTime < endHour;
+    });
+
+    return weatherInRange.length > 0 ? weatherInRange[0] : null;
   };
   return (
     <section>
@@ -200,7 +207,9 @@ const Calendar = ({ dataImage, dataWeather, startTime, endTime }) => {
               <h4 className="text-lg font-semibold  text-gray-800">Hình ảnh</h4>
               <div>
                 {filterImages.map((item, index) => {
-                  const closestWeather = findClosestWeather(item.capture_time);
+                  const weatherInRange = findWeatherInTimeRange(
+                    item.capture_time
+                  );
                   return (
                     <div
                       key={index}
@@ -217,31 +226,31 @@ const Calendar = ({ dataImage, dataWeather, startTime, endTime }) => {
                         <p className="text-gray-800 text-base lg:ml-4 lg:text-xl font-semibold lg:mb-2">
                           {formatDateTime(item.capture_time)}
                         </p>
-                        {closestWeather && (
+                        {weatherInRange && (
                           <div className="text-gray-600 text-sm lg:text-base mt-2 lg:mt-0 lg:ml-4 space-y-1">
                             <p className="flex items-center">
                               <span className="font-medium text-gray-800">
                                 Mô tả:
                               </span>{" "}
-                              {closestWeather.description}
+                              {weatherInRange.description}
                             </p>
                             <p className="flex items-center">
                               <span className="font-medium text-gray-800">
                                 Nhiệt độ:
                               </span>{" "}
-                              {closestWeather.temp}°C
+                              {weatherInRange.temp}°C
                             </p>
                             <p className="flex items-center">
                               <span className="font-medium text-gray-800">
                                 Độ ẩm:
                               </span>{" "}
-                              {closestWeather.humidity}%
+                              {weatherInRange.humidity}%
                             </p>
                             <p className="flex items-center">
                               <span className="font-medium text-gray-800">
                                 Tốc độ gió:
                               </span>{" "}
-                              {closestWeather.windSpeed}m/s
+                              {weatherInRange.windSpeed}m/s
                             </p>
                           </div>
                         )}
