@@ -23,6 +23,7 @@ import IndexQuery from "../Pages/Search/IndexQuery";
 import TransactionHash from "../Pages/TransactionHashQuery";
 import ProjectQuery from "../Pages/ProjectQuery";
 import ScanPrivateQR from "../Pages/Scan";
+import EventFarm from "../Pages/EventFarm";
 export const NormalRoutes = [
   { path: "/", element: <Home /> },
   { path: "/results/:projectId", element: <Result /> },
@@ -39,6 +40,7 @@ export const NormalRoutes = [
   { path: "/search/transaction-hash/:transactionHash", element: <TransactionHash /> },
   { path: "/search/index-query", element: <IndexQuery /> },
   { path: "/search/index/:projectIndex", element: <ProjectQuery /> },
+  { path: "/event/farm/:farmId", element: <EventFarm />},
   { path: "/scan/:projectId/:privateId", element: <ScanPrivateQR /> },
   { path: "/news", element: <New /> },
   { path: "/about-us", element: <About /> },
