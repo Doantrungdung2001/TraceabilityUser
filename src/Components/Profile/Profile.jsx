@@ -58,6 +58,15 @@ const ProfileFarm = () => {
                   <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
                   {farmInfo.address}
                 </div>
+                <div className="text-sm leading-normal mt-0 mb-1 text-blue-800 font-bold uppercase">
+                  <i className="fas fa-wallet mr-2 text-lg text-blueGray-400"></i>
+                  {
+                    farmInfo?.walletAddress ? <a href={`https://escan.live/address/${farmInfo.walletAddress}`} target="_blank">
+                    {farmInfo?.walletAddress}
+                    </a> : ""
+                  }
+                  
+                </div>
                 {farmInfo?.email?.map((email) => (
                   <div className="mb-2 text-blue-500 mt-3">
                     <i className="fas fa-mail-bulk mr-2 text-lg"></i>
