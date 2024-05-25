@@ -71,7 +71,7 @@ const InformationOverview = ({ allDistributerWithQR, dataInfoOverview }) => {
                         </dt>
                         <dd className="mt-1 text-sm text-blue-600 lg:text-base font-medium sm:mt-0 sm:col-span-2 cursor-pointer">
                         <Tooltip color="light" content="Xem chi tiết nông trại">
-                          <a href={`https://traceabilityuser.onrender.com/farm/detail/${dataInfoOverview?.farm?._id}`} target='_blank'> 
+                          <a href={`/farm/detail/${dataInfoOverview?.farm?._id}`} target='_blank'> 
                           {dataInfoOverview?.farm?.name}
                           </a>
                         </Tooltip>

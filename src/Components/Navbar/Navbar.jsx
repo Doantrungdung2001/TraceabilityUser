@@ -56,7 +56,7 @@ const Navbar = () => {
               </a>
             </li>
 
-            <li className="navItem">
+            {/* <li className="navItem">
               <a href="/news" className="navLink">
                 Tin tức
               </a>
@@ -66,7 +66,7 @@ const Navbar = () => {
               <a href="/about-us" className="navLink">
                 Thông tin
               </a>
-            </li>
+            </li> */}
 
             <button className="btn" onClick={handleOpen}>
               <a>Truy xuất</a>
