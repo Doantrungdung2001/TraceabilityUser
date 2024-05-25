@@ -22,8 +22,9 @@ function Icon({ id, open }) {
       viewBox="0 0 24 24"
       strokeWidth={2}
       stroke="currentColor"
-      className={`${id === open ? "rotate-180" : ""
-        } h-5 w-5 transition-transform`}
+      className={`${
+        id === open ? "rotate-180" : ""
+      } h-5 w-5 transition-transform`}
     >
       <path
         strokeLinecap="round"
@@ -127,7 +128,8 @@ const SearchId = () => {
 
         // loop in video to get list of videoItem with date between startDate and endTime, remember to convert date from unix time stamp to date
         const videoItem = video.filter(
-          (item) => Number(item.date) >= startDate && Number(item.date) <= endTime
+          (item) =>
+            Number(item.date) >= startDate && Number(item.date) <= endTime
         );
 
         videos.push(...videoItem);
@@ -140,7 +142,8 @@ const SearchId = () => {
         connection.forEach((item) => console.log("date: ", Number(item.date)));
 
         const connectionItem = connection.filter(
-          (item) => Number(item.date) >= startDate && Number(item.date) <= endTime
+          (item) =>
+            Number(item.date) >= startDate && Number(item.date) <= endTime
         );
         connectionLoss.push(...connectionItem);
       }
@@ -157,9 +160,8 @@ const SearchId = () => {
     } catch (error) {
       console.log("error: ", error);
       setLoading(false);
-      setError("Không tìm thấy dữ liệu. Vui lòng thử lại.")
+      setError("Không tìm thấy dữ liệu. Vui lòng thử lại.");
     }
-
   };
   return (
     <section className="">
@@ -357,7 +359,7 @@ const SearchId = () => {
               </AccordionHeader>
               <AccordionBody>
                 {loadingConnectionLoss &&
-                  (connectionLoss || connectionLoss.length === 0) ? (
+                (connectionLoss || connectionLoss.length === 0) ? (
                   <>
                     {connectionLoss.map((connection, index) => (
                       <div
@@ -393,13 +395,11 @@ const SearchId = () => {
           </>
         </section>
       )}
-      {
-        error && (
-          <div className="text-red-500 text-center">
-            <p>{error}</p>
-          </div>
-        )
-      }
+      {error && (
+        <div className="text-red-500 text-center">
+          <p>{error}</p>
+        </div>
+      )}
       {loading && <p className="text-center">Đang tải dữ liệu...</p>}
     </section>
   );

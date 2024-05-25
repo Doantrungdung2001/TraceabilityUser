@@ -94,7 +94,7 @@ export function renderTypeProcessProject(type) {
 }
 
 export function formatTransactionHashTable({ str, a, b }) {
-  if(!str) return "Transaction not found";
+  if (!str) return "Transaction not found";
   if (
     a < 0 ||
     b < 0 ||
@@ -108,7 +108,11 @@ export function formatTransactionHashTable({ str, a, b }) {
   const suffix = str.slice(-b);
   const formatedFormatTransactionHash = prefix + "..." + suffix;
   return (
-    <a href={`https://traceabilityuser.onrender.com/search/transaction-hash/${str}`} target="_blank" rel="noreferrer">
+    <a
+      href={`/search/transaction-hash/${str}`}
+      target="_blank"
+      rel="noreferrer"
+    >
       {formatedFormatTransactionHash}
     </a>
   );
@@ -144,7 +148,11 @@ export function formatWalletAddress({ str, a, b }) {
   const suffix = str.slice(-b);
   const formatedFormatTransactionHash = prefix + "..." + suffix;
   return (
-    <a href={`https://escan.live/address/${str}`} target="_blank" rel="noreferrer">
+    <a
+      href={`https://escan.live/address/${str}`}
+      target="_blank"
+      rel="noreferrer"
+    >
       {formatedFormatTransactionHash}
     </a>
   );

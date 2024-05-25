@@ -82,7 +82,7 @@ const ProfileFarm = () => {
                   <i className="fas fa-wallet mr-2 text-lg text-blueGray-400"></i>
                   {farmInfo?.walletAddress ? (
                     <a
-                      href={`https://escan.live/address/${farmInfo.walletAddress}`}
+                      href={`/event/farm/${farmInfo.id}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
