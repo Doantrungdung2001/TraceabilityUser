@@ -41,7 +41,7 @@ const EventFarmComponent = () => {
                       Thời gian
                     </th>
                     <th className="px-4 bg-gray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-sm lg:text-xl uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                      Khác
+                      Sự kiện
                     </th>
                   </tr>
                 </thead>

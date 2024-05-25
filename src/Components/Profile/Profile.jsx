@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Spinner } from "@material-tailwind/react";
 import useProfile from "./useProfile";
@@ -38,9 +38,29 @@ const ProfileFarm = () => {
   } = useProfile({
     farmId,
   });
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   if (isSuccessFarmInfo && !farmInfo.id) {
     navigate("/404-notfound");
   }
+
+  const displayWalletAddress = (address) => {
+    if (isMobile) {
+      return `${address.slice(0, 10)}...${address.slice(-10)}`;
+    }
+    return address;
+  };
   return (
     <>
       <div data-aos="fade-up" className="mx-auto pt-20">
@@ -60,12 +80,17 @@ const ProfileFarm = () => {
                 </div>
                 <div className="text-sm leading-normal mt-0 mb-1 text-blue-800 font-bold uppercase">
                   <i className="fas fa-wallet mr-2 text-lg text-blueGray-400"></i>
-                  {
-                    farmInfo?.walletAddress ? <a href={`https://escan.live/address/${farmInfo.walletAddress}`} target="_blank">
-                    {farmInfo?.walletAddress}
-                    </a> : ""
-                  }
-                  
+                  {farmInfo?.walletAddress ? (
+                    <a
+                      href={`https://escan.live/address/${farmInfo.walletAddress}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {displayWalletAddress(farmInfo.walletAddress)}
+                    </a>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 {farmInfo?.email?.map((email) => (
                   <div className="mb-2 text-blue-500 mt-3">
