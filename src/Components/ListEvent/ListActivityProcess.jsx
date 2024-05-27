@@ -194,7 +194,7 @@ const ListActivityProcess = ({ listActivity }) => {
             </div>
           ) : (
             <div className="mt-4 lg:text-lg text-base text-gray-400 font-medium">
-              Không có video
+              Không có video được phát hiện tự động
             </div>
           )}
         </div>
@@ -260,11 +260,11 @@ const ListActivityProcess = ({ listActivity }) => {
                     <td>
                       {activity.objectDetections.length > 0 ? (
                         <div className="item-center justify-center text-green-500">
-                          <h3>Có video</h3>
+                          <h3>Passed</h3>
                         </div>
                       ) : (
                         <div className="item-center justify-center text-red-500">
-                          Không có video
+                          <h3>Not Passed</h3>
                         </div>
                       )}
                     </td>

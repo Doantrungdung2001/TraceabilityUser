@@ -119,6 +119,7 @@ export function formatTransactionHashTable({ str, a, b }) {
 }
 
 export function formatLongText({ str, a, b }) {
+  if(!str) return "";
   if (
     a < 0 ||
     b < 0 ||
