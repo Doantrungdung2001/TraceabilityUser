@@ -107,7 +107,7 @@ const ListVideo = ({ dataListVideo }) => {
             </div>
           ) : (
             <div className="mt-4 lg:text-lg text-base text-gray-400 font-medium">
-              Không có video
+              Không có video được phát hiện tự động
             </div>
           )}
         </DialogBody>
