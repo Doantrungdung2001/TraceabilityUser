@@ -30,8 +30,9 @@ function Icon({ id, open }) {
       viewBox="0 0 24 24"
       strokeWidth={2}
       stroke="currentColor"
-      className={`${id === open ? "rotate-180" : ""
-        } h-5 w-5 transition-transform`}
+      className={`${
+        id === open ? "rotate-180" : ""
+      } h-5 w-5 transition-transform`}
     >
       <path
         strokeLinecap="round"
@@ -109,9 +110,15 @@ const Information = () => {
 
   console.log("allDistributerWithQR", allDistributerWithQR);
   //open more information
-  const [open, setOpen] = useState(1);
+  const [open, setOpen] = useState([1, 2, 3, 4, 5, 6, 7]);
   const [trustScore, setTrustScore] = useState(null);
-  const handleOpen = (value) => setOpen(open === value ? 0 : value);
+  const handleOpen = (index) => {
+    setOpen((prevOpen) =>
+      prevOpen.includes(index)
+        ? prevOpen.filter((item) => item !== index)
+        : [...prevOpen, index]
+    );
+  };
   // delete process
   const [openDeleteProcess, setOpenDeleteProcess] = useState(0);
   const handleOpenDeleteProcess = (value) =>
@@ -138,22 +145,39 @@ const Information = () => {
   };
 
   useEffect(() => {
-    if (projectInfo && totalConnectionLossBySeconds !== null && processWithoutObjectDetectionCount !== null && totalDeletedItem !== null && totalCamera !== null &&
-      dataProcess && dataExpect && Output) {
-      setTrustScore(TrustEvaluator.evaluateTrust({
-        matKetNoi: totalConnectionLossBySeconds,
-        tongThoiGian: projectInfo.totalTime,
-        hoatDongKhongCoVideo: processWithoutObjectDetectionCount,
-        tongHoatDong: dataProcess.length,
-        khaiBaoBiXoa: totalDeletedItem,
-        tongKhaiBao: dataProcess.length + dataExpect.length + Output.length,
-        khaiBaoBiSuaDoi: totalEditProcess + editExpectCount + editOutputCount,
-        cameraDienTich: totalCamera,
-        dienTich: projectInfo.square,
-      }));
+    if (
+      projectInfo &&
+      totalConnectionLossBySeconds !== null &&
+      processWithoutObjectDetectionCount !== null &&
+      totalDeletedItem !== null &&
+      totalCamera !== null &&
+      dataProcess &&
+      dataExpect &&
+      Output
+    ) {
+      setTrustScore(
+        TrustEvaluator.evaluateTrust({
+          matKetNoi: totalConnectionLossBySeconds,
+          tongThoiGian: projectInfo.totalTime,
+          hoatDongKhongCoVideo: processWithoutObjectDetectionCount,
+          tongHoatDong: dataProcess.length,
+          khaiBaoBiXoa: totalDeletedItem,
+          tongKhaiBao: dataProcess.length + dataExpect.length + Output.length,
+          khaiBaoBiSuaDoi: totalEditProcess + editExpectCount + editOutputCount,
+          cameraDienTich: totalCamera,
+          dienTich: projectInfo.square,
+        })
+      );
     }
-  }, [totalConnectionLossBySeconds, processWithoutObjectDetectionCount, totalDeletedItem, totalCamera, dataProcess, dataExpect, Output])
-
+  }, [
+    totalConnectionLossBySeconds,
+    processWithoutObjectDetectionCount,
+    totalDeletedItem,
+    totalCamera,
+    dataProcess,
+    dataExpect,
+    Output,
+  ]);
 
   return (
     <section className="information">
@@ -177,68 +201,77 @@ const Information = () => {
         {isLoadingProjectInfo && <Spinner />}
       </div>
 
-
       <section className="content">
-        {
-          projectInfo && totalConnectionLossBySeconds !== null && processWithoutObjectDetectionCount !== null && totalDeletedItem !== null && totalCamera !== null &&
-          dataProcess && dataExpect && Output && <section className="more-infor">
-            <div className="px-4 text-gray-900 text-2xl font-bold mt-8 mb-4 lg:ml-8">
-              Thông tin đánh giá
-              <h3 className="text-green-700 font-semibold text-lg mr-2">
-                Mức độ tin tưởng: {trustScore?.totalScore
-                }
-              </h3>
-            </div>
+        {projectInfo &&
+          totalConnectionLossBySeconds !== null &&
+          processWithoutObjectDetectionCount !== null &&
+          totalDeletedItem !== null &&
+          totalCamera !== null &&
+          dataProcess &&
+          dataExpect &&
+          Output && (
+            <section className="more-infor">
+              <div className="px-4 text-gray-900 text-2xl font-bold mt-8 mb-4 lg:ml-8">
+                Thông tin đánh giá
+                <h3 className="text-green-700 font-semibold text-lg mr-2">
+                  Mức độ tin tưởng: {trustScore?.totalScore}
+                </h3>
+              </div>
 
-            <div className="block w-full overflow-x-auto lg:max-w-4xl border rounded-lg mx-auto mt-6 mb-4">
-              <table className="items-center w-full bg-transparent border-collapse">
-                <tbody className="divide-y divide-gray-100 ">
-                  <tr className="text-gray-500">
-                    <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
-                      Số thời gian camera bị mất kết nối
-                    </th>
-                    <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
-                      {totalConnectionLossBySeconds / 60} phút - {trustScore?.matKetNoi}
-                    </td>
-                  </tr>
-                  <tr className="text-gray-500">
-                    <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
-                      Số hoạt động không có video đi kèm
-                    </th>
-                    <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
-                      {processWithoutObjectDetectionCount} - {trustScore?.hoatDongKhongCoVideo}
-                    </td>
-                  </tr>
-                  <tr className="text-gray-500">
-                    <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
-                      Số lượng khai báo bị xoá
-                    </th>
-                    <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
-                      {totalDeletedItem} - {trustScore?.khaiBaoBiXoa}
-                    </td>
-                  </tr>
-                  <tr className="text-gray-500">
-                    <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
-                      Số lượng khai báo bị sửa đổi
-                    </th>
-                    <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
-                      {totalEditProcess + editExpectCount + editOutputCount} /{" "}
-                      {dataProcess?.length + dataExpect?.length + Output?.length} - {trustScore?.khaiBaoBiSuaDoi}
-                    </td>
-                  </tr>
-                  <tr className="text-gray-500">
-                    <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
-                      Số lượng camera
-                    </th>
-                    <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
-                      {totalCamera} - {trustScore?.cameraDienTich}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-        }
+              <div className="block w-full overflow-x-auto lg:max-w-4xl border rounded-lg mx-auto mt-6 mb-4">
+                <table className="items-center w-full bg-transparent border-collapse">
+                  <tbody className="divide-y divide-gray-100 ">
+                    <tr className="text-gray-500">
+                      <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
+                        Số thời gian camera bị mất kết nối
+                      </th>
+                      <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
+                        {totalConnectionLossBySeconds / 60} phút -{" "}
+                        {trustScore?.matKetNoi}
+                      </td>
+                    </tr>
+                    <tr className="text-gray-500">
+                      <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
+                        Số hoạt động không có video đi kèm
+                      </th>
+                      <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
+                        {processWithoutObjectDetectionCount} -{" "}
+                        {trustScore?.hoatDongKhongCoVideo}
+                      </td>
+                    </tr>
+                    <tr className="text-gray-500">
+                      <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
+                        Số lượng khai báo bị xoá
+                      </th>
+                      <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
+                        {totalDeletedItem} - {trustScore?.khaiBaoBiXoa}
+                      </td>
+                    </tr>
+                    <tr className="text-gray-500">
+                      <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
+                        Số lượng khai báo bị sửa đổi
+                      </th>
+                      <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
+                        {totalEditProcess + editExpectCount + editOutputCount} /{" "}
+                        {dataProcess?.length +
+                          dataExpect?.length +
+                          Output?.length}{" "}
+                        - {trustScore?.khaiBaoBiSuaDoi}
+                      </td>
+                    </tr>
+                    <tr className="text-gray-500">
+                      <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
+                        Số lượng camera
+                      </th>
+                      <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
+                        {totalCamera} - {trustScore?.cameraDienTich}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          )}
 
         <section className="more-infor">
           <div className="mb-4">Video tổng quan</div>
@@ -280,17 +313,17 @@ const Information = () => {
         </section>
       </section>
 
-
       <section data-aos="fade-up" className="more-infor">
         <>
           <Accordion
-            open={open === 1}
+            open={open.includes(1)}
             className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"
           >
             <AccordionHeader
               onClick={() => handleOpen(1)}
-              className={`border-b-0 transition-colors ${open === 1 ? "text-green-400 hover:text-green-700" : ""
-                } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${
+                open === 1 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               <h1>Video không tương ứng với hoạt động canh tác nào</h1>
               <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center text-xs px-4 lg:px-6">
@@ -326,13 +359,14 @@ const Information = () => {
             </AccordionBody>
           </Accordion>
           <Accordion
-            open={open === 2}
+            open={open.includes(2)}
             className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"
           >
             <AccordionHeader
               onClick={() => handleOpen(2)}
-              className={`border-b-0 transition-colors ${open === 2 ? "text-green-400 hover:text-green-700" : ""
-                } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${
+                open === 2 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               <div className="flex items-center ">
                 <h1> Thông tin dự kiến sản lượng</h1>
@@ -366,13 +400,14 @@ const Information = () => {
             </AccordionBody>
           </Accordion>
           <Accordion
-            open={open === 3}
+            open={open.includes(3)}
             className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"
           >
             <AccordionHeader
               onClick={() => handleOpen(3)}
-              className={`border-b-0 transition-colors ${open === 3 ? "text-green-400 hover:text-green-700" : ""
-                } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${
+                open === 3 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               Quy trình mẫu
             </AccordionHeader>
@@ -389,13 +424,14 @@ const Information = () => {
             </AccordionBody>
           </Accordion>
           <Accordion
-            open={open === 4}
+            open={open.includes(4)}
             className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"
           >
             <AccordionHeader
               onClick={() => handleOpen(4)}
-              className={`border-b-0 transition-colors ${open === 4 ? "text-green-400 hover:text-green-700" : ""
-                } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${
+                open === 4 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               <div className="flex items-center  flex-nowrap">
                 <h1 className="whitespace-nowrap">Đầu ra</h1>
@@ -430,13 +466,14 @@ const Information = () => {
           </Accordion>
           {isSuccessImage && isSuccessWeather && (
             <Accordion
-              open={open === 5}
+              open={open.includes(5)}
               className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"
             >
               <AccordionHeader
                 onClick={() => handleOpen(5)}
-                className={`border-b-0 transition-colors ${open === 5 ? "text-green-400 hover:text-green-700" : ""
-                  } text-base lg:text-2xl`}
+                className={`border-b-0 transition-colors ${
+                  open === 5 ? "text-green-400 hover:text-green-700" : ""
+                } text-base lg:text-2xl`}
               >
                 <h1>Hình ảnh và thời tiết</h1>
                 <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center text-xs px-4 lg:px-6">
@@ -474,13 +511,14 @@ const Information = () => {
           )}
           {isLoadingImage || (isLoadingWeather && <Spinner />)}
           <Accordion
-            open={open === 6}
+            open={open.includes(6)}
             className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"
           >
             <AccordionHeader
               onClick={() => handleOpen(6)}
-              className={`border-b-0 transition-colors ${open === 6 ? "text-green-400 hover:text-green-700" : ""
-                } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${
+                open === 6 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               Các chứng nhận
             </AccordionHeader>
@@ -495,13 +533,14 @@ const Information = () => {
             </AccordionBody>
           </Accordion>
           <Accordion
-            open={open === 7}
+            open={open.includes(7)}
             className="rounded-lg border border-blue-gray-300 px-4 mb-2 max-w-3xl mx-auto"
           >
             <AccordionHeader
               onClick={() => handleOpen(7)}
-              className={`border-b-0 transition-colors ${open === 7 ? "text-green-400 hover:text-green-700" : ""
-                } text-base lg:text-2xl`}
+              className={`border-b-0 transition-colors ${
+                open === 7 ? "text-green-400 hover:text-green-700" : ""
+              } text-base lg:text-2xl`}
             >
               <div className="flex items-center ">
                 <h1> Các hoạt động bị xóa</h1>
