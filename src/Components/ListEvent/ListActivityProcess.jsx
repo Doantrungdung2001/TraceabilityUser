@@ -21,18 +21,16 @@ import {
   AccordionBody,
   Button,
 } from "@material-tailwind/react";
-import { FaCopy, FaArrowCircleRight, FaArrowCircleLeft } from "react-icons/fa"; // Import icon copy từ react-icons
-
-import { Icon } from "@mui/material";
-
+import { FaCopy, FaArrowCircleRight, FaArrowCircleLeft } from "react-icons/fa";
+import Modal from "react-modal";
 import DialogInfoDetail from "../Dialog/DialogInfoDetail";
+import { Icon } from "@mui/material";
 
 const ListActivityProcess = ({ listActivity }) => {
   const [openDetailProcess, setOpenDetailProcess] = useState(false);
   const handleOpenDetailDeleteProcess = () =>
     setOpenDetailProcess(!openDetailProcess);
   const [selectedProcess, setSelectedProcess] = useState(null);
-
   const [reportsOpen, setReportsOpen] = useState(0);
   const handleReportsOpen = (value) =>
     setReportsOpen(reportsOpen === value ? 0 : value);
@@ -40,14 +38,22 @@ const ListActivityProcess = ({ listActivity }) => {
     navigator.clipboard.writeText(text);
     alert("Copy thành công!");
   };
-
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
   const handleScroll = (scrollOffset) => {
     const slider = document.getElementById("slider");
     const newScrollLeft = scrollLeft + scrollOffset;
     setScrollLeft(newScrollLeft);
     slider.scrollLeft = newScrollLeft;
+  };
+
+  const handleVideoClick = (video) => {
+    setSelectedVideo(video);
+  };
+
+  const closeModal = () => {
+    setSelectedVideo(null);
   };
 
   const data = [
@@ -181,13 +187,14 @@ const ListActivityProcess = ({ listActivity }) => {
                     {formatDateTime(data.end_time)}
                   </span>
                   <video
-                    className="h-full w-full my-2 rounded-lg "
+                    className="h-full w-full my-2 rounded-lg cursor-pointer"
                     controls
                     autoPlay
                     muted
+                    onClick={() => handleVideoClick(data)}
                   >
                     <source src={data.video_url} type="video/mp4" />
-                    Your browser does not support the video ta
+                    Your browser does not support the video tag.
                   </video>
                 </div>
               ))}
@@ -201,6 +208,7 @@ const ListActivityProcess = ({ listActivity }) => {
       ),
     },
   ];
+
   return (
     <div className="rounded-xl p-2">
       <div
@@ -209,7 +217,7 @@ const ListActivityProcess = ({ listActivity }) => {
         }`}
       >
         <div
-          className="w-full h-full overflow-auto shadow bg-white "
+          className="w-full h-full overflow-auto shadow bg-white"
           id="journal-scroll"
         >
           {listActivity?.length > 0 ? (
@@ -220,7 +228,7 @@ const ListActivityProcess = ({ listActivity }) => {
                   className="border-b-2 border-gray-300 cursor-default bg-gray-200 bg-opacity-25"
                 >
                   <tr
-                    className="relative transform scale-100 text-xs lg:text-base py-1 "
+                    className="relative transform scale-100 text-xs lg:text-base py-1"
                     onClick={() => {
                       handleOpenDetailDeleteProcess();
                       setSelectedProcess(activity);
@@ -291,12 +299,13 @@ const ListActivityProcess = ({ listActivity }) => {
                                 (video, vidIndex) => (
                                   <div key={vidIndex} className="flex-shrink-0">
                                     <video
-                                      className="w-24 h-24 lg:w-32 lg:h-32 object-cover rounded-lg shadow-md"
+                                      className="w-24 h-24 lg:w-32 lg:h-32 object-cover rounded-lg shadow-md cursor-pointer"
                                       controls
                                       src={video.video_url}
                                       autoPlay
                                       loop
                                       muted
+                                      onClick={() => handleVideoClick(video)}
                                     ></video>
                                   </div>
                                 )
@@ -328,12 +337,10 @@ const ListActivityProcess = ({ listActivity }) => {
 
         <DialogBody className="h-[35rem] overflow-y-auto">
           <Tabs className="tab" id="custom-animation" value="infor">
-            <TabsHeader className="tab-header" style={{height: '80px'}}>
+            <TabsHeader className="tab-header" style={{ height: "80px" }}>
               {data.map(({ label, value }) => (
-                <Tab key={value} value={value} style={{height: '70px'}}>
-                  <span className="text-lg leading-5">
-                    {label}
-                  </span>
+                <Tab key={value} value={value} style={{ height: "70px" }}>
+                  <span className="text-lg leading-5">{label}</span>
                 </Tab>
               ))}
             </TabsHeader>
@@ -357,6 +364,39 @@ const ListActivityProcess = ({ listActivity }) => {
           </Button>
         </DialogFooter>
       </Dialog>
+      <Modal
+        isOpen={!!selectedVideo}
+        onRequestClose={closeModal}
+        contentLabel="Phóng to Video"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.75)",
+          },
+          content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            width: "80%",
+            maxWidth: "800px",
+          },
+        }}
+      >
+        <button
+          onClick={closeModal}
+          className="right-2 text-red-500 hover:text-red-700 text-5xl leading-none"
+        >
+          &times;
+        </button>
+        {selectedVideo && (
+          <video className="w-full h-auto rounded-lg" controls autoPlay muted>
+            <source src={selectedVideo.video_url} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        )}
+      </Modal>
     </div>
   );
 };
