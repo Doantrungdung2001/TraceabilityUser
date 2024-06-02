@@ -7,6 +7,7 @@ import {
   Accordion,
   AccordionHeader,
   AccordionBody,
+  Rating,
 } from "@material-tailwind/react";
 
 import { useNavigate, useParams } from "react-router-dom";
@@ -237,6 +238,12 @@ const Information = () => {
                       <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
                         {processWithoutObjectDetectionCount} -{" "}
                         {trustScore?.hoatDongKhongCoVideo}
+                      </td>
+                      <td>
+                        <Rating
+                          value={trustScore?.hoatDongKhongCoVideo}
+                          readonly
+                        />
                       </td>
                     </tr>
                     <tr className="text-gray-500">

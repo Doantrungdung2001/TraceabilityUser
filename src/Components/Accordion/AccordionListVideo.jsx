@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Accordion,
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import {
   formatTransactionHashTable,
   formatLongText,
@@ -32,8 +33,24 @@ function Icon({ id, open }) {
 
 const AccordionListVideo = ({ dataAccordion }) => {
   const [open, setOpen] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const sliderRef = useRef(null);
 
+  const handleSwipe = (direction) => {
+    const lastIndex = dataAccordion.length - 1;
+    let newIndex;
+    if (direction === "left") {
+      newIndex = currentIndex === 0 ? lastIndex : currentIndex - 1;
+    } else if (direction === "right") {
+      newIndex = currentIndex === lastIndex ? 0 : currentIndex + 1;
+    }
+    setCurrentIndex(newIndex);
+    // Scroll to the new video element
+    const newPosition = newIndex * sliderRef.current.offsetWidth;
+    sliderRef.current.scrollTo({ left: newPosition, behavior: "smooth" });
+  };
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
+
   return (
     <>
       {dataAccordion?.map((data, index) => (
@@ -87,26 +104,49 @@ const AccordionListVideo = ({ dataAccordion }) => {
                   </dl>
                 </div>
               </div>
-              <div className="px-2 mt-4 lg:text-xl text-base font-bold text-green-600 lg:mb-5 mb-3">
-                Danh sách video
-              </div>
-              {data.objectDetections.map((data, index) => (
-                <div key={index}>
-                  <span className="ml-1 text-base">
-                    {formatDateTime(data.start_time)} -{" "}
-                    {formatDateTime(data.end_time)}
-                  </span>
-                  <video
-                    className="h-full w-full my-2 rounded-lg "
-                    controls
-                    autoPlay
-                    muted
-                  >
-                    <source src={data.video_url} type="video/mp4" />
-                    Your browser does not support the video ta
-                  </video>
+              <div>
+                <div className="px-2 mt-4 lg:text-xl text-base font-bold text-green-600 lg:mb-5 mb-3">
+                  Danh sách video
                 </div>
-              ))}
+                <div className="flex items-center justify-center">
+                  <button
+                    className="bg-gray-200 p-2 rounded-full mx-2"
+                    onClick={() => handleSwipe("left")}
+                  >
+                    <FaChevronLeft className="lg:h-6 lg:w-6 h-4 w-4 text-gray-600" />
+                  </button>
+                  <div
+                    className="flex-1 overflow-x-scroll whitespace-nowrap scrollbar-hide"
+                    ref={sliderRef}
+                  >
+                    <div className=" justify-center items-center">
+                      {data.objectDetections.map((item, index) => (
+                        <div key={index} className="inline-block mx-1">
+                          <span className="ml-1 lg:text-base block text-xs">
+                            {formatDateTime(item.start_time)} -{" "}
+                            {formatDateTime(item.end_time)}
+                          </span>
+                          <video
+                            className="lg:h-72 lg:w-96 h-40 w-56 mx-2 my-2 rounded-lg" // Thay đổi kích thước từ cố định sang auto
+                            controls
+                            autoPlay
+                            muted
+                          >
+                            <source src={item.video_url} type="video/mp4" />
+                            Your browser does not support the video tag
+                          </video>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <button
+                    className="bg-gray-200 p-2 rounded-full mx-2"
+                    onClick={() => handleSwipe("right")}
+                  >
+                    <FaChevronRight className="lg:h-6 lg:w-6 h-4 w-4 text-gray-600" />
+                  </button>
+                </div>
+              </div>
             </div>
           </AccordionBody>
         </Accordion>
