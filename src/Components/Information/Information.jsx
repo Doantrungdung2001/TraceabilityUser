@@ -215,20 +215,25 @@ const Information = () => {
               <div className="px-4 text-gray-900 text-2xl font-bold mt-8 mb-4 lg:ml-8">
                 Thông tin đánh giá
                 <h3 className="text-green-700 font-semibold text-lg mr-2">
-                  Mức độ tin tưởng: {trustScore?.totalScore}
+                  Mức độ tin tưởng: {trustScore?.totalScore}{" "}
+                  <div>
+                    <Rating value={trustScore?.totalScore} readonly />
+                  </div>
                 </h3>
               </div>
 
               <div className="block w-full overflow-x-auto lg:max-w-4xl border rounded-lg mx-auto mt-6 mb-4">
                 <table className="items-center w-full bg-transparent border-collapse">
-                  <tbody className="divide-y divide-gray-100 ">
+                  <tbody className="divide-y divide-gray-100">
                     <tr className="text-gray-500">
                       <th className="border-t-0 px-4 align-middle lg:text-base text-sm font-normal whitespace-nowrap p-4 text-left">
                         Số thời gian camera bị mất kết nối
                       </th>
                       <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
-                        {totalConnectionLossBySeconds / 60} phút -{" "}
-                        {trustScore?.matKetNoi}
+                        {totalConnectionLossBySeconds / 60} phút
+                        <div>
+                          <Rating value={trustScore?.matKetNoi} readonly />
+                        </div>
                       </td>
                     </tr>
                     <tr className="text-gray-500">
@@ -236,14 +241,18 @@ const Information = () => {
                         Số hoạt động không có video đi kèm
                       </th>
                       <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
-                        {processWithoutObjectDetectionCount} -{" "}
-                        {trustScore?.hoatDongKhongCoVideo}
-                      </td>
-                      <td>
-                        <Rating
-                          value={trustScore?.hoatDongKhongCoVideo}
-                          readonly
-                        />
+                        {processWithoutObjectDetectionCount}
+                        <div>
+                          <Rating
+                            value={trustScore?.hoatDongKhongCoVideo}
+                            readonly
+                          />
+                          {console.log(
+                            "video sao",
+                            trustScore?.hoatDongKhongCoVideo,
+                            typeof trustScore?.hoatDongKhongCoVideo
+                          )}
+                        </div>
                       </td>
                     </tr>
                     <tr className="text-gray-500">
@@ -251,7 +260,10 @@ const Information = () => {
                         Số lượng khai báo bị xoá
                       </th>
                       <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
-                        {totalDeletedItem} - {trustScore?.khaiBaoBiXoa}
+                        {totalDeletedItem}
+                        <div>
+                          <Rating value={trustScore?.khaiBaoBiXoa} readonly />
+                        </div>
                       </td>
                     </tr>
                     <tr className="text-gray-500">
@@ -262,8 +274,13 @@ const Information = () => {
                         {totalEditProcess + editExpectCount + editOutputCount} /{" "}
                         {dataProcess?.length +
                           dataExpect?.length +
-                          Output?.length}{" "}
-                        - {trustScore?.khaiBaoBiSuaDoi}
+                          Output?.length}
+                        <div>
+                          <Rating
+                            value={trustScore?.khaiBaoBiSuaDoi}
+                            readonly
+                          />
+                        </div>
                       </td>
                     </tr>
                     <tr className="text-gray-500">
@@ -271,7 +288,10 @@ const Information = () => {
                         Số lượng camera
                       </th>
                       <td className="border-t-0 px-4 align-middle lg:text-sm text-sm font-medium text-gray-900 whitespace-nowrap p-4">
-                        {totalCamera} - {trustScore?.cameraDienTich}
+                        {totalCamera}
+                        <div>
+                          <Rating value={trustScore?.cameraDienTich} readonly />
+                        </div>
                       </td>
                     </tr>
                   </tbody>
