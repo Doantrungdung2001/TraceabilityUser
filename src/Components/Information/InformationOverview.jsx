@@ -7,10 +7,9 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import { formatDate, formatTransactionHashTable } from "../../Utils/helpers";
-
+import { IoInformationCircleSharp } from "react-icons/io5";
 
 const InformationOverview = ({ allDistributerWithQR, dataInfoOverview }) => {
-
   const [openTop, setOpenTop] = useState(false);
   const openDrawerTop = () => setOpenTop(true);
   const closeDrawerTop = () => setOpenTop(false);
@@ -29,7 +28,12 @@ const InformationOverview = ({ allDistributerWithQR, dataInfoOverview }) => {
                         <h3 className="text-lg leading-6 font-medium text-green-700">
                           Thông tin chung
                         </h3>
-                        {/* <Button onClick={openDrawerTop}>Thông tin hướng dẫn sử dụng</Button> */}
+                        <div>
+                          <IoInformationCircleSharp
+                            onClick={openDrawerTop}
+                            style={{ color: "green", fontSize: "2rem" }}
+                          />
+                        </div>
                       </div>
                       <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center px-4 lg:px-6">
                         <svg
@@ -70,11 +74,17 @@ const InformationOverview = ({ allDistributerWithQR, dataInfoOverview }) => {
                           Nông trại sản xuất
                         </dt>
                         <dd className="mt-1 text-sm text-blue-600 lg:text-base font-medium sm:mt-0 sm:col-span-2 cursor-pointer">
-                        <Tooltip color="light" content="Xem chi tiết nông trại">
-                          <a href={`/farm/detail/${dataInfoOverview?.farm?._id}`} target='_blank'> 
-                          {dataInfoOverview?.farm?.name}
-                          </a>
-                        </Tooltip>
+                          <Tooltip
+                            color="light"
+                            content="Xem chi tiết nông trại"
+                          >
+                            <a
+                              href={`/farm/detail/${dataInfoOverview?.farm?._id}`}
+                              target="_blank"
+                            >
+                              {dataInfoOverview?.farm?.name}
+                            </a>
+                          </Tooltip>
                         </dd>
                       </div>
                       <div className="lg:py-3 py-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
