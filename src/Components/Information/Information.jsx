@@ -8,8 +8,12 @@ import {
   AccordionHeader,
   AccordionBody,
   Rating,
+  Button,
+  Drawer,
+  Typography,
+  IconButton,
 } from "@material-tailwind/react";
-
+import { IoInformationCircleSharp } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 import useInformation from "./useInformation";
 import Calendar from "../Calendar/Calendar";
@@ -108,8 +112,6 @@ const Information = () => {
     isSuccessQR,
     isLoadingQR,
   } = useInformation({ projectId });
-
-  console.log("allDistributerWithQR", allDistributerWithQR);
   //open more information
   const [open, setOpen] = useState([1, 2, 3, 4, 5, 6, 7]);
   const [trustScore, setTrustScore] = useState(null);
@@ -120,6 +122,11 @@ const Information = () => {
         : [...prevOpen, index]
     );
   };
+
+  const [openTop, setOpenTop] = useState(false);
+  const openDrawerTop = () => setOpenTop(true);
+  const closeDrawerTop = () => setOpenTop(false);
+
   // delete process
   const [openDeleteProcess, setOpenDeleteProcess] = useState(0);
   const handleOpenDeleteProcess = (value) =>
@@ -386,6 +393,15 @@ const Information = () => {
               } text-base lg:text-2xl`}
             >
               <h1>Video không tương ứng với hoạt động canh tác nào</h1>
+              <div>
+                <IoInformationCircleSharp
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    openDrawerTop()
+                  }}
+                  style={{ color: "green", fontSize: "2rem" }}
+                />
+              </div>
               <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center text-xs px-4 lg:px-6">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -409,9 +425,6 @@ const Information = () => {
               {nonProcessObjectDetection?.length ? (
                 <AccordionListVideo dataAccordion={nonProcessObjectDetection} />
               ) : (
-                // <>
-                //   <ListVideo dataListVideo={nonProcessObjectDetection} />
-                // </>
                 <div className="text-base text-gray-300 font-normal p-4">
                   Không có video
                 </div>
@@ -692,6 +705,37 @@ const Information = () => {
           </Accordion>
         </>
       </section>
+      <Drawer
+        placement="top"
+        open={openTop}
+        onClose={closeDrawerTop}
+        className="p-4"
+      >
+        <div className="mb-6 flex items-center justify-between">
+          <Typography variant="h5" color="blue-gray">
+            Hướng dẫn sử dụng
+          </Typography>
+          <IconButton variant="text" color="blue-gray" onClick={closeDrawerTop}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="h-5 w-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </IconButton>
+        </div>
+        <Typography color="gray" className="mb-8 pr-4 font-normal">
+          Nội dung ghi ở đây
+        </Typography>
+      </Drawer>
     </section>
   );
 };
