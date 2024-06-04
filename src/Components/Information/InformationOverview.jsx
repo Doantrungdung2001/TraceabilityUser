@@ -24,8 +24,8 @@ const InformationOverview = ({ allDistributerWithQR, dataInfoOverview }) => {
                 <div className="bg-white overflow-hidden shadow rounded-lg border">
                   <div className="lg:py-5 px-4 py-3">
                     <div className="flex justify-between items-center text-sm">
-                      <div>
-                        <h3 className="text-lg leading-6 font-medium text-green-700">
+                      <div className="flex items-center">
+                        <h3 className="text-lg leading-6 font-medium text-green-700 mr-2">
                           Thông tin chung
                         </h3>
                         <div>
@@ -35,6 +35,7 @@ const InformationOverview = ({ allDistributerWithQR, dataInfoOverview }) => {
                           />
                         </div>
                       </div>
+
                       <div className="ml-4 bg-blue-400 lg:p-2 p-1 rounded-lg flex items-center px-4 lg:px-6">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +43,7 @@ const InformationOverview = ({ allDistributerWithQR, dataInfoOverview }) => {
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
                           stroke="currentColor"
-                          className="w-8 h-8 text-white" // Kích thước lớn hơn và màu xanh
+                          className="w-8 h-8 text-white"
                         >
                           <path
                             strokeLinecap="round"
