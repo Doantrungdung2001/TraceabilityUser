@@ -9,6 +9,7 @@ import {
   formatTransactionHashTable,
   formatLongText,
   formatDateTime,
+  formatDate,
 } from "../../Utils/helpers";
 function Icon({ id, open }) {
   return (
@@ -65,7 +66,7 @@ const AccordionListVideo = ({ dataAccordion }) => {
               open === index + 1 ? "text-green-200 hover:text-green-500" : ""
             } text-sm lg:text-xl`}
           >
-            {data.date}({data.objectDetections.length} video)
+            {formatDate(data.date)}{" "}({data.objectDetections.length} video)
           </AccordionHeader>
           <AccordionBody>
             <div>
